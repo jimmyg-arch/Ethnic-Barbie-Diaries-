@@ -41,6 +41,20 @@
 .section-win .win-bar .win-title{font-family:var(--scr);font-size:8px;color:#fff;letter-spacing:0.5px;}
 .section-win .win-bar .win-btns{display:flex;gap:3px;}
 .section-win .win-bar .win-btn{width:16px;height:14px;background:var(--btn-bg);border:1px solid var(--win-bd);font-family:var(--scr);font-size:7px;color:var(--ink2);display:flex;align-items:center;justify-content:center;}
+
+/* Home-style countdown */
+.countdown-strip{
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  background:var(--win-body2);border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  margin:1rem auto 0;max-width:980px;padding:10px 12px;
+}
+.cd-label{font-size:11px;font-family:var(--head);font-weight:800;color:var(--muted);}
+.cd-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}
+.cd-box{background:var(--win-body2);border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);min-width:56px;text-align:center;padding:8px 6px 6px;}
+.cd-num{font-family:"Nunito",sans-serif;font-size:clamp(18px,3.5vw,26px);font-weight:900;color:var(--pink);display:block;line-height:1;}
+.cd-lbl{font-family:var(--sys);font-size:9px;font-weight:700;color:var(--muted);margin-top:3px;display:block;text-transform:uppercase;letter-spacing:0.06em;}
+.cd-sep{font-family:"Nunito",sans-serif;font-size:20px;font-weight:900;color:var(--pink);padding-bottom:10px;}
 </style>
 
 <style id="y2k-theme">
@@ -757,7 +771,7 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
   <!-- COUNTDOWN STRIP -->
   <div class="countdown-strip">
     <div class="cd-label">⏰ Time until UBW 2026 opens:</div>
-    <div id="countdown" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"></div>
+    <div id="countdown" class="cd-row"></div>
     <div class="cd-label" style="opacity:0.7">Apr 16 · 9AM ET · OCCC Orlando</div>
   </div>
 
@@ -1066,21 +1080,28 @@ ham.addEventListener('click',()=>{
 /* ── COUNTDOWN ────────────────────────────── */
 function initCountdown(){
   const el=document.getElementById('countdown');
-  const target=new Date('2026-04-16T09:00:00-04:00');
+  if(!el) return;
+  // Fixed timestamp for UBW open in ET to avoid locale parsing inconsistencies.
+  const targetMs=Date.parse('2026-04-16T13:00:00.000Z');
+  const pad=n=>String(n).padStart(2,'0');
   function update(){
-    const diff=target-new Date();
-    if(diff<=0){el.innerHTML='<div style="font-size:18px;font-weight:700">🎉 It\'s happening RIGHT NOW!</div>';return;}
+    const diff=targetMs-Date.now();
+    if(diff<=0){el.innerHTML='<span style="font-family:\'Nunito\',sans-serif;font-size:14px;font-weight:900;color:var(--pink)">🎉 UBW 2026 is happening NOW!!</span>';return;}
     const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
     el.innerHTML=`
-      <div class="cd-item"><span class="cd-num">${String(d).padStart(2,'0')}</span><span class="cd-lbl">Days</span></div>
-      <div class="cd-sep">:</div>
-      <div class="cd-item"><span class="cd-num">${String(h).padStart(2,'0')}</span><span class="cd-lbl">Hours</span></div>
-      <div class="cd-sep">:</div>
-      <div class="cd-item"><span class="cd-num">${String(m).padStart(2,'0')}</span><span class="cd-lbl">Mins</span></div>
-      <div class="cd-sep">:</div>
-      <div class="cd-item"><span class="cd-num">${String(s).padStart(2,'0')}</span><span class="cd-lbl">Secs</span></div>`;
+      <div class="cd-row">
+        <div class="cd-box"><span class="cd-num">${pad(d)}</span><span class="cd-lbl">Days</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(h)}</span><span class="cd-lbl">Hours</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(m)}</span><span class="cd-lbl">Min</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(s)}</span><span class="cd-lbl">Sec</span></div>
+      </div>`;
   }
-  update();setInterval(update,1000);
+  update();
+  if(window.__ubwCountdownInt) clearInterval(window.__ubwCountdownInt);
+  window.__ubwCountdownInt=setInterval(update,1000);
 }
 
 /* ── REMINDERS DATA ───────────────────────── */
@@ -1603,10 +1624,10 @@ function initNav(){
 function initCountdown(){
   const el = document.getElementById('countdown');
   if(!el) return;
-  const target = new Date('2026-04-16T09:00:00-04:00');
+  const targetMs = Date.parse('2026-04-16T13:00:00.000Z');
   const pad = n => String(n).padStart(2,'0');
   function update(){
-    const diff = target - new Date();
+    const diff = targetMs - Date.now();
     if(diff <= 0){
       el.innerHTML = '<span style="font-family:\'Nunito\',sans-serif;font-size:14px;font-weight:900;color:var(--pink)">🎉 UBW 2026 is happening NOW!!</span>';
       return;
@@ -1623,7 +1644,9 @@ function initCountdown(){
       <div class="cd-box"><span class="cd-num">${pad(s)}</span><span class="cd-lbl">Sec</span></div>
     </div>`;
   }
-  update(); setInterval(update, 1000);
+  update();
+  if(window.__ubwCountdownInt) clearInterval(window.__ubwCountdownInt);
+  window.__ubwCountdownInt = setInterval(update, 1000);
 }
 
 /* ═══════════════════════════════════════

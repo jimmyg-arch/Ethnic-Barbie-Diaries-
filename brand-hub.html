@@ -45,6 +45,26 @@
 .psa-type-chip.active{background:rgba(255,255,255,0.25)!important;color:#fff!important;}
 #psa-form{display:none;}
 #psa-form.open{display:block;}
+
+/* Text cleanup / readability */
+#tab-stocks .stock-card{line-height:1.55;}
+#tab-stocks .sc-ticker{font-size:16px;font-weight:900;letter-spacing:0.02em;color:var(--win-bar);}
+#tab-stocks .sc-name{font-size:14px;font-weight:800;color:var(--ink);line-height:1.35;}
+#tab-stocks .sc-exchange{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;}
+#tab-stocks .sc-brands,#tab-stocks .sc-note{font-size:12px;line-height:1.6;color:var(--ink2);}
+#tab-stocks .sc-metric-lbl{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
+#tab-stocks .sc-metric-val{font-size:13px;font-weight:700;color:var(--ink);}
+
+#tab-products .product-card{line-height:1.55;}
+#tab-products .pc-brand{font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);}
+#tab-products .pc-name{font-size:14px;font-weight:800;color:var(--ink);line-height:1.4;}
+#tab-products .pc-price-row{font-size:12px;line-height:1.5;}
+#tab-products .pc-booth{font-size:11px;line-height:1.55;color:var(--ink2);}
+
+#tab-roi .roi-rec{line-height:1.6;}
+#tab-roi .roi-rec-name{font-size:15px;font-weight:900;color:var(--ink);}
+#tab-roi .roi-rec-reason{font-size:12px;line-height:1.65;color:var(--ink2);}
+#tab-roi .roi-rec-badge{font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);}
 </style>
 
 <style id="y2k-theme">
@@ -780,8 +800,8 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
 
   <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
     <div>
-      <h2 style="font-family:'Nunito',sans-serif;font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--win-bar,#7B68EE)">Product Value Rankings</h2>
-      <p style="font-size:13px;color:var(--muted,#9966AA);margin-top:4px">Retail prices sourced from <a href="https://sephora.com" target="_blank" style="color:var(--pink)">Sephora.com</a> and <a href="https://ulta.com" target="_blank" style="color:var(--pink)">Ulta.com</a>. Sample values estimated from past UBW events.</p>
+      <h2 style="font-family:'Nunito',sans-serif;font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--win-bar,#7B68EE)">Products + Services Value Rankings</h2>
+      <p style="font-size:13px;color:var(--muted,#9966AA);margin-top:4px">Retail prices and typical service costs estimate what each stop would normally cost. Savings are calculated as event value minus event price (free at expo).</p>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <input type="search" id="prod-search" placeholder="Search brand or product…" oninput="filterProducts()" style="padding:8px 14px;border:1.5px solid var(--win-bd,#D4A0C8);background:var(--win-body2,#FFF0F8);font-size:13px;font-family:'Nunito',sans-serif;color:var(--win-txt,#4A0060);min-width:200px">
@@ -795,6 +815,7 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
     <button class="btn btn-sm" onclick="filterProdCat('Makeup',this)">💄 Makeup</button>
     <button class="btn btn-sm" onclick="filterProdCat('Haircare',this)">🌀 Haircare</button>
     <button class="btn btn-sm" onclick="filterProdCat('Tools',this)">⚡ Tools</button>
+    <button class="btn btn-sm" onclick="filterProdCat('service',this)">💅 Services</button>
   </div>
 
   <!-- Product cards rendered by renderProducts() -->
@@ -807,8 +828,8 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
 <div class="pg-panel" id="tab-roi">
 <section class="section"><div class="container container-sm" style="max-width:700px">
 
-  <h2 style="font-family:'Nunito',sans-serif;font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--win-bar,#7B68EE);margin-bottom:8px">AI ROI Optimizer</h2>
-  <p style="font-size:13px;color:var(--muted,#9966AA);margin-bottom:1.5rem;line-height:1.7">Enter your expo parameters and get a personalized booth priority list ranked by sample value and time ROI. Powered by Claude AI.</p>
+  <h2 style="font-family:'Nunito',sans-serif;font-size:clamp(20px,3vw,30px);font-weight:900;color:var(--win-bar,#7B68EE);margin-bottom:8px">Route ROI Optimizer</h2>
+  <p style="font-size:13px;color:var(--muted,#9966AA);margin-bottom:1.5rem;line-height:1.7">This optimizer now uses your selected route from Planner (`ubw_booth_list` / tracker) and scores stops by value per minute.</p>
 
   <div style="background:var(--win-body,#FFE4F0);border:2px solid var(--win-bd,#D4A0C8);padding:1.5rem;margin-bottom:1.5rem">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem">
@@ -988,6 +1009,7 @@ const BASE_STOCKS = [
   {ticker:'BYTS',name:'Beiersdorf AG (BEI.DE)',exchange:'XETRA',price:'~€149',change:'+0.4%',chg:0.4,cap:'€39B',pe:'34x',yoy:'+8%',brands:['NIVEA','Eucerin','La Prairie','Aquaphor'],booth:'N/A at UBW',ubwNote:'Parent of Aquaphor and Eucerin — not directly at UBW 2026 but background player in skincare landscape.',sentiment:'🟢 Bullish',category:'large-cap',roiScore:45,majorUBW:false},
 ];
 let STOCKS = [...BASE_STOCKS];
+let EXPO_BRANDS = [];
 
 function normalizeBrand(v=''){
   return v.toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -1030,6 +1052,7 @@ async function enrichStocksWithAllExpoBrands(){
     const match = html.match(/const BRANDS\s*=\s*(\[[\s\S]*?\]);/);
     if(!match) return;
     const expoBrands = Function(`"use strict"; return (${match[1]});`)();
+    EXPO_BRANDS = expoBrands;
     const added = [];
     expoBrands.forEach(b => {
       if(!b?.brand || stockHasBrand(b.brand)) return;
@@ -1081,7 +1104,8 @@ function renderStocks(filter='all'){const sg=document.getElementById('stock-grid
     const chgIcon=isNA?'':isUp?'▲':'▼';
     const fallbackLogo = makeFallbackLogoData(s.name);
     const logoUrl = guessLogoUrl((s.brands&&s.brands[0])||s.name);
-    return `<div class="stock-card">
+    const catColor = s.category==='large-cap' ? '#7B68EE' : s.category==='mass' ? '#FF69B4' : '#C080E0';
+    return `<div class="stock-card" style="border:2px solid ${catColor};box-shadow:3px 3px 0 rgba(100,60,180,0.18)">
       <div class="sc-header">
         <img src="${logoUrl}" alt="${s.name} logo" style="width:48px;height:48px;border-radius:10px;border:1px solid var(--win-bd,#D4A0C8);background:#fff;object-fit:contain;padding:4px;flex-shrink:0" onerror="this.onerror=null;this.src='${fallbackLogo}'">
         <div>
@@ -1125,7 +1149,7 @@ function filterStocks(type,btn){
 /* ══════════════════════════════════════════════════
    PRODUCT VALUES
 ══════════════════════════════════════════════════ */
-const PRODUCTS = [
+const SEED_PRODUCTS = [
   {brand:'COSRX',name:'Advanced Snail 96 Mucin Essence',cat:'Skincare',emoji:'🐌',booth:'2240',retail:26,sample:8,roiPct:225,tag:'K-Beauty'},
   {brand:'Tatcha',name:'The Water Cream',cat:'Skincare',emoji:'🍵',booth:'1803',retail:72,sample:18,roiPct:175,tag:'Luxury'},
   {brand:'Rare Beauty',name:'Soft Pinch Liquid Blush',cat:'Makeup',emoji:'🌸',booth:'2003',retail:24,sample:10,roiPct:141,tag:'Celebrity'},
@@ -1151,31 +1175,94 @@ const PRODUCTS = [
   {brand:'r.e.m. beauty',name:'At The Borderline Mascara',cat:'Makeup',emoji:'🌙',booth:'1528',retail:26,sample:8,roiPct:108,tag:'Celebrity'},
   {brand:'e.l.f.',name:'Halo Glow Liquid Filter',cat:'Makeup',emoji:'✨',booth:'1229',retail:14,sample:6,roiPct:143,tag:'Budget'},
 ];
+let PRODUCTS = [...SEED_PRODUCTS];
+
+function categoryRetailEstimate(cat){
+  const map = { Skincare: 32, Makeup: 29, Haircare: 26, Tools: 120, Fragrance: 65, Nails: 18, Wellness: 24 };
+  return map[cat] || 30;
+}
+
+function categorySampleEstimate(cat){
+  const map = { Skincare: 10, Makeup: 9, Haircare: 8, Tools: 0, Fragrance: 7, Nails: 6, Wellness: 6 };
+  return map[cat] || 8;
+}
+
+function serviceEstimate(cat){
+  const map = { Skincare: 45, Makeup: 55, Haircare: 65, Tools: 35, Fragrance: 25, Nails: 30, Wellness: 28 };
+  return map[cat] || 35;
+}
+
+function enrichProductsAndServices(){
+  const key = p => `${normalizeBrand(p.brand)}|${p.booth}|${p.name}|${p.type||'product'}`;
+  const seen = new Set(PRODUCTS.map(key));
+  EXPO_BRANDS.forEach(b => {
+    const retail = categoryRetailEstimate(b.cat);
+    const sample = categorySampleEstimate(b.cat);
+    const productItem = {
+      brand: b.brand,
+      name: `${b.cat} Hero Item`,
+      cat: b.cat || 'Skincare',
+      emoji: '💗',
+      booth: b.booth,
+      retail,
+      sample,
+      roiPct: sample > 0 ? Math.round((retail / sample) * 40) : 0,
+      tag: 'Expo Product',
+      type: 'product',
+      eventCost: 0,
+      savings: retail
+    };
+    const serviceCost = serviceEstimate(b.cat);
+    const serviceItem = {
+      brand: b.brand,
+      name: `${b.cat} Service / Demo`,
+      cat: b.cat || 'Skincare',
+      emoji: '🛎️',
+      booth: b.booth,
+      retail: serviceCost,
+      sample: serviceCost,
+      roiPct: 100,
+      tag: 'Service',
+      type: 'service',
+      eventCost: 0,
+      savings: serviceCost,
+      note: 'Typical in-store service value'
+    };
+    [productItem, serviceItem].forEach(it => {
+      const k = key(it);
+      if (!seen.has(k)) {
+        seen.add(k);
+        PRODUCTS.push(it);
+      }
+    });
+  });
+}
 
 let prodFilter = 'all';
 let prodSearch = '';
 
 function renderProducts(){const pg=document.getElementById('product-grid');if(!pg)return;
   let data = [...PRODUCTS];
-  if(prodFilter!=='all') data=data.filter(p=>p.cat===prodFilter);
+  if(prodFilter==='service') data=data.filter(p=>(p.type||'product')==='service');
+  else if(prodFilter!=='all') data=data.filter(p=>p.cat===prodFilter);
   if(prodSearch) data=data.filter(p=>p.name.toLowerCase().includes(prodSearch)||p.brand.toLowerCase().includes(prodSearch));
-  data.sort((a,b)=>b.roiPct-a.roiPct);
+  data.sort((a,b)=>(b.savings||b.sample||0)-(a.savings||a.sample||0));
   pg.innerHTML=data.map(p=>`
     <div class="product-card" data-cat="${p.cat}">
       <div class="pc-img">
         <span>${p.emoji}</span>
-        ${p.roiPct>0?`<div class="pc-value-badge">+${p.roiPct}% ROI</div>`:'<div class="pc-value-badge" style="color:var(--gold-d)">Demo Only</div>'}
+        <div class="pc-value-badge">${(p.type||'product')==='service'?'Service':'Product'}</div>
       </div>
       <div class="pc-body">
         <div class="pc-brand">${p.brand} · Booth ${p.booth}</div>
         <div class="pc-name">${p.name}</div>
         <div class="pc-price-row">
           <span class="pc-retail">$${p.retail}</span>
-          <span class="pc-sample">${p.sample>0?'~$'+p.sample+' sample':'No sample'}</span>
+          <span class="pc-sample">${(p.type||'product')==='service'?'Typical service cost':(p.sample>0?'~$'+p.sample+' sample':'No sample')}</span>
         </div>
-        ${p.roiPct>0?`<div class="pc-roi-row">
-          <div class="pc-roi-bar"><div class="pc-roi-fill" style="width:${Math.min(100,p.roiPct/3)}%"></div></div>
-          <span class="pc-roi-pct">${p.roiPct}% ROI</span>
+        ${p.retail>0?`<div class="pc-roi-row">
+          <div class="pc-roi-bar"><div class="pc-roi-fill" style="width:${Math.min(100,Math.round(((p.savings??p.retail)/(p.retail||1))*100))}%"></div></div>
+          <span class="pc-roi-pct">Saved $${p.savings??p.retail}</span>
         </div>`:''}
         <div class="pc-booth"><span>🏷️</span>${p.tag}${p.note?` · <em>${p.note}</em>`:''}</div>
         <div class="pc-actions">
@@ -1211,104 +1298,105 @@ function addToPriority(btn,name){
 /* ══════════════════════════════════════════════════
    ROI OPTIMIZER
 ══════════════════════════════════════════════════ */
-async function runROI(){
+function runROI(){
   const budget=parseInt(document.getElementById('roi-budget').value)||100;
   const hours=parseInt(document.getElementById('roi-hours').value)||6;
   const focus=document.getElementById('roi-focus').value;
-  const sample=document.getElementById('sl-sample').value;
-  const retail=document.getElementById('sl-retail').value;
-  const excl=document.getElementById('sl-excl').value;
-  const wait=document.getElementById('sl-wait').value;
+  const prioritizeSample=document.getElementById('sl-sample').checked;
+  const prioritizeRetail=document.getElementById('sl-retail').checked;
+  const prioritizeExcl=document.getElementById('sl-excl').checked;
+  const avoidWait=document.getElementById('sl-wait').checked;
 
   const result=document.getElementById('roi-result');
   result.classList.remove('show');
   result.style.display='block';
-  document.getElementById('roi-metrics').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:1.5rem;color:var(--mist);font-size:13px"><div style="width:24px;height:24px;border:2px solid var(--pink-pale);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px"></div>Calculating your optimal ROI…</div>';
-  document.getElementById('roi-recs').innerHTML='';
 
-  const focusMap={all:'all categories',skincare:'skincare',haircare:'haircare',makeup:'makeup',melanin:'melanin-friendly brands',kbeauty:'K-beauty brands',clean:'clean and organic brands'};
-  const boothSnippet=PRODUCTS.slice(0,20).map(p=>`${p.brand} (Booth ${p.booth}) — $${p.retail} retail, $${p.sample} sample value, ${p.roiPct}% ROI`).join('\n');
+  const selectedRoute = JSON.parse(localStorage.getItem('ubw_booth_list')||localStorage.getItem('ubw_tracker_list')||'[]');
+  const routeBooths = selectedRoute.map(r=>String(r.booth||'')).filter(Boolean);
+  const routeSet = new Set(routeBooths);
 
-  const prompt=`You are a Ulta Beauty World 2026 expo ROI strategist. Given a visitor's parameters, rank their optimal booths.
+  const focusFilter = (p)=>{
+    if(focus==='all') return true;
+    if(focus==='budget') return (p.sample||0)>=6;
+    if(['skincare','makeup','haircare'].includes(focus)) return (p.cat||'').toLowerCase()===focus;
+    if(focus==='luxury') return (p.retail||0)>=55;
+    if(focus==='kbeauty') return /k-beauty|kbeauty/i.test(p.tag||'');
+    if(focus==='melanin') return /melanin/i.test((p.tag||'')+' '+(p.brand||''));
+    if(focus==='clean') return /clean|organic/i.test((p.tag||'')+' '+(p.note||''));
+    return true;
+  };
 
-Products/booths data:
-${boothSnippet}
+  let candidates = PRODUCTS.filter(p => routeSet.size ? routeSet.has(String(p.booth)) : true).filter(focusFilter);
+  if(!candidates.length) candidates = PRODUCTS.filter(focusFilter);
 
-Visitor parameters:
-- Budget: $${budget}
-- Hours available: ${hours} hours (9AM–${9+hours}PM)
-- Focus: ${focusMap[focus]}
-- Free sample priority: ${sample}/10
-- Retail value priority: ${retail}/10
-- Exclusive launches priority: ${excl}/10
-- Minimize wait time: ${wait}/10
+  const waitByCat = {Skincare:12, Makeup:14, Haircare:15, Tools:18, Fragrance:10, Nails:9, Wellness:8};
+  const scored = candidates.map(p=>{
+    const waitMins = waitByCat[p.cat] || 12;
+    const timeNeeded = (p.type==='service' ? 20 : 12) + (avoidWait ? Math.round(waitMins*0.6) : waitMins);
+    const sampleValue = p.type==='service' ? 0 : (p.sample||0);
+    const retailValue = p.retail||0;
+    const savings = p.savings ?? retailValue;
+    let score = 50;
+    if(prioritizeSample) score += sampleValue*2;
+    if(prioritizeRetail) score += retailValue*0.15;
+    score += savings*0.25;
+    if(prioritizeExcl && /exclusive|luxury|prestige/i.test((p.tag||'')+' '+(p.note||''))) score += 12;
+    score -= timeNeeded*0.8;
+    return {...p, timeNeeded, sampleValue, retailValue, savings, roiScore:Math.max(1,Math.round(score))};
+  }).sort((a,b)=>b.roiScore-a.roiScore);
 
-Calculate and respond in valid JSON only (no fences):
-{
-  "totalPotentialSampleValue": "$XXX",
-  "estimatedSpend": "$XX",
-  "timeOptimized": "X hours X min",
-  "boothsReachable": number,
-  "topRecs": [
-    {
-      "rank": 1,
-      "brand": "Brand name",
-      "booth": "XXXX",
-      "roiScore": 94,
-      "sampleValue": "$XX",
-      "retailValue": "$XX",
-      "timeNeeded": "X min",
-      "reason": "One sentence why this is the top pick for this specific visitor's parameters",
-      "badge": "Must Visit|High Value|Quick Win|Hidden Gem|K-Beauty Pick|Melanin Fave"
-    }
-  ],
-  "strategy": "2-sentence personalized expo strategy"
-}`;
-
-  try{
-    const res=await fetch('https://jemubw-proxy.YOUR-SUBDOMAIN.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    const raw=(data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'').trim();
-    const r=JSON.parse(raw);
-
-    document.getElementById('roi-metrics').innerHTML=`
-      <div class="roi-metric"><div class="roi-metric-num">${r.totalPotentialSampleValue}</div><div class="roi-metric-lbl">Sample value</div></div>
-      <div class="roi-metric"><div class="roi-metric-num">${r.estimatedSpend}</div><div class="roi-metric-lbl">Estimated spend</div></div>
-      <div class="roi-metric"><div class="roi-metric-num">${r.boothsReachable}</div><div class="roi-metric-lbl">Booths reachable</div></div>
-      <div class="roi-metric"><div class="roi-metric-num">${r.timeOptimized}</div><div class="roi-metric-lbl">Optimized time</div></div>`;
-
-    if(r.strategy){
-      document.getElementById('roi-metrics').insertAdjacentHTML('afterend',`<div style="background:linear-gradient(135deg,var(--ink),#5C1035);border-radius:var(--r);padding:14px 16px;color:rgba(255,255,255,0.8);font-size:13px;line-height:1.65;margin-bottom:1.25rem"><strong style="color:#fff">Strategy: </strong>${r.strategy}</div>`);
-    }
-
-    const badgeCls={'Must Visit':'b-pink','High Value':'b-gold','Quick Win':'b-green','Hidden Gem':'b-blue','K-Beauty Pick':'b-blue','Melanin Fave':'b-pink'};
-    document.getElementById('roi-recs').innerHTML=r.topRecs.map(rec=>`
-      <div class="roi-rec">
-        <div class="roi-rec-rank">${rec.rank}</div>
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <div class="roi-rec-name">${rec.brand}</div>
-            <span style="font-size:10px;background:var(--pink-pale);color:var(--pink-hot);padding:1px 7px;border-radius:8px;font-weight:700">Booth ${rec.booth}</span>
-            <span class="badge ${badgeCls[rec.badge]||'b-pink'}">${rec.badge}</span>
-          </div>
-          <div class="roi-rec-reason">${rec.reason}</div>
-          <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--mist)">
-            <span>🎁 Sample: ${rec.sampleValue}</span>
-            <span>🏷️ Retail: ${rec.retailValue}</span>
-            <span>⏱ ${rec.timeNeeded}</span>
-          </div>
-        </div>
-        <div class="roi-rec-right">
-          <div class="roi-rec-score">${rec.roiScore}</div>
-          <div class="roi-rec-badge">ROI score</div>
-        </div>
-      </div>`).join('');
-
-    result.classList.add('show');
-  }catch(e){
-    document.getElementById('roi-metrics').innerHTML='<div style="grid-column:1/-1;color:var(--pink-hot);font-size:13px;padding:1rem">Error calculating ROI — please try again.</div>';
-    console.error(e);
+  const maxMins = hours*60;
+  let usedMins = 0;
+  let estimatedSpend = 0;
+  const picks = [];
+  for(const item of scored){
+    if(usedMins + item.timeNeeded > maxMins) continue;
+    if(estimatedSpend + (item.type==='product' ? (item.retailValue*0.1) : 0) > budget) continue;
+    picks.push(item);
+    usedMins += item.timeNeeded;
+    estimatedSpend += item.type==='product' ? (item.retailValue*0.1) : 0;
+    if(picks.length>=10) break;
   }
+
+  const totalSampleValue = picks.reduce((s,p)=>s+p.sampleValue,0);
+  const totalRetailValue = picks.reduce((s,p)=>s+p.retailValue,0);
+  const totalSavings = picks.reduce((s,p)=>s+p.savings,0);
+  const strategy = routeSet.size
+    ? 'Using your selected route list from Planner, this ranking prioritizes highest value-per-minute stops first.'
+    : 'No route list found, so this ranking uses all booths filtered by your chosen focus and constraints.';
+
+  document.getElementById('roi-metrics').innerHTML=`
+    <div class="roi-metric"><div class="roi-metric-num">$${totalSampleValue}</div><div class="roi-metric-lbl">Sample value</div></div>
+    <div class="roi-metric"><div class="roi-metric-num">$${Math.round(estimatedSpend)}</div><div class="roi-metric-lbl">Estimated spend</div></div>
+    <div class="roi-metric"><div class="roi-metric-num">${picks.length}</div><div class="roi-metric-lbl">Booths reachable</div></div>
+    <div class="roi-metric"><div class="roi-metric-num">${Math.floor(usedMins/60)}h ${usedMins%60}m</div><div class="roi-metric-lbl">Optimized time</div></div>
+    <div class="roi-metric"><div class="roi-metric-num">$${Math.round(totalRetailValue)}</div><div class="roi-metric-lbl">Retail value</div></div>
+    <div class="roi-metric"><div class="roi-metric-num">$${Math.round(totalSavings)}</div><div class="roi-metric-lbl">Event savings</div></div>`;
+
+  document.getElementById('roi-recs').innerHTML = `<div style="background:linear-gradient(135deg,var(--ink),#5C1035);border-radius:var(--r);padding:14px 16px;color:rgba(255,255,255,0.82);font-size:13px;line-height:1.65;margin-bottom:1rem"><strong style="color:#fff">Strategy: </strong>${strategy}</div>` + picks.map((rec,idx)=>`
+    <div class="roi-rec">
+      <div class="roi-rec-rank">${idx+1}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <div class="roi-rec-name">${rec.brand}</div>
+          <span style="font-size:10px;background:var(--pink-pale);color:var(--pink-hot);padding:1px 7px;border-radius:8px;font-weight:700">Booth ${rec.booth}</span>
+          <span class="badge ${rec.type==='service'?'b-gold':'b-pink'}">${rec.type==='service'?'Service':'Product'}</span>
+        </div>
+        <div class="roi-rec-reason">${rec.name}</div>
+        <div style="display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--mist);flex-wrap:wrap">
+          <span>🎁 Sample: $${rec.sampleValue}</span>
+          <span>🏷️ Retail/Service: $${rec.retailValue}</span>
+          <span>💸 Saved: $${rec.savings}</span>
+          <span>⏱ ${rec.timeNeeded} min</span>
+        </div>
+      </div>
+      <div class="roi-rec-right">
+        <div class="roi-rec-score">${rec.roiScore}</div>
+        <div class="roi-rec-badge">ROI score</div>
+      </div>
+    </div>
+  `).join('');
+  result.classList.add('show');
 }
 
 const spinCSS=document.createElement('style');
@@ -1456,10 +1544,11 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m;t
    INIT
 ══════════════════════════════════════════════════ */
 enrichStocksWithAllExpoBrands().finally(()=>{
+  enrichProductsAndServices();
   renderTicker();
   renderStocks();
+  renderProducts();
 });
-renderProducts();
 </script>
 
 
