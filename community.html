@@ -1427,8 +1427,9 @@ function renderQA(){
 
 function renderAns(q,i){
   return `<div class="qa-ai-box">
-    <div class="ai-badge">✨ AI Answer</div>
+    <div class="ai-badge">${q.srcUrl ? '🌐 Top Web Answer' : '✨ AI Answer'}</div>
     <div style="font-size:14px;line-height:1.75;color:var(--ink2)">${q.ans}</div>
+    ${q.srcUrl ? `<div style="margin-top:8px;font-size:11px;color:var(--mist)">Source: <a href="${q.srcUrl}" target="_blank" rel="noopener" style="color:var(--pink)">${q.srcLabel || q.srcUrl}</a></div>` : ''}
     <div class="qa-helpful">
       <span style="font-size:12px;color:var(--mist)">Helpful?</span>
       <button class="hbtn" onclick="this.textContent='👍 Thanks!';this.style.color='var(--pink)'">👍 Yes</button>
@@ -1448,11 +1449,36 @@ async function toggleQ(i,row){
 async function genAns(i){
   const q=displayQs[i];
   const prompt='You are a friendly Ulta Beauty World 2026 expo expert. Answer in 2-4 sentences with specific UBW 2026 details (April 16, Orange County Convention Center Orlando FL, 200+ brands, 9AM-5PM). Warm and helpful tone. Question: "'+q.q+'"';
+  const esc = (s='') => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  async function fetchTopWebAnswer(query){
+    try{
+      const u='https://api.duckduckgo.com/?q='+encodeURIComponent(query)+'&format=json&no_html=1&no_redirect=1';
+      const res=await fetch(u);
+      const data=await res.json();
+      if(data.AbstractText){
+        return { text: esc(data.AbstractText), url: data.AbstractURL || '', label: data.Heading || 'DuckDuckGo top result' };
+      }
+      const first=(data.RelatedTopics||[]).find(x=>x.Text||x.FirstURL) || null;
+      if(first && first.Text){
+        return { text: esc(first.Text), url: first.FirstURL || '', label: 'DuckDuckGo top result' };
+      }
+    }catch(e){}
+    return null;
+  }
   try{
-    const res=await fetch('https://jemubw-proxy.YOUR-SUBDOMAIN.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:prompt}]})});
-    const data=await res.json();
-    const txt=(data.content||[]).map(c=>c.text||'').join('').trim();
-    displayQs[i].ans=txt;
+    const webAns = await fetchTopWebAnswer(q.q + ' Ulta Beauty World 2026');
+    if(webAns && webAns.text){
+      displayQs[i].ans=webAns.text;
+      displayQs[i].srcUrl=webAns.url;
+      displayQs[i].srcLabel=webAns.label;
+    } else {
+      const res=await fetch('https://jemubw-proxy.YOUR-SUBDOMAIN.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:prompt}]})});
+      const data=await res.json();
+      const txt=(data.content||[]).map(c=>c.text||'').join('').trim();
+      displayQs[i].ans=esc(txt);
+      displayQs[i].srcUrl='';
+      displayQs[i].srcLabel='';
+    }
     const row=document.querySelector('#qi'+i+' .qa-qr');
     const ans=document.getElementById('qa'+i);
     const box=ans.querySelector('.qa-ai-box');
@@ -1981,7 +2007,43 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 </script>
 <script id="y2k-gif-gallery-shared">
-(function () { if (document.getElementById('y2k-gif-gallery')) return; const gifs=['assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-fa500e31-282a-489d-ae59-a542744288f6.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-05711ac0-7fdb-4375-b445-74e11ca31104.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-891d6a2b-9fda-43c9-86ba-161e270d1914.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-89ddcd48-a0fd-4fab-be90-045979c9d7f1.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-ed52de47-3dd2-4def-aa04-67df25cc8f0d.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-f9c9283f-9934-4ebb-9bee-b946272929c8.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-db7d4496-f9df-437c-8851-b7f6a0f6e2dd.png','assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-0fe99397-a9dd-498e-8aaf-43a3fe85ccff.png']; let idx=0; const box=document.createElement('div'); box.id='y2k-gif-gallery'; box.innerHTML='<div class="y2k-gif-head">Y2K GIF</div><img class="y2k-gif-img" alt="Y2K theme gif"><div class="y2k-gif-actions"><button type="button" data-dir="-1">◀</button><button type="button" data-dir="1">▶</button></div>'; const st=document.createElement('style'); st.textContent='#y2k-gif-gallery{position:fixed;right:12px;bottom:12px;width:146px;background:#ffe8f7;border:2px solid #ff6fb1;box-shadow:3px 3px 0 rgba(123,104,238,.35);z-index:9998;padding:6px}#y2k-gif-gallery .y2k-gif-head{font:800 10px/1.1 Nunito,sans-serif;color:#9a1a63;margin-bottom:6px;letter-spacing:.06em}#y2k-gif-gallery .y2k-gif-img{width:100%;height:96px;object-fit:cover;border:1px solid #ff9aca;background:#fff}#y2k-gif-gallery .y2k-gif-actions{display:flex;gap:6px;margin-top:6px}#y2k-gif-gallery button{flex:1;border:1px solid #b86ad8;background:#fff;color:#8b2d68;font:700 10px Nunito,sans-serif;cursor:none}'; document.head.appendChild(st); document.body.appendChild(box); const img=box.querySelector('.y2k-gif-img'); const setGif=(n)=>{idx=(n+gifs.length)%gifs.length; img.src=gifs[idx]; img.onerror=()=>{img.onerror=null; img.src=gifs[(idx+1)%gifs.length];};}; box.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>setGif(idx+Number(b.dataset.dir)))); setGif(0); setInterval(()=>setGif(idx+1),5000); })();
+(function () {
+  if (document.getElementById('y2k-gif-gallery')) return;
+  const gifs = [
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-fa500e31-282a-489d-ae59-a542744288f6.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-05711ac0-7fdb-4375-b445-74e11ca31104.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-891d6a2b-9fda-43c9-86ba-161e270d1914.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-89ddcd48-a0fd-4fab-be90-045979c9d7f1.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-ed52de47-3dd2-4def-aa04-67df25cc8f0d.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-f9c9283f-9934-4ebb-9bee-b946272929c8.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-db7d4496-f9df-437c-8851-b7f6a0f6e2dd.png',
+    'file:///C:/Users/jacks/.cursor/projects/c-Users-jacks-Downloads-ubw2026-FINAL/assets/c__Users_jacks_AppData_Roaming_Cursor_User_workspaceStorage_bf95d094b383a23ca216ae4114b60a4c_images_image-0fe99397-a9dd-498e-8aaf-43a3fe85ccff.png'
+  ];
+  let idx = 0;
+  const box = document.createElement('div');
+  box.id = 'y2k-gif-gallery';
+  box.innerHTML = '<div class="y2k-gif-head"><span>Y2K GIF</span><button type="button" class="y2k-min-btn" aria-label="Minimize">_</button></div><div class="y2k-gif-body"><img class="y2k-gif-img" alt="Y2K theme gif"><div class="y2k-gif-actions"><button type="button" data-dir="-1">◀</button><button type="button" data-dir="1">▶</button></div></div>';
+  const st = document.createElement('style');
+  st.textContent = '#y2k-gif-gallery{position:fixed;right:12px;bottom:12px;width:146px;background:#ffe8f7;border:2px solid #ff6fb1;box-shadow:3px 3px 0 rgba(123,104,238,.35);z-index:9998;padding:6px}#y2k-gif-gallery .y2k-gif-head{display:flex;justify-content:space-between;align-items:center;font:800 10px/1.1 Nunito,sans-serif;color:#9a1a63;margin-bottom:6px;letter-spacing:.06em}#y2k-gif-gallery .y2k-min-btn{width:18px;height:16px;border:1px solid #b86ad8;background:#fff;color:#8b2d68;font:700 10px Nunito,sans-serif;cursor:none}#y2k-gif-gallery.min .y2k-gif-body{display:none}#y2k-gif-gallery .y2k-gif-img{width:100%;height:96px;object-fit:cover;border:1px solid #ff9aca;background:#fff}#y2k-gif-gallery .y2k-gif-actions{display:flex;gap:6px;margin-top:6px}#y2k-gif-gallery .y2k-gif-actions button{flex:1;border:1px solid #b86ad8;background:#fff;color:#8b2d68;font:700 10px Nunito,sans-serif;cursor:none}';
+  document.head.appendChild(st);
+  document.body.appendChild(box);
+  const img = box.querySelector('.y2k-gif-img');
+  const setGif = (n) => {
+    idx = (n + gifs.length) % gifs.length;
+    img.src = gifs[idx];
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = gifs[(idx + 1) % gifs.length];
+    };
+  };
+  box.querySelectorAll('.y2k-gif-actions button').forEach(b => b.addEventListener('click', () => setGif(idx + Number(b.dataset.dir))));
+  box.querySelector('.y2k-min-btn').addEventListener('click', () => {
+    box.classList.toggle('min');
+    box.querySelector('.y2k-min-btn').textContent = box.classList.contains('min') ? '□' : '_';
+  });
+  setGif(0);
+  setInterval(() => setGif(idx + 1), 5000);
+})();
 </script>
 </body>
 </html>
