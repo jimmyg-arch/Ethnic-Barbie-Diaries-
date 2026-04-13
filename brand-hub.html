@@ -469,6 +469,26 @@ select.inp{cursor:none;}
 .pg-panel.active{display:block;animation:fadeUp 0.15s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
+/* Y2K separation + readability for brands/products */
+#tab-stocks .section-win,
+#tab-products .section-win{
+  border:2px solid #C78BE9;
+  box-shadow:4px 4px 0 rgba(123,104,238,0.18), inset 0 0 0 1px rgba(255,255,255,0.45);
+}
+#tab-stocks .stock-card,
+#tab-products .product-card{
+  background:linear-gradient(180deg,#FFF7FF 0%, #FDF0FF 100%);
+  border:2px solid #D9A3F4;
+  box-shadow:3px 3px 0 rgba(90,50,130,0.14);
+}
+#tab-stocks .sc-name,
+#tab-products .pc-name{color:#3C1D57;font-weight:900;}
+#tab-stocks .sc-brands,
+#tab-products .pc-booth{color:#5A3A71;}
+#tab-products .pc-value-badge{
+  background:#FFE8F7;border:1px solid #E89ACC;color:#8B2D68;font-weight:800;
+}
+
 /* ══════════════════════════════════════════
    PAGE HERO
 ══════════════════════════════════════════ */

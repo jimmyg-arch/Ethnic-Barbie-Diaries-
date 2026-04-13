@@ -692,8 +692,9 @@ select.inp{cursor:none;}
 .zone-pill{
   font-size:10px;font-weight:700;padding:6px 8px;background:#fff;
   border:1px solid var(--pink-border);border-radius:10px;color:var(--win-txt);
-  min-width:150px;line-height:1.25;
+  min-width:150px;line-height:1.25;cursor:none;
 }
+.zone-pill.linked{outline:2px solid var(--pink);box-shadow:0 0 0 2px rgba(255,45,136,0.18) inset;}
 .zp-booth{font-size:10px;color:var(--pink-hot);font-weight:900;}
 .zp-brand{font-size:11px;color:var(--win-txt);font-weight:800;}
 .zp-prod{font-size:10px;color:var(--muted);}
@@ -790,20 +791,7 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
 
 <div class="page-wrap">
 <div class="ticker-wrap" style="position:sticky;top:var(--nav-h);z-index:89;">
-  <div class="ticker-track">
-    <span class="ticker-item">✦ Ethnic Barbie Diaries · UBW 2026 · Apr 16 · Orlando FL</span>
-    <span class="ticker-item">ELF <span class="tc-up">▲+3.2%</span></span>
-    <span class="ticker-item">ULTA <span class="tc-up">▲+1.4%</span></span>
-    <span class="ticker-item">EL <span class="tc-dn">▼-2.1%</span></span>
-    <span class="ticker-item">COTY <span class="tc-dn">▼-0.5%</span></span>
-    <span class="ticker-item">💗 BEAUTY MADE EASIER BY JEM</span>
-    <span class="ticker-item">✦ Ethnic Barbie Diaries · UBW 2026 · Apr 16 · Orlando FL</span>
-    <span class="ticker-item">ELF <span class="tc-up">▲+3.2%</span></span>
-    <span class="ticker-item">ULTA <span class="tc-up">▲+1.4%</span></span>
-    <span class="ticker-item">EL <span class="tc-dn">▼-2.1%</span></span>
-    <span class="ticker-item">COTY <span class="tc-dn">▼-0.5%</span></span>
-    <span class="ticker-item">💗 BEAUTY MADE EASIER BY JEM</span>
-  </div>
+  <div class="ticker-track" id="brand-ticker-track"></div>
 </div>
 
 <section class="section">
@@ -1024,6 +1012,7 @@ function buildBrandGrid(data) {
     card.dataset.brandKey = brandKey(b.brand);
     card.dataset.booth = b.booth;
     card.id = `brand-card-${brandKey(b.brand)}`;
+    card.onclick = () => linkBrandToMap(b.booth);
     const company = companyDomain(b.link) || b.brand.toLowerCase().replace(/\s+/g,'') + '.com';
     const logo = logoUrlForBrand(b);
     card.innerHTML = `
@@ -1071,7 +1060,55 @@ function onBrandSelect(v) {
     target.classList.remove('flash');
     void target.offsetWidth;
     target.classList.add('flash');
+    linkBrandToMap(target.dataset.booth);
   }
+}
+
+function populateBrandTicker() {
+  const track = document.getElementById('brand-ticker-track');
+  if (!track) return;
+  const sorted = [...BRANDS_DATA].sort((a,b)=>a.brand.localeCompare(b.brand));
+  const line = sorted.map(b => `<span class="ticker-item">${b.brand} · Booth ${b.booth}</span>`).join('');
+  track.innerHTML = line + line;
+}
+
+function guessCatFromName(name='') {
+  const n = String(name).toLowerCase();
+  if (n.includes('hair') || n.includes('curl') || n.includes('olaplex')) return 'Haircare';
+  if (n.includes('fragrance') || n.includes('paris hilton') || n.includes('tom ford') || n.includes('versace')) return 'Fragrance';
+  if (n.includes('nail') || n.includes('manicure') || n.includes('opi')) return 'Nails';
+  if (n.includes('vitamin') || n.includes('wellbeing') || n.includes('nutrition')) return 'Wellness';
+  if (n.includes('tool') || n.includes('brush') || n.includes('dyson') || n.includes('shark')) return 'Tools';
+  if (n.includes('beauty') || n.includes('cosmetic') || n.includes('lip') || n.includes('blush') || n.includes('foundation')) return 'Makeup';
+  return 'Skincare';
+}
+
+function syncBrandsDataWithAllBooths() {
+  const booths = window.__ALL_BOOTHS || [];
+  const existing = new Set(BRANDS_DATA.map(b => String(b.booth)));
+  booths.forEach(item => {
+    if (existing.has(String(item.b))) return;
+    BRANDS_DATA.push({
+      booth: String(item.b),
+      brand: item.n,
+      cat: guessCatFromName(item.n),
+      tags: [],
+      icon: '💗',
+      desc: `${item.n} is part of the UBW 2026 floor lineup.`,
+      hero: `${item.n} booth feature — value varies`,
+      link: `https://${brandKey(item.n) || 'brand'}.com`
+    });
+  });
+}
+
+function linkBrandToMap(booth) {
+  if (!booth) return;
+  showMapTab('zone', document.querySelector('.map-tab'));
+  const pill = document.querySelector(`.zone-pill[data-booth="${String(booth)}"]`);
+  if (!pill) return;
+  document.querySelectorAll('.zone-pill.linked').forEach(p => p.classList.remove('linked'));
+  pill.classList.add('linked');
+  pill.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
 function setFilter(cat, el) {
@@ -1137,10 +1174,21 @@ function buildZoneMap() {
     block.innerHTML = `<div class="zone-head">${zoneLabels[z]}</div><div class="zone-pills">${items.map(i=>{
       const hit = byBooth[String(i.b)];
       const prod = hit ? String(hit.hero||'').split('—')[0].trim() : `${i.n} feature`;
-      return `<div class="zone-pill" title="${i.n}"><div class="zp-booth">Booth ${i.b}</div><div class="zp-brand">${i.n}</div><div class="zp-prod">${prod}</div></div>`;
+      return `<div class="zone-pill" data-booth="${i.b}" title="${i.n}" onclick="onZonePillClick('${String(i.b).replace(/'/g,"\\'")}')"><div class="zp-booth">Booth ${i.b}</div><div class="zp-brand">${i.n}</div><div class="zp-prod">${prod}</div></div>`;
     }).join('')}</div>`;
     zm.appendChild(block);
   });
+}
+
+function onZonePillClick(booth) {
+  const k = String(booth);
+  const card = document.querySelector(`.brand-card[data-booth="${k}"]`);
+  if (card) {
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    card.classList.remove('flash');
+    void card.offsetWidth;
+    card.classList.add('flash');
+  }
 }
 
 function buildRouteIndexMap() {
@@ -1401,9 +1449,11 @@ function renderRoute(r) {
 }
 
 // Init
+buildZoneMap();
+syncBrandsDataWithAllBooths();
 buildBrandGrid(BRANDS_DATA);
 populateBrandSelect();
-buildZoneMap();
+populateBrandTicker();
 </script>
 
 

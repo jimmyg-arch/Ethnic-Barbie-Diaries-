@@ -1501,22 +1501,97 @@ function downloadWatermarkedRoute() {
   }
   const start = document.getElementById('routeStartTime').value || '09:00';
   const end = document.getElementById('routeEndTime').value || '17:00';
-  const wm = getDigitalWatermark('route-plan');
-  const lines = [
-    'Ethnic Barbie Diaries — UBW 2026 Route Plan',
-    `Time Window: ${start} - ${end}`,
-    '',
-    ...routePlan.map(s => `${s.order}. ${s.brand} (Booth ${s.booth}) | ${minutesToClock(s.arrive)}-${minutesToClock(s.depart)}${s.walk ? ` | walk ${s.walk}m` : ''}`),
-    '',
-    wm.line
+  const wm = getDigitalWatermark('route-full-floor-map');
+  const routeOrderByKey = new Map(routePlan.map(stop => [stop.key, stop.order]));
+  const zones = [
+    { key: 'A', label: 'Zone A · Booths 100–599', range: [100, 599] },
+    { key: 'B', label: 'Zone B · Booths 600–1099', range: [600, 1099] },
+    { key: 'C', label: 'Zone C · Booths 1100–1599', range: [1100, 1599] },
+    { key: 'D', label: 'Zone D · Booths 1600–2500+', range: [1600, 9999] }
   ];
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+
+  const esc = (s = '') => String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
+  const zoneW = 470;
+  const cardW = 220;
+  const cardH = 48;
+  const gapX = 10;
+  const gapY = 8;
+  const pad = 20;
+  const rows = Math.ceil(zones.length / 2);
+  const width = pad * 2 + zoneW * 2 + 18;
+
+  const counts = zones.map(z =>
+    BRANDS.filter(b => {
+      const num = parseInt(b.booth, 10);
+      if (Number.isNaN(num)) return z.range[0] === 100;
+      return num >= z.range[0] && num <= z.range[1];
+    }).length
+  );
+  const zoneHeights = counts.map(c => 42 + Math.max(1, Math.ceil(c / 2)) * (cardH + gapY) + 16);
+  const rowHeights = [];
+  for (let i = 0; i < rows; i++) rowHeights.push(Math.max(zoneHeights[i * 2] || 0, zoneHeights[i * 2 + 1] || 0));
+  const height = pad * 2 + rowHeights.reduce((a, b) => a + b, 0) + 40;
+
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`;
+  svg += `<rect width="100%" height="100%" fill="#130F24"/>`;
+  svg += `<text x="${pad}" y="18" font-size="13" font-weight="700" fill="#FF8FAB">UBW 2026 Full Floor Route Map</text>`;
+  svg += `<text x="${pad}" y="34" font-size="11" fill="#FBCFE8">Time Window: ${esc(start)} - ${esc(end)}</text>`;
+  svg += `<text x="${width - 430}" y="18" font-size="10" fill="#FBCFE8">${esc(wm.line)}</text>`;
+
+  let yCursor = pad + 16;
+  zones.forEach((zone, zi) => {
+    const col = zi % 2;
+    const row = Math.floor(zi / 2);
+    if (col === 0 && zi > 0) yCursor += rowHeights[row - 1] + 10;
+    const x0 = pad + col * (zoneW + 18);
+    const y0 = yCursor;
+    const zH = rowHeights[row];
+    const zoneBrands = BRANDS.filter(b => {
+      const num = parseInt(b.booth, 10);
+      if (Number.isNaN(num)) return zone.range[0] === 100;
+      return num >= zone.range[0] && num <= zone.range[1];
+    });
+
+    svg += `<rect x="${x0}" y="${y0}" width="${zoneW}" height="${zH}" rx="8" fill="#1B1433" stroke="#4C1D95"/>`;
+    svg += `<text x="${x0 + 10}" y="${y0 + 20}" font-size="13" font-weight="700" fill="#F9A8D4">${esc(zone.label)}</text>`;
+
+    zoneBrands.forEach((b, i) => {
+      const c = i % 2;
+      const r = Math.floor(i / 2);
+      const x = x0 + 10 + c * (cardW + gapX);
+      const y = y0 + 30 + r * (cardH + gapY);
+      const order = routeOrderByKey.get(getBrandKey(b));
+      const hasRoute = routeOrderByKey.size > 0;
+      const selected = Boolean(order);
+      const fill = selected ? '#F0184E' : (hasRoute ? '#241B3F' : '#201735');
+      const stroke = selected ? '#FFD166' : '#4C1D95';
+      const nameColor = selected ? '#FFFFFF' : '#FBCFE8';
+      const boothColor = selected ? '#FFE8A3' : '#C4B5FD';
+
+      svg += `<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="6" fill="${fill}" stroke="${stroke}" opacity="${hasRoute && !selected ? '0.35' : '1'}"/>`;
+      svg += `<text x="${x + 8}" y="${y + 14}" font-size="10" font-weight="700" fill="${boothColor}">Booth ${esc(b.booth)}</text>`;
+      svg += `<text x="${x + 8}" y="${y + 29}" font-size="11" font-weight="700" fill="${nameColor}">${esc(b.brand).slice(0, 32)}</text>`;
+      if (selected) {
+        svg += `<circle cx="${x + cardW - 12}" cy="${y + 12}" r="9" fill="#FFD166"/>`;
+        svg += `<text x="${x + cardW - 12}" y="${y + 15}" text-anchor="middle" font-size="9" font-weight="700" fill="#2D1B4E">${order}</text>`;
+      }
+    });
+  });
+  svg += `</svg>`;
+
+  const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = `ubw2026_route_${new Date().toISOString().slice(0, 10)}.txt`;
+  a.download = `ubw2026_route_full_floor_${new Date().toISOString().slice(0, 10)}.svg`;
   a.click();
   URL.revokeObjectURL(a.href);
-  document.getElementById('routeSummary').textContent = `Watermarked route downloaded. Fingerprint: ${wm.fingerprint}`;
+  document.getElementById('routeSummary').textContent = `Watermarked full-floor map downloaded. Fingerprint: ${wm.fingerprint}`;
 }
 
 function syncRouteWithWishlist() {
