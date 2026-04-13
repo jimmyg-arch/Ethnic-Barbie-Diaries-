@@ -882,7 +882,10 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
             <input id="sl2" class="inp" type="range" min="1" max="10" value="8">
           </label>
         </div>
-        <button id="gen-route-btn" class="btn btn-pink" style="margin-top:12px" onclick="generateRoute()">✨ Generate My Route</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button id="gen-route-btn" class="btn btn-pink" onclick="generateRoute()">✨ Generate My Route</button>
+          <button class="btn btn-outline" onclick="resetRouteChoices()">Reset Choices</button>
+        </div>
         <div id="route-output" class="route-output"><div class="route-empty">Your personalized route appears here.</div></div>
       </div>
 
@@ -1482,9 +1485,9 @@ function sendRouteToPlanner(route){
     id: Date.now() + i,
     name: s.brand,
     booth: String(s.booth),
-    priority: i < 4 ? 'high' : (i < 8 ? 'medium' : 'low'),
-    baseTime: i < 4 ? 25 : (i < 8 ? 15 : 8),
-    lineTime: i < 4 ? 20 : (i < 8 ? 10 : 3),
+    priority: i < 10 ? 'high' : (i < 80 ? 'medium' : 'low'),
+    baseTime: i < 10 ? 25 : (i < 80 ? 15 : 8),
+    lineTime: i < 10 ? 20 : (i < 80 ? 10 : 3),
     done: false
   }));
   localStorage.setItem('ubw_booth_list', JSON.stringify(plannerList));
@@ -1564,7 +1567,7 @@ async function generateRoute() {
       totalValue: `$${totalValue}`,
       route
     };
-    sendRouteToPlanner(route.slice(0, 10));
+    sendRouteToPlanner(route.slice(0, 230));
     renderRoute(result);
   } catch(e) {
     document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">Error generating route — please try again.</p>';
@@ -1603,9 +1606,16 @@ function renderRoute(r) {
   });
   html += `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
     <a class="btn btn-pink btn-sm" href="planner.html">Open Route in Planner →</a>
-    <span style="font-size:11px;color:var(--muted);align-self:center">Top 10 auto-saved to Planner list · Full top 230 shown here</span>
+    <span style="font-size:11px;color:var(--muted);align-self:center">Top 230 auto-saved to Planner list</span>
   </div>`;
   document.getElementById('route-output').innerHTML = html;
+}
+
+function resetRouteChoices() {
+  document.querySelectorAll('#ps-builder .chip.active').forEach(c => c.classList.remove('active'));
+  document.getElementById('sl1').value = 7;
+  document.getElementById('sl2').value = 8;
+  document.getElementById('route-output').innerHTML = '<div class="route-empty">Your personalized route appears here.</div>';
 }
 
 // Init

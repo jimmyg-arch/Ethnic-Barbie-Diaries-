@@ -934,6 +934,7 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
         </select>
         <button class="btn btn-primary btn-sm" onclick="addBoothToList()">+ Add Booth</button>
         <button class="btn btn-sm" onclick="downloadBoothList()">⬇ Download List</button>
+        <button class="btn btn-sm" onclick="clearBoothList()">Reset Top List</button>
       </div>
       <div class="booth-picker-wrap">
         <div class="booth-picker-search">
@@ -1006,20 +1007,20 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
   <div class="mb-sides">
     <div class="mb-side">
       <div class="mb-side-title">💸 What I Spent</div>
-      <div class="mb-row"><span class="mb-lbl">Ticket price</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-ticket" value="165" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Transportation</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-transport" value="40" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Parking</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-parking" value="20" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Purchases on floor</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-purchases" value="0" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Food &amp; drinks</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-food" value="25" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Ticket price</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-ticket" value="165" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Transportation</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-transport" value="40" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Parking</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-parking" value="20" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Purchases on floor</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-purchases" value="0" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Food &amp; drinks</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-food" value="25" oninput="calcMoneyBack()"></div></div>
       <div class="mb-total"><span>Total spent</span><span id="mb-total-spent" style="color:var(--red)">$250</span></div>
     </div>
     <div class="mb-side">
       <div class="mb-side-title">🎁 What I Received</div>
-      <div class="mb-row"><span class="mb-lbl">Official swag bag</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-swag" value="2000" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Booth samples</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-samples" value="0" oninput="calcMoneyBack()"><button onclick="autoFillSamples()" style="font-size:10px;padding:3px 7px;background:var(--btn-bg);color:var(--purple);border:1.5px solid var(--btn-bd);cursor:none;font-weight:700;font-family:var(--head)">Auto</button></div></div>
-      <div class="mb-row"><span class="mb-lbl">Services received</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-services" value="0" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Education / demos</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-education" value="150" oninput="calcMoneyBack()"></div></div>
-      <div class="mb-row"><span class="mb-lbl">Exclusive purchases</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="number" class="mb-inp" id="mb-exclusive" value="0" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Official swag bag</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-swag" value="2000" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Booth samples</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-samples" value="0" oninput="calcMoneyBack()"><button onclick="autoFillSamples()" style="font-size:10px;padding:3px 7px;background:var(--btn-bg);color:var(--purple);border:1.5px solid var(--btn-bd);cursor:none;font-weight:700;font-family:var(--head)">Auto</button></div></div>
+      <div class="mb-row"><span class="mb-lbl">Services received</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-services" value="0" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Education / demos</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-education" value="150" oninput="calcMoneyBack()"></div></div>
+      <div class="mb-row"><span class="mb-lbl">Exclusive purchases</span><div style="display:flex;align-items:center;gap:4px"><span style="color:var(--muted);font-size:13px">$</span><input type="text" class="mb-inp" id="mb-exclusive" value="0" oninput="calcMoneyBack()"></div></div>
       <div class="mb-total"><span>Total received</span><span id="mb-total-received" style="color:var(--green)">$2,150</span></div>
     </div>
   </div>
@@ -1046,45 +1047,45 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
   <div class="budget-grid" id="budget-grid">
     <div class="budget-item" id="bi-hotel">
       <div class="bi-header"><div class="bi-label">🏨 Hotel</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-hotel')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-hotel" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-hotel" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">Nightly rate × nights stayed</div>
     </div>
     <div class="budget-item" id="bi-flight">
       <div class="bi-header"><div class="bi-label">✈️ Flights &amp; Transport</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-flight')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-flight" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-flight" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">Round-trip flights, Uber, car rental, etc.</div>
     </div>
     <div class="budget-item" id="bi-tickets">
       <div class="bi-header"><div class="bi-label">🎟️ Tickets</div></div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
-        <input type="number" min="1" max="10" value="1" id="ticket-count" style="width:56px;padding:8px;border:1.5px solid var(--btn-bd);font-size:14px;text-align:center;font-family:var(--body)" oninput="calcGirlMath()">
+        <input type="text" value="1" id="ticket-count" style="width:56px;padding:8px;border:1.5px solid var(--btn-bd);font-size:14px;text-align:center;font-family:var(--body)" oninput="calcGirlMath()">
         <span style="font-size:13px;color:var(--muted)">tickets × $165 each</span>
       </div>
       <div style="font-family:var(--head);font-size:14px;font-weight:800;color:var(--win-bar)" id="ticket-total">= $165.00</div>
     </div>
     <div class="budget-item" id="bi-parking">
       <div class="bi-header"><div class="bi-label">🅿️ Parking</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-parking')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-parking" placeholder="0.00" value="20" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-parking" placeholder="0.00" value="20" oninput="calcGirlMath()"></div>
       <div class="bi-note">OCCC West Lot is $20 flat</div>
     </div>
     <div class="budget-item" id="bi-food">
       <div class="bi-header"><div class="bi-label">🍕 Food &amp; Drinks</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-food')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-food" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-food" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">On-site food + meals</div>
     </div>
     <div class="budget-item" id="bi-shipping">
       <div class="bi-header"><div class="bi-label">📦 Shipping Haul Home</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-shipping')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-shipping" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-shipping" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">Use the 📦 Shipping Calc tab to estimate</div>
     </div>
     <div class="budget-item" id="bi-outfit">
       <div class="bi-header"><div class="bi-label">👗 New Outfit</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-outfit')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-outfit" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-outfit" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">That's an investment, not a cost 💅</div>
     </div>
     <div class="budget-item" id="bi-other">
       <div class="bi-header"><div class="bi-label">✨ Other</div><button class="bi-remove-btn" onclick="removeBudgetItem('bi-other')">×</button></div>
-      <div class="bi-prefix"><input type="number" class="bi-input" id="cost-other" placeholder="0.00" oninput="calcGirlMath()"></div>
+      <div class="bi-prefix"><input type="text" class="bi-input" id="cost-other" placeholder="0.00" oninput="calcGirlMath()"></div>
       <div class="bi-note">Anything else</div>
     </div>
   </div>
@@ -1159,24 +1160,24 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:1.25rem">
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Weight (lbs)</div>
-          <input type="number" class="inp" id="ship-weight" value="15" min="1" max="70" oninput="calcShipping()" placeholder="e.g. 15">
+          <input type="text" class="inp" id="ship-weight" value="15" oninput="calcShipping()" placeholder="e.g. 15">
           <div style="font-size:11px;color:var(--muted);margin-top:4px">Typical haul: 10–25 lbs</div>
         </div>
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Length (in)</div>
-          <input type="number" class="inp" id="ship-l" value="20" min="1" oninput="calcShipping()">
+          <input type="text" class="inp" id="ship-l" value="20" oninput="calcShipping()">
         </div>
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Width (in)</div>
-          <input type="number" class="inp" id="ship-w" value="16" min="1" oninput="calcShipping()">
+          <input type="text" class="inp" id="ship-w" value="16" oninput="calcShipping()">
         </div>
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Height (in)</div>
-          <input type="number" class="inp" id="ship-h" value="12" min="1" oninput="calcShipping()">
+          <input type="text" class="inp" id="ship-h" value="12" oninput="calcShipping()">
         </div>
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Number of boxes</div>
-          <input type="number" class="inp" id="ship-boxes" value="1" min="1" max="10" oninput="calcShipping()">
+          <input type="text" class="inp" id="ship-boxes" value="1" oninput="calcShipping()">
         </div>
         <div>
           <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Distance zone</div>
@@ -1204,11 +1205,11 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:1rem">
           <div style="flex:1;min-width:160px">
             <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Est. # of items in haul</div>
-            <input type="number" class="inp" id="ship-items" value="30" min="1" oninput="calcCostPerItem()">
+            <input type="text" class="inp" id="ship-items" value="30" oninput="calcCostPerItem()">
           </div>
           <div style="flex:1;min-width:160px">
             <div style="font-size:11px;font-weight:800;color:var(--muted);margin-bottom:5px;font-family:var(--head);text-transform:uppercase;letter-spacing:0.07em">Est. total haul value ($)</div>
-            <input type="number" class="inp" id="ship-haul-value" value="500" min="1" oninput="calcCostPerItem()">
+            <input type="text" class="inp" id="ship-haul-value" value="500" oninput="calcCostPerItem()">
           </div>
         </div>
         <div id="cost-per-item-result"></div>
@@ -1315,6 +1316,7 @@ async function loadExpoBoothOptions(){
   if(dl){
     dl.innerHTML=expoBoothOptions.map(b=>`<option value="${String(b.booth).replace(/"/g,'&quot;')}">${b.booth} — ${b.name}</option>`).join('');
   }
+  syncCompaniesWithExpoBrands();
   renderBoothPicker();
 }
 
@@ -1356,6 +1358,11 @@ function addBoothToList(){
   document.getElementById('booth-name-in').value='';
   document.getElementById('booth-num-in').value='';
   saveAndRenderBooths();showToast(`${name} added 💗`);
+}
+function clearBoothList(){
+  boothList = [];
+  saveAndRenderBooths();
+  showToast('Planner list reset.');
 }
 function downloadBoothList(){
   if(!boothList.length){showToast('Add at least one booth first ✨');return;}
@@ -1488,9 +1495,9 @@ function shareProgress(){const done=trackerList.filter(b=>b.done).length,total=t
 
 /* MONEY BACK */
 function calcMoneyBack(){
-  const spent=[+document.getElementById('mb-ticket').value||0,+document.getElementById('mb-transport').value||0,+document.getElementById('mb-parking').value||0,+document.getElementById('mb-purchases').value||0,+document.getElementById('mb-food').value||0];
+  const spent=[numIn('mb-ticket'),numIn('mb-transport'),numIn('mb-parking'),numIn('mb-purchases'),numIn('mb-food')];
   const totalSpent=spent.reduce((a,b)=>a+b,0);
-  const received=[+document.getElementById('mb-swag').value||0,+document.getElementById('mb-samples').value||0,+document.getElementById('mb-services').value||0,+document.getElementById('mb-education').value||0,+document.getElementById('mb-exclusive').value||0];
+  const received=[numIn('mb-swag'),numIn('mb-samples'),numIn('mb-services'),numIn('mb-education'),numIn('mb-exclusive')];
   const totalReceived=received.reduce((a,b)=>a+b,0);
   const roi=totalSpent>0?Math.round((totalReceived-totalSpent)/totalSpent*100):0;
   const diff=totalReceived-totalSpent;
@@ -1508,12 +1515,13 @@ document.querySelectorAll('#tab-money input').forEach(inp=>inp.addEventListener(
 
 /* GIRL MATH */
 function calcGirlMath(){
-  const hotel=+document.getElementById('cost-hotel')?.value||0,flight=+document.getElementById('cost-flight')?.value||0;
-  const tickets=(+document.getElementById('ticket-count')?.value||1)*165;
-  const parking=+document.getElementById('cost-parking')?.value||0,food=+document.getElementById('cost-food')?.value||0;
-  const shipping=+document.getElementById('cost-shipping')?.value||0,outfit=+document.getElementById('cost-outfit')?.value||0;
-  const other=+document.getElementById('cost-other')?.value||0;
-  const totalCost=hotel+flight+tickets+parking+food+shipping+outfit+other;
+  const hotel=numIn('cost-hotel'),flight=numIn('cost-flight');
+  const tickets=(numIn('ticket-count',1)||1)*165;
+  const parking=numIn('cost-parking'),food=numIn('cost-food');
+  const shipping=numIn('cost-shipping'),outfit=numIn('cost-outfit');
+  const other=numIn('cost-other');
+  const customTotal = [...document.querySelectorAll('#budget-grid input[id^="cost-c"]')].reduce((sum, el) => sum + evalExcelExpression(el.value), 0);
+  const totalCost=hotel+flight+tickets+parking+food+shipping+outfit+other+customTotal;
   document.getElementById('ticket-total').textContent=`= $${tickets.toFixed(2)}`;
   const swagValue=2000,sampleValue=trackerList.filter(b=>b.done).reduce((s,b)=>s+(SAMPLE_VALUES[b.name]||5),0)||350;
   const totalValue=swagValue+sampleValue+200+150;
@@ -1546,7 +1554,7 @@ function addCustomBudgetItem(){
   customCount++;const id=`bi-c${customCount}`,inputId=`cost-c${customCount}`;
   const name=prompt('Name this expense:','Other expense');if(!name)return;
   const div=document.createElement('div');div.className='budget-item';div.id=id;
-  div.innerHTML=`<div class="bi-header"><div class="bi-label">✨ ${name}</div><button class="bi-remove-btn" onclick="removeBudgetItem('${id}')">×</button></div><div class="bi-prefix"><input type="number" class="bi-input" id="${inputId}" placeholder="0.00" oninput="calcGirlMath()"></div>`;
+  div.innerHTML=`<div class="bi-header"><div class="bi-label">✨ ${name}</div><button class="bi-remove-btn" onclick="removeBudgetItem('${id}')">×</button></div><div class="bi-prefix"><input type="text" class="bi-input" id="${inputId}" placeholder="0.00" oninput="calcGirlMath()"></div>`;
   document.getElementById('budget-grid').appendChild(div);showToast(`${name} added 💗`);
 }
 
@@ -1560,12 +1568,12 @@ function addCustomBudgetItem(){
 let cheapestShipCost = 0;
 
 function calcShipping(){
-  const weight=parseFloat(document.getElementById('ship-weight').value)||15;
-  const L=parseFloat(document.getElementById('ship-l').value)||20;
-  const W=parseFloat(document.getElementById('ship-w').value)||16;
-  const H=parseFloat(document.getElementById('ship-h').value)||12;
-  const boxes=parseInt(document.getElementById('ship-boxes').value)||1;
-  const zone=parseInt(document.getElementById('ship-zone').value)||2;
+  const weight=numIn('ship-weight',15)||15;
+  const L=numIn('ship-l',20)||20;
+  const W=numIn('ship-w',16)||16;
+  const H=numIn('ship-h',12)||12;
+  const boxes=Math.round(numIn('ship-boxes',1)||1);
+  const zone=Math.round(numIn('ship-zone',2)||2);
 
   // Dimensional weight calculation
   const dimWeightUPS=Math.ceil((L*W*H)/139);   // UPS/FedEx divisor
@@ -1649,8 +1657,8 @@ function calcShipping(){
 }
 
 function calcCostPerItem(){
-  const items=parseInt(document.getElementById('ship-items').value)||30;
-  const haulValue=parseFloat(document.getElementById('ship-haul-value').value)||500;
+  const items=Math.round(numIn('ship-items',30)||30);
+  const haulValue=numIn('ship-haul-value',500)||500;
   if(!cheapestShipCost){document.getElementById('cost-per-item-result').innerHTML='<div style="color:var(--muted);font-size:13px">Calculate shipping first to see cost per item.</div>';return;}
   const costPerItem=cheapestShipCost/items;
   const pctOfValue=(cheapestShipCost/haulValue)*100;
@@ -1662,6 +1670,26 @@ function calcCostPerItem(){
       <div class="stat-box"><span class="stat-val">$${haulValue.toLocaleString()}</span><span class="stat-lbl">Total haul value</span></div>
     </div>
     <div style="padding:10px 14px;background:var(--btn-bg);border:1.5px solid var(--btn-bd);font-size:13px;font-weight:600;color:var(--ink)">${verdict}</div>`;
+}
+
+function evalExcelExpression(raw){
+  const s = String(raw||'').trim();
+  if (!s) return 0;
+  const expr = s.startsWith('=') ? s.slice(1) : s;
+  if (!/^[0-9+\-*/().\s]+$/.test(expr)) return Number(s) || 0;
+  try {
+    // basic arithmetic-only expression support (e.g. =3+5, =10/2)
+    const v = Function(`"use strict"; return (${expr});`)();
+    return Number.isFinite(v) ? v : 0;
+  } catch {
+    return Number(s) || 0;
+  }
+}
+
+function numIn(id, fallback=0){
+  const el = document.getElementById(id);
+  if(!el) return fallback;
+  return evalExcelExpression(el.value);
 }
 
 function sendShippingToGirlMath(){
@@ -1688,6 +1716,36 @@ const COMPANIES=[
   {name:'Ulta Beauty',booth:'901',cat:'Makeup',emoji:'💗',tagline:'The host — your beauty home base',tags:['celebrity'],desc:"UBW host booth. Swag bag claim, ear piercing, makeovers, tutorials, and exclusive event-only products.",website:'https://ulta.com',products:[{name:'Exclusive event products',retail:0,sample:0,note:'Event-only'},{name:'Gift with purchase',retail:0,sample:20,note:'Various'}],services:[{icon:'👂',name:'Ear piercing',desc:'Professional piercing with aftercare',value:70},{icon:'💄',name:'Makeup tutorial',desc:'Full look by certified Ulta stylist',value:90},{icon:'✂️',name:'Hair service',desc:'Blowout or styling by licensed professional',value:85},{icon:'📸',name:'Content creation',desc:'Professional setup for your UBW look photos',value:60}]},
 ];
 let brandCatFilter='all';
+
+function inferCompanyCategory(name=''){
+  const n = String(name).toLowerCase();
+  if (/(hair|curl|scalp|shampoo|conditioner|styler|blow|brush)/.test(n)) return 'Haircare';
+  if (/(skin|serum|cream|spf|cleanser|mucin|acne|tatcha|cosrx|lily)/.test(n)) return 'Skincare';
+  if (/(tool|dyson|device|dryer|straightener)/.test(n)) return 'Tools';
+  return 'Makeup';
+}
+
+function syncCompaniesWithExpoBrands(){
+  const seen = new Set(COMPANIES.map(c => c.name.toLowerCase()));
+  expoBoothOptions.forEach(b => {
+    const key = String(b.name || '').toLowerCase();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    COMPANIES.push({
+      name: b.name,
+      booth: b.booth || '?',
+      cat: b.cat && b.cat !== 'General' ? b.cat : inferCompanyCategory(b.name),
+      emoji: '💗',
+      tagline: 'Featured at UBW 2026',
+      tags: [],
+      desc: `${b.name} is participating at UBW 2026. Visit booth ${b.booth || '?'} for live demos, product education, and event specials.`,
+      website: '#',
+      products: [{name:'Event highlights',retail:0,sample:0,note:'See booth for current offers'}],
+      services: []
+    });
+  });
+  renderCompanies();
+}
 function renderCompanies(){
   const q=(document.getElementById('company-search')?.value||'').toLowerCase();
   const filtered=COMPANIES.filter(c=>{

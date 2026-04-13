@@ -1056,6 +1056,36 @@ function tickerFromBrand(name=''){
   return (base.slice(0,5) || 'PVT');
 }
 
+function pctToNum(v){
+  if (typeof v === 'number') return v;
+  const n = parseFloat(String(v || '').replace(/[^\d.-]/g,''));
+  return Number.isFinite(n) ? n : 0;
+}
+
+function priceToNum(v){
+  if (typeof v === 'number') return v;
+  const n = parseFloat(String(v || '').replace(/[^\d.-]/g,''));
+  return Number.isFinite(n) ? n : 0;
+}
+
+function projectionForStock(s){
+  const yoy = pctToNum(s.yoy || s.yoh);
+  const daily = pctToNum(s.chg);
+  const momentum = Math.max(-12, Math.min(18, (yoy * 0.16) + (daily * 2.3) + ((s.roiScore || 50) - 50) * 0.06));
+  return {
+    oneMonth: +(momentum * 0.45).toFixed(1),
+    eventWindow: +momentum.toFixed(1)
+  };
+}
+
+function profitScore(s){
+  const yoy = pctToNum(s.yoy || s.yoh);
+  const chg = pctToNum(s.chg);
+  const roi = Number(s.roiScore || 50);
+  const marketBias = s.category === 'large-cap' ? 8 : s.category === 'mass' ? 5 : 2;
+  return +(roi * 0.45 + yoy * 0.30 + chg * 6 + marketBias).toFixed(2);
+}
+
 function stockHasBrand(brand){
   const n = normalizeBrand(brand);
   return STOCKS.some(s =>
@@ -1105,7 +1135,7 @@ async function enrichStocksWithAllExpoBrands(){
 
 function renderTicker(){
   const t=document.getElementById('ticker'); if(!t)return;
-  const items=STOCKS.filter(s=>s.chg!==0).map(s=>`<div class="ticker-item"><span class="ticker-sym">${s.ticker}</span><span class="ticker-price">${s.price}</span><span class="ticker-chg ${s.chg>0?'tc-up':'tc-down'}">${s.change}</span></div>`).join(' &nbsp;&nbsp;&nbsp; ');
+  const items=STOCKS.map(s=>`<div class="ticker-item"><span class="ticker-sym">${s.ticker}</span><span class="ticker-price">${s.price}</span><span class="ticker-chg ${s.chg>=0?'tc-up':'tc-down'}">${s.change}</span></div>`).join(' &nbsp;&nbsp;&nbsp; ');
   t.innerHTML=items+' &nbsp;&nbsp;&nbsp; '+items; // duplicate for seamless loop
 }
 
@@ -1117,7 +1147,8 @@ function renderStocks(filter='all'){const sg=document.getElementById('stock-grid
     if(filter==='high-cap')return s.category==='large-cap';
     if(filter==='ubw-major')return s.majorUBW;
     return true;
-  });
+  }).map(s => ({...s, _profitScore: profitScore(s), _projection: projectionForStock(s)}))
+    .sort((a,b) => b._profitScore - a._profitScore);
   sg.innerHTML=filtered.map(s=>{
     const isUp=s.chg>0,isNA=s.change==='N/A';
     const chgCls=isNA?'':isUp?'sc-up':'sc-down';
@@ -1145,6 +1176,9 @@ function renderStocks(filter='all'){const sg=document.getElementById('stock-grid
           <div class="sc-metric"><div class="sc-metric-lbl">P/E Ratio</div><div class="sc-metric-val">${s.pe}</div></div>
           <div class="sc-metric"><div class="sc-metric-lbl">YoY Growth</div><div class="sc-metric-val">${s.yoy||s.yoh||'N/A'}</div></div>
           <div class="sc-metric"><div class="sc-metric-lbl">Sentiment</div><div class="sc-metric-val" style="font-size:12px">${s.sentiment}</div></div>
+          <div class="sc-metric"><div class="sc-metric-lbl">Profit Rank Score</div><div class="sc-metric-val">${s._profitScore}</div></div>
+          <div class="sc-metric"><div class="sc-metric-lbl">1-Month Projection</div><div class="sc-metric-val" style="color:${s._projection.oneMonth>=0?'#059669':'#dc2626'}">${s._projection.oneMonth>=0?'+':''}${s._projection.oneMonth}%</div></div>
+          <div class="sc-metric"><div class="sc-metric-lbl">Event Window Projection</div><div class="sc-metric-val" style="color:${s._projection.eventWindow>=0?'#059669':'#dc2626'}">${s._projection.eventWindow>=0?'+':''}${s._projection.eventWindow}%</div></div>
         </div>
         <div class="sc-bar-wrap">
           <div class="sc-bar-lbl"><span>ROI Score at UBW</span><span style="font-weight:700;color:var(--pink)">${s.roiScore}/100</span></div>
@@ -1160,9 +1194,31 @@ function renderStocks(filter='all'){const sg=document.getElementById('stock-grid
   }).join('');
 }
 
+function simulateLiveStockUpdates(){
+  STOCKS = STOCKS.map(s => {
+    if (String(s.price).toUpperCase() === 'N/A') return s;
+    const current = priceToNum(s.price);
+    const drift = (Math.random() - 0.48) * 1.2;
+    const trend = pctToNum(s.yoy || s.yoh) * 0.015;
+    const nextChg = +(pctToNum(s.chg) * 0.65 + drift + trend).toFixed(2);
+    const nextPrice = +(current * (1 + nextChg / 100)).toFixed(2);
+    return {
+      ...s,
+      chg: nextChg,
+      price: String(s.price).includes('€') ? `~€${nextPrice}` : `~$${nextPrice}`,
+      change: `${nextChg >= 0 ? '+' : ''}${nextChg}%`
+    };
+  });
+  renderTicker();
+  const active = document.querySelector('#stock-filter-row .btn-pink');
+  const type = active?.dataset?.type || 'all';
+  renderStocks(type);
+}
+
 function filterStocks(type,btn){
   document.querySelectorAll('#stock-filter-row button').forEach(b=>{b.className='btn btn-outline btn-sm';});
   btn.className='btn btn-pink btn-sm';
+  btn.dataset.type = type;
   renderStocks(type);
 }
 
@@ -1568,6 +1624,7 @@ enrichStocksWithAllExpoBrands().finally(()=>{
   renderTicker();
   renderStocks();
   renderProducts();
+  setInterval(simulateLiveStockUpdates, 18000);
 });
 </script>
 

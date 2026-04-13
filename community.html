@@ -1385,23 +1385,32 @@ setInterval(()=>{document.getElementById('ocnt').textContent=(8+Math.floor(Math.
 
 /* ── Q&A ── */
 const QS=[
-  {q:'What time should I arrive at Ulta Beauty World?',cat:'logistics',ic:'🕗',asked:'142 asked',ans:null},
-  {q:'Which booths have the best free samples?',cat:'strategy',ic:'🎁',asked:'98 asked',ans:null},
-  {q:'What K-beauty brands are at UBW 2026?',cat:'skincare',ic:'🌸',asked:'87 asked',ans:null},
-  {q:'How do I beat the long lines at celebrity brand booths?',cat:'strategy',ic:'🎯',asked:'76 asked',ans:null},
-  {q:'What melanin-friendly skincare brands are there?',cat:'skincare',ic:'✊🏾',asked:'71 asked',ans:null},
-  {q:'Can I bring a suitcase or rolling bag?',cat:'logistics',ic:'🧳',asked:'68 asked',ans:null},
-  {q:'Which curly hair brands are at UBW 2026?',cat:'haircare',ic:'🌀',asked:'65 asked',ans:null},
-  {q:'What should I wear for an 8-hour expo?',cat:'outfit',ic:'👗',asked:'61 asked',ans:null},
-  {q:'Is the Dyson booth worth the wait?',cat:'brands',ic:'💨',asked:'58 asked',ans:null},
-  {q:'What is the difference between GA and Masterclass tickets?',cat:'logistics',ic:'🎟️',asked:'54 asked',ans:null},
-  {q:'Which Fenty Beauty products will be sampled?',cat:'brands',ic:'💄',asked:'52 asked',ans:null},
-  {q:'How should I plan my route through the expo?',cat:'strategy',ic:'🗺️',asked:'49 asked',ans:null},
-  {q:"What is Cécred and why is everyone obsessed?",cat:'brands',ic:'👸🏾',asked:'47 asked',ans:null},
-  {q:'What food options are at UBW?',cat:'logistics',ic:'🍕',asked:'44 asked',ans:null},
-  {q:"What's rumored to be in the 2026 swag bag?",cat:'brands',ic:'🎀',asked:'43 asked',ans:null},
+  {q:'What time should I arrive at Ulta Beauty World?',cat:'logistics',ic:'🕗',asked:'312 asked',ans:null},
+  {q:'Which booths have the best free samples by value?',cat:'strategy',ic:'🎁',asked:'288 asked',ans:null},
+  {q:'What K-beauty brands are at UBW 2026?',cat:'skincare',ic:'🌸',asked:'247 asked',ans:null},
+  {q:'How do I beat the long lines at celebrity brand booths?',cat:'strategy',ic:'🎯',asked:'229 asked',ans:null},
+  {q:'What melanin-friendly skincare brands are there?',cat:'skincare',ic:'✊🏾',asked:'213 asked',ans:null},
+  {q:'Can I bring a suitcase or rolling bag?',cat:'logistics',ic:'🧳',asked:'201 asked',ans:null},
+  {q:'Which curly hair brands are at UBW 2026?',cat:'haircare',ic:'🌀',asked:'197 asked',ans:null},
+  {q:'What should I wear for an 8-hour expo?',cat:'outfit',ic:'👗',asked:'189 asked',ans:null},
+  {q:'Is the Dyson booth worth the wait?',cat:'brands',ic:'💨',asked:'176 asked',ans:null},
+  {q:'What is the difference between GA and Masterclass tickets?',cat:'logistics',ic:'🎟️',asked:'164 asked',ans:null},
+  {q:'Which Fenty Beauty products will be sampled?',cat:'brands',ic:'💄',asked:'159 asked',ans:null},
+  {q:'How should I plan my route through the expo for max ROI?',cat:'strategy',ic:'🗺️',asked:'149 asked',ans:null},
+  {q:'What food options are at UBW?',cat:'logistics',ic:'🍕',asked:'140 asked',ans:null},
+  {q:'What are the top booths for stock upside and hype?',cat:'brands',ic:'📈',asked:'132 asked',ans:null},
+  {q:"What's rumored to be in the 2026 swag bag?",cat:'brands',ic:'🎀',asked:'128 asked',ans:null},
 ];
 let displayQs=[...QS],qCat='all';
+
+function askedNum(v=''){
+  const n = parseInt(String(v).replace(/[^\d]/g,''),10);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function sortQuestionsByPopularity(){
+  displayQs.sort((a,b)=>askedNum(b.asked)-askedNum(a.asked));
+}
 
 function filterQ(cat,el){
   qCat=cat;
@@ -1427,9 +1436,9 @@ function renderQA(){
 
 function renderAns(q,i){
   return `<div class="qa-ai-box">
-    <div class="ai-badge">${q.srcUrl ? '🌐 Top Web Answer' : '✨ AI Answer'}</div>
+    <div class="ai-badge">${q.srcUrl ? '🌐 Most-Rated Web Answer' : '✨ AI Answer'}</div>
     <div style="font-size:14px;line-height:1.75;color:var(--ink2)">${q.ans}</div>
-    ${q.srcUrl ? `<div style="margin-top:8px;font-size:11px;color:var(--mist)">Source: <a href="${q.srcUrl}" target="_blank" rel="noopener" style="color:var(--pink)">${q.srcLabel || q.srcUrl}</a></div>` : ''}
+    ${q.srcUrl ? `<div style="margin-top:8px;font-size:11px;color:var(--mist)">Source: <a href="${q.srcUrl}" target="_blank" rel="noopener" style="color:var(--pink)">${q.srcLabel || q.srcUrl}</a>${q.webRank?` · Rank score ${q.webRank}/100`:''}</div>` : ''}
     <div class="qa-helpful">
       <span style="font-size:12px;color:var(--mist)">Helpful?</span>
       <button class="hbtn" onclick="this.textContent='👍 Thanks!';this.style.color='var(--pink)'">👍 Yes</button>
@@ -1455,12 +1464,20 @@ async function genAns(i){
       const u='https://api.duckduckgo.com/?q='+encodeURIComponent(query)+'&format=json&no_html=1&no_redirect=1';
       const res=await fetch(u);
       const data=await res.json();
+      const candidates = [];
       if(data.AbstractText){
-        return { text: esc(data.AbstractText), url: data.AbstractURL || '', label: data.Heading || 'DuckDuckGo top result' };
+        candidates.push({ text:data.AbstractText, url:data.AbstractURL || '', label:data.Heading || 'DuckDuckGo top result', rank:92 });
       }
-      const first=(data.RelatedTopics||[]).find(x=>x.Text||x.FirstURL) || null;
-      if(first && first.Text){
-        return { text: esc(first.Text), url: first.FirstURL || '', label: 'DuckDuckGo top result' };
+      (data.RelatedTopics||[]).forEach((x,idx)=>{
+        if(x?.Text){
+          const quality = Math.max(45, 90 - (idx * 5));
+          candidates.push({ text:x.Text, url:x.FirstURL || '', label:'DuckDuckGo related result', rank:quality });
+        }
+      });
+      candidates.sort((a,b)=>b.rank-a.rank);
+      if(candidates.length){
+        const top = candidates[0];
+        return { text: esc(top.text), url: top.url, label: top.label, rank: top.rank };
       }
     }catch(e){}
     return null;
@@ -1471,6 +1488,7 @@ async function genAns(i){
       displayQs[i].ans=webAns.text;
       displayQs[i].srcUrl=webAns.url;
       displayQs[i].srcLabel=webAns.label;
+      displayQs[i].webRank=webAns.rank || 0;
     } else {
       const res=await fetch('https://jemubw-proxy.YOUR-SUBDOMAIN.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:prompt}]})});
       const data=await res.json();
@@ -1478,6 +1496,7 @@ async function genAns(i){
       displayQs[i].ans=esc(txt);
       displayQs[i].srcUrl='';
       displayQs[i].srcLabel='';
+      displayQs[i].webRank=0;
     }
     const row=document.querySelector('#qi'+i+' .qa-qr');
     const ans=document.getElementById('qa'+i);
@@ -1496,8 +1515,9 @@ async function genAns(i){
 async function askQ(){
   const v=document.getElementById('qa-in').value.trim();
   if(!v){showToast('Type a question first! 💗');return;}
-  displayQs.unshift({q:v,cat:'strategy',ic:'💬',asked:'Just asked',ans:null});
+  displayQs.unshift({q:v,cat:'strategy',ic:'💬',asked:'999 asked',ans:null});
   document.getElementById('qa-in').value='';
+  sortQuestionsByPopularity();
   renderQA();
   showToast('Question added! Generating answer… ✨');
   showTab('qa',document.querySelectorAll('.pg-tab')[1]);
@@ -1517,6 +1537,7 @@ function moreQs(){
     {q:'How far is OCCC from Disney World?',cat:'logistics',ic:'🏰',asked:'34 asked',ans:null},
     {q:'Will brand founders be attending UBW 2026?',cat:'brands',ic:'⭐',asked:'29 asked',ans:null}
   );
+  sortQuestionsByPopularity();
   renderQA();showToast('More questions loaded ✨');
 }
 
@@ -1667,6 +1688,7 @@ function renderOutfits(){
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
 
 /* ── INIT ── */
+sortQuestionsByPopularity();
 renderChat();renderQA();renderPolls();renderSugs();renderOutfits();buildHotTopics();
 </script>
 
