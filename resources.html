@@ -850,37 +850,29 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
       </div>
 
       <div id="ps-builder" class="ps-panel active">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Select interests</div>
-        <div id="int-chips" class="brand-controls">
-          <button class="chip" data-v="skincare-routine">Skincare Routine</button>
-          <button class="chip" data-v="hyperpigmentation">Hyperpigmentation</button>
-          <button class="chip" data-v="barrier-repair">Barrier Repair</button>
-          <button class="chip" data-v="spf">SPF + Sun Care</button>
-          <button class="chip" data-v="sensitive-skin">Sensitive Skin</button>
-          <button class="chip" data-v="scalp-care">Scalp Care</button>
-          <button class="chip" data-v="bond-repair">Bond Repair</button>
-          <button class="chip" data-v="curl-definition">Curl Definition</button>
-          <button class="chip" data-v="frizz-control">Frizz Control</button>
-          <button class="chip" data-v="base-makeup">Base Makeup</button>
-          <button class="chip" data-v="lip-products">Lip Products</button>
-          <button class="chip" data-v="tools-styling">Styling Tools</button>
-          <button class="chip" data-v="body-care">Body Care</button>
-          <button class="chip" data-v="fragrance">Fragrance</button>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Main filter menu · Shop For</div>
+        <div id="rb-shopfor" class="brand-controls rb-group">
+          <button class="chip" data-v="Skincare">Skincare</button><button class="chip" data-v="Haircare">Haircare</button><button class="chip" data-v="Makeup">Makeup</button><button class="chip" data-v="Fragrance">Fragrance</button><button class="chip" data-v="Body">Body</button><button class="chip" data-v="Nails">Nails</button><button class="chip" data-v="Tools">Tools</button><button class="chip" data-v="Wellness">Wellness</button><button class="chip" data-v="Services">Services</button>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Advanced priorities</div>
-        <div id="focus-chips" class="brand-controls">
-          <button class="chip" data-v="melanin">Melanin</button>
-          <button class="chip" data-v="kbeauty">K-Beauty</button>
-          <button class="chip" data-v="clean">Clean</button>
-          <button class="chip" data-v="curly">Curly</button>
-          <button class="chip" data-v="celebrity">Celebrity</button>
-          <button class="chip" data-v="exclusive">Exclusive</button>
-          <button class="chip" data-v="budget-finds">Budget Finds</button>
-          <button class="chip" data-v="luxury-splurge">Luxury Splurge</button>
-          <button class="chip" data-v="freebies-max">Max Freebies</button>
-          <button class="chip" data-v="quick-stops">Quick Stops</button>
-          <button class="chip" data-v="service-heavy">Service Heavy</button>
-          <button class="chip" data-v="new-launches">New Launches</button>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Target Concern</div>
+        <div id="rb-concern" class="brand-controls rb-group">
+          <button class="chip" data-v="hyperpigmentation">Hyperpigmentation</button><button class="chip" data-v="barrier-repair">Barrier Repair</button><button class="chip" data-v="sensitive-skin">Sensitive Skin</button><button class="chip" data-v="spf">SPF</button><button class="chip" data-v="scalp-care">Scalp Care</button><button class="chip" data-v="bond-repair">Bond Repair</button><button class="chip" data-v="curl-definition">Curl Definition</button><button class="chip" data-v="frizz-control">Frizz Control</button><button class="chip" data-v="base-makeup">Base Makeup</button><button class="chip" data-v="lip-products">Lip Products</button><button class="chip" data-v="body-moisture">Body Moisture</button><button class="chip" data-v="hair-growth">Hair Growth</button><button class="chip" data-v="brightening">Brightening</button><button class="chip" data-v="hydration">Hydration</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Wellness Type</div>
+        <div id="rb-wellness" class="brand-controls rb-group">
+          <button class="chip" data-v="supplements">Supplements</button><button class="chip" data-v="sleep-calm">Sleep / Calm</button><button class="chip" data-v="aromatherapy">Aromatherapy</button><button class="chip" data-v="intimate-care">Intimate Care</button><button class="chip" data-v="clean-lifestyle">Clean Lifestyle</button><button class="chip" data-v="recovery-stress">Recovery / Stress Relief</button><button class="chip" data-v="beauty-from-within">Beauty From Within</button><button class="chip" data-v="daily-wellness">Daily Wellness</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Service Type</div>
+        <div id="rb-service" class="brand-controls rb-group">
+          <button class="chip" data-v="skin-consult">Skin Consult</button><button class="chip" data-v="hair-consult">Hair Consult</button><button class="chip" data-v="shade-match">Shade Match</button><button class="chip" data-v="tool-demo">Tool Demo</button><button class="chip" data-v="scalp-analysis">Scalp Analysis</button><button class="chip" data-v="fragrance-discovery">Fragrance Discovery</button><button class="chip" data-v="routine-building">Routine Building</button><button class="chip" data-v="interactive-booth">Interactive Booth</button><button class="chip" data-v="education-focused">Education Heavy</button><button class="chip" data-v="sampling-focused">Sampling-Focused</button><button class="chip" data-v="consultations">Consultations</button><button class="chip" data-v="shade-matching">Shade Matching</button><button class="chip" data-v="styling-demos">Styling Demos</button><button class="chip" data-v="device-demos">Device Demos</button><button class="chip" data-v="interactive-booths">Interactive Booths</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Shopping Style</div>
+        <div id="rb-style" class="brand-controls rb-group">
+          <button class="chip" data-v="kbeauty">K-Beauty</button><button class="chip" data-v="budget-finds">Budget Finds</button><button class="chip" data-v="luxury-splurge">Luxury Splurge</button><button class="chip" data-v="max-freebies">Max Freebies</button><button class="chip" data-v="quick-stops">Quick Stops</button><button class="chip" data-v="new-launches">New Launches</button><button class="chip" data-v="exclusive">Exclusive</button><button class="chip" data-v="viral-picks">Viral Picks</button><button class="chip" data-v="content-friendly">Content-Friendly</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Audience Fit</div>
+        <div id="rb-audience" class="brand-controls rb-group">
+          <button class="chip" data-v="tan-skin-friendly">Tan Skin Friendly</button><button class="chip" data-v="melanin-friendly">Melanin-Friendly</button><button class="chip" data-v="asian-hair-friendly">Asian Hair Friendly</button><button class="chip" data-v="curly-textured">Curly / Textured Hair</button><button class="chip" data-v="sensitive-skin-safe">Sensitive Skin Safe</button><button class="chip" data-v="beginner-friendly">Beginner Friendly</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
           <label style="font-size:12px;color:var(--muted)">Sample Priority
@@ -1101,6 +1093,88 @@ function syncBrandsDataWithAllBooths() {
   });
 }
 
+function uniq(arr) {
+  return [...new Set(arr.filter(Boolean))];
+}
+
+function assignRouteTaxonomy(brand) {
+  const text = `${brand.brand} ${brand.desc} ${brand.hero}`.toLowerCase();
+  const has = (s) => text.includes(s);
+  const t = {
+    shopFor: [],
+    concern: [],
+    wellness: [],
+    service: [],
+    style: [],
+    audience: []
+  };
+
+  if (brand.cat) t.shopFor.push(brand.cat);
+  if (has('body') || has('sanitizer')) t.shopFor.push('Body');
+  if (['Skincare','Haircare','Makeup','Tools','Fragrance'].includes(brand.cat)) t.shopFor.push('Services');
+
+  if (has('hyperpigmentation') || has('brightening') || has('vitamin c')) t.concern.push('hyperpigmentation','brightening');
+  if (has('barrier') || has('ceramide') || has('soothing')) t.concern.push('barrier-repair');
+  if (brand.tags.includes('sensitive') || has('sensitive')) t.concern.push('sensitive-skin');
+  if (has('spf') || has('sunscreen') || has('sun')) t.concern.push('spf');
+  if (has('scalp')) t.concern.push('scalp-care');
+  if (has('bond') || has('repair')) t.concern.push('bond-repair');
+  if (brand.tags.includes('curly') || has('curl')) t.concern.push('curl-definition');
+  if (has('frizz') || has('smoothing')) t.concern.push('frizz-control');
+  if (brand.cat === 'Makeup' && (has('foundation') || has('concealer') || has('base'))) t.concern.push('base-makeup');
+  if (has('lip')) t.concern.push('lip-products');
+  if (has('body') || has('moisture') || has('cream')) t.concern.push('body-moisture');
+  if (has('growth')) t.concern.push('hair-growth');
+  if (has('hydration') || has('moistur')) t.concern.push('hydration');
+
+  if (has('nutrition') || has('supplement')) t.wellness.push('supplements','beauty-from-within');
+  if (has('sleep') || has('calm')) t.wellness.push('sleep-calm');
+  if (has('aroma') || brand.cat === 'Fragrance') t.wellness.push('aromatherapy');
+  if (has('intimate')) t.wellness.push('intimate-care');
+  if (brand.tags.includes('clean')) t.wellness.push('clean-lifestyle');
+  if (has('stress') || has('soothing')) t.wellness.push('recovery-stress');
+  if (brand.cat === 'Wellness') t.wellness.push('daily-wellness');
+
+  if (brand.cat === 'Skincare') t.service.push('skin-consult','routine-building');
+  if (brand.cat === 'Haircare') t.service.push('hair-consult','styling-demos');
+  if (brand.cat === 'Makeup') t.service.push('shade-match','shade-matching');
+  if (brand.cat === 'Tools') t.service.push('tool-demo','device-demos');
+  if (brand.cat === 'Fragrance') t.service.push('fragrance-discovery');
+  if (has('scalp')) t.service.push('scalp-analysis');
+  if (has('demo') || brand.tags.includes('exclusive')) t.service.push('interactive-booth','interactive-booths');
+  if (has('science') || has('formula')) t.service.push('education-focused');
+  if (estimateSampleValue(brand) >= 9) t.service.push('sampling-focused');
+  if (['Skincare','Haircare','Makeup'].includes(brand.cat)) t.service.push('consultations');
+
+  if (brand.tags.includes('kbeauty')) t.style.push('kbeauty');
+  if (parseRetailFromHero(brand.hero) <= 30) t.style.push('budget-finds');
+  if (parseRetailFromHero(brand.hero) >= 60) t.style.push('luxury-splurge');
+  if (estimateSampleValue(brand) >= 12) t.style.push('max-freebies');
+  if (['Skincare','Makeup'].includes(brand.cat)) t.style.push('quick-stops');
+  if (brand.tags.includes('exclusive') || has('new')) t.style.push('new-launches','exclusive');
+  if (has('viral') || has('best-selling')) t.style.push('viral-picks');
+  if (has('demo') || brand.tags.includes('celebrity') || brand.tags.includes('exclusive')) t.style.push('content-friendly');
+
+  if (brand.tags.includes('melanin') || has('deep shade')) t.audience.push('tan-skin-friendly','melanin-friendly');
+  if (has('k-beauty') || has('frizz') || has('straight')) t.audience.push('asian-hair-friendly');
+  if (brand.tags.includes('curly') || has('curl')) t.audience.push('curly-textured');
+  if (brand.tags.includes('sensitive') || has('sensitive')) t.audience.push('sensitive-skin-safe');
+  if (parseRetailFromHero(brand.hero) <= 35) t.audience.push('beginner-friendly');
+
+  brand.routeTaxonomy = {
+    shopFor: uniq(t.shopFor),
+    concern: uniq(t.concern),
+    wellness: uniq(t.wellness),
+    service: uniq(t.service),
+    style: uniq(t.style),
+    audience: uniq(t.audience)
+  };
+}
+
+function assignTaxonomyToAllBrands() {
+  BRANDS_DATA.forEach(assignRouteTaxonomy);
+}
+
 function linkBrandToMap(booth) {
   if (!booth) return;
   showMapTab('zone', document.querySelector('.map-tab'));
@@ -1286,7 +1360,7 @@ function downloadFullFloorMap() {
 }
 
 // Route generator
-document.querySelectorAll('#int-chips .chip, #focus-chips .chip').forEach(c => {
+document.querySelectorAll('#ps-builder .chip').forEach(c => {
   c.addEventListener('click', () => c.classList.toggle('active'));
 });
 
@@ -1303,39 +1377,95 @@ function estimateSampleValue(brand){
   return Math.max(0, sample);
 }
 
-function interestMatchScore(brand, selectedInterests, selectedFocus){
+function inferZone(booth='') {
+  const n = parseInt(String(booth).replace(/\D/g,''), 10);
+  if (Number.isNaN(n)) return String(booth).startsWith('GS') ? 'GS' : 'FT';
+  if (n < 1000) return 'A';
+  if (n < 1750) return 'B';
+  if (n < 2000) return 'C';
+  return 'D';
+}
+
+function matchesShopForCategory(brand, selectedShopFor = []) {
+  if (!selectedShopFor.length) return true;
+  const tx = brand.routeTaxonomy?.shopFor || [];
+  return selectedShopFor.some(cat => tx.includes(cat));
+}
+
+function interestMatchScore(brand, picked){
   const txt = `${brand.brand} ${brand.desc} ${brand.hero}`.toLowerCase();
+  const tx = brand.routeTaxonomy || {shopFor:[],concern:[],wellness:[],service:[],style:[],audience:[]};
   let score = 0;
   const has = (s) => txt.includes(s);
-  const interestMatchers = {
-    'skincare-routine': () => brand.cat === 'Skincare',
+  const concernMatchers = {
     'hyperpigmentation': () => has('hyperpigmentation') || has('brightening') || has('vitamin c'),
     'barrier-repair': () => has('barrier') || has('ceramide') || has('soothing'),
     'spf': () => has('spf') || has('sunscreen') || has('sun'),
-    'sensitive-skin': () => brand.tags.includes('sensitive') || has('sensitive') || has('soothing'),
+    'sensitive-skin': () => brand.tags.includes('sensitive') || has('sensitive'),
     'scalp-care': () => has('scalp'),
     'bond-repair': () => has('bond') || has('repair'),
     'curl-definition': () => brand.tags.includes('curly') || has('curl'),
     'frizz-control': () => has('frizz') || has('smoothing'),
     'base-makeup': () => brand.cat === 'Makeup' && (has('foundation') || has('concealer') || has('base')),
     'lip-products': () => has('lip'),
-    'tools-styling': () => brand.cat === 'Tools',
-    'body-care': () => has('body') || has('sanitizer'),
-    'fragrance': () => brand.cat === 'Fragrance' || has('fragrance') || has('mist')
+    'body-moisture': () => has('body') || has('cream') || has('moisture'),
+    'hair-growth': () => has('growth') || has('scalp'),
+    'brightening': () => has('brightening') || has('vitamin c'),
+    'hydration': () => has('hydration') || has('moistur')
   };
-  const focusMatchers = {
+  const styleMatchers = {
+    'kbeauty': () => brand.tags.includes('kbeauty') || has('korea'),
     'budget-finds': () => parseRetailFromHero(brand.hero) <= 30,
     'luxury-splurge': () => parseRetailFromHero(brand.hero) >= 60,
-    'freebies-max': () => estimateSampleValue(brand) >= 12,
+    'max-freebies': () => estimateSampleValue(brand) >= 12,
     'quick-stops': () => ['Skincare','Makeup'].includes(brand.cat),
-    'service-heavy': () => brand.cat === 'Tools' || has('demo'),
-    'new-launches': () => brand.tags.includes('exclusive') || has('new') || has('viral')
+    'new-launches': () => brand.tags.includes('exclusive') || has('new'),
+    'exclusive': () => brand.tags.includes('exclusive'),
+    'viral-picks': () => has('viral') || has('best-selling'),
+    'content-friendly': () => has('demo') || has('exclusive') || has('celebrity')
   };
-  selectedInterests.forEach(k => { if (interestMatchers[k]?.()) score += 5; });
-  selectedFocus.forEach(k => {
-    if (brand.tags.includes(k)) score += 7;
-    if (focusMatchers[k]?.()) score += 7;
-  });
+  const audienceMatchers = {
+    'tan-skin-friendly': () => brand.tags.includes('melanin') || has('deep shade'),
+    'melanin-friendly': () => brand.tags.includes('melanin') || has('inclusive'),
+    'asian-hair-friendly': () => has('k-beauty') || has('straight') || has('frizz'),
+    'curly-textured': () => brand.tags.includes('curly') || has('curl'),
+    'sensitive-skin-safe': () => brand.tags.includes('sensitive') || has('sensitive'),
+    'beginner-friendly': () => parseRetailFromHero(brand.hero) <= 35
+  };
+  const serviceMatchers = {
+    'skin-consult': () => brand.cat === 'Skincare',
+    'hair-consult': () => brand.cat === 'Haircare',
+    'shade-match': () => brand.cat === 'Makeup',
+    'tool-demo': () => brand.cat === 'Tools',
+    'scalp-analysis': () => has('scalp'),
+    'fragrance-discovery': () => brand.cat === 'Fragrance',
+    'routine-building': () => ['Skincare','Haircare'].includes(brand.cat),
+    'interactive-booth': () => has('demo') || brand.tags.includes('exclusive'),
+    'education-focused': () => has('science') || has('formula'),
+    'sampling-focused': () => estimateSampleValue(brand) >= 9,
+    'consultations': () => ['Skincare','Haircare','Makeup'].includes(brand.cat),
+    'shade-matching': () => brand.cat === 'Makeup',
+    'styling-demos': () => brand.cat === 'Haircare' || brand.cat === 'Tools',
+    'device-demos': () => brand.cat === 'Tools',
+    'interactive-booths': () => has('demo') || brand.tags.includes('exclusive')
+  };
+  const wellnessMatchers = {
+    'supplements': () => has('nutrition') || has('supplement'),
+    'sleep-calm': () => has('sleep') || has('calm'),
+    'aromatherapy': () => has('aroma') || brand.cat === 'Fragrance',
+    'intimate-care': () => has('intimate'),
+    'clean-lifestyle': () => brand.tags.includes('clean'),
+    'recovery-stress': () => has('stress') || has('soothing'),
+    'beauty-from-within': () => has('within') || has('nutrition'),
+    'daily-wellness': () => brand.cat === 'Wellness'
+  };
+
+  picked.shopFor.forEach(k => { if (tx.shopFor.includes(k)) score += 7; });
+  picked.concern.forEach(k => { if (tx.concern.includes(k) || concernMatchers[k]?.()) score += 6; });
+  picked.wellness.forEach(k => { if (tx.wellness.includes(k) || wellnessMatchers[k]?.()) score += 5; });
+  picked.service.forEach(k => { if (tx.service.includes(k) || serviceMatchers[k]?.()) score += 5; });
+  picked.style.forEach(k => { if (tx.style.includes(k) || styleMatchers[k]?.() || brand.tags.includes(k.replace('-friendly',''))) score += 6; });
+  picked.audience.forEach(k => { if (tx.audience.includes(k) || audienceMatchers[k]?.()) score += 6; });
   return score;
 }
 
@@ -1365,8 +1495,14 @@ function sendRouteToPlanner(route){
 async function generateRoute() {
   const btn = document.getElementById('gen-route-btn');
   btn.disabled = true; btn.textContent = '⏳ Building your route…';
-  const interests = [...document.querySelectorAll('#int-chips .chip.active')].map(c=>c.dataset.v);
-  const focus     = [...document.querySelectorAll('#focus-chips .chip.active')].map(c=>c.dataset.v);
+  const picked = {
+    shopFor: [...document.querySelectorAll('#rb-shopfor .chip.active')].map(c=>c.dataset.v),
+    concern: [...document.querySelectorAll('#rb-concern .chip.active')].map(c=>c.dataset.v),
+    wellness: [...document.querySelectorAll('#rb-wellness .chip.active')].map(c=>c.dataset.v),
+    service: [...document.querySelectorAll('#rb-service .chip.active')].map(c=>c.dataset.v),
+    style: [...document.querySelectorAll('#rb-style .chip.active')].map(c=>c.dataset.v),
+    audience: [...document.querySelectorAll('#rb-audience .chip.active')].map(c=>c.dataset.v)
+  };
   const s1 = document.getElementById('sl1').value;
   const s2 = document.getElementById('sl2').value;
 
@@ -1375,31 +1511,51 @@ async function generateRoute() {
     const _store = 'ubw_goal_data';
     const _sid = (() => { let s=sessionStorage.getItem('ubw_sid'); if(!s){s=Math.random().toString(36).slice(2,10);sessionStorage.setItem('ubw_sid',s);} return s; })();
     const _recs = JSON.parse(localStorage.getItem(_store)||'[]');
-    _recs.push({ ts:Date.now(), session:_sid, source:'route_builder', interests, focus, samplesW:+s1, roiW:+s2 });
+    _recs.push({ ts:Date.now(), session:_sid, source:'route_builder', picked, samplesW:+s1, roiW:+s2 });
     localStorage.setItem(_store, JSON.stringify(_recs.slice(-5000)));
   } catch(e) {}
 
   try {
-    const scored = BRANDS_DATA.map(b => {
+    const candidates = picked.shopFor.length
+      ? BRANDS_DATA.filter(b => matchesShopForCategory(b, picked.shopFor))
+      : BRANDS_DATA;
+    const scored = candidates.map(b => {
       const retail = parseRetailFromHero(b.hero);
       const sample = estimateSampleValue(b);
-      const roiBase = (sample * (+s1)) + (retail * (+s2) * 0.12); // ROI-dominant score
-      const relevance = interestMatchScore(b, interests, focus);
+      const categoryFit = matchesShopForCategory(b, picked.shopFor);
+      const categoryMultiplier = picked.shopFor.length ? (categoryFit ? 1.35 : 0.3) : 1;
+      const roiBase = ((sample * (+s1)) + (retail * (+s2) * 0.12)) * categoryMultiplier; // ROI optimized inside selected categories
+      const relevance = interestMatchScore(b, picked);
       const totalScore = roiBase * 10 + relevance; // prioritize ROI first, then relevance
-      return { b, retail, sample, relevance, totalScore };
-    }).sort((a,b) => b.totalScore - a.totalScore).slice(0,10);
+      return { b, retail, sample, relevance, totalScore, zone: inferZone(b.booth), categoryFit };
+    })
+      .sort((a,b) => (Number(b.categoryFit) - Number(a.categoryFit)) || (b.totalScore - a.totalScore))
+      .slice(0,230);
+
+    if (!scored.length) {
+      document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">No brands match the selected category filter. Try another category.</p>';
+      btn.disabled = false; btn.textContent = '✨ Generate My Route';
+      return;
+    }
 
     const route = scored.map((x,i) => ({
       order: i+1,
       brand: x.b.brand,
       booth: x.b.booth,
+      zone: x.zone,
       cat: x.b.cat,
       why: `High ROI with ${x.relevance>0?'strong interest match':'good overall value'}.`,
       topProduct: x.b.hero,
       sampleValue: `$${x.sample}`,
       time: `${x.b.cat==='Tools'?20:12} min`,
       walk: i===0 ? '0 min' : estimateWalkMinutes(scored[i-1].b.booth, x.b.booth),
-      roi: Math.max(45, Math.min(99, Math.round(x.totalScore/12)))
+      roi: Math.max(45, Math.min(99, Math.round(x.totalScore/12))),
+      concernTags: picked.concern.join(', ') || 'General',
+      wellnessType: picked.wellness.join(', ') || 'N/A',
+      serviceType: picked.service.join(', ') || 'N/A',
+      audienceFit: picked.audience.join(', ') || 'General',
+      shoppingStyle: picked.style.join(', ') || 'Balanced',
+      priorityScore: Math.round(x.totalScore)
     }));
 
     const totalValue = route.reduce((s,r)=>s+Number(String(r.sampleValue).replace('$','')),0);
@@ -1408,7 +1564,7 @@ async function generateRoute() {
       totalValue: `$${totalValue}`,
       route
     };
-    sendRouteToPlanner(route);
+    sendRouteToPlanner(route.slice(0, 10));
     renderRoute(result);
   } catch(e) {
     document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">Error generating route — please try again.</p>';
@@ -1421,6 +1577,7 @@ function renderRoute(r) {
     <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-bottom:4px">Your Strategy</div>
     <div style="font-size:14px;line-height:1.65">${r.summary}</div>
     <div style="margin-top:10px;font-size:13px;opacity:0.85">Estimated sample value: <strong>${r.totalValue}</strong></div>
+    <div style="margin-top:6px;font-size:12px;opacity:0.9"><strong>Top ${r.route.length}</strong> ranked booths based on your filter menu.</div>
   </div>`;
   r.route.forEach((s,i) => {
     html += `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
@@ -1437,13 +1594,16 @@ function renderRoute(r) {
           <span>⏱ ${s.time}</span>
           <span>🚶 ${s.walk} to next</span>
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">
+          Zone ${s.zone} · Concern Tags: ${s.concernTags} · Wellness Type: ${s.wellnessType} · Service Type: ${s.serviceType} · Audience Fit: ${s.audienceFit} · Shopping Style: ${s.shoppingStyle} · Priority Score: ${s.priorityScore}
+        </div>
         <div class="roi-bar" style="margin-top:8px"><div class="roi-fill" style="width:${s.roi}%"></div></div>
       </div>
     </div>`;
   });
   html += `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
     <a class="btn btn-pink btn-sm" href="planner.html">Open Route in Planner →</a>
-    <span style="font-size:11px;color:var(--muted);align-self:center">Route auto-saved to Planner list</span>
+    <span style="font-size:11px;color:var(--muted);align-self:center">Top 10 auto-saved to Planner list · Full top 230 shown here</span>
   </div>`;
   document.getElementById('route-output').innerHTML = html;
 }
@@ -1451,6 +1611,7 @@ function renderRoute(r) {
 // Init
 buildZoneMap();
 syncBrandsDataWithAllBooths();
+assignTaxonomyToAllBrands();
 buildBrandGrid(BRANDS_DATA);
 populateBrandSelect();
 populateBrandTicker();
