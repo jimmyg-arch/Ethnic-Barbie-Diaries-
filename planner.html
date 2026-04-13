@@ -940,6 +940,19 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
         <div class="booth-picker-search">
           <input type="search" class="inp" id="booth-picker-search" placeholder="Search booths like map page (brand or booth #)..." oninput="renderBoothPicker()">
         </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+          <select class="inp" id="booth-picker-source" onchange="renderBoothPicker()" style="max-width:260px">
+            <option value="all">All Map Brands</option>
+            <option value="route">Generated Route Brands</option>
+          </select>
+          <select class="inp" id="booth-picker-limit" onchange="renderBoothPicker()" style="max-width:220px">
+            <option value="20">Show 20 at a time</option>
+            <option value="50" selected>Show 50 at a time</option>
+            <option value="100">Show 100 at a time</option>
+            <option value="230">Show 230 at a time</option>
+          </select>
+          <button class="btn btn-sm" onclick="importGeneratedRoute()">Import Generated Route</button>
+        </div>
         <div class="booth-picker-list" id="booth-picker-list"></div>
       </div>
       <div id="booth-list"></div>
@@ -1253,6 +1266,7 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
     <input type="search" class="inp" id="company-search" placeholder="Search brand, category, or keyword…" oninput="filterCompanies()" style="padding-left:38px">
     <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted)" fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
   </div>
+  <div id="company-count" style="font-size:12px;color:var(--muted);margin:-10px 0 12px"></div>
 
   <div id="company-list"></div>
 
@@ -1334,7 +1348,14 @@ function renderBoothPicker(){
   const el=document.getElementById('booth-picker-list');
   if(!el) return;
   const q=norm(document.getElementById('booth-picker-search')?.value||'');
-  const filtered=expoBoothOptions.filter(b=>!q||norm(b.name).includes(q)||norm(b.booth).includes(q)).slice(0,80);
+  const source=document.getElementById('booth-picker-source')?.value||'all';
+  const limit=parseInt(document.getElementById('booth-picker-limit')?.value||'50',10);
+  const routePool = getGeneratedRoutePool();
+  const routeKeys = new Set(routePool.map(b => `${String(b.booth)}|${norm(b.name)}`));
+  const sourceFiltered = source==='route'
+    ? expoBoothOptions.filter(b => routeKeys.has(`${String(b.booth)}|${norm(b.name)}`) || routeKeys.has(`${String(b.booth)}|`))
+    : expoBoothOptions;
+  const filtered=sourceFiltered.filter(b=>!q||norm(b.name).includes(q)||norm(b.booth).includes(q)).slice(0,Math.max(1, limit));
   if(!filtered.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);padding:6px">No booths match that search.</div>';return;}
   el.innerHTML=filtered.map(b=>`<div class="booth-pick-item">
     <div class="booth-pick-main">
@@ -1364,6 +1385,36 @@ function clearBoothList(){
   saveAndRenderBooths();
   showToast('Planner list reset.');
 }
+function getGeneratedRoutePool(){
+  const raw = JSON.parse(localStorage.getItem('ubw_generated_route')||'[]');
+  return (Array.isArray(raw)?raw:[]).map(r=>({
+    name: r.name || r.brand || '',
+    booth: r.booth || '?'
+  }));
+}
+function importGeneratedRoute(){
+  const route = getGeneratedRoutePool();
+  if(!route.length){showToast('No generated route found yet.');return;}
+  const now = Date.now();
+  boothList = route.slice(0,230).map((r,i)=>{
+    const pri = i < 10 ? 'high' : (i < 80 ? 'medium' : 'low');
+    const t = PRIORITY_TIMES[pri];
+    return {id:now+i,name:r.name||`Brand ${i+1}`,booth:r.booth||'?',priority:pri,baseTime:t.base,lineTime:t.line,done:false};
+  });
+  saveAndRenderBooths();
+  showToast(`Imported ${boothList.length} route brands to planner.`);
+}
+function bootstrapPlannerFromGeneratedRoute(){
+  if(boothList.length) return;
+  const route = getGeneratedRoutePool();
+  if(!route.length) return;
+  const now = Date.now();
+  boothList = route.slice(0,230).map((r,i)=>{
+    const pri = i < 10 ? 'high' : (i < 80 ? 'medium' : 'low');
+    const t = PRIORITY_TIMES[pri];
+    return {id:now+i,name:r.name||`Brand ${i+1}`,booth:r.booth||'?',priority:pri,baseTime:t.base,lineTime:t.line,done:false};
+  });
+}
 function downloadBoothList(){
   if(!boothList.length){showToast('Add at least one booth first ✨');return;}
   const lines=[
@@ -1383,7 +1434,17 @@ function downloadBoothList(){
   URL.revokeObjectURL(a.href);
   showToast('Planner list downloaded 📋');
 }
-function saveAndRenderBooths(){localStorage.setItem('ubw_booth_list',JSON.stringify(boothList));renderBoothList();updateTimeCalc();}
+function syncTrackerWithBoothList(){
+  const existing = JSON.parse(localStorage.getItem('ubw_tracker_list')||'[]');
+  const byKey = new Map(existing.map(i => [`${norm(i.name)}|${String(i.booth)}`, i]));
+  const merged = boothList.map(b => {
+    const k = `${norm(b.name)}|${String(b.booth)}`;
+    const prev = byKey.get(k);
+    return prev ? {...prev, priority:b.priority, baseTime:b.baseTime, lineTime:b.lineTime} : {...b, done:false, skipped:false, value:0, note:''};
+  });
+  localStorage.setItem('ubw_tracker_list', JSON.stringify(merged));
+}
+function saveAndRenderBooths(){localStorage.setItem('ubw_booth_list',JSON.stringify(boothList));syncTrackerWithBoothList();renderBoothList();updateTimeCalc();renderTracker();}
 function renderBoothList(){
   const el=document.getElementById('booth-list');
   if(!boothList.length){el.innerHTML='<div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">Add your first booth above to start planning ✨</div>';return;}
@@ -1754,6 +1815,8 @@ function renderCompanies(){
     return catOk&&qOk;
   });
   const el=document.getElementById('company-list');
+  const cc=document.getElementById('company-count');
+  if(cc) cc.textContent=`Showing ${filtered.length} of ${COMPANIES.length} brand profiles`;
   el.innerHTML=filtered.map((c,i)=>{
     const tagHtml=c.tags.map(t=>{const cls={celebrity:'t-celebrity',melanin:'t-melanin',kbeauty:'t-kbeauty',clean:'t-clean',curly:'t-curly',tools:'t-tools',luxury:'t-luxury'}[t]||'t-clean';return `<span class="cc-tag ${cls}">${{celebrity:'⭐ Celebrity',melanin:'✊🏾 Melanin',kbeauty:'🌸 K-Beauty',clean:'🌿 Clean',curly:'🌀 Curly',tools:'⚡ Tools',luxury:'💎 Luxury'}[t]||t}</span>`;}).join('');
     const sampleTotal=c.products.reduce((s,p)=>s+(p.sample||0),0);
@@ -1810,6 +1873,7 @@ function addBoothFromProfile(name,booth){
 }
 
 /* INIT */
+bootstrapPlannerFromGeneratedRoute();
 renderBoothList();updateTimeCalc();renderTracker();calcMoneyBack();calcGirlMath();renderCompanies();loadExpoBoothOptions();
 </script>
 

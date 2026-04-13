@@ -838,6 +838,18 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
     <button class="btn btn-sm" onclick="filterProdCat('service',this)">💅 Services</button>
   </div>
 
+  <div style="background:var(--win-body,#FFE4F0);border:2px solid var(--win-bd,#D4A0C8);padding:1rem;margin-bottom:1.2rem">
+    <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center">
+      <div>
+        <div style="font-weight:900;color:var(--win-bar,#7B68EE);font-size:15px">My Value Bag</div>
+        <div style="font-size:12px;color:var(--muted,#9966AA)">Add products, services, and demos from the list below to track your total event value.</div>
+      </div>
+      <button class="btn btn-sm" onclick="clearValueBag()">Clear List</button>
+    </div>
+    <div id="value-bag-summary" style="margin-top:10px;font-size:13px;color:var(--win-txt,#4A0060)"></div>
+    <div id="value-bag-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px"></div>
+  </div>
+
   <!-- Product cards rendered by renderProducts() -->
   <div id="product-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem"></div>
 
@@ -1316,6 +1328,7 @@ function enrichProductsAndServices(){
 
 let prodFilter = 'all';
 let prodSearch = '';
+let VALUE_BAG = JSON.parse(localStorage.getItem('ubw_value_bag')||'[]');
 
 function renderProducts(){const pg=document.getElementById('product-grid');if(!pg)return;
   let data = [...PRODUCTS];
@@ -1323,6 +1336,7 @@ function renderProducts(){const pg=document.getElementById('product-grid');if(!p
   else if(prodFilter!=='all') data=data.filter(p=>p.cat===prodFilter);
   if(prodSearch) data=data.filter(p=>p.name.toLowerCase().includes(prodSearch)||p.brand.toLowerCase().includes(prodSearch));
   data.sort((a,b)=>(b.savings||b.sample||0)-(a.savings||a.sample||0));
+  window.__PRODUCT_VIEW = data;
   pg.innerHTML=data.map(p=>`
     <div class="product-card" data-cat="${p.cat}">
       <div class="pc-img">
@@ -1332,6 +1346,7 @@ function renderProducts(){const pg=document.getElementById('product-grid');if(!p
       <div class="pc-body">
         <div class="pc-brand">${p.brand} · Booth ${p.booth}</div>
         <div class="pc-name">${p.name}</div>
+        <div style="font-size:12px;color:var(--muted);margin:4px 0 6px">${(p.type||'product')==='service'?'Service / Demo Experience':'Specific Product'} · ${p.cat}</div>
         <div class="pc-price-row">
           <span class="pc-retail">$${p.retail}</span>
           <span class="pc-sample">${(p.type||'product')==='service'?'Typical service cost':(p.sample>0?'~$'+p.sample+' sample':'No sample')}</span>
@@ -1342,11 +1357,73 @@ function renderProducts(){const pg=document.getElementById('product-grid');if(!p
         </div>`:''}
         <div class="pc-booth"><span>🏷️</span>${p.tag}${p.note?` · <em>${p.note}</em>`:''}</div>
         <div class="pc-actions">
+          <button class="pc-btn pc-btn-add" onclick="addToValueBagByRef('${encodeURIComponent(`${p.brand}|${p.booth}|${p.name}|${p.type||'product'}`)}')">+ Add to Value Bag</button>
           <button class="pc-btn pc-btn-add" onclick="addToPriority(this,'${p.brand} — ${p.name}')">+ Priority</button>
           <button class="pc-btn pc-btn-wish" onclick="this.textContent='♥ Saved';this.style.borderColor='var(--pink)';this.style.color='var(--pink)'">♡ Save</button>
         </div>
       </div>
     </div>`).join('');
+}
+
+function saveValueBag(){
+  localStorage.setItem('ubw_value_bag', JSON.stringify(VALUE_BAG));
+}
+
+function renderValueBag(){
+  const list = document.getElementById('value-bag-list');
+  const sum = document.getElementById('value-bag-summary');
+  if(!list || !sum) return;
+  const totalRetail = VALUE_BAG.reduce((s,i)=>s+(i.retail||0),0);
+  const totalSaved = VALUE_BAG.reduce((s,i)=>s+(i.savings||i.retail||0),0);
+  sum.innerHTML = `<strong>${VALUE_BAG.length}</strong> items selected · <strong>$${Math.round(totalRetail)}</strong> retail/service value · <strong style="color:#059669">$${Math.round(totalSaved)}</strong> estimated event savings`;
+  if(!VALUE_BAG.length){
+    list.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:8px 0">No items yet. Click “Add to Value Bag” on products/services below.</div>`;
+    return;
+  }
+  list.innerHTML = VALUE_BAG.map((i,idx)=>`
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;background:#fff;border:1px solid var(--win-bd,#D4A0C8);padding:8px 10px">
+      <div style="font-size:12px;color:var(--win-txt,#4A0060)">
+        <strong>${i.brand}</strong> · ${i.name}<br>
+        <span style="color:var(--muted)">Booth ${i.booth} · ${(i.type||'product')==='service'?'Service/Demo':'Product'}</span>
+      </div>
+      <div style="text-align:right;font-size:12px">
+        <div><strong>$${i.retail||0}</strong></div>
+        <button class="btn btn-sm" onclick="removeValueBagItem(${idx})">Remove</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToValueBagByRef(ref){
+  const key = decodeURIComponent(ref||'');
+  const [brand, booth, name, type='product'] = key.split('|');
+  const item = PRODUCTS.find(p => p.brand===brand && String(p.booth)===String(booth) && p.name===name && (p.type||'product')===type);
+  if(!item){showToast('Item unavailable right now.');return;}
+  const exists = VALUE_BAG.some(v => v.brand===item.brand && v.name===item.name && String(v.booth)===String(item.booth) && (v.type||'product')===(item.type||'product'));
+  if(exists){showToast('Already in your value bag.');return;}
+  VALUE_BAG.push({
+    brand:item.brand,
+    booth:item.booth,
+    name:item.name,
+    type:item.type||'product',
+    retail:item.retail||0,
+    savings:item.savings??item.retail??0
+  });
+  saveValueBag();
+  renderValueBag();
+  showToast(`${item.brand} added to your value bag.`);
+}
+
+function removeValueBagItem(idx){
+  VALUE_BAG.splice(idx,1);
+  saveValueBag();
+  renderValueBag();
+}
+
+function clearValueBag(){
+  VALUE_BAG = [];
+  saveValueBag();
+  renderValueBag();
 }
 
 function filterProducts(){
@@ -1624,6 +1701,7 @@ enrichStocksWithAllExpoBrands().finally(()=>{
   renderTicker();
   renderStocks();
   renderProducts();
+  renderValueBag();
   setInterval(simulateLiveStockUpdates, 18000);
 });
 </script>
