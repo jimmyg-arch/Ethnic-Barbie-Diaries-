@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JemUBW 2026 — Beauty Made Easier by Jem</title>
+<meta name="description" content="Your Y2K guide to Ulta Beauty World 2026. Brand directory, expo planner, AI route builder and more.">
+<meta property="og:title" content="JemUBW — Ulta Beauty World 2026 Survival Guide">
+<meta property="og:description" content="200+ brands. One day. Your pink-coded expo playbook for UBW 2026.">
+<meta property="og:image" content="https://yourusername.github.io/ubw2026/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💗</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   JemUBW Y2K THEME — "Back to 2000s" exact match
+   Palette from reference: soft periwinkle bg, peach cream 
+   windows, medium purple UI, bubbly rounded headings
+   Pink accent preserved for brand identity (Jem = pink)
+═══════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap');
+
+/* ── EXACT PALETTE FROM REFERENCE IMAGE ─────────────── */
+:root {
+  /* backgrounds */
+  --bg:        #C8BFEA;   /* periwinkle lavender — page bg */
+  --bg2:       #D4CAED;   /* slightly lighter lavender */
+  --grid-c:    rgba(160,145,210,0.22); /* grid line color */
+
+  /* window chrome */
+  --win-bg:    #F5EDE8;   /* warm peach-cream interior */
+  --win-bar:   #8B5CF6;   /* medium purple title bar */
+  --win-bar2:  #7C3AED;   /* darker purple for bar gradient */
+  --win-bd:    #C4A8E0;   /* light purple border */
+  --win-sh:    3px 3px 0 rgba(100,60,180,0.3);
+
+  /* text */
+  --purple:    #7C5CBF;   /* main purple — headings, labels */
+  --purple2:   #9B7DD4;   /* medium purple */
+  --purple3:   #C4A8E0;   /* light purple */
+  --ink:       #4A3070;   /* dark purple for body text */
+  --muted:     #9B88B8;   /* muted purple-gray */
+
+  /* pink accent (Jem brand) */
+  --pink:      #F06292;   /* soft pink — not harsh */
+  --pink2:     #F8BBD9;   /* light pink */
+  --pink3:     #FDE8F0;   /* blush */
+
+  /* buttons */
+  --btn-bg:    #EDE0F5;   /* light lavender button */
+  --btn-bd:    #B09AD0;   /* medium purple border */
+  --btn-sh:    2px 2px 0 rgba(100,60,180,0.25);
+
+  /* semantic */
+  --green:     #66BB6A;
+  --red:       #EF5350;
+  --gold:      #FFA726;
+  --gold-l:    #FFF3E0;
+
+  /* typography */
+  --scr:  'Press Start 2P', monospace;  /* pixel font — sparingly */
+  --head: 'Nunito', sans-serif;          /* bubbly rounded — headings */
+  --body: 'DM Sans', sans-serif;         /* clean body */
+
+  --nav-h: 56px;
+}
+
+/* ── RESET ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  cursor:none;
+  min-height:100dvh;
+}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--body);cursor:none;border:none;outline:none;}
+input,textarea,select{font-family:var(--body);outline:none;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--win-bar);border-radius:0;}
+
+/* ── GRID BACKGROUND ─────────────────────────────────── */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(var(--grid-c) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-c) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+
+/* ── SCANLINES (very subtle) ─────────────────────────── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 3px,
+    rgba(120,80,200,0.018) 3px,rgba(120,80,200,0.018) 4px
+  );
+}
+
+/* ── CUSTOM CURSOR (pixel arrow like reference) ──────── */
+#y2k-cursor{
+  position:fixed;pointer-events:none;z-index:99999;
+  transform:translate(-2px,-2px);transition:none;
+}
+
+/* ── PAGE WRAP ───────────────────────────────────────── */
+.page-wrap{
+  position:relative;z-index:2;
+  padding-top:var(--nav-h);
+  min-height:100dvh;
+}
+
+/* ══════════════════════════════════════════════════════
+   WINDOW CHROME — matches reference exactly
+══════════════════════════════════════════════════════ */
+.win{
+  background:var(--win-bg);
+  border:2px solid var(--win-bd);
+  box-shadow:var(--win-sh),
+             inset 1px 1px 0 rgba(255,255,255,0.5),
+             inset -1px -1px 0 rgba(140,100,200,0.08);
+  position:relative;
+}
+
+.win-bar{
+  background:linear-gradient(90deg,var(--win-bar),var(--win-bar2));
+  padding:5px 8px;
+  display:flex;align-items:center;justify-content:space-between;
+  user-select:none;flex-shrink:0;
+}
+
+.win-title{
+  font-family:var(--body);font-size:12px;font-weight:600;
+  color:#fff;letter-spacing:0.01em;
+}
+
+.win-btns{display:flex;gap:3px;align-items:center;}
+.win-btn{
+  width:18px;height:16px;
+  background:var(--btn-bg);
+  border:1px solid var(--win-bar2);
+  font-size:9px;color:var(--purple);
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;transition:background 0.1s;font-weight:700;
+  font-family:var(--body);
+}
+.win-btn:hover{background:var(--pink2);}
+
+/* Window body */
+.win-body{padding:1.5rem;}
+
+/* ══════════════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════════════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+  background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));
+  border-bottom:3px solid var(--win-bar2);
+  box-shadow:0 2px 12px rgba(100,60,180,0.3);
+  z-index:1000;
+  display:flex;align-items:center;padding:0 1.25rem;gap:10px;
+}
+
+.nav-logo{
+  font-family:var(--head);font-size:20px;font-weight:900;
+  color:#fff;white-space:nowrap;flex-shrink:0;margin-right:8px;
+  text-shadow:1px 1px 0 rgba(0,0,0,0.15);
+  letter-spacing:-0.5px;
+}
+
+.nav-links{display:flex;align-items:center;gap:3px;flex-wrap:nowrap;overflow:hidden;}
+.nav-links a{
+  font-family:var(--body);font-size:12px;font-weight:600;
+  color:rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:5px 12px;white-space:nowrap;transition:all 0.15s;
+}
+.nav-links a:hover{background:rgba(255,255,255,0.25);color:#fff;}
+.nav-links a.active{background:rgba(255,255,255,0.95);color:var(--win-bar);border-color:rgba(255,255,255,0.9);}
+.nav-links .nav-cta{
+  background:var(--pink);border-color:var(--pink);color:#fff;
+  font-weight:700;
+}
+.nav-links .nav-cta:hover{background:#E91E8C;border-color:#E91E8C;}
+.nav-hamburger{
+  display:none;flex-direction:column;gap:4px;padding:7px;
+  background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);
+}
+.nav-hamburger span{display:block;width:18px;height:2px;background:#fff;transition:all 0.2s;}
+.nav-mobile{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+  background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));
+  border-bottom:3px solid var(--win-bar2);
+  padding:10px;flex-direction:column;gap:4px;z-index:999;
+}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{
+  font-family:var(--body);font-size:13px;font-weight:600;
+  color:rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+  padding:10px 14px;
+}
+.nav-mobile a.active,.nav-mobile a:hover{background:rgba(255,255,255,0.25);color:#fff;}
+@media(max-width:680px){.nav-links{display:none;}.nav-hamburger{display:flex;}}
+
+/* ══════════════════════════════════════════════════════
+   TICKER BAR
+══════════════════════════════════════════════════════ */
+.ticker-wrap{
+  background:var(--win-bar2);
+  border-bottom:2px solid rgba(0,0,0,0.15);
+  padding:6px 0;overflow:hidden;position:relative;z-index:89;
+}
+.ticker-track{
+  display:flex;gap:4rem;white-space:nowrap;
+  animation:tickerScroll 35s linear infinite;
+}
+.ticker-track:hover{animation-play-state:paused;}
+.ticker-item{
+  font-family:var(--body);font-size:11px;font-weight:600;
+  color:rgba(255,255,255,0.9);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.tc-up{color:#A5F3C8;font-weight:700;}
+.tc-dn{color:#FCA5A5;font-weight:700;}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════════════════
+   TYPOGRAPHY — bubbly Nunito headings like reference
+══════════════════════════════════════════════════════ */
+.display-title,.section-title,.panel-title{
+  font-family:var(--head);
+  font-weight:900;
+  color:var(--purple);
+  line-height:1.15;
+  letter-spacing:-0.5px;
+}
+.display-title{font-size:clamp(28px,5vw,52px);}
+.section-title{font-size:clamp(22px,4vw,36px);}
+.panel-title{font-size:clamp(18px,3vw,26px);}
+.display-title em,.section-title em,.panel-title em{
+  color:var(--pink);font-style:normal;
+}
+.eyebrow{
+  font-family:var(--head);font-size:13px;font-weight:700;
+  color:var(--purple2);display:block;margin-bottom:6px;
+  text-transform:uppercase;letter-spacing:0.08em;
+}
+.lead{
+  font-size:clamp(14px,2vw,16px);color:var(--muted);
+  line-height:1.7;font-weight:400;
+}
+.divider{
+  width:60px;height:3px;
+  background:linear-gradient(90deg,var(--purple),var(--purple3));
+  margin:1rem 0;
+}
+.dc{margin:1rem auto;}
+
+/* Pixel font only for decorative/accent use */
+.pixel{font-family:var(--scr);font-size:9px;letter-spacing:0.5px;}
+
+/* ══════════════════════════════════════════════════════
+   SECTION LABELS (reference style: centered with lines)
+══════════════════════════════════════════════════════ */
+.sec-label{
+  font-family:var(--head);font-size:11px;font-weight:800;
+  color:var(--purple2);letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.sec-label::before,.sec-label::after{
+  content:'';flex:1;height:1px;background:var(--purple3);
+}
+
+/* ══════════════════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════════════════ */
+.btn{
+  font-family:var(--head);font-size:13px;font-weight:700;
+  color:var(--purple);
+  background:var(--btn-bg);
+  border:1.5px solid var(--btn-bd);
+  box-shadow:var(--btn-sh);
+  padding:10px 20px;
+  cursor:none;transition:all 0.12s;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  white-space:nowrap;letter-spacing:0.01em;
+}
+.btn:hover{background:var(--purple3);transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(100,60,180,0.25);}
+.btn:active{transform:translate(2px,2px);box-shadow:none;}
+.btn-primary{
+  background:var(--win-bar);border-color:var(--win-bar2);color:#fff;
+  box-shadow:2px 2px 0 var(--win-bar2);
+}
+.btn-primary:hover{background:var(--win-bar2);}
+.btn-pink{
+  background:var(--pink);border-color:#D81B7A;color:#fff;
+  box-shadow:2px 2px 0 #D81B7A;
+}
+.btn-pink:hover{background:#E91E8C;}
+.btn-sm{font-size:12px;padding:7px 14px;}
+.btn-full{width:100%;}
+
+/* ══════════════════════════════════════════════════════
+   INPUTS
+══════════════════════════════════════════════════════ */
+.inp{
+  background:#fff;
+  border:1.5px solid var(--btn-bd);
+  box-shadow:inset 1px 1px 0 rgba(140,100,200,0.08);
+  padding:10px 12px;
+  font-family:var(--body);font-size:14px;color:var(--ink);
+  width:100%;transition:border-color 0.15s;
+}
+.inp:focus{border-color:var(--win-bar);outline:none;}
+.inp::placeholder{color:var(--purple3);}
+select.inp{cursor:none;}
+
+/* ══════════════════════════════════════════════════════
+   CARDS
+══════════════════════════════════════════════════════ */
+.card{
+  background:var(--win-bg);
+  border:1.5px solid var(--win-bd);
+  box-shadow:var(--win-sh);
+}
+.card:hover{box-shadow:4px 4px 0 rgba(100,60,180,0.25);}
+.cp{padding:1.5rem;}
+
+/* ══════════════════════════════════════════════════════
+   PROGRESS BAR (pixel stripes)
+══════════════════════════════════════════════════════ */
+.prog-wrap{
+  height:16px;background:var(--btn-bg);
+  border:1.5px solid var(--btn-bd);overflow:hidden;
+}
+.prog-fill{
+  height:100%;
+  background:repeating-linear-gradient(
+    90deg,var(--win-bar) 0,var(--win-bar) 12px,
+    var(--purple2) 12px,var(--purple2) 14px
+  );
+  transition:width 0.6s ease;
+}
+
+/* ══════════════════════════════════════════════════════
+   PAGE TABS
+══════════════════════════════════════════════════════ */
+.page-tabs{
+  background:var(--win-bg);
+  border-bottom:2px solid var(--win-bd);
+  position:sticky;top:var(--nav-h);z-index:90;
+  box-shadow:0 2px 8px rgba(100,60,180,0.1);
+}
+.tab-row{
+  display:flex;overflow-x:auto;scrollbar-width:none;
+  max-width:1200px;margin:0 auto;padding:0 1.25rem;
+}
+.tab-row::-webkit-scrollbar{display:none;}
+.pg-tab{
+  font-family:var(--head);font-size:13px;font-weight:700;
+  color:var(--muted);background:transparent;border:none;
+  border-bottom:3px solid transparent;
+  padding:12px 16px;white-space:nowrap;transition:all 0.15s;
+}
+.pg-tab:hover{color:var(--purple);}
+.pg-tab.active{color:var(--win-bar);border-bottom-color:var(--win-bar);}
+.pg-panel{display:none;}
+.pg-panel.active{display:block;animation:fadeUp 0.22s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════════════════════════
+   PAGE HERO (pink-to-lavender gradient)
+══════════════════════════════════════════════════════ */
+.page-hero{
+  background:linear-gradient(150deg,#E8D5F0 0%,var(--bg2) 50%,#C8BFE8 100%);
+  padding:5rem 0 3.5rem;text-align:center;
+  position:relative;overflow:hidden;
+  border-bottom:2px solid var(--win-bd);
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--grid-c) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-c) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none;opacity:0.5;
+}
+.page-hero .lead{color:var(--ink);}
+.page-hero .divider{background:linear-gradient(90deg,var(--purple),var(--purple3));}
+
+/* ══════════════════════════════════════════════════════
+   STAT BOX
+══════════════════════════════════════════════════════ */
+.stat-box{
+  background:var(--win-bg);border:1.5px solid var(--win-bd);
+  box-shadow:var(--win-sh);padding:14px 12px;text-align:center;
+}
+.stat-val{
+  font-family:var(--head);font-size:24px;font-weight:900;
+  color:var(--purple);display:block;margin-bottom:3px;
+}
+.stat-lbl{font-family:var(--body);font-size:12px;color:var(--muted);}
+
+/* ══════════════════════════════════════════════════════
+   BADGE
+══════════════════════════════════════════════════════ */
+.badge{
+  font-family:var(--head);font-size:11px;font-weight:700;
+  padding:3px 10px;display:inline-flex;align-items:center;gap:4px;
+}
+.b-purple{background:var(--btn-bg);border:1px solid var(--btn-bd);color:var(--purple);}
+.b-pink{background:var(--pink3);border:1px solid var(--pink2);color:var(--pink);}
+.b-green{background:#DCFCE7;border:1px solid #86EFAC;color:#16A34A;}
+.b-gold{background:var(--gold-l);border:1px solid #FCD34D;color:#92400E;}
+
+/* ══════════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--win-bar);color:#fff;
+  padding:11px 24px;
+  border:2px solid var(--win-bar2);
+  box-shadow:3px 3px 0 rgba(80,40,160,0.3);
+  font-family:var(--head);font-size:13px;font-weight:700;
+  z-index:9999;opacity:0;transition:all 0.25s;
+  pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══════════════════════════════════════════════════════
+   BLINK + ANIMATIONS
+══════════════════════════════════════════════════════ */
+.blink{animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+.spinner{
+  width:18px;height:18px;border:3px solid var(--purple3);
+  border-top-color:var(--win-bar);border-radius:50%;
+  animation:spin 0.8s linear infinite;display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══════════════════════════════════════════════════════
+   REVEAL ANIMATIONS
+══════════════════════════════════════════════════════ */
+[data-reveal]{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease;}
+[data-reveal].revealed{opacity:1;transform:translateY(0);}
+[data-reveal][delay-1]{transition-delay:0.1s;}
+[data-reveal][delay-2]{transition-delay:0.2s;}
+[data-reveal][delay-3]{transition-delay:0.3s;}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.fade-up.visible,.fade-up.revealed{opacity:1;transform:translateY(0);}
+.delay-2{transition-delay:0.15s;}
+
+/* ══════════════════════════════════════════════════════
+   SECTION / LAYOUT
+══════════════════════════════════════════════════════ */
+.section{padding:3.5rem 0;}
+.section-sm{padding:2rem 0;}
+.container{max-width:1100px;margin:0 auto;padding:0 1.25rem;}
+.container-sm{max-width:800px;margin:0 auto;padding:0 1.25rem;}
+
+/* ══════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════ */
+.footer{
+  background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));
+  padding:3rem 0 1.5rem;position:relative;z-index:2;
+  border-top:3px solid var(--win-bar2);
+}
+.footer-brand-name{
+  font-family:var(--head);font-size:22px;font-weight:900;
+  color:#fff;margin-bottom:8px;
+}
+.footer-brand-desc{font-size:13px;color:rgba(255,255,255,0.75);max-width:220px;line-height:1.6;}
+.footer-col-title{
+  font-family:var(--head);font-size:11px;font-weight:800;
+  color:rgba(255,255,255,0.65);margin-bottom:10px;
+  text-transform:uppercase;letter-spacing:0.1em;
+}
+.footer-links{display:flex;flex-direction:column;gap:7px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.7);transition:color 0.15s;font-weight:500;}
+.footer-links a:hover{color:#fff;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.2);margin-bottom:1.5rem;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-bottom span,.footer-bottom a{font-size:12px;color:rgba(255,255,255,0.45);font-weight:500;}
+.footer-bottom a:hover{color:#fff;}
+.footer-bottom div{display:flex;gap:1rem;}
+.footer-social{display:flex;gap:6px;margin-top:10px;}
+.footer-social a{width:32px;height:30px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.15s;}
+.footer-social a:hover{background:rgba(255,255,255,0.3);}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;gap:1.5rem;}}
+@media(max-width:640px){.footer-top{grid-template-columns:1fr;}.section{padding:2.5rem 0;}}
+
+</style>
+<style>
+/* ── HERO ─────────────────────────────────── */
+.hero-section{padding:2rem 0 1rem;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:1.5rem;align-items:start;}
+@media(max-width:720px){.hero-grid{grid-template-columns:1fr;}}
+
+.hero-win .win-body{padding:2.5rem 2rem;text-align:center;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--btn-bg);border:1px solid var(--btn-bd);
+  padding:5px 14px;margin-bottom:1.25rem;
+  font-family:var(--head);font-size:11px;font-weight:700;
+  color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;
+}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.75rem;}
+
+/* ── COUNTDOWN ────────────────────────────── */
+.cd-wrap{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
+.cd-box{
+  background:#fff;border:1.5px solid var(--btn-bd);
+  box-shadow:2px 2px 0 rgba(100,60,180,0.2);
+  min-width:64px;text-align:center;padding:10px 8px 8px;
+}
+.cd-num{
+  font-family:var(--head);font-size:clamp(20px,3.5vw,30px);
+  font-weight:900;color:var(--win-bar);display:block;line-height:1;
+}
+.cd-lbl{
+  font-family:var(--head);font-size:10px;font-weight:700;
+  color:var(--muted);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:0.08em;
+}
+.cd-sep{
+  font-family:var(--head);font-size:22px;font-weight:900;
+  color:var(--purple2);padding-bottom:10px;
+}
+
+/* ── QUICK FACTS ──────────────────────────── */
+.qf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.qf-item{
+  background:#fff;border:1.5px solid var(--win-bd);
+  box-shadow:2px 2px 0 rgba(100,60,180,0.15);
+  padding:14px 10px;text-align:center;transition:all 0.15s;
+}
+.qf-item:hover{background:var(--btn-bg);transform:translate(1px,1px);}
+.qf-icon{font-size:24px;display:block;margin-bottom:7px;}
+.qf-val{font-family:var(--head);font-size:16px;font-weight:900;color:var(--win-bar);display:block;margin-bottom:3px;}
+.qf-lbl{font-size:12px;color:var(--muted);font-weight:500;}
+
+/* ── ESSENTIALS GRID ──────────────────────── */
+.ess-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+.ess-card{
+  background:#fff;border:1.5px solid var(--win-bd);
+  box-shadow:2px 2px 0 rgba(100,60,180,0.15);
+  padding:16px 14px;transition:all 0.15s;
+}
+.ess-card:hover{background:var(--btn-bg);transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(100,60,180,0.15);}
+.ess-icon{font-size:28px;display:block;margin-bottom:10px;}
+.ess-title{font-family:var(--head);font-size:14px;font-weight:800;color:var(--purple);margin-bottom:5px;}
+.ess-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+
+/* ── BRING LIST ───────────────────────────── */
+.bring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:7px;}
+.bring-item{
+  display:flex;align-items:center;gap:10px;padding:11px 13px;
+  background:#fff;border:1.5px solid var(--win-bd);
+  box-shadow:1px 1px 0 rgba(100,60,180,0.1);
+  cursor:none;transition:all 0.12s;
+  font-size:13px;font-weight:500;color:var(--ink);
+}
+.bring-item:hover{background:var(--btn-bg);}
+.bring-item.checked{background:var(--win-bar);color:#fff;border-color:var(--win-bar2);}
+.bring-check{
+  width:17px;height:17px;border:2px solid var(--btn-bd);background:#fff;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;color:var(--win-bar);transition:all 0.12s;
+}
+.bring-item.checked .bring-check{background:#fff;border-color:#fff;color:var(--win-bar);}
+
+/* ── TIPS ─────────────────────────────────── */
+.tip-list{display:flex;flex-direction:column;gap:10px;max-width:720px;margin:0 auto;}
+.tip-card{
+  background:#fff;border:1.5px solid var(--win-bd);
+  box-shadow:2px 2px 0 rgba(100,60,180,0.15);
+  padding:16px;display:flex;gap:14px;align-items:flex-start;
+  transition:all 0.15s;
+}
+.tip-card:hover{border-color:var(--win-bar);box-shadow:3px 3px 0 rgba(100,60,180,0.2);}
+.tip-num{
+  font-family:var(--head);font-size:14px;font-weight:900;color:#fff;
+  background:var(--win-bar);min-width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.tip-title{font-family:var(--head);font-size:15px;font-weight:800;color:var(--purple);margin-bottom:5px;}
+.tip-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* ── CTA ──────────────────────────────────── */
+.cta-section{
+  background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));
+  border:2px solid var(--win-bar2);
+  box-shadow:4px 4px 0 rgba(80,40,160,0.3);
+  padding:3rem 2.5rem;text-align:center;
+}
+.cta-title{font-family:var(--head);font-size:clamp(20px,4vw,32px);font-weight:900;color:#fff;line-height:1.3;margin-bottom:8px;}
+.cta-sub{font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:1.75rem;}
+.cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.cta-buttons .btn{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:#fff;}
+.cta-buttons .btn:hover{background:rgba(255,255,255,0.28);}
+.cta-buttons .btn-white{background:#fff;color:var(--win-bar);border-color:#fff;}
+.cta-buttons .btn-white:hover{background:var(--btn-bg);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="resources.html">Brands</a>
+    <a href="community.html">Community</a>
+    <a href="reminders.html">Reminders</a>
+    <a href="brand-hub.html">Brand Hub</a>
+    <a href="planner.html">Planner</a>
+    <a href="about.html">About</a>
+    <a href="resources.html" class="nav-cta">Plan My Route →</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Home</a><a href="resources.html">Brands</a>
+  <a href="community.html">Community</a><a href="reminders.html">Reminders</a>
+  <a href="brand-hub.html">Brand Hub</a><a href="planner.html">Planner</a>
+  <a href="about.html">About</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" style="position:sticky;top:var(--nav-h);z-index:89">
+    <div class="ticker-track">
+      <span class="ticker-item">✦ UBW 2026 &middot; April 16 &middot; Orlando FL</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+      <span class="ticker-item">💗 200+ Brands &middot; $2,000+ Swag Bag &middot; $165 Ticket</span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+      <span class="ticker-item">Beauty Made Easier by Jem ✦</span>
+      <span class="ticker-item">✦ UBW 2026 &middot; April 16 &middot; Orlando FL</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+      <span class="ticker-item">💗 200+ Brands &middot; $2,000+ Swag Bag &middot; $165 Ticket</span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+      <span class="ticker-item">Beauty Made Easier by Jem ✦</span>
+    </div>
+  </div>
+
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- LEFT: Main hero window -->
+        <div class="win" data-reveal>
+          <div class="win-bar">
+            <span class="win-title">survival_guide.exe — UBW 2026</span>
+            <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+          </div>
+          <div class="win-body" style="text-align:center">
+            <div class="hero-eyebrow"><span class="blink">●</span>&nbsp; April 16, 2026 · Orlando, FL · Live Event</div>
+            <h1 class="display-title" style="font-size:clamp(26px,4.5vw,48px);margin-bottom:10px">
+              Ulta Beauty<br>World <em>2026</em>
+            </h1>
+            <p class="lead" style="max-width:400px;margin:0 auto">200+ brands. One day. Zero time to waste.<br>Your pink-coded expo playbook.</p>
+            <div class="hero-actions">
+              <a href="#essentials" class="btn btn-primary">Start Planning →</a>
+              <a href="resources.html" class="btn">Browse Brands</a>
+              <a href="planner.html" class="btn btn-pink">My Planner</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Countdown + stats -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="win" data-reveal delay-1>
+            <div class="win-bar">
+              <span class="win-title">countdown.exe</span>
+              <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+            </div>
+            <div style="padding:1.25rem">
+              <div class="sec-label">Time Until Doors Open</div>
+              <div id="countdown" class="cd-wrap"></div>
+            </div>
+          </div>
+          <div class="win" data-reveal delay-2>
+            <div class="win-bar">
+              <span class="win-title">event_stats.dat</span>
+              <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+            </div>
+            <div style="padding:1rem">
+              <div class="qf-grid">
+                <div class="qf-item"><span class="qf-icon">💄</span><span class="qf-val">200+</span><span class="qf-lbl">Brands</span></div>
+                <div class="qf-item"><span class="qf-icon">🎁</span><span class="qf-val">$2,000+</span><span class="qf-lbl">Swag bag</span></div>
+                <div class="qf-item"><span class="qf-icon">🕘</span><span class="qf-val">8 hrs</span><span class="qf-lbl">9AM – 5PM</span></div>
+                <div class="qf-item"><span class="qf-icon">💳</span><span class="qf-val">$165</span><span class="qf-lbl">Per ticket</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="section" id="location" style="padding-top:0">
+    <div class="container">
+      <div class="win" data-reveal>
+        <div class="win-bar">
+          <span class="win-title">venue_info.txt — Orange County Convention Center, Orlando FL</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+          <div>
+            <div class="sec-label">Venue Details</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:#fff;border:1.5px solid var(--win-bd);padding:10px 13px"><span style="font-family:var(--head);font-size:11px;font-weight:800;color:var(--win-bar);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px">Address</span><span style="font-size:13px;color:var(--ink)">9800 International Drive, Orlando FL 32819 — West Building</span></div>
+              <div style="background:#fff;border:1.5px solid var(--win-bd);padding:10px 13px"><span style="font-family:var(--head);font-size:11px;font-weight:800;color:var(--win-bar);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px">Parking</span><span style="font-size:13px;color:var(--ink)">West Lot · $20 cashless · card, Apple Pay, Google Pay</span></div>
+              <div style="background:#fff;border:1.5px solid var(--win-bd);padding:10px 13px"><span style="font-family:var(--head);font-size:11px;font-weight:800;color:var(--win-bar);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px">Hours</span><span style="font-size:13px;color:var(--ink)">Check-in 8:00 AM · Expo 9AM–5PM · Storage closes 5:30PM</span></div>
+              <div style="background:#fff;border:1.5px solid var(--win-bd);padding:10px 13px"><span style="font-family:var(--head);font-size:11px;font-weight:800;color:var(--win-bar);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px">Nearest Airport</span><span style="font-size:13px;color:var(--ink)">Orlando International (MCO) — approx. 20 min drive</span></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+              <a href="https://maps.google.com/?q=Orange+County+Convention+Center" target="_blank" class="btn btn-primary btn-sm">Get Directions →</a>
+              <a href="about.html#map-download" class="btn btn-sm">Download Map</a>
+            </div>
+          </div>
+          <div>
+            <div class="sec-label">Location Preview</div>
+            <div onclick="window.open('https://maps.google.com/?q=Orange+County+Convention+Center+Orlando','_blank')"
+              style="background:linear-gradient(135deg,var(--bg),var(--bg2));border:1.5px solid var(--win-bd);height:185px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:none;transition:all 0.15s;box-shadow:2px 2px 0 rgba(100,60,180,0.15);"
+              onmouseover="this.style.background='var(--btn-bg)'" onmouseout="this.style.background='linear-gradient(135deg,var(--bg),var(--bg2))'">
+              <div style="font-size:40px;margin-bottom:10px">📍</div>
+              <div style="font-family:var(--head);font-size:14px;font-weight:800;color:var(--purple);text-align:center;line-height:1.4">Orange County<br>Convention Center</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:8px">Click to open in Google Maps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESSENTIALS -->
+  <section class="section" id="essentials" style="padding-top:0">
+    <div class="container">
+      <div class="win" data-reveal>
+        <div class="win-bar">
+          <span class="win-title">event_essentials.exe — Must read before attending!</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">Must Know Before You Go</div>
+          <div class="ess-grid">
+            <div class="ess-card" data-reveal><span class="ess-icon">🆔</span><div class="ess-title">ID Required</div><div class="ess-desc">Government ID must match ticket name. No ID = no entry. Must be 18+.</div></div>
+            <div class="ess-card" data-reveal delay-1><span class="ess-icon">💳</span><div class="ess-title">Cashless Event</div><div class="ess-desc">No cash accepted anywhere on-site. Bring card, Apple Pay, or Google Pay.</div></div>
+            <div class="ess-card" data-reveal delay-2><span class="ess-icon">👜</span><div class="ess-title">Bag Policy</div><div class="ess-desc">No wheeled bags except the $50 Ulta roller. Bring multiple tote bags!</div></div>
+            <div class="ess-card" data-reveal delay-3><span class="ess-icon">📦</span><div class="ess-title">Free Storage</div><div class="ess-desc">Complimentary monitored luggage storage from 9AM–5:30PM.</div></div>
+            <div class="ess-card" data-reveal><span class="ess-icon">📬</span><div class="ess-title">Ship It Home</div><div class="ess-desc">On-site shipping boxes available. Domestic shipping only — no international.</div></div>
+            <div class="ess-card" data-reveal delay-1><span class="ess-icon">🎁</span><div class="ess-title">Swag Bag $2,000+</div><div class="ess-desc">Must be present to claim. Do NOT leave without picking it up!</div></div>
+            <div class="ess-card" data-reveal delay-2><span class="ess-icon">🎟️</span><div class="ess-title">Digital Ticket</div><div class="ess-desc">Check email for event pass. No transfers — name must match ID exactly.</div></div>
+            <div class="ess-card" data-reveal delay-3><span class="ess-icon">👟</span><div class="ess-title">Wear Comfy Shoes!</div><div class="ess-desc">You'll walk 5–8 miles on the floor. Cute and comfortable is the goal.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKING LIST -->
+  <section class="section" id="bring" style="padding-top:0">
+    <div class="container">
+      <div class="win" data-reveal>
+        <div class="win-bar">
+          <span class="win-title">packing_list.exe — Click each item to check off</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">Packing Checklist</div>
+          <div class="bring-grid">
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Government-issued ID</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital ticket (check email)</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Credit / debit card</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Multiple tote bags</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Portable charger</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Reusable water bottle</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Comfortable shoes</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Phone + headphones</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Lip liner (for testing)</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Hand sanitizer</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Snacks for energy</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Event map / route plan</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Priority brand list</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Small makeup bag</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Mini mirror</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Business cards (optional)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section" id="tips" style="padding-top:0">
+    <div class="container">
+      <div class="win" data-reveal>
+        <div class="win-bar">
+          <span class="win-title">pro_tips.txt — Strategies from expo veterans</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">Survival Tips</div>
+          <div class="tip-list">
+            <div class="tip-card" data-reveal><div class="tip-num">01</div><div><div class="tip-title">Arrive at 8AM — not 9AM</div><div class="tip-desc">Doors open at 8AM for check-in. The expo starts at 9AM sharp. Fenty, Cécred, and Rare Beauty booths have 40+ minute lines by 9:15AM.</div></div></div>
+            <div class="tip-card" data-reveal delay-1><div class="tip-num">02</div><div><div class="tip-title">Split up with your crew</div><div class="tip-desc">Divide and conquer. Cover different zones simultaneously, then text each other when you find hidden gem booths or freebies.</div></div></div>
+            <div class="tip-card" data-reveal delay-2><div class="tip-num">03</div><div><div class="tip-title">Hit high-ROI booths first</div><div class="tip-desc">Celebrity brand booths — Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — draw the longest lines early. Hit those in the first 90 minutes.</div></div></div>
+            <div class="tip-card" data-reveal delay-3><div class="tip-num">04</div><div><div class="tip-title">Bring multiple tote bags</div><div class="tip-desc">No wheeled bags allowed (except the $50 Ulta roller). Some booths give away bags you can reuse throughout the day.</div></div></div>
+            <div class="tip-card" data-reveal><div class="tip-num">05</div><div><div class="tip-title">Use the on-site shipping station</div><div class="tip-desc">Flying home? Box up your haul at the on-site shipping station. Domestic only — boxes and labels available. Use our <a href="planner.html#shipping" style="color:var(--win-bar);font-weight:700">shipping cost calculator</a> to plan ahead.</div></div></div>
+            <div class="tip-card" data-reveal delay-1><div class="tip-num">06</div><div><div class="tip-title">Use the Expo Planner tool</div><div class="tip-desc">Build your custom route, track your checklist, calculate your haul ROI, and run the Girl Math budget analyzer — all in our <a href="planner.html" style="color:var(--win-bar);font-weight:700">free Planner</a>.</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0;padding-bottom:3rem">
+    <div class="container">
+      <div class="cta-section" data-reveal>
+        <div class="cta-title">Ready to Build Your<br>Perfect Expo Day?</div>
+        <p class="cta-sub">Explore brands · Plan your route · Calculate your shipping · Run the Girl Math</p>
+        <div class="cta-buttons">
+          <a href="resources.html" class="btn btn-white">Browse 200+ Brands →</a>
+          <a href="planner.html" class="btn">My Planner</a>
+          <a href="about.html#map-download" class="btn">Download Map</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your Y2K pink-coded guide to Ulta Beauty World 2026. Built with 💗 by Jem.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a><a href="#">📌</a><a href="#">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="index.html">Home</a><a href="resources.html">Resources</a><a href="community.html">Community</a><a href="about.html">About Jem</a></div></div>
+      <div><div class="footer-col-title">Tools</div><div class="footer-links"><a href="planner.html">My Planner</a><a href="reminders.html">Reminders</a><a href="brand-hub.html">Brand Hub</a><a href="brand-intel.html">Intelligence</a></div></div>
+      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="legal.html">Terms &amp; Privacy</a><a href="legal.html#disclaimer">Disclaimer</a><a href="legal.html#financial">Financial Notice</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Beauty Made Easier by Jem 💗</span><div><a href="legal.html">Legal</a><a href="legal.html#privacy">Privacy</a></div></div>
+  </div>
+</footer>
+
+<div class="toast" id="y2k-toast"></div>
+<script>
+/* JemUBW Y2K Shared JS */
+(function(){
+'use strict';
+
+/* CURSOR — pixel arrow matching reference */
+function initCursor(){
+  const el=document.createElement('svg');
+  el.id='y2k-cursor';
+  el.setAttribute('width','20');el.setAttribute('height','24');
+  el.setAttribute('viewBox','0 0 20 24');
+  el.style.cssText='position:fixed;pointer-events:none;z-index:99999;left:0;top:0;transition:none;';
+  el.innerHTML='<polygon points="0,0 0,20 5,15 9,22 12,21 8,14 15,14" fill="#8B5CF6" stroke="#5B21B6" stroke-width="1.2"/>';
+  document.body.appendChild(el);
+  document.addEventListener('mousemove',e=>{el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';},{passive:true});
+  /* sparkle on click */
+  document.addEventListener('click',e=>{
+    const s=document.createElement('div');
+    s.style.cssText='position:fixed;left:'+e.clientX+'px;top:'+e.clientY+'px;font-size:16px;pointer-events:none;z-index:99990;transform:translate(-50%,-50%);animation:y2kSpark 0.55s ease both;';
+    s.textContent=['💗','✦','★','🌸','✿'][Math.floor(Math.random()*5)];
+    document.body.appendChild(s);setTimeout(()=>s.remove(),600);
+  });
+  const css=document.createElement('style');
+  css.textContent='@keyframes y2kSpark{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-160%) scale(1.8)}}';
+  document.head.appendChild(css);
+}
+
+/* NAV */
+function initNav(){
+  const ham=document.getElementById('hamburger');
+  const mob=document.getElementById('nav-mobile');
+  if(ham&&mob){
+    ham.addEventListener('click',()=>{
+      mob.classList.toggle('open');
+      const ss=ham.querySelectorAll('span');
+      if(mob.classList.contains('open')){ss[0].style.transform='rotate(45deg) translate(5px,5px)';ss[1].style.opacity='0';ss[2].style.transform='rotate(-45deg) translate(5px,-5px)';}
+      else ss.forEach(s=>{s.style.transform='';s.style.opacity='';});
+    });
+  }
+  const path=window.location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.nav-links a,.nav-mobile a').forEach(a=>{
+    if((a.getAttribute('href')||'')===(path||'index.html'))a.classList.add('active');
+  });
+}
+
+/* COUNTDOWN */
+function initCountdown(){
+  const el=document.getElementById('countdown');
+  if(!el)return;
+  const target=new Date('2026-04-16T09:00:00-04:00');
+  function pad(n){return String(n).padStart(2,'0');}
+  function update(){
+    const diff=target-new Date();
+    if(diff<=0){el.innerHTML='<div class="cd-box" style="grid-column:1/-1"><span class="cd-num">🎉 It\'s UBW Day!!</span></div>';return;}
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    el.innerHTML=`
+      <div class="cd-box"><span class="cd-num">${pad(d)}</span><span class="cd-lbl">Days</span></div>
+      <span class="cd-sep blink">:</span>
+      <div class="cd-box"><span class="cd-num">${pad(h)}</span><span class="cd-lbl">Hours</span></div>
+      <span class="cd-sep blink">:</span>
+      <div class="cd-box"><span class="cd-num">${pad(m)}</span><span class="cd-lbl">Min</span></div>
+      <span class="cd-sep blink">:</span>
+      <div class="cd-box"><span class="cd-num">${pad(s)}</span><span class="cd-lbl">Sec</span></div>`;
+  }
+  update();setInterval(update,1000);
+}
+
+/* TOAST */
+window.showToast=function(msg){
+  let t=document.getElementById('y2k-toast');
+  if(!t){t=document.createElement('div');t.id='y2k-toast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),2800);
+};
+
+/* TABS */
+window.showTab=function(id,btn){
+  document.querySelectorAll('.pg-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pg-tab').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById('tab-'+id);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  const tabs=document.querySelector('.page-tabs');
+  if(tabs)window.scrollTo({top:tabs.offsetTop-10,behavior:'smooth'});
+};
+
+/* STARTUP DIALOG — exact match to reference image */
+function initStartup(){
+  if(sessionStorage.getItem('y2k-boot2'))return;
+  sessionStorage.setItem('y2k-boot2','1');
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(80,50,140,0.55);z-index:99998;display:flex;align-items:center;justify-content:center;animation:fadeIn 0.3s both;backdrop-filter:blur(2px);';
+  overlay.innerHTML=`
+    <div style="animation:winPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;max-width:320px;width:90vw;">
+      <div class="win" style="background:#F5EDE8;">
+        <div class="win-bar">
+          <span class="win-title">JemUBW.exe</span>
+          <div class="win-btns">
+            <div class="win-btn" onclick="document.getElementById('y2k-overlay').remove()">&#9633;</div>
+            <div class="win-btn" onclick="document.getElementById('y2k-overlay').remove()">&#9135;</div>
+            <div class="win-btn" onclick="document.getElementById('y2k-overlay').remove()">&#215;</div>
+          </div>
+        </div>
+        <div style="padding:32px 28px;text-align:center;">
+          <div style="font-family:'Nunito',sans-serif;font-size:clamp(22px,6vw,32px);font-weight:900;color:#7C5CBF;line-height:1.3;margin-bottom:6px;">Beauty Made<br>Easier? ✦</div>
+          <div style="font-size:13px;color:#9B88B8;margin-bottom:24px;">UBW 2026 · Apr 16 · Orlando</div>
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button class="btn btn-primary" onclick="document.getElementById('y2k-overlay').remove()">Go! &rarr;</button>
+            <button class="btn" onclick="document.getElementById('y2k-overlay').remove()">Cancel</button>
+          </div>
+          <div style="margin-top:20px;text-align:right;">
+            <svg width="20" height="24" viewBox="0 0 20 24" style="opacity:0.5"><polygon points="0,0 0,20 5,15 9,22 12,21 8,14 15,14" fill="#7C5CBF"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  overlay.id='y2k-overlay';
+  const css=document.createElement('style');
+  css.textContent='@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes winPop{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}';
+  document.head.appendChild(css);
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+}
+
+/* SCROLL PROGRESS */
+function initScrollBar(){
+  const bar=document.createElement('div');
+  bar.style.cssText='position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#8B5CF6,#F06292,#8B5CF6);z-index:2001;width:0%;transition:width 0.08s linear;';
+  document.body.appendChild(bar);
+  window.addEventListener('scroll',()=>{
+    const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+    bar.style.width=Math.min(100,pct)+'%';
+  },{passive:true});
+}
+
+/* REVEAL */
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed','visible');obs.unobserve(e.target);}});
+  },{threshold:0.06,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('[data-reveal],.fade-up').forEach(el=>obs.observe(el));
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initCursor();initNav();initCountdown();initReveal();initScrollBar();initStartup();
+});
+})();
+
+</script>
+
+<script>
+function toggleBring(el){
+  el.classList.toggle('checked');
+  el.querySelector('.bring-check').textContent = el.classList.contains('checked') ? '✓' : '';
+  showToast(el.classList.contains('checked') ? 'Packed! ✓ 💗' : 'Removed from list');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,3092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UBW 2026 — Full Site Preview by Jem</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ── GLOBAL CSS ── */
+/* ═══════════════════════════════════════════════
+   BARBIE UBW 2026 — GLOBAL STYLESHEET
+   Bubblegum Pink · Glossy · Feminine · Luxury-Pop
+═══════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Dancing+Script:wght@600;700&display=swap');
+
+/* ── TOKENS ──────────────────────────────────── */
+:root {
+  --pink:        #FF3F8E;
+  --pink-hot:    #E8185A;
+  --pink-soft:   #FF7FB5;
+  --pink-pale:   #FFD6E8;
+  --pink-blush:  #FFF0F6;
+  --pink-glass:  rgba(255,63,142,0.12);
+  --pink-border: rgba(255,63,142,0.25);
+
+  --white:  #FFFFFF;
+  --cream:  #FFF8FB;
+  --smoke:  #FDF0F6;
+  --mist:   #C8809A;
+  --ink:    #2D0A1E;
+  --ink2:   #5C2040;
+
+  --gold:   #E8A020;
+  --gold-l: #FFF0CC;
+
+  --shadow-pink: 0 8px 32px rgba(255,63,142,0.18);
+  --shadow-soft: 0 4px 20px rgba(255,63,142,0.10);
+  --shadow-card: 0 2px 12px rgba(45,10,30,0.08);
+
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-pill: 50px;
+
+  --font-display: 'Playfair Display', serif;
+  --font-script:  'Dancing Script', cursive;
+  --font-body:    'DM Sans', sans-serif;
+
+  --nav-h: 64px;
+}
+
+/* ── RESET ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--font-body); cursor: pointer; border: none; outline: none; }
+input, textarea, select { font-family: var(--font-body); outline: none; }
+ul { list-style: none; }
+
+/* ── SCROLLBAR ───────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--pink-blush); }
+::-webkit-scrollbar-thumb { background: var(--pink-soft); border-radius: 4px; }
+
+/* ══════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--pink-border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nav-logo {
+  font-family: var(--font-script);
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-hot), var(--pink-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-links a {
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink2);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-links a:hover { background: var(--pink-pale); color: var(--pink); }
+.nav-links a.active {
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(255,63,142,0.35);
+}
+.nav-cta {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff !important;
+  padding: 8px 18px !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-pink) !important; opacity: 1 !important; background: linear-gradient(135deg, var(--pink), var(--pink-hot)) !important; }
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  cursor: pointer;
+  background: none;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--pink);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: var(--nav-h); left: 0; right: 0;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--pink-border);
+  padding: 1rem 1.5rem 1.5rem;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 999;
+  box-shadow: var(--shadow-pink);
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink2);
+  transition: all 0.15s;
+}
+.nav-mobile a:hover, .nav-mobile a.active { background: var(--pink-pale); color: var(--pink); }
+
+/* ══════════════════════════════════════════════
+   SHARED LAYOUT
+══════════════════════════════════════════════ */
+.page-wrap {
+  padding-top: var(--nav-h);
+  min-height: 100dvh;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.container-sm {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.section { padding: 5rem 0; }
+.section-sm { padding: 3rem 0; }
+
+/* ── TYPOGRAPHY ──────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-script);
+  font-size: 18px;
+  color: var(--pink);
+  display: block;
+  margin-bottom: 8px;
+}
+.display-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 6vw, 64px);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--ink);
+}
+.display-title em { color: var(--pink); font-style: italic; }
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+}
+.section-title em { color: var(--pink); font-style: italic; }
+.lead {
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--mist);
+  line-height: 1.7;
+  font-weight: 300;
+}
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+/* ── BUTTONS ─────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.22s;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.98) translateY(0); }
+.btn-pink {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff;
+  box-shadow: var(--shadow-soft);
+}
+.btn-pink:hover { box-shadow: var(--shadow-pink); }
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--pink-border);
+  color: var(--pink);
+}
+.btn-outline:hover { background: var(--pink-pale); border-color: var(--pink); }
+.btn-white {
+  background: #fff;
+  color: var(--pink-hot);
+  box-shadow: var(--shadow-soft);
+}
+.btn-white:hover { box-shadow: var(--shadow-pink); }
+.btn-sm { padding: 8px 16px; font-size: 12px; }
+.btn-lg { padding: 16px 36px; font-size: 16px; }
+
+/* ── CARDS ───────────────────────────────────── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--pink-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: box-shadow 0.22s, transform 0.22s;
+}
+.card:hover { box-shadow: var(--shadow-pink); transform: translateY(-3px); }
+.card-pad { padding: 1.5rem; }
+.card-glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* ── BADGE ───────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+.badge-pink { background: var(--pink-pale); color: var(--pink-hot); }
+.badge-gold { background: var(--gold-l); color: var(--gold); }
+.badge-white { background: rgba(255,255,255,0.9); color: var(--pink-hot); }
+
+/* ── GRADIENT BG SECTIONS ─────────────────────── */
+.bg-gradient {
+  background: linear-gradient(150deg, #fff 0%, #FFE8F3 40%, #FFD6E8 100%);
+}
+.bg-pink {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-hot) 100%);
+}
+.bg-dark-pink {
+  background: linear-gradient(135deg, #2D0A1E 0%, #5C1035 100%);
+}
+.bg-blush { background: var(--pink-blush); }
+.bg-smoke { background: var(--smoke); }
+
+/* ── DIVIDER ─────────────────────────────────── */
+.divider {
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-soft));
+  border-radius: 2px;
+  margin: 1rem 0;
+}
+.divider-center { margin: 1rem auto; }
+
+/* ── GRID ────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+.grid-auto-sm { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+
+/* ── PILLS / CHIPS ───────────────────────────── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1.5px solid var(--pink-border);
+  background: var(--white);
+  color: var(--mist);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.chip:hover { border-color: var(--pink); color: var(--pink); }
+.chip.active { background: var(--pink); border-color: var(--pink); color: #fff; box-shadow: 0 4px 14px rgba(255,63,142,0.3); }
+
+/* ── TOAST ───────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: var(--shadow-pink);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+.footer {
+  background: linear-gradient(135deg, #2D0A1E 0%, #5C1035 100%);
+  color: rgba(255,255,255,0.7);
+  padding: 4rem 0 2rem;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 2rem;
+}
+.footer-brand-name {
+  font-family: var(--font-script);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--pink-soft);
+  margin-bottom: 12px;
+}
+.footer-brand-desc { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.5); max-width: 220px; }
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 14px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--pink-soft); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+}
+.footer-social { display: flex; gap: 10px; }
+.footer-social a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+}
+.footer-social a:hover { background: var(--pink); color: #fff; transform: translateY(-2px); }
+
+/* ══════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulse-pink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,63,142,0.4); }
+  50%       { box-shadow: 0 0 0 12px rgba(255,63,142,0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.fade-up { animation: fadeUp 0.6s ease both; }
+.float   { animation: float 4s ease-in-out infinite; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ══════════════════════════════════════════════
+   MEDIA QUERIES
+══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .grid-4 { grid-template-columns: repeat(2,1fr); }
+  .grid-3 { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section { padding: 3.5rem 0; }
+  .display-title { font-size: clamp(28px, 9vw, 44px); }
+}
+
+
+/* ── SITE SWITCHER ── */
+.site-pages { display:none; }
+.site-pages.active { display:block; }
+
+/* ── PAGE STYLES ── */
+
+/* ══ HOME-SPECIFIC ══════════════════════════ */
+
+/* HERO */
+.hero {
+  min-height: calc(100dvh - var(--nav-h));
+  background: linear-gradient(150deg, #fff 0%, #FFE8F3 35%, #FFD6E8 70%, #FFC4E0 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0 4rem;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,127,181,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -60px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,63,142,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pink-hot);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  animation: pulse-pink 1.5s infinite;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2rem; }
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* COUNTDOWN */
+.countdown-card {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  color: #fff;
+  box-shadow: var(--shadow-pink);
+  position: relative;
+  overflow: hidden;
+}
+.countdown-card::before {
+  content: '💗';
+  position: absolute;
+  font-size: 80px;
+  right: -10px; top: -10px;
+  opacity: 0.15;
+  transform: rotate(15deg);
+}
+.countdown-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#countdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  min-width: 56px;
+  backdrop-filter: blur(4px);
+}
+.countdown-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+}
+.countdown-lbl {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+}
+.countdown-sep {
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.5);
+  margin-top: -8px;
+}
+
+/* QUICK FACTS */
+.quick-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.quick-fact {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+.quick-fact:hover { box-shadow: var(--shadow-soft); transform: translateY(-2px); }
+.qf-icon { font-size: 20px; margin-bottom: 6px; }
+.qf-value { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.qf-label { font-size: 11px; color: var(--mist); margin-top: 2px; }
+
+/* LOCATION SECTION */
+.location-card {
+  background: linear-gradient(135deg, #fff 0%, var(--pink-blush) 100%);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.map-preview {
+  background: var(--pink-pale);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid var(--pink-border);
+}
+.map-preview-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--pink-blush), var(--pink-pale));
+  transition: all 0.2s;
+}
+.map-preview:hover .map-preview-inner { background: var(--pink-pale); }
+.map-pin-icon { font-size: 40px; animation: float 3s ease-in-out infinite; }
+.map-preview-label { font-size: 13px; font-weight: 600; color: var(--pink-hot); }
+.directions-btn { font-size: 12px; color: var(--pink); text-decoration: underline; cursor: pointer; }
+
+/* ESSENTIALS */
+.essentials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+.essential-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+.essential-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-soft));
+}
+.essential-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.ec-icon { font-size: 28px; margin-bottom: 10px; }
+.ec-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.ec-desc { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+/* BRING LIST */
+.bring-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.bring-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink2);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.bring-item:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-blush); }
+.bring-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--pink-border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  transition: all 0.15s;
+}
+.bring-item.checked .bring-check {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+}
+.bring-item.checked { border-color: var(--pink-pale); color: var(--mist); text-decoration: line-through; }
+
+/* TIPS SECTION */
+.tip-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+.tip-card:hover { box-shadow: var(--shadow-soft); }
+.tip-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255,63,142,0.3);
+}
+.tip-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.tip-desc { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+/* CTA SECTION */
+.cta-section {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-hot) 100%);
+  border-radius: var(--radius-xl);
+  padding: 4rem;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '✦ ✦ ✦';
+  position: absolute;
+  top: 20px; left: 0; right: 0;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 20px;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.cta-sub { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 2rem; }
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* SECTION HEADER */
+.sec-head { text-align: center; margin-bottom: 3rem; }
+.sec-head .divider { margin: 1rem auto; }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-visual { order: -1; }
+  .location-card { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 640px) {
+  .quick-facts-grid { grid-template-columns: repeat(2,1fr); }
+  .hero { padding: 3rem 0 4rem; }
+  .countdown-item { min-width: 48px; padding: 8px 10px; }
+  .countdown-num { font-size: 22px; }
+  .cta-section { padding: 2.5rem 1.5rem; }
+}
+
+
+/* ══ RESOURCES PAGE ═══════════════════════════ */
+.page-hero {
+  padding: 5rem 0 4rem;
+  background: linear-gradient(150deg, #fff 0%, #FFE8F3 50%, #FFD6E8 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '✦';
+  position: absolute;
+  font-size: 300px;
+  color: rgba(255,63,142,0.04);
+  top: -60px; right: -60px;
+  font-family: var(--font-display);
+}
+
+/* FILTER BAR */
+.filter-bar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--pink-border);
+  padding: 14px 0;
+}
+.filter-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 1.25rem;
+}
+.filter-inner::-webkit-scrollbar { display: none; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pink-blush);
+  border: 1.5px solid var(--pink-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  flex-shrink: 0;
+  flex: 1;
+  max-width: 280px;
+}
+.search-box svg { width: 14px; height: 14px; stroke: var(--mist); flex-shrink: 0; }
+.search-box input {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--ink);
+  width: 100%;
+}
+.search-box input::placeholder { color: var(--mist); }
+
+/* BRAND CARD */
+.brand-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.22s;
+  cursor: pointer;
+}
+.brand-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.brand-card.hidden { display: none; }
+
+.bc-top {
+  padding: 1.25rem 1.25rem 0.75rem;
+  position: relative;
+}
+.bc-cat-bar {
+  height: 3px;
+  border-radius: 0;
+  margin: 0 -1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+.bc-icon { font-size: 28px; margin-bottom: 8px; }
+.bc-name { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+.bc-booth {
+  font-size: 11px; background: var(--pink-pale);
+  color: var(--pink-hot); padding: 2px 8px;
+  border-radius: var(--radius-pill); font-weight: 700;
+  display: inline-block; margin-bottom: 6px;
+}
+.bc-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.bc-tag {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.bc-body { padding: 0 1.25rem 1.25rem; }
+.bc-desc { font-size: 12px; color: var(--mist); line-height: 1.6; margin-bottom: 10px; }
+.bc-hero-prod {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--pink-blush); border-radius: var(--radius-md);
+  padding: 8px 10px; font-size: 12px; color: var(--ink2); margin-bottom: 10px;
+}
+.bc-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ROUTE BUILDER SECTION */
+.route-section {
+  background: linear-gradient(135deg, #fff 0%, var(--pink-blush) 100%);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+}
+
+/* MAP SECTION */
+.map-section {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.map-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--pink-border);
+  overflow-x: auto;
+}
+.map-tab {
+  padding: 14px 20px;
+  font-size: 13px; font-weight: 600;
+  color: var(--mist);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.map-tab.active { color: var(--pink); border-bottom-color: var(--pink); }
+.map-tab-content { display: none; padding: 2rem; }
+.map-tab-content.active { display: block; }
+
+/* ZONE DISPLAY */
+.zone-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.zone-block {
+  background: var(--smoke);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.zone-head {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.zone-pills {
+  padding: 10px;
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.zone-pill {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--pink-border);
+  color: var(--ink2);
+}
+.zone-pill:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+/* STOCK DATA */
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.stock-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: all 0.2s;
+}
+.stock-card:hover { box-shadow: var(--shadow-soft); }
+.stock-ticker {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--pink-hot);
+}
+.stock-name { font-size: 11px; color: var(--mist); margin-bottom: 10px; }
+.stock-price { font-size: 22px; font-weight: 700; color: var(--ink); }
+.stock-change {
+  font-size: 12px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+  margin-left: 6px;
+}
+.stock-change.up { background: #DCFCE7; color: #16A34A; }
+.stock-change.down { background: #FEE2E2; color: #DC2626; }
+.stock-note { font-size: 11px; color: var(--mist); margin-top: 8px; }
+
+/* SECTION TABS */
+.page-sections {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2rem 0 0;
+  border-bottom: 1px solid var(--pink-border);
+  margin-bottom: 2.5rem;
+}
+.page-sections::-webkit-scrollbar { display: none; }
+.ps-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-pill) var(--radius-pill) 0 0;
+  font-size: 13px; font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--pink-border);
+  border-bottom: none;
+  color: var(--mist);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ps-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+.ps-btn:hover:not(.active) { color: var(--pink); border-color: var(--pink); }
+
+.ps-panel { display: none; }
+.ps-panel.active { display: block; }
+
+/* ROI BADGE */
+.roi-bar { height: 4px; background: var(--pink-pale); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+.roi-fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--gold)); border-radius: 2px; }
+
+@media (max-width: 640px) {
+  .route-section { padding: 1.5rem; }
+}
+
+
+/* HERO */
+.about-hero {
+  min-height: 70vh;
+  background: linear-gradient(150deg, var(--pink) 0%, var(--pink-hot) 60%, #8B0040 100%);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 6rem 0 5rem;
+}
+.about-hero::before {
+  content: '';
+  position: absolute; top: -120px; right: -120px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 65%);
+}
+.about-hero::after {
+  content: '✦';
+  position: absolute; font-size: 400px;
+  color: rgba(255,255,255,0.04);
+  bottom: -100px; left: -60px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.profile-ring {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  animation: float 4s ease-in-out infinite;
+}
+.profile-ring::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,255,255,0.25);
+  animation: spin 20s linear infinite;
+}
+
+/* STATS */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin: -3rem 0 4rem;
+  position: relative;
+  z-index: 10;
+}
+.astat {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-pink);
+  transition: all 0.22s;
+}
+.astat:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(255,63,142,0.2); }
+.astat-num {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 900;
+  color: var(--pink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.astat-lbl { font-size: 12px; color: var(--mist); }
+
+/* MAP DOWNLOAD SECTION */
+.map-download-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: center;
+  box-shadow: var(--shadow-soft);
+}
+.map-mockup {
+  background: linear-gradient(135deg, var(--pink-pale), var(--pink-blush));
+  border-radius: var(--radius-lg);
+  aspect-ratio: 3/4;
+  max-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--pink-border);
+  position: relative;
+  overflow: hidden;
+}
+.map-mockup::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,63,142,0.04) 20px, rgba(255,63,142,0.04) 21px),
+              repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,63,142,0.04) 20px, rgba(255,63,142,0.04) 21px);
+}
+.map-icon-float { font-size: 48px; animation: float 3s ease-in-out infinite; }
+.map-label { font-size: 13px; font-weight: 700; color: var(--pink-hot); }
+.map-sublabel { font-size: 11px; color: var(--mist); }
+
+/* SOCIAL CARDS */
+.social-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.social-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.22s;
+}
+.social-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.sc-icon { font-size: 32px; margin-bottom: 8px; }
+.sc-platform { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.sc-handle { font-size: 12px; color: var(--pink); }
+
+/* VISITOR SECTION */
+.visitor-card {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.visitor-card::before { content: '👀'; position: absolute; font-size: 120px; right: -20px; top: -20px; opacity: 0.1; }
+.visitor-num {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.visitor-label { font-size: 16px; opacity: 0.85; margin-bottom: 0.5rem; }
+.visitor-sub { font-size: 13px; opacity: 0.65; }
+
+/* FAQ */
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.faq-q {
+  padding: 1rem 1.25rem;
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.faq-q:hover { background: var(--pink-blush); }
+.faq-q.open { color: var(--pink); }
+.faq-q .arrow { transition: transform 0.25s; font-size: 12px; }
+.faq-q.open .arrow { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding: 0 1.25rem 1rem;
+  font-size: 13px; line-height: 1.65;
+  color: var(--mist);
+}
+.faq-a.open { display: block; }
+
+@media(max-width:768px){ .about-stats{grid-template-columns:repeat(2,1fr);margin-top:-2rem;} .map-download-card{grid-template-columns:1fr;} .about-hero{padding:5rem 0 6rem;} }
+@media(max-width:480px){ .about-stats{grid-template-columns:repeat(2,1fr);} }
+
+
+:root{--bg:#080307;--surface:#110810;--card:#18101A;--border:rgba(255,63,142,0.12);--border-soft:rgba(255,255,255,0.06);--pink:#FF3F8E;--pink-hot:#E8185A;--text-1:#F5EEF8;--text-2:rgba(245,238,248,0.6);--text-3:rgba(245,238,248,0.3);--text-4:rgba(245,238,248,0.15);--green:#34D399;--amber:#FBBF24;--orange:#FB923C;--red:#F87171;--r-lg:20px;--r-md:14px;--r-sm:9px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-1);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:4px;height:4px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(255,63,142,0.3);border-radius:4px;}
+#lock-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem;background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(255,63,142,0.12) 0%,transparent 70%);}
+.lock-wrap{width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center;}
+.lock-mark{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,#1E0A18,#2D1228);border:1px solid rgba(255,63,142,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:2rem;box-shadow:0 0 0 8px rgba(255,63,142,0.05),0 0 0 16px rgba(255,63,142,0.025);}
+.lock-mark svg{width:28px;height:28px;stroke:var(--pink);stroke-width:1.5;}
+.lock-h{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--text-1);text-align:center;letter-spacing:-0.01em;line-height:1.1;margin-bottom:8px;}
+.lock-s{font-size:13px;color:var(--text-3);text-align:center;line-height:1.65;max-width:280px;margin:0 auto 2.5rem;}
+.lock-field{width:100%;position:relative;margin-bottom:12px;}
+.lock-field svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--text-4);pointer-events:none;}
+#pw-input{width:100%;padding:15px 16px 15px 44px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);font-size:14px;color:var(--text-1);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s,box-shadow 0.2s;letter-spacing:0.08em;}
+#pw-input::placeholder{color:var(--text-4);letter-spacing:0.02em;}
+#pw-input:focus{border-color:rgba(255,63,142,0.5);box-shadow:0 0 0 3px rgba(255,63,142,0.08);}
+#pw-input.err{border-color:rgba(248,113,113,0.5);}
+.lock-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--pink),var(--pink-hot));border:none;border-radius:var(--r-md);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 4px 24px rgba(255,63,142,0.35);transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:0.02em;}
+.lock-btn:hover{transform:translateY(-1px);box-shadow:0 6px 32px rgba(255,63,142,0.45);}
+.lock-msg{height:18px;font-size:12px;text-align:center;margin-top:10px;color:var(--red);opacity:0;transition:opacity 0.2s;}
+.lock-msg.show{opacity:1;}
+.lock-foot{margin-top:2.5rem;font-size:11px;color:var(--text-4);text-align:center;line-height:1.7;}
+.lock-foot b{color:var(--text-3);font-weight:500;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.shake{animation:shake 0.35s ease;}
+#dashboard{display:none;flex-direction:column;min-height:100dvh;}
+.topbar{height:58px;background:rgba(8,3,7,0.88);border-bottom:1px solid var(--border-soft);backdrop-filter:blur(20px);display:flex;align-items:center;padding:0 1.5rem;gap:12px;position:sticky;top:0;z-index:200;}
+.tb-brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tb-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--pink),var(--pink-hot));display:flex;align-items:center;justify-content:center;font-size:14px;}
+.tb-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--text-1);letter-spacing:0.01em;}
+.tb-tag{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-4);}
+.tb-space{flex:1;}
+.tb-live{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.2);border-radius:20px;}
+.tb-live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.35}}
+.tb-live-text{font-size:11px;font-weight:600;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;}
+.tb-upd{font-size:11px;color:var(--text-4);white-space:nowrap;}
+.tbtn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;white-space:nowrap;border:1px solid;letter-spacing:0.01em;}
+.tbtn svg{width:12px;height:12px;stroke-width:2;flex-shrink:0;}
+.tbtn-ghost{background:transparent;border-color:var(--border-soft);color:var(--text-2);}
+.tbtn-ghost:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12);color:var(--text-1);}
+.tbtn-pink{background:rgba(255,63,142,0.1);border-color:rgba(255,63,142,0.25);color:var(--pink);}
+.tbtn-pink:hover{background:rgba(255,63,142,0.18);}
+.tbtn-red{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:var(--red);}
+.tbtn-red:hover{background:rgba(248,113,113,0.14);}
+.dash-layout{display:grid;grid-template-columns:220px 1fr;flex:1;min-height:calc(100dvh - 58px);}
+.sidebar{background:var(--surface);border-right:1px solid var(--border-soft);padding:1.5rem 0;display:flex;flex-direction:column;position:sticky;top:58px;height:calc(100dvh - 58px);overflow-y:auto;}
+.sb-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-4);padding:0 1.25rem;margin-bottom:6px;margin-top:1.25rem;}
+.sb-label:first-of-type{margin-top:0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 1.25rem;font-size:13px;font-weight:500;color:var(--text-3);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;user-select:none;}
+.nav-item svg{width:15px;height:15px;stroke-width:1.75;flex-shrink:0;}
+.nav-item:hover{color:var(--text-1);background:rgba(255,255,255,0.025);}
+.nav-item.active{color:var(--pink);border-left-color:var(--pink);background:rgba(255,63,142,0.06);}
+.nb{margin-left:auto;background:rgba(255,63,142,0.15);color:var(--pink);font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;}
+.sb-foot{margin-top:auto;padding:1.25rem;border-top:1px solid var(--border-soft);}
+.sb-user{display:flex;align-items:center;gap:9px;}
+.sb-avatar{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--pink-hot));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.sb-uname{font-size:13px;font-weight:600;color:var(--text-1);line-height:1.2;}
+.sb-urole{font-size:10px;color:var(--text-4);}
+.sb-lock{margin-left:auto;width:28px;height:28px;border-radius:8px;background:transparent;border:1px solid var(--border-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-3);transition:all 0.15s;}
+.sb-lock svg{width:13px;height:13px;stroke-width:2;}
+.sb-lock:hover{background:rgba(248,113,113,0.08);border-color:rgba(248,113,113,0.2);color:var(--red);}
+.dash-main{padding:2rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.5rem;}
+.p-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--text-1);margin-bottom:2px;}
+.p-sub{font-size:12px;color:var(--text-3);}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--pink);display:block;margin-bottom:4px;}
+.card{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--r-lg);box-shadow:0 1px 3px rgba(0,0,0,0.4),0 4px 16px rgba(0,0,0,0.3);}
+.cp{padding:1.5rem;}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.kpi-card{background:var(--card);border:1px solid var(--border-soft);border-radius:var(--r-lg);padding:1.25rem;position:relative;overflow:hidden;transition:border-color 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.4);}
+.kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);opacity:0;transition:opacity 0.2s;}
+.kpi-card:hover{border-color:rgba(255,63,142,0.2);}
+.kpi-card:hover::after{opacity:0.5;}
+.kpi-lbl{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.kpi-lbl svg{width:13px;height:13px;stroke-width:1.75;opacity:0.6;}
+.kpi-val{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3vw,36px);font-weight:700;color:var(--text-1);line-height:1;margin-bottom:8px;}
+.kv-pink{color:var(--pink);}
+.kpi-delta{font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;width:fit-content;}
+.d-up{background:rgba(52,211,153,0.1);color:var(--green);}
+.d-neu{background:rgba(255,255,255,0.06);color:var(--text-3);}
+.row2{display:grid;grid-template-columns:1.6fr 1fr;gap:1.25rem;}
+.row2e{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
+.ctrl-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.sf{position:relative;flex:1;min-width:200px;max-width:300px;}
+.sf svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--text-4);pointer-events:none;}
+.sf input{width:100%;padding:9px 12px 9px 34px;background:rgba(255,255,255,0.04);border:1px solid var(--border-soft);border-radius:var(--r-sm);font-size:13px;color:var(--text-1);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s;}
+.sf input::placeholder{color:var(--text-4);}
+.sf input:focus{border-color:rgba(255,63,142,0.35);}
+.fpills{display:flex;gap:6px;flex-wrap:wrap;}
+.fpill{padding:6px 13px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--border-soft);background:transparent;color:var(--text-3);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;letter-spacing:0.02em;}
+.fpill:hover{border-color:rgba(255,63,142,0.3);color:var(--text-2);}
+.fpill.active{background:rgba(255,63,142,0.12);border-color:rgba(255,63,142,0.35);color:var(--pink);}
+.ftable{width:100%;border-collapse:collapse;}
+.ftable thead th{padding:0 12px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-4);white-space:nowrap;border-bottom:1px solid var(--border-soft);}
+.ftable thead th:first-child{padding-left:0;}
+.ftable tbody tr{transition:background 0.12s;border-bottom:1px solid rgba(255,255,255,0.03);}
+.ftable tbody tr:last-child{border-bottom:none;}
+.ftable tbody tr:hover{background:rgba(255,255,255,0.02);}
+.ftable td{padding:11px 12px;font-size:13px;color:var(--text-2);vertical-align:middle;}
+.ftable td:first-child{padding-left:0;}
+.bn{font-weight:600;color:var(--text-1);font-size:13px;line-height:1.2;}
+.bb{font-size:10px;color:var(--text-4);margin-top:1px;}
+.hrow{display:flex;align-items:center;gap:8px;}
+.hbar{flex:1;min-width:70px;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.hfill{height:100%;border-radius:2px;transition:width 0.7s cubic-bezier(0.16,1,0.3,1);}
+.hpct{font-size:11px;font-weight:700;min-width:30px;text-align:right;}
+.spill{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;}
+.spill::before{content:'';width:5px;height:5px;border-radius:50%;display:inline-block;}
+.s-c{background:rgba(248,113,113,0.1);color:var(--red)}.s-c::before{background:var(--red);}
+.s-h{background:rgba(251,146,60,0.1);color:var(--orange)}.s-h::before{background:var(--orange);}
+.s-m{background:rgba(251,191,36,0.1);color:var(--amber)}.s-m::before{background:var(--amber);}
+.s-l{background:rgba(52,211,153,0.1);color:var(--green)}.s-l::before{background:var(--green);}
+.ptag{font-size:11px;color:var(--text-4);}
+.donut-wrap{display:flex;align-items:center;gap:1.5rem;}
+.donut-svg{width:110px;height:110px;flex-shrink:0;}
+.dleg{display:flex;flex-direction:column;gap:9px;flex:1;}
+.dlr{display:flex;align-items:center;gap:8px;}
+.dld{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.dll{font-size:12px;color:var(--text-2);flex:1;}
+.dlp{font-size:12px;font-weight:700;color:var(--text-1);}
+.ibar-list{display:flex;flex-direction:column;gap:10px;}
+.ibar-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.ibn{font-size:12px;color:var(--text-2);}
+.ibc{font-size:12px;font-weight:700;color:var(--text-1);}
+.ibar-track{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;}
+.ibar-fill{height:100%;border-radius:2px;transition:width 0.7s cubic-bezier(0.16,1,0.3,1);}
+.hm-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:0.75rem 0 6px;}
+.hm-cell{aspect-ratio:1.2;border-radius:7px;cursor:pointer;position:relative;transition:transform 0.15s;}
+.hm-cell:hover{transform:scale(1.08);z-index:5;}
+.hm-tip{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%) translateY(4px);background:#1A1020;color:var(--text-1);font-size:10px;font-weight:500;padding:5px 9px;border-radius:7px;white-space:nowrap;border:1px solid var(--border);opacity:0;transition:all 0.15s;z-index:10;box-shadow:0 4px 12px rgba(0,0,0,0.5);pointer-events:none;}
+.hm-cell:hover .hm-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+.hm-lbls{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;}
+.hm-lbl{font-size:9px;color:var(--text-4);text-align:center;font-weight:500;}
+.hm-leg{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;}
+.hm-leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-4);}
+.hm-sw{width:9px;height:9px;border-radius:2px;}
+.zone-row{display:flex;align-items:center;gap:12px;padding:11px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border-soft);border-radius:var(--r-sm);margin-bottom:7px;transition:border-color 0.15s;}
+.zone-row:hover{border-color:rgba(255,63,142,0.18);}
+.zone-row:last-child{margin-bottom:0;}
+.zltr{width:34px;height:34px;border-radius:10px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.zinfo{flex:1;min-width:0;}
+.zname{font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:3px;}
+.zdesc{font-size:10px;color:var(--text-4);}
+.zbar-wrap{width:90px;}
+.zbar{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;margin-bottom:3px;}
+.zbar-fill{height:100%;border-radius:2px;}
+.zpct{font-size:10px;color:var(--text-4);text-align:right;}
+.trend-wrap{height:160px;position:relative;}
+.trend-wrap svg{width:100%;height:100%;overflow:visible;}
+.trend-lbls{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--text-4);}
+.feed-list{display:flex;flex-direction:column;}
+.fi{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fi:last-child{border-bottom:none;padding-bottom:0;}
+.fi-dot-w{display:flex;flex-direction:column;align-items:center;padding-top:3px;}
+.fi-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.fi-line{width:1px;flex:1;background:rgba(255,255,255,0.05);margin-top:4px;min-height:10px;}
+.fi:last-child .fi-line{display:none;}
+.fi-time{font-size:10px;font-weight:700;color:var(--pink);min-width:40px;}
+.fi-text{font-size:12px;color:var(--text-3);line-height:1.5;flex:1;}
+.fi-text b{color:var(--text-1);font-weight:600;}
+.focus-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.fc-card{background:rgba(255,255,255,0.025);border:1px solid var(--border-soft);border-radius:var(--r-md);padding:1.125rem;transition:border-color 0.2s;}
+.fc-card:hover{border-color:rgba(255,63,142,0.2);}
+.fc-icon{font-size:22px;margin-bottom:8px;}
+.fc-title{font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:2px;}
+.fc-desc{font-size:11px;color:var(--text-4);margin-bottom:10px;line-height:1.5;}
+.fc-cr{display:flex;align-items:baseline;gap:5px;margin-bottom:6px;}
+.fc-num{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;line-height:1;}
+.fc-pct{font-size:11px;color:var(--text-4);}
+.fc-bar{height:3px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;}
+.fc-fill{height:100%;border-radius:2px;transition:width 0.7s cubic-bezier(0.16,1,0.3,1);}
+.abtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 16px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;border:1px solid;letter-spacing:0.01em;}
+.abtn svg{width:12px;height:12px;stroke-width:2;}
+.abtn-ghost{background:transparent;border-color:var(--border-soft);color:var(--text-2);}
+.abtn-ghost:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:var(--text-1);}
+.abtn-primary{background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-color:transparent;color:#fff;box-shadow:0 2px 12px rgba(255,63,142,0.25);}
+.abtn-primary:hover{box-shadow:0 4px 20px rgba(255,63,142,0.4);transform:translateY(-1px);}
+.abtn-muted{background:rgba(255,63,142,0.07);border-color:rgba(255,63,142,0.2);color:var(--pink);}
+.abtn-muted:hover{background:rgba(255,63,142,0.13);}
+.abtn-full{width:100%;}
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(12px);background:#1A1020;color:var(--text-1);padding:10px 20px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:all 0.25s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:inline-block;animation:spin 0.9s linear infinite;}
+@media(max-width:1100px){.dash-layout{grid-template-columns:180px 1fr;}.kpi-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.dash-layout{grid-template-columns:1fr;}.sidebar{display:none;}.row2,.row2e{grid-template-columns:1fr;}.kpi-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr;}.dash-main{padding:1rem;gap:1rem;}}
+
+
+/* ── DASHBOARD OVERRIDES for inline view ── */
+#dashboard { display:flex !important; }
+#lock-screen { display:none !important; }
+.dash-layout { min-height:600px; }
+</style>
+</head>
+<body>
+
+<!-- ══ SHARED NAVBAR ══ -->
+<nav class="navbar" id="main-navbar">
+  <a href="#" onclick="showPage('home');return false" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="#" id="nav-home" class="active" onclick="showPage('home');return false">Home</a>
+    <a href="#" id="nav-resources" onclick="showPage('resources');return false">Resources</a>
+    <a href="#" id="nav-community" onclick="showPage('community');return false">Community</a>
+    <a href="#" id="nav-about" onclick="showPage('about');return false">About Jem</a>
+    <a href="#" id="nav-dashboard" onclick="showPage('dashboard');return false">Creator Dashboard</a>
+    <a href="#" class="nav-cta" onclick="showPage('resources');return false">Explore Brands →</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="document.getElementById('nav-mob').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mob">
+  <a href="#" onclick="showPage('home');document.getElementById('nav-mob').classList.remove('open');return false">Home</a>
+  <a href="#" onclick="showPage('resources');document.getElementById('nav-mob').classList.remove('open');return false">Resources</a>
+  <a href="#" onclick="showPage('community');document.getElementById('nav-mob').classList.remove('open');return false">Community</a>
+  <a href="#" onclick="showPage('about');document.getElementById('nav-mob').classList.remove('open');return false">About Jem</a>
+  <a href="#" onclick="showPage('dashboard');document.getElementById('nav-mob').classList.remove('open');return false">Creator Dashboard</a>
+</div>
+
+<!-- ══ HOME ══ -->
+<div id="page-home" class="site-pages active">
+  <div class="page-wrap">
+    <!-- ══ NAVBAR ════════════════════════════════ -->
+
+
+
+<!-- ══ PAGE WRAP ═════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── HERO ─────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy fade-up">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            April 16, 2026 · Orlando, FL
+          </div>
+          <h1 class="display-title">Ulta Beauty World<br><em>Survival Guide</em></h1>
+          <div class="divider" style="margin-top:1.25rem"></div>
+          <p class="lead" style="margin-top:1rem;max-width:460px">
+            200+ brands. One day. Zero time to waste. Your ultimate pink-coded playbook to conquer the floor, maximize every sample, and slay from open to close.
+          </p>
+          <div class="hero-actions">
+            <a href="#essentials" class="btn btn-pink btn-lg">
+              <span>Start planning</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="resources.html" class="btn btn-outline btn-lg">Browse brands</a>
+          </div>
+        </div>
+
+        <div class="hero-visual fade-up delay-2">
+          <!-- Countdown -->
+          <div class="countdown-card">
+            <div class="countdown-label">
+              <span>⏰</span> Time until the doors open
+            </div>
+            <div id="countdown">Loading…</div>
+            <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6)">Thu Apr 16 · Doors 8AM · Expo 9AM–5PM</div>
+          </div>
+
+          <!-- Quick facts -->
+          <div class="quick-facts-grid">
+            <div class="quick-fact">
+              <div class="qf-icon">💄</div>
+              <div class="qf-value">200+</div>
+              <div class="qf-label">Brand booths</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">🎁</div>
+              <div class="qf-value">$2,000+</div>
+              <div class="qf-label">Swag bag value</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">🕘</div>
+              <div class="qf-value">8 Hours</div>
+              <div class="qf-label">Expo time (9–5)</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">💳</div>
+              <div class="qf-value">$160</div>
+              <div class="qf-label">Ticket price</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LOCATION ──────────────────────────── -->
+  <section class="section bg-smoke" id="location">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">📍 Where</span>
+        <h2 class="section-title">Find <em>Your Way</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Orange County Convention Center, Orlando, Florida</p>
+      </div>
+      <div class="location-card" data-reveal>
+        <div>
+          <div class="map-preview" onclick="window.open('https://maps.google.com/?q=Orange+County+Convention+Center+Orlando+FL','_blank')">
+            <div class="map-preview-inner">
+              <div class="map-pin-icon">📍</div>
+              <div class="map-preview-label">Orange County Convention Center</div>
+              <div class="directions-btn">Click for Google Maps →</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow">Venue Details</span>
+          <h3 class="section-title" style="font-size:clamp(20px,3vw,28px)">Orange County<br>Convention Center</h3>
+          <div class="divider"></div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:1.25rem">
+            <div class="bring-item" style="cursor:default">
+              <span>🏛️</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">West Building</div>
+                <div style="font-size:12px;color:var(--mist)">9800 International Drive, Orlando, FL 32819</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>🚗</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Parking — $20</div>
+                <div style="font-size:12px;color:var(--mist)">West Parking Lot · Cashless (card/Apple Pay)</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>🕗</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Doors open 8:00 AM</div>
+                <div style="font-size:12px;color:var(--mist)">Expo: 9AM–5PM · Storage closes 5:30PM</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>✈️</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Nearest Airport</div>
+                <div style="font-size:12px;color:var(--mist)">Orlando International (MCO) — ~20 min drive</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;display:flex;gap:10px;flex-wrap:wrap">
+            <a href="https://maps.google.com/?q=Orange+County+Convention+Center+Orlando+FL" target="_blank" class="btn btn-pink btn-sm">Get Directions 🗺️</a>
+            <a href="about.html#map-download" class="btn btn-outline btn-sm">Download Map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ESSENTIALS ────────────────────────── -->
+  <section class="section" id="essentials">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">✨ What to know</span>
+        <h2 class="section-title">Event <em>Essentials</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Everything you need before stepping on that floor</p>
+      </div>
+      <div class="essentials-grid">
+        <div class="essential-card" data-reveal>
+          <div class="ec-icon">🆔</div>
+          <div class="ec-title">ID Required</div>
+          <div class="ec-desc">Government-issued ID must match your ticket name. No ID = no entry. Must be 18+ to attend.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-1>
+          <div class="ec-icon">💳</div>
+          <div class="ec-title">Cashless Event</div>
+          <div class="ec-desc">Cash is not accepted anywhere on-site. Bring Visa, Mastercard, Amex, Apple Pay, or Google Pay.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-2>
+          <div class="ec-icon">👜</div>
+          <div class="ec-title">Bag Policy</div>
+          <div class="ec-desc">No wheeled bags except the official $50 Ulta roller bag. Bring multiple tote bags — you'll need them.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-3>
+          <div class="ec-icon">📦</div>
+          <div class="ec-title">Free Storage</div>
+          <div class="ec-desc">Complimentary monitored luggage storage from 9AM–5:30PM. Come and go as needed.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-4>
+          <div class="ec-icon">📬</div>
+          <div class="ec-title">Ship It Home</div>
+          <div class="ec-desc">On-site shipping boxes & labels available. Domestic shipping only — no international.</div>
+        </div>
+        <div class="essential-card" data-reveal>
+          <div class="ec-icon">🎁</div>
+          <div class="ec-title">Swag Bag $2K+</div>
+          <div class="ec-desc">You must be present to receive your swag bag. Don't leave before grabbing it at pick-up!</div>
+        </div>
+        <div class="essential-card" data-reveal delay-1>
+          <div class="ec-icon">🎟️</div>
+          <div class="ec-title">Digital Ticket</div>
+          <div class="ec-desc">Check your email for your event pass. No transfer allowed — name on ID must match ticket.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-2>
+          <div class="ec-icon">🌡️</div>
+          <div class="ec-title">Wear Comfy Shoes</div>
+          <div class="ec-desc">You'll walk 5–8 miles on this floor. Wear cute but comfortable shoes. Your feet will thank you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRING LIST ─────────────────────────── -->
+  <section class="section bg-gradient" id="bring">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">🎒 Packing list</span>
+        <h2 class="section-title">What to <em>Bring</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Tap to check off items as you pack</p>
+      </div>
+      <div class="bring-list" id="bring-list">
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Government-issued ID</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital ticket (email)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Credit/debit card</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Multiple tote bags</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Portable charger</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Reusable water bottle</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Comfortable shoes</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Phone + headphones</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Lip liner (for testing)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Hand sanitizer</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Snacks for energy</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Printed/digital map</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Priority brand list</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Small makeup bag</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Business cards (optional)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Mini mirror</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIPS ──────────────────────────────── -->
+  <section class="section" id="tips">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">💡 Strategy</span>
+        <h2 class="section-title">Things to Know<br><em>Before You Go</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Pro tips straight from veterans of last year's San Antonio event</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;max-width:750px;margin:0 auto">
+        <div class="tip-card" data-reveal>
+          <div class="tip-num">1</div>
+          <div>
+            <div class="tip-title">Arrive at 8AM — not 9AM</div>
+            <div class="tip-desc">Doors open at 8AM for check-in. The expo starts at 9AM sharp. Get there early to avoid the registration line and get your wristband first. The Fenty, Rare Beauty, and Cécred booths will have 40+ minute lines by 9:15.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-1>
+          <div class="tip-num">2</div>
+          <div>
+            <div class="tip-title">Split up with your friends</div>
+            <div class="tip-desc">If you're going with a group, divide and conquer. Cover different sections simultaneously, then text each other when you find hidden gem booths or freebies. You'll cover 2x the ground.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-2>
+          <div class="tip-num">3</div>
+          <div>
+            <div class="tip-title">Hit high-ROI booths first</div>
+            <div class="tip-desc">Celebrity brand booths — Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — draw the longest lines early. Hit those in the first 90 minutes, then loop back to mid-tier booths after noon when crowds thin.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-3>
+          <div class="tip-num">4</div>
+          <div>
+            <div class="tip-title">Bring MULTIPLE bags</div>
+            <div class="tip-desc">Last year attendees brought full suitcases. No wheels allowed (except the $50 Ulta roller), so pack multiple large tote bags. Polite Society was giving away huge bags — grab those and re-use them throughout the day.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal>
+          <div class="tip-num">5</div>
+          <div>
+            <div class="tip-title">Use the shipping station</div>
+            <div class="tip-desc">If you're flying home, use the on-site shipping station to box up your haul before you leave. Boxes and labels are available on-site. Domestic only — no international shipping.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-1>
+          <div class="tip-num">6</div>
+          <div>
+            <div class="tip-title">Use our Expo Planner tool</div>
+            <div class="tip-desc">Download our free interactive planner to build your custom route, track your checklist, and log visited booths in real time from your phone. Zero wasted time, maximum haul.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────── -->
+  <section class="section" id="cta">
+    <div class="container">
+      <div class="cta-section" data-reveal>
+        <span class="eyebrow" style="color:rgba(255,255,255,0.7)">Ready?</span>
+        <h2 class="cta-title">Let's Build Your<br>Perfect Expo Day ✨</h2>
+        <p class="cta-sub">Explore brands, plan your route, and download your map</p>
+        <div class="cta-buttons">
+          <a href="resources.html" class="btn btn-white btn-lg">Browse 200+ Brands</a>
+          <a href="resources.html#route" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:#fff">Build My Route</a>
+          <a href="about.html#map-download" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:#fff">Download Map 🗺️</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+
+  </div>
+  
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p><div class="footer-social" style="margin-top:1rem"><a href="#" onclick="return false">📸</a><a href="#" onclick="return false">🎵</a><a href="#" onclick="return false">📌</a><a href="#" onclick="return false">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Home</a><a href="#" onclick="showPage('resources');return false">Resources</a><a href="#" onclick="showPage('community');return false">Community</a><a href="#" onclick="showPage('about');return false">About Jem</a></div></div>
+      <div><div class="footer-col-title">Event Info</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Venue &amp; Directions</a><a href="#" onclick="showPage('home');return false">Event Essentials</a><a href="#" onclick="showPage('home');return false">Packing List</a><a href="#" onclick="showPage('home');return false">Pro Tips</a></div></div>
+      <div><div class="footer-col-title">Resources</div><div class="footer-links"><a href="#" onclick="showPage('resources');return false">Brand Directory</a><a href="#" onclick="showPage('resources');return false">Route Builder</a><a href="#" onclick="showPage('about');return false">Download Map</a><a href="#" onclick="showPage('community');return false">Community Chat</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Made with 💗 for beauty lovers</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ══ RESOURCES ══ -->
+<div id="page-resources" class="site-pages">
+  <div class="page-wrap">
+    <!-- ══ NAVBAR ════════════════════════════════ -->
+
+
+
+<div class="page-wrap">
+
+  <!-- ── PAGE HERO ─────────────────────────── -->
+  <div class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Everything you need</span>
+      <h1 class="display-title">Brand <em>Directory</em><br>& Resources</h1>
+      <div class="divider divider-center"></div>
+      <p class="lead">All 200+ booths · Interactive floor map · Route builder · Brand profiles</p>
+    </div>
+  </div>
+
+  <!-- ── FILTER BAR ─────────────────────────── -->
+  <div class="filter-bar" id="brands">
+    <div class="filter-inner">
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="brand-search" placeholder="Search brand or booth #…" oninput="filterBrands()">
+      </div>
+      <div class="chip-row" id="cat-chips" style="flex-shrink:0">
+        <div class="chip active" onclick="setFilter('all',this)">All</div>
+        <div class="chip" onclick="setFilter('Skincare',this)">Skincare</div>
+        <div class="chip" onclick="setFilter('Haircare',this)">Haircare</div>
+        <div class="chip" onclick="setFilter('Makeup',this)">Makeup</div>
+        <div class="chip" onclick="setFilter('Fragrance',this)">Fragrance</div>
+        <div class="chip" onclick="setFilter('Nails',this)">Nails</div>
+        <div class="chip" onclick="setFilter('Wellness',this)">Wellness</div>
+        <div class="chip" onclick="setFilter('Tools',this)">Tools</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- SECTION TABS -->
+    <div class="page-sections">
+      <button class="ps-btn active" onclick="showPanel('brands-panel',this)">💄 Brands</button>
+      <button class="ps-btn" onclick="showPanel('map-panel',this)">🗺️ Floor Map</button>
+      <button class="ps-btn" id="route-tab" onclick="showPanel('route-panel',this)">✨ Route Builder</button>
+      <button class="ps-btn" onclick="showPanel('stock-panel',this)">📈 Stocks</button>
+    </div>
+
+    <!-- ─── BRANDS PANEL ───────────────────── -->
+    <div class="ps-panel active" id="brands-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:10px">
+        <div>
+          <div class="label">Showing</div>
+          <div style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--pink)"><span id="brand-count">200+</span> <span style="font-size:16px;color:var(--mist);font-family:var(--font-body);font-weight:400">brands</span></div>
+        </div>
+        <a href="about.html#map-download" class="btn btn-pink btn-sm">Download Map 💗</a>
+      </div>
+      <div class="grid-auto" id="brand-grid"></div>
+      <div id="no-results" style="display:none;text-align:center;padding:4rem 0;color:var(--mist)">
+        <div style="font-size:40px;margin-bottom:12px">💭</div>
+        <div style="font-size:16px;font-weight:600">No brands found</div>
+        <div style="font-size:13px;margin-top:6px">Try a different search or category</div>
+      </div>
+    </div>
+
+    <!-- ─── MAP PANEL ──────────────────────── -->
+    <div class="ps-panel" id="map-panel">
+      <div class="map-section" style="margin-bottom:1.5rem">
+        <div class="map-tabs">
+          <div class="map-tab active" onclick="showMapTab('zones',this)">Zone Map</div>
+          <div class="map-tab" onclick="showMapTab('entrance',this)">Entry Strategy</div>
+          <div class="map-tab" onclick="showMapTab('download',this)">Official Map</div>
+        </div>
+        <div class="map-tab-content active" id="tab-zones">
+          <div style="text-align:center;margin-bottom:1.5rem">
+            <span class="eyebrow">Floor Layout</span>
+            <h3 class="section-title" style="font-size:clamp(20px,3vw,28px)">Orange County Convention Center<br><em>West Building</em></h3>
+          </div>
+          <div style="margin-bottom:12px;font-size:13px;color:var(--mist)">Booth numbers organized by floor zone. Click any booth to view brand details.</div>
+          <div class="zone-row" id="zone-map"></div>
+          <div style="margin-top:1.5rem;padding:1rem;background:var(--pink-blush);border-radius:var(--radius-lg);font-size:13px;color:var(--mist)">
+            💡 <strong>Tip:</strong> Zones A–D run left to right as you enter from the main entrance. GS = special floor positions. FT = featured tables along the perimeter.
+          </div>
+        </div>
+        <div class="map-tab-content" id="tab-entrance">
+          <span class="eyebrow">Strategy</span>
+          <h3 class="section-title" style="font-size:24px;margin-bottom:1rem">Entry Day <em>Game Plan</em></h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">8A</div>
+              <div><strong style="font-size:14px">Arrive at 8:00 AM</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Check-in line opens. Get wristband and swag bag claim ticket. Use this time to orientate.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">9A</div>
+              <div><strong style="font-size:14px">Doors open — go RIGHT toward Zone C/D</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Most people go left first. Beat the crowd to Fenty (2009), Rare Beauty (2003), Cécred (1903) and Pat McGrath (1821).</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">11A</div>
+              <div><strong style="font-size:14px">Work Zone B (1000–1600s)</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">PATTERN (1421), COSRX (2240), Tatcha (1803), tarte (1703), Charlotte Tilbury (201), NARS (1403).</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">1P</div>
+              <div><strong style="font-size:14px">Lunch break + Zone A sweep</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Grab food, drop bags at storage, then sweep Zone A (100–999s) — CeraVe, Charlotte Tilbury, Lancôme, NYX, Kylie.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">4P</div>
+              <div><strong style="font-size:14px">Pick up swag bag & ship haul</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Collect official swag bag. Use shipping station before 5PM to box up purchases. Storage closes 5:30PM.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="map-tab-content" id="tab-download">
+          <div style="text-align:center;padding:2rem">
+            <div style="font-size:60px;margin-bottom:1rem;animation:float 3s ease-in-out infinite">🗺️</div>
+            <h3 class="section-title" style="font-size:24px;margin-bottom:8px">Official Expo Map</h3>
+            <p style="font-size:14px;color:var(--mist);margin-bottom:1.5rem">Download the official Ulta Beauty World 2026 floor map</p>
+            <a href="about.html#map-download" class="btn btn-pink">Download Map 💗</a>
+            <p style="font-size:12px;color:var(--mist);margin-top:12px">Also available on the About Jem page</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ROUTE PANEL ─────────────────────── -->
+    <div class="ps-panel" id="route-panel">
+      <div class="route-section" id="route">
+        <span class="eyebrow">Plan your day</span>
+        <h2 class="section-title" style="font-size:clamp(22px,4vw,32px);margin-bottom:8px">Build Your <em>Route</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:14px;color:var(--mist);margin:1rem 0 1.5rem;line-height:1.7">Select your interests, skin focus, and priorities — then hit generate. Our AI builds you a custom 14–18 booth itinerary ranked by ROI with real booth numbers, walk times, and sample values.</p>
+        <div style="background:var(--white);border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:2rem;display:flex;flex-direction:column;gap:1.5rem">
+          <div>
+            <div class="label" style="margin-bottom:10px">Beauty interests</div>
+            <div class="chip-row" id="int-chips">
+              <div class="chip active" data-v="Skincare">Skincare</div>
+              <div class="chip active" data-v="Haircare">Haircare</div>
+              <div class="chip" data-v="Makeup">Makeup</div>
+              <div class="chip" data-v="Fragrance">Fragrance</div>
+              <div class="chip" data-v="Nails">Nails</div>
+              <div class="chip" data-v="Wellness">Wellness</div>
+              <div class="chip" data-v="Tools">Tools</div>
+            </div>
+          </div>
+          <div>
+            <div class="label" style="margin-bottom:10px">Skin & community focus</div>
+            <div class="chip-row" id="focus-chips">
+              <div class="chip active" data-v="melanin">Melanin-friendly</div>
+              <div class="chip active" data-v="kbeauty">K-Beauty</div>
+              <div class="chip" data-v="clean">Clean / Organic</div>
+              <div class="chip" data-v="curly">Curly / Textured</div>
+              <div class="chip" data-v="sensitive">Sensitive Skin</div>
+              <div class="chip" data-v="exclusive">Exclusives</div>
+              <div class="chip" data-v="celebrity">Celebrity Brands</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+                <span style="color:var(--mist)">Free samples priority</span>
+                <span style="color:var(--pink);font-weight:600" id="sv1">9</span>
+              </div>
+              <input type="range" min="1" max="10" value="9" step="1" style="-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--pink-pale);border-radius:2px;outline:none" id="sl1" oninput="document.getElementById('sv1').textContent=this.value">
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+                <span style="color:var(--mist)">ROI / value priority</span>
+                <span style="color:var(--pink);font-weight:600" id="sv2">8</span>
+              </div>
+              <input type="range" min="1" max="10" value="8" step="1" style="-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--pink-pale);border-radius:2px;outline:none" id="sl2" oninput="document.getElementById('sv2').textContent=this.value">
+            </div>
+          </div>
+          <button class="btn btn-pink" id="gen-route-btn" onclick="generateRoute()" style="align-self:flex-start">
+            ✨ Generate My Route
+          </button>
+          <div id="route-output"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── STOCK PANEL ─────────────────────── -->
+    <div class="ps-panel" id="stock-panel">
+      <div style="margin-bottom:1.5rem">
+        <span class="eyebrow">Public companies at UBW 2026</span>
+        <h2 class="section-title" style="font-size:clamp(22px,4vw,32px)">Investor <em>Spotlight</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:13px;color:var(--mist);margin-top:0.75rem">These publicly traded companies have brands exhibiting at UBW 2026. Data is illustrative — check real-time prices on your brokerage.</p>
+      </div>
+      <div class="stock-grid">
+        <div class="stock-card">
+          <div class="stock-ticker">EL</div>
+          <div class="stock-name">Estée Lauder Companies</div>
+          <div><span class="stock-price">~$68</span><span class="stock-change down">▼ –2.1%</span></div>
+          <div class="stock-note">Brands: Estée Lauder, MAC, Clinique, Bobbi Brown, Origins, Lab Series, DARPHIN</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:72%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">ULTA</div>
+          <div class="stock-name">Ulta Beauty Inc.</div>
+          <div><span class="stock-price">~$342</span><span class="stock-change up">▲ +1.4%</span></div>
+          <div class="stock-note">Host of UBW 2026 and the Ulta Beauty Neighborhood booth (#901)</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:85%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">OR.PA</div>
+          <div class="stock-name">L'Oréal Paris</div>
+          <div><span class="stock-price">~€375</span><span class="stock-change up">▲ +0.8%</span></div>
+          <div class="stock-note">Brands: L'Oréal Paris, Maybelline, essie, Garnier, Lancôme, Redken, Matrix</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:90%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">COTY</div>
+          <div class="stock-name">Coty Inc.</div>
+          <div><span class="stock-price">~$8</span><span class="stock-change down">▼ –0.5%</span></div>
+          <div class="stock-note">Brands: CoverGirl, philosophy, Kylie Cosmetics, Gucci Beauty, Rimmel</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:55%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">REV</div>
+          <div class="stock-name">Revlon / Elizabeth Arden</div>
+          <div><span class="stock-price">Private</span></div>
+          <div class="stock-note">Brands at booth: Juicy Couture, Revlon (now under EBA Acquisitions)</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:40%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">NVO</div>
+          <div class="stock-name">Henkel AG (parent: Schwarzkopf)</div>
+          <div><span class="stock-price">~€79</span><span class="stock-change up">▲ +0.3%</span></div>
+          <div class="stock-note">Brands: Kenra, got2b, Syoss. German conglomerate with strong US beauty arm.</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:65%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">SKIN</div>
+          <div class="stock-name">e.l.f. Beauty</div>
+          <div><span class="stock-price">~$38</span><span class="stock-change up">▲ +3.2%</span></div>
+          <div class="stock-note">e.l.f. Cosmetics & e.l.f. skin (Booth 1229) — one of fastest-growing mass beauty stocks</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:88%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">BYMA</div>
+          <div class="stock-name">P&G Prestige / Olay</div>
+          <div><span class="stock-price">~$158</span><span class="stock-change up">▲ +0.9%</span></div>
+          <div class="stock-note">P&G's beauty portfolio includes SK-II, Olay, and licensed fragrance brands.</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--mist);margin-top:1.5rem;padding:12px;background:var(--pink-blush);border-radius:var(--radius-md)">⚠️ Prices are approximate and for informational purposes only. Not financial advice. Always verify on live market data before making investment decisions.</p>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /page-wrap -->
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+
+  </div>
+  
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p><div class="footer-social" style="margin-top:1rem"><a href="#" onclick="return false">📸</a><a href="#" onclick="return false">🎵</a><a href="#" onclick="return false">📌</a><a href="#" onclick="return false">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Home</a><a href="#" onclick="showPage('resources');return false">Resources</a><a href="#" onclick="showPage('community');return false">Community</a><a href="#" onclick="showPage('about');return false">About Jem</a></div></div>
+      <div><div class="footer-col-title">Event Info</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Venue &amp; Directions</a><a href="#" onclick="showPage('home');return false">Event Essentials</a><a href="#" onclick="showPage('home');return false">Packing List</a><a href="#" onclick="showPage('home');return false">Pro Tips</a></div></div>
+      <div><div class="footer-col-title">Resources</div><div class="footer-links"><a href="#" onclick="showPage('resources');return false">Brand Directory</a><a href="#" onclick="showPage('resources');return false">Route Builder</a><a href="#" onclick="showPage('about');return false">Download Map</a><a href="#" onclick="showPage('community');return false">Community Chat</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Made with 💗 for beauty lovers</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ══ COMMUNITY ══ -->
+<div id="page-community" class="site-pages">
+  <div class="page-wrap">
+    
+<div class="page-wrap">
+  <div class="page-hero" style="padding:5rem 0 4rem;background:linear-gradient(150deg,#fff 0%,#FFE8F3 50%,#FFD6E8 100%);text-align:center;position:relative;overflow:hidden">
+    <div class="container"><span class="eyebrow">Connect &amp; Share</span><h1 class="display-title">The <em>Community</em> Hub</h1><div class="divider divider-center"></div><p class="lead">Connect with beauty lovers, share tips, and get hype together for UBW 2026</p></div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start">
+        <div>
+          <span class="eyebrow">Live Discussion</span>
+          <h2 class="section-title">Chat With the <em>Community</em></h2>
+          <div class="divider"></div>
+          <p class="lead" style="font-size:15px;margin-top:1rem">Share excitement, ask questions, and trade tips with others going to UBW 2026.</p>
+          <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--pink-border);border-radius:16px;padding:12px 14px"><span>💬</span><div><strong style="font-size:13px">Real-time chat</strong><div style="font-size:12px;color:var(--mist)">Messages visible to the community</div></div></div>
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--pink-border);border-radius:16px;padding:12px 14px"><span>🌸</span><div><strong style="font-size:13px">Share your tips</strong><div style="font-size:12px;color:var(--mist)">What are you most excited for?</div></div></div>
+            <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--pink-border);border-radius:16px;padding:12px 14px"><span>💅</span><div><strong style="font-size:13px">Find your crew</strong><div style="font-size:12px;color:var(--mist)">Are you going? Let everyone know!</div></div></div>
+          </div>
+        </div>
+        <div>
+          <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;height:520px;box-shadow:0 8px 32px rgba(255,63,142,0.18)">
+            <div style="padding:1rem 1.25rem;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;display:flex;align-items:center;gap:10px;flex-shrink:0">
+              <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:18px">💄</div>
+              <div><div style="font-size:15px;font-weight:700">UBW 2026 Community Chat</div><div style="font-size:11px;opacity:0.8">April 16 · Orlando</div></div>
+              <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px"><span style="width:7px;height:7px;border-radius:50%;background:#4ADE80;display:inline-block"></span><span id="comm-online">12 online</span></div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:12px;background:var(--pink-blush)" id="chat-msgs"></div>
+            <div style="padding:8px 14px 0;background:#fff;flex-shrink:0"><input type="text" id="chat-name" placeholder="Your name or nickname…" maxlength="20" style="width:100%;padding:8px 12px;border:1.5px solid var(--pink-border);border-radius:50px;font-size:12px;color:var(--ink);background:var(--pink-blush);font-family:inherit;outline:none"></div>
+            <div style="display:flex;gap:8px;padding:10px 14px;background:#fff;border-top:1px solid var(--pink-border);flex-shrink:0">
+              <input type="text" id="chat-input" placeholder="Type a message… 💗" maxlength="200" style="flex:1;padding:10px 16px;border:1.5px solid var(--pink-border);border-radius:50px;font-size:13px;color:var(--ink);background:var(--pink-blush);font-family:inherit;outline:none" onkeydown="if(event.key==='Enter')sendChatMsg()">
+              <button onclick="sendChatMsg()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;flex-shrink:0">➤</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section bg-gradient">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:2.5rem"><span class="eyebrow">Follow along</span><h2 class="section-title">Stay <em>Connected</em></h2><div class="divider" style="margin:1rem auto"></div><p class="lead">Follow Jem across socials for live updates and real-time coverage on April 16</p></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem">
+        <div style="display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.22s" onmouseover="this.style.boxShadow='0 8px 32px rgba(255,63,142,0.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''"><div style="font-size:40px;margin-bottom:12px">📸</div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Instagram</div><div style="font-size:13px;color:var(--pink)">@JemBeauty</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.22s" onmouseover="this.style.boxShadow='0 8px 32px rgba(255,63,142,0.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''"><div style="font-size:40px;margin-bottom:12px">🎵</div><div style="font-size:16px;font-weight:700;margin-bottom:4px">TikTok</div><div style="font-size:13px;color:var(--pink)">@JemUBW2026</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.22s" onmouseover="this.style.boxShadow='0 8px 32px rgba(255,63,142,0.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''"><div style="font-size:40px;margin-bottom:12px">📌</div><div style="font-size:16px;font-weight:700;margin-bottom:4px">Pinterest</div><div style="font-size:13px;color:var(--pink)">@JemBeautyWorld</div></div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.22s" onmouseover="this.style.boxShadow='0 8px 32px rgba(255,63,142,0.18)';this.style.transform='translateY(-4px)'" onmouseout="this.style.boxShadow='';this.style.transform=''"><div style="font-size:40px;margin-bottom:12px">▶️</div><div style="font-size:16px;font-weight:700;margin-bottom:4px">YouTube</div><div style="font-size:13px;color:var(--pink)">Jem Beauty</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:2.5rem;align-items:start">
+        <div>
+          <span class="eyebrow">Community posts</span>
+          <h2 class="section-title" style="margin-bottom:1.5rem">What Everyone's <em>Saying</em></h2>
+          <div style="display:flex;flex-direction:column;gap:1rem" id="comm-feed">
+            <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.25rem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:50%;background:var(--pink-pale);font-size:18px;display:flex;align-items:center;justify-content:center">💅</div><div><div style="font-size:14px;font-weight:700">BeautyQueenRayna</div><div style="font-size:11px;color:var(--mist)">2 hours ago</div></div></div><div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:10px">OKAY so I'm already planning my outfit for April 16 and I need everyone to know I'm wearing all pink 🩷 We're doing Barbie goes to UBW!</div><span style="font-size:12px;color:var(--mist);cursor:pointer" onclick="likeCommPost(this)">🤍 24</span></div>
+            <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.25rem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:50%;background:var(--pink-pale);font-size:18px;display:flex;align-items:center;justify-content:center">🌀</div><div><div style="font-size:14px;font-weight:700">CurlGirlMikayla</div><div style="font-size:11px;color:var(--mist)">4 hours ago</div></div></div><div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:10px">My list: Cécred (1903) → PATTERN (1421) → Rizos Curls (1947). Curly girl takeover of Zone C 🌀💜</div><span style="font-size:12px;color:var(--mist);cursor:pointer" onclick="likeCommPost(this)">🤍 41</span></div>
+            <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.25rem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:50%;background:var(--pink-pale);font-size:18px;display:flex;align-items:center;justify-content:center">🦋</div><div><div style="font-size:14px;font-weight:700">MelaninMagicSasha</div><div style="font-size:11px;color:var(--mist)">Yesterday</div></div></div><div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:10px">PSA for my melanin girlies: Buttah Skin (609), Live Tinted (1438), Pat McGrath (1821) are OUR booths. We are EATING at this expo 🍫✨</div><span style="font-size:12px;color:var(--mist);cursor:pointer" onclick="likeCommPost(this)">🤍 92</span></div>
+          </div>
+          <div style="margin-top:1.5rem;background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:24px;padding:2rem;color:#fff">
+            <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px">Share Your Tip 💡</h3>
+            <p style="font-size:13px;opacity:0.85;margin-bottom:1rem">Have an UBW tip? Share it with the community!</p>
+            <textarea id="share-comm-input" placeholder="What's your must-visit booth or strategy?…" style="width:100%;padding:12px 14px;border-radius:14px;border:none;font-family:inherit;font-size:13px;resize:none;min-height:80px;background:rgba(255,255,255,0.2);color:#fff;" rows="3"></textarea>
+            <div style="margin-top:10px"><button onclick="shareCommPost()" style="padding:8px 20px;background:#fff;color:var(--pink-hot);border:none;border-radius:50px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer">Post ✨</button></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1.25rem">
+          <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.5rem"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:12px">🔥 Trending</div><div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;background:var(--pink);color:#fff">#UBW2026</span><span style="padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--pink-border);color:var(--mist)">#CurlyGirl</span><span style="padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--pink-border);color:var(--mist)">#KBeauty</span><span style="padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--pink-border);color:var(--mist)">#MelaninMagic</span><span style="padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--pink-border);color:var(--mist)">#Cécred</span></div></div>
+          <div style="background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.5rem"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:12px">📅 Countdown</div><div id="comm-countdown"></div></div>
+          <div style="background:var(--pink-blush);border:1px solid var(--pink-border);border-radius:24px;padding:1.5rem"><div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:10px">💌 Newsletter</div><p style="font-size:13px;color:var(--mist);margin-bottom:12px;line-height:1.6">Get Jem's UBW tips and day-of alerts</p><input type="email" placeholder="your@email.com" style="width:100%;padding:10px 14px;border:1.5px solid var(--pink-border);border-radius:50px;font-size:13px;margin-bottom:8px;font-family:inherit;outline:none"><button onclick="alert('Subscribed! See you April 16 💗')" style="width:100%;padding:11px;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;border:none;border-radius:50px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer">Subscribe 💗</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+  </div>
+  
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p><div class="footer-social" style="margin-top:1rem"><a href="#" onclick="return false">📸</a><a href="#" onclick="return false">🎵</a><a href="#" onclick="return false">📌</a><a href="#" onclick="return false">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Home</a><a href="#" onclick="showPage('resources');return false">Resources</a><a href="#" onclick="showPage('community');return false">Community</a><a href="#" onclick="showPage('about');return false">About Jem</a></div></div>
+      <div><div class="footer-col-title">Event Info</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Venue &amp; Directions</a><a href="#" onclick="showPage('home');return false">Event Essentials</a><a href="#" onclick="showPage('home');return false">Packing List</a><a href="#" onclick="showPage('home');return false">Pro Tips</a></div></div>
+      <div><div class="footer-col-title">Resources</div><div class="footer-links"><a href="#" onclick="showPage('resources');return false">Brand Directory</a><a href="#" onclick="showPage('resources');return false">Route Builder</a><a href="#" onclick="showPage('about');return false">Download Map</a><a href="#" onclick="showPage('community');return false">Community Chat</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Made with 💗 for beauty lovers</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ══ ABOUT ══ -->
+<div id="page-about" class="site-pages">
+  <div class="page-wrap">
+    <div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="container">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1">
+        <div class="profile-ring">👸🏽</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px">Beauty lover · Expo strategist · Content creator</div>
+        <h1 class="display-title" style="color:#fff;margin-bottom:12px">Hi, I'm <em style="color:rgba(255,255,255,0.9);font-style:italic">Jem</em> 💗</h1>
+        <p style="font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,0.8);line-height:1.7;max-width:560px;margin-bottom:2rem">I built this site so every beauty lover going to Ulta Beauty World 2026 can walk in with a plan and walk out with everything on their list. Pink-coded, organized, and ready to slay.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+          <a href="#map-download" class="btn btn-white">Download My Map 🗺️</a>
+          <a href="community.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff">Join the Community</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS FLOATING CARDS -->
+  <section style="position:relative;z-index:10">
+    <div class="container">
+      <div class="about-stats">
+        <div class="astat">
+          <div class="astat-num"><span id="visitor-count">1,248</span></div>
+          <div class="astat-lbl">Site visitors</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">200+</div>
+          <div class="astat-lbl">Brands mapped</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">Apr 16</div>
+          <div class="astat-lbl">Event day</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">💗</div>
+          <div class="astat-lbl">Made with love</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+        <div data-reveal>
+          <span class="eyebrow">My story</span>
+          <h2 class="section-title">About <em>Jem</em></h2>
+          <div class="divider"></div>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-top:1.25rem;margin-bottom:1rem">I'm a beauty obsessive who went to the inaugural Ulta Beauty World in San Antonio last year and learned a lot from the experience. I watched people leave with half as much as they could have gotten simply because they didn't have a plan.</p>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-bottom:1rem">So for Orlando 2026, I built this — a full Barbie-pink survival guide with an interactive brand directory, AI route planner, day-of checklist, and community chat. Because beauty is better when we're organized AND glamorous.</p>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-bottom:1.5rem">My personal obsessions: K-beauty, melanin-friendly skincare, curly haircare, and anything that comes in pink packaging. If it's a Tatcha or Peach & Lily product, I've already bought it twice.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="community.html" class="btn btn-pink">Join My Community 💗</a>
+            <a href="resources.html" class="btn btn-outline">Explore Brands</a>
+          </div>
+        </div>
+        <div data-reveal style="display:flex;flex-direction:column;gap:14px">
+          <div style="background:linear-gradient(135deg,var(--pink-pale),var(--pink-blush));border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:1.5rem">
+            <div style="font-size:24px;margin-bottom:10px">💄</div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:6px">My Favorite Categories</div>
+            <div class="chip-row">
+              <span class="chip active" style="font-size:11px">K-Beauty</span>
+              <span class="chip active" style="font-size:11px">Melanin-Friendly</span>
+              <span class="chip active" style="font-size:11px">Curly Hair</span>
+              <span class="chip active" style="font-size:11px">Clean Beauty</span>
+              <span class="chip active" style="font-size:11px">Skincare</span>
+            </div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:1.5rem">
+            <div style="font-size:24px;margin-bottom:10px">⭐</div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:6px">My Must-Visit Booths</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;color:var(--mist)">🐌 COSRX — Booth 2240</div>
+              <div style="font-size:13px;color:var(--mist)">🍑 Peach & Lily — Booth 1825</div>
+              <div style="font-size:13px;color:var(--mist)">💄 Pat McGrath Labs — Booth 1821</div>
+              <div style="font-size:13px;color:var(--mist)">👸🏾 Cécred — Booth 1903</div>
+              <div style="font-size:13px;color:var(--mist)">🌺 Camille Rose — Booth 431</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP DOWNLOAD -->
+  <section class="section bg-gradient" id="map-download">
+    <div class="container">
+      <div class="sec-head" style="text-align:center;margin-bottom:2.5rem" data-reveal>
+        <span class="eyebrow">Official Expo Map</span>
+        <h2 class="section-title">Download the <em>Map</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+        <p class="lead">The official Ulta Beauty World 2026 expo floor map — all 200+ booths with zones and booth numbers</p>
+      </div>
+      <div class="map-download-card" data-reveal>
+        <div class="map-mockup">
+          <div class="map-icon-float">🗺️</div>
+          <div class="map-label">UBW 2026 Expo Map</div>
+          <div class="map-sublabel">Official floor layout</div>
+          <div style="margin-top:8px;font-size:10px;color:var(--mist)">PNG · High resolution</div>
+        </div>
+        <div>
+          <span class="eyebrow">Official Floor Map</span>
+          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);margin-bottom:8px">UBW 2026 <em style="color:var(--pink)">Expo Map</em></h3>
+          <div class="divider"></div>
+          <p style="font-size:14px;color:var(--mist);line-height:1.7;margin:1rem 0 1.5rem">The official Ulta Beauty World 2026 expo floor map showing all booths, zones, food vendors, entrances, and stage areas. Use alongside our interactive digital planner for the ultimate expo strategy.</p>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>📐</span> Full floor with all 200+ booth numbers</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🎯</span> Zone A–D marked for navigation</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🍕</span> Food vendor locations marked</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🚪</span> Both entrance/exit points</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#" class="btn btn-pink btn-lg" onclick="downloadMap(event)">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Map (PNG)
+            </a>
+            <a href="resources.html#map-panel" class="btn btn-outline">View Interactive Map</a>
+          </div>
+          <p style="font-size:11px;color:var(--mist);margin-top:12px">Source: Official Ulta Beauty World 2026 SpotMe App · Updated April 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL LINKS -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head" style="text-align:center;margin-bottom:2rem" data-reveal>
+        <span class="eyebrow">Find me everywhere</span>
+        <h2 class="section-title">Follow <em>Jem</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+        <p class="lead">Live updates, haul reveals, and real-time content from April 16</p>
+      </div>
+      <div class="social-row">
+        <a href="https://instagram.com" target="_blank" class="social-card"><div class="sc-icon">📸</div><div class="sc-platform">Instagram</div><div class="sc-handle">@JemBeauty</div></a>
+        <a href="https://tiktok.com" target="_blank" class="social-card"><div class="sc-icon">🎵</div><div class="sc-platform">TikTok</div><div class="sc-handle">@JemUBW2026</div></a>
+        <a href="https://pinterest.com" target="_blank" class="social-card"><div class="sc-icon">📌</div><div class="sc-platform">Pinterest</div><div class="sc-handle">@JemBeautyWorld</div></a>
+        <a href="https://youtube.com" target="_blank" class="social-card"><div class="sc-icon">▶️</div><div class="sc-platform">YouTube</div><div class="sc-handle">Jem Beauty</div></a>
+        <a href="https://twitter.com" target="_blank" class="social-card"><div class="sc-icon">🐦</div><div class="sc-platform">Twitter/X</div><div class="sc-handle">@JemBeauty</div></a>
+        <a href="/cdn-cgi/l/email-protection#1f757a725f6a7d682d2f2d29317c7072" class="social-card"><div class="sc-icon">📧</div><div class="sc-platform">Email</div><div class="sc-handle"><span class="__cf_email__" data-cfemail="e58f8088a5908792d7d5d7d3cb868a88">[email&#160;protected]</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISITOR COUNT SECTION -->
+  <section class="section bg-smoke">
+    <div class="container container-sm">
+      <div class="visitor-card" data-reveal>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:16px">Community Size</div>
+          <div class="visitor-num" id="visitor-display">1,248</div>
+          <div class="visitor-label">Beauty lovers have visited this site</div>
+          <div class="visitor-sub">And counting… 💗</div>
+          <div style="margin-top:1.5rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a href="community.html" class="btn btn-white">Join the Community</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container container-sm">
+      <div class="sec-head" style="text-align:center;margin-bottom:2rem" data-reveal>
+        <span class="eyebrow">Questions</span>
+        <h2 class="section-title">FAQ <em>About This Site</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+      </div>
+      <div id="faq">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Who built this site? <span class="arrow">▼</span></div><div class="faq-a">This site was built by Jem — a beauty enthusiast and expo veteran who attended the inaugural UBW in San Antonio. It's a passion project built to help the community plan smarter.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is this affiliated with Ulta Beauty? <span class="arrow">▼</span></div><div class="faq-a">No — this is an independent fan site created by Jem. All brand info and booth data comes from the official expo map and public sources. This site has no official affiliation with Ulta Beauty, Inc.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I use the Route Builder? <span class="arrow">▼</span></div><div class="faq-a">Head to the Resources page, click "Route Builder," select your beauty interests and skin focus, adjust the priority sliders, and hit "Generate My Route." The AI will create a personalized 10-booth itinerary with real booth numbers, walk times, and sample values.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I download the expo map? <span class="arrow">▼</span></div><div class="faq-a">Yes! Scroll up to the Map Download section on this page or click the "Download Map" button. It's the official Ulta Beauty World 2026 expo map sourced from the SpotMe event app.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I contact Jem? <span class="arrow">▼</span></div><div class="faq-a">Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0bab5bd90a5b2a7e2e0e2e6feb3bfbd">[email&#160;protected]</a> or DM on Instagram @JemBeauty or TikTok @JemUBW2026. I try to respond within 24 hours!</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Will you post live content on April 16? <span class="arrow">▼</span></div><div class="faq-a">Absolutely! Follow @JemUBW2026 on TikTok for real-time floor coverage, haul reveals, and live reactions. Instagram stories will also be updated throughout the day.</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+  </div>
+  
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p><div class="footer-social" style="margin-top:1rem"><a href="#" onclick="return false">📸</a><a href="#" onclick="return false">🎵</a><a href="#" onclick="return false">📌</a><a href="#" onclick="return false">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Home</a><a href="#" onclick="showPage('resources');return false">Resources</a><a href="#" onclick="showPage('community');return false">Community</a><a href="#" onclick="showPage('about');return false">About Jem</a></div></div>
+      <div><div class="footer-col-title">Event Info</div><div class="footer-links"><a href="#" onclick="showPage('home');return false">Venue &amp; Directions</a><a href="#" onclick="showPage('home');return false">Event Essentials</a><a href="#" onclick="showPage('home');return false">Packing List</a><a href="#" onclick="showPage('home');return false">Pro Tips</a></div></div>
+      <div><div class="footer-col-title">Resources</div><div class="footer-links"><a href="#" onclick="showPage('resources');return false">Brand Directory</a><a href="#" onclick="showPage('resources');return false">Route Builder</a><a href="#" onclick="showPage('about');return false">Download Map</a><a href="#" onclick="showPage('community');return false">Community Chat</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Made with 💗 for beauty lovers</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ══ CREATOR DASHBOARD ══ -->
+<div id="page-dashboard" class="site-pages">
+  
+    <h1 class="lock-h">Creator Dashboard</h1>
+    <p class="lock-s">Restricted access. Contains proprietary crowd forecast data from user goal selections.</p>
+    <div class="lock-field">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <input type="password" id="pw-input" placeholder="Enter access password">
+    </div>
+    <button class="lock-btn" onclick="unlock()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Access Dashboard
+    </button>
+    <div class="lock-msg" id="lock-msg"></div>
+    <div class="lock-foot"><b>Session-based auth</b> · Expires on tab close<br>No credentials stored locally</div>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="topbar">
+    <div class="tb-brand">
+      <div class="tb-mark">✦</div>
+      <div><div class="tb-name">JemUBW Analytics</div><div class="tb-tag">Creator Dashboard</div></div>
+    </div>
+    <div class="tb-space"></div>
+    <div class="tb-live"><div class="tb-live-dot"></div><span class="tb-live-text">Live</span></div>
+    <span class="tb-upd" id="upd-lbl">Updated just now</span>
+    <button class="tbtn tbtn-ghost" onclick="refreshAll()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+      <span id="rl">Refresh</span>
+    </button>
+    <button class="tbtn tbtn-pink" onclick="exportCSV()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+    <button class="tbtn tbtn-red" onclick="lockOut()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Lock
+    </button>
+  </div>
+
+  <div class="dash-layout">
+    <aside class="sidebar">
+      <div class="sb-label">Analytics</div>
+      <div class="nav-item active" onclick="scrollSec('s-kpi',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="9" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="2" y="11" width="6" height="6" rx="1"/><rect x="9" y="11" width="6" height="6" rx="1"/><rect x="16" y="11" width="6" height="6" rx="1"/></svg>Overview<span class="nb" id="sb-n">0</span></div>
+      <div class="nav-item" onclick="scrollSec('s-fc',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Crowd Forecast</div>
+      <div class="nav-item" onclick="scrollSec('s-goals',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>Goal Breakdown</div>
+      <div class="nav-item" onclick="scrollSec('s-hourly',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="4" height="18" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="5" width="4" height="16" rx="1"/></svg>Hourly Traffic</div>
+      <div class="nav-item" onclick="scrollSec('s-community',this)"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Community</div>
+      <div class="sb-label">Actions</div>
+      <div class="nav-item" onclick="refreshAll()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>Refresh Data</div>
+      <div class="nav-item" onclick="exportCSV()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</div>
+      <div class="nav-item" onclick="generateAlert()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 004-3V9a8 8 0 0116 0v5a3 3 0 004 3"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Generate Alert</div>
+      <div class="nav-item" onclick="window.open('index.html')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Back to Site</div>
+      <div class="sb-foot">
+        <div class="sb-user">
+          <div class="sb-avatar">👸🏽</div>
+          <div><div class="sb-uname">Jem</div><div class="sb-urole">Creator · Admin</div></div>
+          <button class="sb-lock" onclick="lockOut()" title="Lock"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+
+      <div id="s-kpi">
+        <div style="margin-bottom:1rem">
+          <span class="eyebrow">Overview</span>
+          <div class="p-title">Audience Intelligence</div>
+          <div class="p-sub">Real-time insights from user goal selections across your site</div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-lbl"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Unique Visitors</div><div class="kpi-val kv-pink" id="kv1">—</div><span class="kpi-delta d-up" id="kd1">— today</span></div>
+          <div class="kpi-card"><div class="kpi-lbl"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Goal Submissions</div><div class="kpi-val kv-pink" id="kv2">—</div><span class="kpi-delta d-up" id="kd2">— today</span></div>
+          <div class="kpi-card"><div class="kpi-lbl"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Hottest Brand</div><div class="kpi-val" id="kv3" style="font-size:clamp(15px,2vw,20px);line-height:1.2;padding-top:6px">—</div><span class="kpi-delta d-neu" id="kd3">forecast score</span></div>
+          <div class="kpi-card"><div class="kpi-lbl"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Floor Coverage</div><div class="kpi-val kv-pink" id="kv4">—</div><span class="kpi-delta d-neu" id="kd4">of 7 categories</span></div>
+        </div>
+      </div>
+
+      <div id="s-fc" class="card cp">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap">
+          <div><span class="eyebrow">Crowd Intelligence</span><div class="p-title">Brand Crowd Forecast</div><div class="p-sub">Predicted congestion based on user interests and goal weights</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button class="abtn abtn-ghost" onclick="refreshAll()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg><span id="ri2">Refresh</span></button>
+            <button class="abtn abtn-primary" onclick="exportCSV()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export CSV</button>
+          </div>
+        </div>
+        <div class="ctrl-bar">
+          <div class="sf"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="search" placeholder="Search brand or booth…" oninput="filterTbl()" id="tsearch"></div>
+          <div class="fpills">
+            <button class="fpill active" onclick="setSort('heat',this)">Hottest first</button>
+            <button class="fpill" onclick="setSort('name',this)">A – Z</button>
+            <button class="fpill" onclick="setSort('votes',this)">Most interest</button>
+          </div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="ftable">
+            <thead><tr><th>Brand</th><th>Crowd Level</th><th>Heat Score</th><th>Peak Window</th><th>Votes</th><th>Focus Tags</th></tr></thead>
+            <tbody id="fc-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row2" id="s-goals">
+        <div class="card cp">
+          <span class="eyebrow">Distribution</span>
+          <div class="p-title" style="margin-bottom:1.25rem">Category Breakdown</div>
+          <div class="donut-wrap">
+            <svg class="donut-svg" viewBox="0 0 110 110" id="donut-svg"><circle cx="55" cy="55" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="16"/></svg>
+            <div class="dleg" id="dleg"></div>
+          </div>
+        </div>
+        <div class="card cp">
+          <span class="eyebrow">Focus Preferences</span>
+          <div class="p-title" style="margin-bottom:1.25rem">Top Interests</div>
+          <div class="ibar-list" id="ibars"></div>
+        </div>
+      </div>
+
+      <div class="row2e" id="s-hourly">
+        <div class="card cp">
+          <span class="eyebrow">Temporal</span>
+          <div class="p-title">Hourly Traffic Forecast</div>
+          <div class="p-sub" style="margin-bottom:0">Based on expo patterns and user priority weights</div>
+          <div class="hm-grid" id="hm-grid"></div>
+          <div class="hm-lbls" id="hm-lbls"></div>
+          <div class="hm-leg">
+            <div class="hm-leg-item"><div class="hm-sw" style="background:#F87171"></div>Critical</div>
+            <div class="hm-leg-item"><div class="hm-sw" style="background:#FB923C"></div>High</div>
+            <div class="hm-leg-item"><div class="hm-sw" style="background:#FBBF24"></div>Medium</div>
+            <div class="hm-leg-item"><div class="hm-sw" style="background:#34D399"></div>Low</div>
+          </div>
+        </div>
+        <div class="card cp">
+          <span class="eyebrow">Spatial</span>
+          <div class="p-title" style="margin-bottom:1.25rem">Zone Activity</div>
+          <div id="zone-list"></div>
+          <div style="margin-top:1rem;padding:10px 12px;background:rgba(255,63,142,0.04);border:1px solid rgba(255,63,142,0.1);border-radius:9px;font-size:11px;color:var(--text-3);line-height:1.6">Zones C and D historically absorb 40%+ of first-wave foot traffic due to celebrity brand concentration.</div>
+        </div>
+      </div>
+
+      <div class="row2e">
+        <div class="card cp">
+          <span class="eyebrow">7-Day View</span>
+          <div class="p-title">Goal Submission Trend</div>
+          <div class="p-sub" style="margin-bottom:0.75rem">Cumulative goal selections over the past week</div>
+          <div class="trend-wrap"><svg id="trend-svg" viewBox="0 0 500 140" preserveAspectRatio="none"></svg></div>
+          <div class="trend-lbls" id="trend-lbls"></div>
+        </div>
+        <div class="card cp">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+            <div><span class="eyebrow">Real-Time</span><div class="p-title">Activity Feed</div></div>
+            <button class="abtn abtn-muted" onclick="generateAlert()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 004-3V9a8 8 0 0116 0v5a3 3 0 004 3"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>New Alert</button>
+          </div>
+          <div class="feed-list" id="afeed"></div>
+        </div>
+      </div>
+
+      <div id="s-community" class="card cp">
+        <div style="margin-bottom:1.25rem"><span class="eyebrow">Audience Segmentation</span><div class="p-title">Community Focus Analysis</div><div class="p-sub">Skin type and community interest breakdown from goal submissions</div></div>
+        <div class="focus-grid" id="focus-grid"></div>
+      </div>
+
+      <div style="padding:1rem 0;border-top:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span style="font-size:11px;color:var(--text-4)">JemUBW Creator Dashboard · Data from localStorage · Session-scoped auth · No external tracking</span>
+        <span style="font-size:11px;color:var(--text-4)" id="s-clock"></span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="global-toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── PAGE SWITCHER ── */
+function showPage(id) {
+  document.querySelectorAll('.site-pages').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + id);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+  // Init page-specific things
+  if(id === 'home') { initCountdown('countdown'); }
+  if(id === 'dashboard') { try{ init(); }catch(e){} }
+  if(id === 'community') { try{ renderChat2(); initCommCountdown(); }catch(e){} }
+}
+
+/* ── SHARED JS ── */
+
+// ── SHARED ──────────────────────────────────────
+function initCountdown(elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const target = new Date('2026-04-16T09:00:00-04:00');
+  function update() {
+    const diff = target - new Date();
+    if (diff <= 0) { el.innerHTML = '<div class="countdown-item"><span class="countdown-num">🎉</span><span class="countdown-lbl">NOW!</span></div>'; return; }
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    el.innerHTML=`<div class="countdown-item"><span class="countdown-num">${String(d).padStart(2,'0')}</span><span class="countdown-lbl">Days</span></div><div class="countdown-sep">:</div><div class="countdown-item"><span class="countdown-num">${String(h).padStart(2,'0')}</span><span class="countdown-lbl">Hrs</span></div><div class="countdown-sep">:</div><div class="countdown-item"><span class="countdown-num">${String(m).padStart(2,'0')}</span><span class="countdown-lbl">Min</span></div><div class="countdown-sep">:</div><div class="countdown-item"><span class="countdown-num">${String(s).padStart(2,'0')}</span><span class="countdown-lbl">Sec</span></div>`;
+  }
+  update(); setInterval(update, 1000);
+}
+function toggleBring(el) { el.classList.toggle('checked'); const c=el.querySelector('.bring-check'); c.textContent=el.classList.contains('checked')?'✓':''; }
+function toggleFaq(el) { const a=el.nextElementSibling; el.classList.toggle('open'); a.classList.toggle('open'); }
+function downloadMap(e) { e.preventDefault(); alert('Map download starting… save to your phone for offline use! ✨'); }
+let visitorCount = parseInt(localStorage.getItem('ubw_visits')||'0')+1;
+localStorage.setItem('ubw_visits', visitorCount);
+const visDisplay = visitorCount + 1247;
+document.querySelectorAll('#visitor-count, #visitor-display').forEach(el => { if(el) el.textContent = visDisplay.toLocaleString(); });
+
+
+/* ── HOME JS ── */
+
+function toggleBring(el) {
+  el.classList.toggle('checked');
+  const check = el.querySelector('.bring-check');
+  if (el.classList.contains('checked')) check.textContent = '✓';
+  else check.textContent = '';
+}
+
+
+/* ── RESOURCES JS ── */
+
+// ─── BRAND DATA ──────────────────────────────
+const BRANDS_DATA = [
+  {booth:'1903',brand:'Cécred',cat:'Haircare',tags:['celebrity','melanin','curly'],icon:'👸🏾',desc:"Beyoncé's bond-repair haircare built for textured, natural, and color-treated hair. Features moisture-locking and scalp-nourishing formulas.",hero:'Scalp Serum Treatment — $38',link:'https://cecred.com'},
+  {booth:'2009',brand:'Fenty Beauty & OLEHENRIKSEN',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'💄',desc:"Rihanna's 50-shade-deep inclusive makeup line plus OLEHENRIKSEN's brightening vitamin C skincare — two powerhouses in one booth.",hero:'Pro Filt\'r Soft Matte Foundation — $40',link:'https://fentybeauty.com'},
+  {booth:'2003',brand:'Rare Beauty',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'🌸',desc:"Selena Gomez's inclusive beauty brand. The Soft Pinch Liquid Blush is one of the most viral beauty products in history.",hero:'Soft Pinch Liquid Blush — $24',link:'https://rarebeauty.com'},
+  {booth:'1421',brand:'PATTERN',cat:'Haircare',tags:['celebrity','melanin','curly'],icon:'🌀',desc:"Tracee Ellis Ross's curl-type-specific haircare line. The definitive brand for 3A–4C curl patterns with hydration-first formulas.",hero:'Intensive Conditioner — $24',link:'https://patternbeauty.com'},
+  {booth:'1821',brand:'Pat McGrath Labs',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'✨',desc:"Industry legend Pat McGrath's deeply pigmented, skin-inclusive makeup. Rich deep shades and luxurious textures.",hero:'MatteTrance Lipstick — $42',link:'https://patmcgrath.com'},
+  {booth:'2240',brand:'COSRX',cat:'Skincare',tags:['kbeauty','melanin'],icon:'🐌',desc:"Korea's #1 most-exported skincare brand. Famous for Snail Mucin essence, AHA/BHA actives, and hyperpigmentation treatments.",hero:'Advanced Snail 96 Mucin Essence — $26',link:'https://cosrx.com'},
+  {booth:'1803',brand:'Tatcha',cat:'Skincare',tags:['kbeauty','clean'],icon:'🍵',desc:"Luxe Japanese-inspired skincare using hadasei-3 complex of green tea, rice, and algae. Deeply beloved for dewy, glass-skin results.",hero:'The Water Cream — $72',link:'https://tatcha.com'},
+  {booth:'201',brand:'Charlotte Tilbury',cat:'Makeup',tags:['celebrity','exclusive'],icon:'💋',desc:"British luxury makeup with Hollywood glamour. Magic Cream and Pillow Talk have earned cult-classic status worldwide.",hero:'Magic Cream Moisturizer — $110',link:'https://charlottetilbury.com'},
+  {booth:'409',brand:'CeraVe, La Roche-Posay, Vichy',cat:'Skincare',tags:['sensitive'],icon:'🧴',desc:"Three dermatologist-recommended powerhouses sharing one booth. Essential ceramide, SPF, and soothing formulas for all skin types.",hero:'CeraVe Moisturizing Cream — $20',link:'https://cerave.com'},
+  {booth:'1947',brand:'Rizos Curls',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🌿',desc:"Julissa Prado's Latinx-founded curl brand. Nourishing gels, milks, and hydration systems built for 2C–4C curl patterns.",hero:'Curl Defining Gel — $20',link:'https://rizoscurls.com'},
+  {booth:'431',brand:'Camille Rose',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🌺',desc:"Luxury natural hair care rooted in Afrocentric beauty traditions. Deeply moisturizing, food-grade ingredient formulas for 4A–4C hair.",hero:'Curl Maker Styling Gel — $18',link:'https://camillerose.com'},
+  {booth:'921',brand:'BEVEL & Mielle',cat:'Haircare',tags:['melanin','curly'],icon:'💚',desc:"Two Black-founded brands sharing a booth. Mielle's Rosemary Oil is one of the most-discussed hair care products in recent years.",hero:'Mielle Rosemary & Mint Scalp Oil — $12',link:'https://mielleorganics.com'},
+  {booth:'1825',brand:'Peach & Lily',cat:'Skincare',tags:['kbeauty','melanin','exclusive'],icon:'🍑',desc:"K-beauty glass skin specialists. Glass Skin Serum and brightening SPF products formulated for hyperpigmentation and glow.",hero:'Glass Skin Serum — $39',link:'https://peachandlily.com'},
+  {booth:'1015',brand:'TIR TIR',cat:'Skincare',tags:['kbeauty'],icon:'🌙',desc:"Korean cushion foundation brand with coverage built for deeper skin tones. The Blur Fit Cushion has changed the game for melanin-rich skin.",hero:'Blur Fit Cushion — $45',link:'https://tirtircosmetics.com'},
+  {booth:'2231',brand:'Dyson',cat:'Tools',tags:['exclusive'],icon:'💨',desc:"Premium hair tools including the Airwrap and Supersonic dryer. Expect live demos, exclusive event colorways, and expert stylists.",hero:'Airwrap Multi-Styler — $599',link:'https://dyson.com'},
+  {booth:'1029',brand:'Shark Beauty',cat:'Tools',tags:['exclusive'],icon:'⚡',desc:"Pro-grade hair tools at accessible prices. FlexStyle is a top-rated Dyson Airwrap alternative with rave reviews.",hero:'FlexStyle Styler — $249',link:'https://sharkclean.com'},
+  {booth:'1021',brand:'Sol de Janeiro',cat:'Skincare',tags:[],icon:'🌴',desc:"Brazilian-inspired body care. Bum Bum Cream and Brazilian Crush body fragrance mists are among the most-sampled products at any expo.",hero:'Bum Bum Body Cream — $48',link:'https://soldejaneiro.com'},
+  {booth:'1115',brand:'Supergoop!',cat:'Skincare',tags:['clean','melanin'],icon:'☀️',desc:"SPF innovators. Glowscreen and Unseen Sunscreen disappear on every skin tone — finally, sunscreen with zero white cast.",hero:'Unseen Sunscreen SPF 40 — $42',link:'https://supergoop.com'},
+  {booth:'1221',brand:'Drunk Elephant',cat:'Skincare',tags:['clean'],icon:'🐘',desc:"Clean-compatible skincare free of the 'Suspicious 6'. Perfect for building a custom routine with highly effective actives.",hero:'C-Firma Fresh Day Serum — $90',link:'https://drunkelephant.com'},
+  {booth:'1534',brand:'JVN',cat:'Haircare',tags:['celebrity','clean'],icon:'💫',desc:"Jonathan Van Ness's clean, science-backed haircare. Omegacore Technology nourishes and protects with healthy scalp formulas.",hero:'Complete Hydration Serum — $30',link:'https://jvnhair.com'},
+  {booth:'1703',brand:'tarte',cat:'Makeup',tags:['clean','exclusive'],icon:'🍑',desc:"Clean, eco-friendly makeup with cruelty-free formulas. Shape Tape is one of the best-selling concealers in the US.",hero:'Shape Tape Concealer — $32',link:'https://tartecosmetics.com'},
+  {booth:'1403',brand:'NARS Cosmetics',cat:'Makeup',tags:['melanin','exclusive'],icon:'🖤',desc:"Bold pigments and deep-shade inclusivity. The Sheer Glow Foundation range covers the full spectrum of melanin-rich skin tones.",hero:'Sheer Glow Foundation — $52',link:'https://narscosmetics.com'},
+  {booth:'109',brand:'Naturium',cat:'Skincare',tags:['clean','melanin'],icon:'🌱',desc:"Science-first, no-markup skincare. High-potency niacinamide, vitamin C, and retinol formulas at accessible price points.",hero:'Niacinamide Serum 12% — $22',link:'https://naturium.com'},
+  {booth:'1438',brand:'Live Tinted',cat:'Makeup',tags:['melanin','exclusive'],icon:'🌈',desc:"Deepica Mutyala's brand for melanin-rich complexions. The Huestick multitasks as a color corrector, bronzer, blush, and lip color.",hero:'Huestick Universal Stick — $30',link:'https://livetinted.com'},
+  {booth:'715',brand:'Kiehl\'s Since 1851',cat:'Skincare',tags:['clean','melanin'],icon:'🏺',desc:"New York apothecary heritage brand. Ultra Facial Cream and Midnight Recovery Concentrate are universally loved classics.",hero:'Ultra Facial Cream — $42',link:'https://kiehls.com'},
+  {booth:'1809',brand:'OLAPLEX',cat:'Haircare',tags:['exclusive'],icon:'🔗',desc:"Bond-building hair repair system trusted by professional colorists worldwide. Essential for color-treated, bleached, or heat-damaged hair.",hero:'No.3 Hair Perfector — $30',link:'https://olaplex.com'},
+  {booth:'1840',brand:'tgin',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🍯',desc:"Thank God It's Natural — affordable, deeply moisturizing natural haircare. Honey Whip and Triple Moisture Replenishing line are fan favorites.",hero:'Honey Whip Protective Styling Butter — $15',link:'https://tginaturals.com'},
+  {booth:'1528',brand:'r.e.m. beauty by Ariana Grande',cat:'Makeup',tags:['celebrity','exclusive'],icon:'🌙',desc:"Ariana Grande's cruelty-free beauty line inspired by space and science fiction aesthetics. Playful but polished.",hero:'At The Borderline Mascara — $26',link:'https://rembeauty.com'},
+  {booth:'1247',brand:'Touchland',cat:'Wellness',tags:[],icon:'✋',desc:"Premium hand sanitizer sprays in gorgeous scents. One of the most popular freebie items at beauty expos — people line up just for the minis.",hero:'Power Mist Hand Sanitizer — $12',link:'https://touchland.com'},
+  {booth:'815',brand:'Urban Decay',cat:'Makeup',tags:['melanin'],icon:'🌆',desc:"Edgy, high-pigment makeup with exceptional eyeshadow blendability. All Nighter Setting Spray is a ride-or-die for every makeup look.",hero:'All Nighter Setting Spray — $36',link:'https://urbandecay.com'},
+];
+
+const CAT_COLORS = {
+  Skincare:  {bg:'#FFE8F3',color:'#C01450',bar:'linear-gradient(90deg,#FF3F8E,#FF7FB5)'},
+  Haircare:  {bg:'#F3E8FF',color:'#6D28D9',bar:'linear-gradient(90deg,#9333EA,#C084FC)'},
+  Makeup:    {bg:'#FEF3C7',color:'#92400E',bar:'linear-gradient(90deg,#F59E0B,#FCD34D)'},
+  Fragrance: {bg:'#E0F2FE',color:'#075985',bar:'linear-gradient(90deg,#0EA5E9,#67E8F9)'},
+  Nails:     {bg:'#D1FAE5',color:'#065F46',bar:'linear-gradient(90deg,#059669,#6EE7B7)'},
+  Wellness:  {bg:'#ECFCCB',color:'#3F6212',bar:'linear-gradient(90deg,#65A30D,#BEF264)'},
+  Tools:     {bg:'#E0E7FF',color:'#3730A3',bar:'linear-gradient(90deg,#4F46E5,#A5B4FC)'},
+};
+const TAG_LABELS = {melanin:'Melanin ✓',kbeauty:'K-Beauty',clean:'Clean',curly:'Curly',celebrity:'Celebrity',exclusive:'Exclusive',sensitive:'Sensitive'};
+const TAG_COLORS = {melanin:'#FFF0E6|#8B4513',kbeauty:'#EBF7FB|#0E7490',clean:'#ECFDF5|#065F46',curly:'#F5F3FF|#5B21B6',celebrity:'#FDF2F8|#9D174D',exclusive:'#FDF3E3|#92400E',sensitive:'#EFF6FF|#1D4ED8'};
+
+let activeFilter = 'all';
+
+function buildBrandGrid(data) {
+  const grid = document.getElementById('brand-grid');
+  grid.innerHTML = '';
+  data.forEach(b => {
+    const cc = CAT_COLORS[b.cat] || CAT_COLORS.Skincare;
+    const tagHtml = b.tags.map(t => {
+      const [bg,col] = (TAG_COLORS[t]||'#f0f0f0|#333').split('|');
+      return `<span class="bc-tag" style="background:${bg};color:${col}">${TAG_LABELS[t]||t}</span>`;
+    }).join('');
+    const card = document.createElement('div');
+    card.className = 'brand-card';
+    card.dataset.cat = b.cat;
+    card.dataset.brand = b.brand.toLowerCase();
+    card.dataset.booth = b.booth;
+    card.innerHTML = `
+      <div class="bc-top">
+        <div class="bc-icon">${b.icon}</div>
+        <div class="bc-booth">Booth ${b.booth}</div>
+        <div class="bc-name">${b.brand}</div>
+        <div class="bc-tags">${tagHtml}</div>
+        <div class="bc-cat-bar" style="background:${cc.bar}"></div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-desc">${b.desc}</div>
+        <div class="bc-hero-prod">⭐ <strong style="margin-right:4px">Hero product:</strong> ${b.hero}</div>
+        <div class="bc-actions">
+          <a href="${b.link}" target="_blank" class="btn btn-pink btn-sm">Visit Brand →</a>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();addToWishlist('${b.brand.replace(/'/g,"\\'")}','${b.booth}')">+ Wishlist</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  document.getElementById('brand-count').textContent = data.length;
+}
+
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('#cat-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterBrands();
+}
+
+function filterBrands() {
+  const q = document.getElementById('brand-search').value.toLowerCase();
+  const cards = document.querySelectorAll('.brand-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const catOk = activeFilter === 'all' || c.dataset.cat === activeFilter;
+    const qOk   = !q || c.dataset.brand.includes(q) || c.dataset.booth.includes(q);
+    const show  = catOk && qOk;
+    c.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('brand-count').textContent = visible;
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.ps-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ps-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showMapTab(id, el) {
+  document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.map-tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function addToWishlist(brand, booth) {
+  showToast(`${brand} added to your list 💗`);
+}
+
+// Build zone map
+function buildZoneMap() {
+  const ALL_BOOTHS = [
+    {z:'A',b:'100',n:'Gimme Beauty'},{z:'A',b:'101',n:'MEDIHEAL'},{z:'A',b:'108',n:'VOESH'},{z:'A',b:'109',n:'Naturium'},{z:'A',b:'110',n:'NuFACE'},{z:'A',b:'114',n:'Naked Sundays'},{z:'A',b:'115',n:'Bloomeffects'},{z:'A',b:'116',n:'Design Essentials'},{z:'A',b:'120',n:'Florence by Mills'},{z:'A',b:'121',n:'The INKEY List'},{z:'A',b:'201',n:'Charlotte Tilbury'},{z:'A',b:'208',n:'Saje Natural'},{z:'A',b:'209',n:'isima'},{z:'A',b:'211',n:'Olive & June'},{z:'A',b:'213',n:'Round Lab'},{z:'A',b:'214',n:'KISS'},{z:'A',b:'215',n:'Vanicream'},{z:'A',b:'217',n:'Magic Molecule'},{z:'A',b:'220',n:'VT COSMETICS'},{z:'A',b:'228',n:'Kristin Ess'},{z:'A',b:'229',n:'Nioxin/OPI'},{z:'A',b:'301',n:'Coco & Eve'},{z:'A',b:'308',n:'Eva NYC'},{z:'A',b:'309',n:'Morphe'},{z:'A',b:'310',n:'Odele'},{z:'A',b:'312',n:'SEEN'},{z:'A',b:'315',n:'ELEMIS'},{z:'A',b:'316',n:'DIME'},{z:'A',b:'321',n:'Innersense'},{z:'A',b:'329',n:'Alterna/Joico'},{z:'A',b:'347',n:'Madison Reed'},{z:'A',b:'401',n:'Benefit'},{z:'A',b:'409',n:'CeraVe/LRP'},{z:'A',b:'415',n:'Prada/YSL'},{z:'A',b:'421',n:'YSL MYSLF'},{z:'A',b:'429',n:"MaryRuth's"},{z:'A',b:'431',n:'Camille Rose'},{z:'A',b:'433',n:'Earth Therapeutics'},{z:'A',b:'435',n:'Virtue'},{z:'A',b:'439',n:'Rodan+Fields'},{z:'A',b:'501',n:'Lake & Skye'},{z:'A',b:'509',n:'Valentino'},{z:'A',b:'515',n:'Lancôme'},{z:'A',b:'521',n:'Ralph Lauren'},{z:'A',b:'524',n:'Paul Mitchell'},{z:'A',b:'528',n:'Avène'},{z:'A',b:'529',n:'Azzaro/Viktor&Rolf'},{z:'A',b:'532',n:'The Crème Shop'},{z:'A',b:'538',n:'Reel'},{z:'A',b:'539',n:'DRMTLGY'},{z:'A',b:'543',n:'UNITE Hair'},{z:'A',b:'547',n:"D&G/Donna's"},{z:'A',b:'601',n:"essie/L'Oréal"},{z:'A',b:'609',n:'Buttah/Clarins'},{z:'A',b:'615',n:'Biolage'},{z:'A',b:'621',n:'Pureology'},{z:'A',b:'633',n:'Locks & Mane'},{z:'A',b:'635',n:'ORLY'},{z:'A',b:'638',n:'Nakery Beauty'},{z:'A',b:'639',n:'bareMinerals'},{z:'A',b:'640',n:'Cocokind'},{z:'A',b:'709',n:'Kylie Cosmetics'},{z:'A',b:'715',n:"Kiehl's"},{z:'A',b:'716',n:'SKIN1004'},{z:'A',b:'721',n:'Matrix'},{z:'A',b:'747',n:'Keratin Complex'},{z:'A',b:'809',n:'NYX'},{z:'A',b:'815',n:'Urban Decay'},{z:'A',b:'821',n:'Garnier/Thayers'},{z:'A',b:'828',n:'No7'},{z:'A',b:'829',n:'IT Cosmetics'},{z:'A',b:'830',n:'18.21 Man Made'},{z:'A',b:'832',n:'AmLactin'},{z:'A',b:'834',n:'Eylure'},{z:'A',b:'839',n:'Shampooheiat'},{z:'A',b:'847',n:'L.A. Girl'},{z:'A',b:'901',n:'Ulta Neighborhood'},{z:'A',b:'915',n:'Paris Hilton Frag.'},{z:'A',b:'920',n:'Bed Head'},{z:'A',b:'921',n:'BEVEL/Mielle'},{z:'A',b:'929',n:'REDKEN'},{z:'A',b:'938',n:'Starface'},{z:'A',b:'939',n:'Sweet Tooth'},{z:'A',b:'940',n:'Ethique Beauty'},{z:'A',b:'942',n:'Good Molecules'},{z:'A',b:'947',n:'method'},
+    {z:'B',b:'1015',n:'TIR TIR'},{z:'B',b:'1021',n:'Sol de Janeiro'},{z:'B',b:'1029',n:'Shark Beauty'},{z:'B',b:'1038',n:'Real Techniques'},{z:'B',b:'1039',n:'BYOMA'},{z:'B',b:'1047',n:'belif/CNP'},{z:'B',b:'1115',n:'Supergoop!'},{z:'B',b:'1121',n:'Dermalogica'},{z:'B',b:'1129',n:'about-face'},{z:'B',b:'1131',n:'Dashing Diva'},{z:'B',b:'1135',n:'Blind Barber'},{z:'B',b:'1215',n:'Revolution Beauty'},{z:'B',b:'1221',n:'Drunk Elephant'},{z:'B',b:'1229',n:'e.l.f.'},{z:'B',b:'1234',n:'EOS'},{z:'B',b:'1239',n:'Glamnetic'},{z:'B',b:'1246',n:'Divi Growth Care'},{z:'B',b:'1247',n:'Touchland'},{z:'B',b:'1403',n:'NARS'},{z:'B',b:'1409',n:'Shiseido'},{z:'B',b:'1415',n:'OUAI'},{z:'B',b:'1421',n:'PATTERN'},{z:'B',b:'1429',n:'NEST New York'},{z:'B',b:'1438',n:'Live Tinted'},{z:'B',b:'1441',n:'Ardell/China Glaze'},{z:'B',b:'1449',n:'Kitsch'},{z:'B',b:'1502',n:'Medicube'},{z:'B',b:'1508',n:'Givenchy Beauty'},{z:'B',b:'1514',n:'Half Magic'},{z:'B',b:'1517',n:'ABH'},{z:'B',b:'1520',n:'OSEA Malibu'},{z:'B',b:'1524',n:'Stila'},{z:'B',b:'1528',n:'r.e.m. beauty'},{z:'B',b:'1531',n:'Neutrogena'},{z:'B',b:'1534',n:'JVN'},{z:'B',b:'1541',n:'Exuviance/OGX'},{z:'B',b:'1546',n:'NEOM Wellbeing'},{z:'B',b:'1603',n:'Polite Society'},{z:'B',b:'1609',n:'Bubble Skincare'},{z:'B',b:'1617',n:'MAËLYS'},{z:'B',b:'1625',n:'Lemme'},{z:'B',b:'1631',n:'ONYX Pro'},{z:'B',b:'1647',n:'Celimax/dAlba'},{z:'B',b:'1703',n:'tarte'},{z:'B',b:'1709',n:'LolaVie'},{z:'B',b:'1716',n:'Snif'},{z:'B',b:'1717',n:'Curlsmith/Drybar'},{z:'B',b:'1724',n:'Hempz'},{z:'B',b:'1725',n:'ILIA Beauty'},{z:'B',b:'1731',n:'Hero/Batiste'},{z:'B',b:'1741',n:"It's a 10"},
+    {z:'C',b:'1747',n:'Briogeo'},{z:'C',b:'1803',n:'Tatcha'},{z:'C',b:'1808',n:'Squishmallows Frag.'},{z:'C',b:'1809',n:'OLAPLEX'},{z:'C',b:'1817',n:'Winky Lux'},{z:'C',b:'1819',n:'BondiBoost'},{z:'C',b:'1821',n:'Pat McGrath'},{z:'C',b:'1825',n:'Peach & Lily'},{z:'C',b:'1830',n:'PTR'},{z:'C',b:'1831',n:'Truly Beauty'},{z:'C',b:'1833',n:'Luna Bronze'},{z:'C',b:'1835',n:'Red Carpet Manicure'},{z:'C',b:'1840',n:'tgin'},{z:'C',b:'1841',n:'K-Beauty World'},{z:'C',b:'1847',n:'Lumé'},{z:'C',b:'1903',n:'Cécred'},{z:'C',b:'1909',n:'Nemet'},{z:'C',b:'1916',n:'Grande Cosmetics'},{z:'C',b:'1917',n:'Drake/Eilish Frag.'},{z:'C',b:'1918',n:'Bioderma'},{z:'C',b:'1920',n:'Saltair'},{z:'C',b:'1925',n:'Personal Day'},{z:'C',b:'1931',n:'amika'},{z:'C',b:'1932',n:'Lanolips'},{z:'C',b:'1934',n:'Herbivore'},{z:'C',b:'1941',n:'Beekman 1802'},{z:'C',b:'1947',n:'Rizos Curls'},
+    {z:'D',b:'2003',n:'Rare Beauty'},{z:'D',b:'2008',n:'NOYZ'},{z:'D',b:'2009',n:'Fenty/OLEHENRIKSEN'},{z:'D',b:'2017',n:'Living Proof'},{z:'D',b:'2024',n:'Bio-Oil/Bondi Sands'},{z:'D',b:'2025',n:'Tangle Teezer'},{z:'D',b:'2031',n:'DIBS Beauty'},{z:'D',b:'2040',n:'Milani'},{z:'D',b:'2041',n:'Revive Collagen'},{z:'D',b:'2046',n:'ma:nyo'},{z:'D',b:'2047',n:'Bio Ionic/Wet Brush'},{z:'D',b:'2103',n:'Clinique'},{z:'D',b:'2109',n:'Estée Lauder'},{z:'D',b:'2116',n:'Kopari'},{z:'D',b:'2117',n:'BaBylissPRO/Conair'},{z:'D',b:'2124',n:'IGK'},{z:'D',b:'2125',n:'fwee'},{z:'D',b:'2130',n:'Natasha Denona'},{z:'D',b:'2131',n:'Kate Somerville'},{z:'D',b:'2141',n:"Not Your Mother's"},{z:'D',b:'2147',n:'Verb'},{z:'D',b:'2202',n:'Origins'},{z:'D',b:'2203',n:'The Ordinary'},{z:'D',b:'2209',n:'MAC Cosmetics'},{z:'D',b:'2217',n:'Moroccanoil'},{z:'D',b:'2225',n:'CHI'},{z:'D',b:'2231',n:'Dyson'},{z:'D',b:'2240',n:'COSRX'},{z:'D',b:'2241',n:'Juicy Couture/Revlon'},{z:'D',b:'2246',n:"L'ange Hair"},{z:'D',b:'2247',n:'St.Tropez'},{z:'D',b:'2302',n:'Too Faced'},{z:'D',b:'2309',n:'TOM FORD'},{z:'D',b:'2317',n:'Carolina Herrera'},{z:'D',b:'2325',n:'Essence'},{z:'D',b:'2331',n:'Clean Skin Club'},{z:'D',b:'2341',n:'DevaCurl'},{z:'D',b:'2347',n:'Tree Hut'},{z:'D',b:'2401',n:'Bobbi Brown'},{z:'D',b:'2408',n:'BALMAIN'},{z:'D',b:'2409',n:'Bumble and bumble.'},{z:'D',b:'2431',n:'Nexxus/Vaseline'},
+    {z:'GS',b:'GS1',n:'OCTAVIA MORGAN'},{z:'GS',b:'GS2',n:'Scarlet/RedDrop'},{z:'GS',b:'GS3',n:'Bushbalm'},{z:'GS',b:'GS5',n:'Hairstory'},{z:'GS',b:'GS6',n:'Ocoe'},{z:'GS',b:'GS7',n:'Denman Brush'},
+    {z:'FT',b:'FT1',n:'UNbrush'},{z:'FT',b:'FT2',n:'Meesi Elixir'},{z:'FT',b:'FT3',n:'GuruNanda'},{z:'FT',b:'FT4',n:'Medicine Mama'},{z:'FT',b:'FT5',n:'Ellis Brooklyn'},{z:'FT',b:'FT6',n:'Versace Crystal'},{z:'FT',b:'FT7',n:'Bird&Be'},{z:'FT',b:'FT8',n:'Nodpod'},{z:'FT',b:'FT9',n:'Hum Nutrition'},{z:'FT',b:'FT10',n:'Apothékary'},{z:'FT',b:'FT11',n:'Cymbiotika'},
+  ];
+  const zones = ['A','B','C','D','GS','FT'];
+  const zoneLabels = {'A':'Zone A · 100–999','B':'Zone B · 1000–1749','C':'Zone C · 1750–1999','D':'Zone D · 2000–2500','GS':'GS · Special Positions','FT':'FT · Featured Tables'};
+  const zm = document.getElementById('zone-map');
+  zones.forEach(z => {
+    const items = ALL_BOOTHS.filter(b => b.z === z);
+    const block = document.createElement('div');
+    block.className = 'zone-block';
+    block.innerHTML = `<div class="zone-head">${zoneLabels[z]}</div><div class="zone-pills">${items.map(i=>`<div class="zone-pill" title="${i.n}">${i.b}</div>`).join('')}</div>`;
+    zm.appendChild(block);
+  });
+}
+
+// Route generator
+document.querySelectorAll('#int-chips .chip, #focus-chips .chip').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('active'));
+});
+
+async function generateRoute() {
+  const btn = document.getElementById('gen-route-btn');
+  btn.disabled = true; btn.textContent = '⏳ Building your route…';
+  const interests = [...document.querySelectorAll('#int-chips .chip.active')].map(c=>c.dataset.v);
+  const focus     = [...document.querySelectorAll('#focus-chips .chip.active')].map(c=>c.dataset.v);
+  const s1 = document.getElementById('sl1').value;
+  const s2 = document.getElementById('sl2').value;
+
+  // ── TRACK GOAL DATA for creator dashboard ──
+  try {
+    const _store = 'ubw_goal_data';
+    const _sid = (() => { let s=sessionStorage.getItem('ubw_sid'); if(!s){s=Math.random().toString(36).slice(2,10);sessionStorage.setItem('ubw_sid',s);} return s; })();
+    const _recs = JSON.parse(localStorage.getItem(_store)||'[]');
+    _recs.push({ ts:Date.now(), session:_sid, source:'route_builder', interests, focus, samplesW:+s1, roiW:+s2 });
+    localStorage.setItem(_store, JSON.stringify(_recs.slice(-5000)));
+  } catch(e) {}
+
+  const boothSnippet = BRANDS_DATA.filter(b => interests.includes(b.cat)).slice(0,40)
+    .map(b=>`Booth ${b.booth}: ${b.brand} (${b.cat})`).join('\n');
+
+  const prompt = `You are a Ulta Beauty World 2026 expo strategist. Real official booths:
+${boothSnippet}
+
+User: interests=${interests.join(',')}, focus=${focus.join(',')}, samples_priority=${s1}/10, roi_priority=${s2}/10
+
+Create an optimal 10-booth ROI-ranked route. Respond ONLY in valid JSON (no fences):
+{"summary":"2 sentence pink-coded strategy","totalValue":"$XXX","route":[{"order":1,"brand":"exact name","booth":"exact #","cat":"cat","why":"1 sentence reason for this user","topProduct":"Product — $XX","sampleValue":"$XX","time":"X min","walk":"X min","roi":85}]}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
+    const data = await res.json();
+    const raw = (data.content||[]).map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const r = JSON.parse(raw);
+    renderRoute(r);
+  } catch(e) {
+    document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">Error generating route — please try again.</p>';
+  }
+  btn.disabled = false; btn.textContent = '✨ Generate My Route';
+}
+
+function renderRoute(r) {
+  let html = `<div style="background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:var(--radius-lg);padding:1.25rem;color:#fff;margin-bottom:1rem">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-bottom:4px">Your Strategy</div>
+    <div style="font-size:14px;line-height:1.65">${r.summary}</div>
+    <div style="margin-top:10px;font-size:13px;opacity:0.85">Estimated sample value: <strong>${r.totalValue}</strong></div>
+  </div>`;
+  r.route.forEach((s,i) => {
+    html += `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${s.order}</div>
+      <div style="flex:1;background:var(--pink-blush);border:1px solid var(--pink-border);border-radius:var(--radius-lg);padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:4px">
+          <strong style="font-size:14px">${s.brand}</strong>
+          <span style="font-size:10px;background:var(--pink-pale);color:var(--pink-hot);padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap">Booth ${s.booth}</span>
+        </div>
+        <div style="font-size:12px;color:var(--mist);margin-bottom:6px">${s.why}</div>
+        <div style="font-size:12px;display:flex;flex-wrap:wrap;gap:10px;color:var(--ink2)">
+          <span>⭐ ${s.topProduct}</span>
+          <span>🎁 ${s.sampleValue}</span>
+          <span>⏱ ${s.time}</span>
+          <span>🚶 ${s.walk} to next</span>
+        </div>
+        <div class="roi-bar" style="margin-top:8px"><div class="roi-fill" style="width:${s.roi}%"></div></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('route-output').innerHTML = html;
+}
+
+// Init
+buildBrandGrid(BRANDS_DATA);
+buildZoneMap();
+
+
+/* ── ABOUT JS ── */
+
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  el.classList.toggle('open');
+  ans.classList.toggle('open');
+}
+function downloadMap(e) {
+  e.preventDefault();
+  showToast('Map download starting… 💗');
+  // In production this would trigger a real file download
+  setTimeout(() => showToast('Tip: Save the map to your phone for offline use! ✨'), 1500);
+}
+// Sync visitor count
+document.addEventListener('DOMContentLoaded', () => {
+  const c = parseInt(localStorage.getItem('ubw_visits')||'0') + 1247;
+  const el = document.getElementById('visitor-display');
+  if (el) el.textContent = c.toLocaleString();
+});
+
+
+/* ── COMMUNITY JS ── */
+
+const SEED=[{name:'Jem ✦',avatar:'👸🏽',text:"Welcome to the UBW 2026 community! April 16 can't come fast enough! 💗",time:'10:00 AM'},{name:'BeautyJunkie92',avatar:'💄',text:'SO excited!! Already mapped Fenty, Cécred, and Pat McGrath 🖤✨',time:'10:03 AM'},{name:'CurlsAndGloss',avatar:'🌀',text:'First time going — any tips?',time:'10:07 AM'},{name:'Jem ✦',avatar:'👸🏽',text:'Use the route builder on the Resources page — it makes a custom plan just for you 💗',time:'10:09 AM'},{name:'SkincareSlay',avatar:'🌸',text:'COSRX (2240) and Tatcha (1803) are non-negotiable. K-beauty girlies unite 🐌🍵',time:'10:14 AM'}];
+let chatMsgs2=[...SEED];
+function renderChat2(){const el=document.getElementById('chat-msgs');if(!el)return;el.innerHTML=chatMsgs2.map(m=>`<div style="display:flex;gap:10px;align-items:flex-end;${m.isMe?'flex-direction:row-reverse':''}"><div style="width:30px;height:30px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${m.avatar||'🌸'}</div><div><div style="font-size:10px;font-weight:700;color:var(--pink);margin-bottom:3px${m.isMe?';text-align:right':''}">${m.name}</div><div style="max-width:280px;padding:10px 14px;border-radius:${m.isMe?'18px 18px 4px 18px':'18px 18px 18px 4px'};font-size:13px;line-height:1.55;${m.isMe?'background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff':'background:#fff;border:1px solid var(--pink-border);color:var(--ink)'}">${m.text}</div><div style="font-size:10px;color:var(--mist);margin-top:4px${m.isMe?';text-align:right':''}">${m.time}</div></div></div>`).join('');el.scrollTop=el.scrollHeight;}
+function sendChatMsg(){const inp=document.getElementById('chat-input'),nm=document.getElementById('chat-name');const t=inp.value.trim();if(!t)return;const n=nm?.value.trim()||'You';const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});chatMsgs2.push({name:n,avatar:'💗',text:t,time:now,isMe:true});inp.value='';renderChat2();setTimeout(()=>{const r=[{name:'BeautyJunkie92',avatar:'💄',text:'Yesss! This is going to be amazing 🙌✨'},{name:'SkincareSlay',avatar:'🌸',text:'Omg totally agree!! 💗'},{name:'CurlsAndGloss',avatar:'🌀',text:'Such a good tip, thank you! 🌸'}][Math.floor(Math.random()*3)];r.time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});chatMsgs2.push(r);renderChat2();},1800+Math.random()*1200);}
+function likeCommPost(el){const n=parseInt(el.textContent.split(' ')[1]||'0')+1;el.textContent='❤️ '+n;}
+function shareCommPost(){const v=document.getElementById('share-comm-input').value.trim();if(!v){alert('Write something first!');return;}const f=document.getElementById('comm-feed'),c=document.createElement('div');c.style.cssText='background:#fff;border:1px solid var(--pink-border);border-radius:24px;padding:1.25rem';c.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:38px;height:38px;border-radius:50%;background:var(--pink-pale);font-size:18px;display:flex;align-items:center;justify-content:center">💗</div><div><div style="font-size:14px;font-weight:700">You</div><div style="font-size:11px;color:var(--mist)">Just now</div></div></div><div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:10px">${v}</div><span style="font-size:12px;color:var(--mist);cursor:pointer" onclick="likeCommPost(this)">🤍 0</span>`;f.insertBefore(c,f.firstChild);document.getElementById('share-comm-input').value='';}
+function initCommCountdown(){const el=document.getElementById('comm-countdown');if(!el)return;const t=new Date('2026-04-16T09:00:00-04:00');function u(){const d=t-new Date();if(d<=0){el.innerHTML='<strong style="color:var(--pink)">It\'s happening NOW! 🎉</strong>';return;}const dv=Math.floor(d/86400000),h=Math.floor((d%86400000)/3600000),m=Math.floor((d%3600000)/60000),s=Math.floor((d%60000)/1000);el.innerHTML='<div style="display:flex;gap:8px;flex-wrap:wrap">'+[[dv,'Days'],[h,'Hrs'],[m,'Min'],[s,'Sec']].map(([v,l])=>`<div style="background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:12px;padding:8px 12px;color:#fff;text-align:center;min-width:48px"><div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;line-height:1">${String(v).padStart(2,'0')}</div><div style="font-size:9px;opacity:0.8;font-weight:600;letter-spacing:0.08em;text-transform:uppercase">${l}</div></div>`).join('')+'</div>';}u();setInterval(u,1000);}
+renderChat2();initCommCountdown();
+setInterval(()=>{const e=document.getElementById('comm-online');if(e)e.textContent=(8+Math.floor(Math.random()*20))+' online';},8000);
+
+
+/* ── DASHBOARD JS ── */
+
+const PW='JemUBW2026\u{1F497}';
+const SK='ubw_creator_v2';
+const STORE='ubw_goal_data';
+let fails=0,lockTil=0,sortMode='heat';
+
+document.getElementById('pw-input').addEventListener('keydown',e=>{if(e.key==='Enter')unlock();});
+
+function unlock(){
+  const now=Date.now();
+  if(now<lockTil){showMsg('Locked — wait '+Math.ceil((lockTil-now)/1000)+'s');return;}
+  const v=document.getElementById('pw-input').value;
+  if(v===PW){
+    sessionStorage.setItem(SK,btoa(PW+now));fails=0;
+    const ls=document.getElementById('lock-screen');
+    ls.style.transition='opacity 0.4s';ls.style.opacity='0';
+    setTimeout(()=>{ls.style.display='none';document.getElementById('dashboard').style.display='flex';init();},380);
+  } else {
+    fails++;
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').classList.add('err','shake');
+    setTimeout(()=>document.getElementById('pw-input').classList.remove('err','shake'),500);
+    if(fails>=5){lockTil=Date.now()+60000;showMsg('Too many attempts. Locked 60s.');}
+    else showMsg('Incorrect — '+(5-fails)+' attempts remaining.');
+  }
+}
+function showMsg(m){const el=document.getElementById('lock-msg');el.textContent=m;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000);}
+function lockOut(){showToast('Refresh page to re-access');}
+
+
+
+function loadRec(){try{return JSON.parse(localStorage.getItem(STORE)||'[]');}catch{return[];}}
+
+function seedDemo(){
+  if(loadRec().length>0)return;
+  const INT=[['Skincare','Haircare'],['Makeup','Fragrance'],['Haircare','Skincare'],['Skincare','Makeup','Haircare'],['Nails','Makeup'],['Wellness','Skincare'],['Haircare','Tools'],['Skincare'],['Makeup','Skincare','Haircare']];
+  const FOC=[['melanin','kbeauty'],['curly','melanin'],['kbeauty','clean'],['melanin'],['sensitive','clean'],['kbeauty'],['curly'],['melanin','curly','kbeauty'],['clean'],['celebrity','exclusive']];
+  const now=Date.now(),dm=86400000,batch=[];
+  for(let i=0;i<185;i++){
+    batch.push({ts:now-Math.floor(Math.random()*7)*dm-Math.floor(Math.random()*dm),session:Math.random().toString(36).slice(2,10),source:'route_builder',interests:INT[Math.floor(Math.random()*INT.length)],focus:FOC[Math.floor(Math.random()*FOC.length)],samplesW:Math.floor(Math.random()*4)+6,roiW:Math.floor(Math.random()*4)+6});
+  }
+  localStorage.setItem(STORE,JSON.stringify(batch));
+}
+
+const BRANDS=[
+  {booth:'1903',brand:'Cécred',cat:'Haircare',focus:['melanin','curly'],celeb:0.95,base:0.90},
+  {booth:'2009',brand:'Fenty Beauty',cat:'Makeup',focus:['melanin','celebrity'],celeb:0.95,base:0.92},
+  {booth:'2003',brand:'Rare Beauty',cat:'Makeup',focus:['melanin','celebrity'],celeb:0.90,base:0.88},
+  {booth:'1821',brand:'Pat McGrath Labs',cat:'Makeup',focus:['melanin','celebrity'],celeb:0.88,base:0.85},
+  {booth:'2231',brand:'Dyson',cat:'Tools',focus:['exclusive'],celeb:0.70,base:0.82},
+  {booth:'1421',brand:'PATTERN',cat:'Haircare',focus:['melanin','curly','celebrity'],celeb:0.85,base:0.80},
+  {booth:'1803',brand:'Tatcha',cat:'Skincare',focus:['kbeauty','clean'],celeb:0.50,base:0.75},
+  {booth:'2240',brand:'COSRX',cat:'Skincare',focus:['kbeauty'],celeb:0.55,base:0.78},
+  {booth:'201',brand:'Charlotte Tilbury',cat:'Makeup',focus:['celebrity'],celeb:0.85,base:0.80},
+  {booth:'1703',brand:'tarte',cat:'Makeup',focus:['clean'],celeb:0.60,base:0.72},
+  {booth:'1029',brand:'Shark Beauty',cat:'Tools',focus:['exclusive'],celeb:0.50,base:0.65},
+  {booth:'1021',brand:'Sol de Janeiro',cat:'Skincare',focus:[],celeb:0.55,base:0.74},
+  {booth:'1825',brand:'Peach & Lily',cat:'Skincare',focus:['kbeauty','melanin'],celeb:0.45,base:0.70},
+  {booth:'1115',brand:'Supergoop!',cat:'Skincare',focus:['clean','melanin'],celeb:0.40,base:0.68},
+  {booth:'1221',brand:'Drunk Elephant',cat:'Skincare',focus:['clean'],celeb:0.50,base:0.70},
+  {booth:'1403',brand:'NARS Cosmetics',cat:'Makeup',focus:['melanin'],celeb:0.65,base:0.72},
+  {booth:'1947',brand:'Rizos Curls',cat:'Haircare',focus:['melanin','curly'],celeb:0.40,base:0.62},
+  {booth:'431',brand:'Camille Rose',cat:'Haircare',focus:['melanin','curly'],celeb:0.40,base:0.60},
+  {booth:'921',brand:'Mielle',cat:'Haircare',focus:['melanin','curly'],celeb:0.50,base:0.65},
+  {booth:'1247',brand:'Touchland',cat:'Wellness',focus:[],celeb:0.35,base:0.58},
+  {booth:'609',brand:'Buttah Skin',cat:'Skincare',focus:['melanin'],celeb:0.45,base:0.62},
+  {booth:'1534',brand:'JVN',cat:'Haircare',focus:['celebrity'],celeb:0.70,base:0.65},
+  {booth:'1438',brand:'Live Tinted',cat:'Makeup',focus:['melanin'],celeb:0.50,base:0.63},
+  {booth:'1528',brand:'r.e.m. beauty',cat:'Makeup',focus:['celebrity'],celeb:0.78,base:0.72},
+  {booth:'409',brand:'CeraVe / LRP',cat:'Skincare',focus:['sensitive'],celeb:0.20,base:0.52},
+  {booth:'1809',brand:'OLAPLEX',cat:'Haircare',focus:[],celeb:0.45,base:0.64},
+  {booth:'109',brand:'Naturium',cat:'Skincare',focus:['clean','melanin'],celeb:0.35,base:0.58},
+  {booth:'1015',brand:'TIR TIR',cat:'Skincare',focus:['kbeauty'],celeb:0.40,base:0.62},
+  {booth:"715",brand:"Kiehl's",cat:'Skincare',focus:['clean'],celeb:0.45,base:0.60},
+  {booth:'815',brand:'Urban Decay',cat:'Makeup',focus:['melanin'],celeb:0.55,base:0.65},
+];
+
+function computeFC(rec){
+  if(!rec.length)return BRANDS.map(b=>({...b,heat:b.base+(Math.random()*.05-.025),votes:Math.round(b.base*80+b.celeb*30+Math.random()*15)})).sort((a,b)=>b.heat-a.heat);
+  const cc={},fc={},sa=[],ra=[];
+  rec.forEach(r=>{(r.interests||[]).forEach(c=>{cc[c]=(cc[c]||0)+1;});(r.focus||[]).forEach(f=>{fc[f]=(fc[f]||0)+1;});if(r.samplesW)sa.push(+r.samplesW);if(r.roiW)ra.push(+r.roiW);});
+  const n=rec.length,aS=sa.length?sa.reduce((a,b)=>a+b)/sa.length:7,aR=ra.length?ra.reduce((a,b)=>a+b)/ra.length:7;
+  return BRANDS.map(b=>{
+    const cs=(cc[b.cat]||0)/Math.max(n,1);
+    const fs=b.focus.length?b.focus.reduce((a,f)=>a+(fc[f]||0),0)/Math.max(b.focus.length*n,1):0.1;
+    const cb=b.celeb*((aS+aR)/20);
+    const heat=Math.min(0.99,Math.max(0.05,b.base*.4+cs*.3+fs*.2+cb*.1+(Math.random()*.03-.015)));
+    const votes=Math.round(cs*n*.6+fs*n*.4+b.celeb*22);
+    return {...b,heat,votes};
+  }).sort((a,b)=>b.heat-a.heat);
+}
+
+function hi(h){
+  if(h>=.85)return{cls:'s-c',lbl:'Critical',col:'#F87171'};
+  if(h>=.70)return{cls:'s-h',lbl:'High',col:'#FB923C'};
+  if(h>=.50)return{cls:'s-m',lbl:'Medium',col:'#FBBF24'};
+  return{cls:'s-l',lbl:'Low',col:'#34D399'};
+}
+function pw(h){if(h>=.85)return'9:00 – 10:30 AM';if(h>=.70)return'9:30 – 11:00 AM';if(h>=.50)return'10:00 AM – 12 PM';return'11:00 AM – 2:00 PM';}
+
+let fc=[];
+
+function init(){
+  seedDemo();
+  renderAll();
+  renderHourly();
+  renderTrend();
+  renderFeed();
+  startClock();
+  setInterval(renderAll,30000);
+}
+
+function renderAll(){
+  const rec=loadRec();
+  fc=computeFC(rec);
+  const today=new Date().setHours(0,0,0,0);
+  const tr=rec.filter(r=>r.ts>=today);
+  const us=new Set(rec.map(r=>r.session)).size;
+  const ts=new Set(tr.map(r=>r.session)).size;
+  document.getElementById('kv1').textContent=us.toLocaleString();
+  document.getElementById('kd1').textContent='+'+ts+' today';
+  document.getElementById('kv2').textContent=rec.length.toLocaleString();
+  document.getElementById('kd2').textContent='+'+tr.length+' today';
+  document.getElementById('kv3').textContent=fc[0]?.brand||'—';
+  document.getElementById('kd3').textContent=Math.round((fc[0]?.heat||0)*100)+'% heat score';
+  const cats=new Set(rec.flatMap(r=>r.interests||[]));
+  document.getElementById('kv4').textContent=Math.round(cats.size/7*100)+'%';
+  document.getElementById('kd4').textContent=cats.size+' of 7 categories';
+  document.getElementById('sb-n').textContent=us;
+  renderTbl();
+  renderDonut(rec);
+  renderIbars(rec);
+  renderZones();
+  renderFocus(rec);
+  document.getElementById('upd-lbl').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+}
+
+function renderTbl(){
+  let data=[...fc];
+  const q=(document.getElementById('tsearch')?.value||'').toLowerCase();
+  if(q)data=data.filter(b=>b.brand.toLowerCase().includes(q)||b.booth.includes(q));
+  if(sortMode==='name')data.sort((a,b)=>a.brand.localeCompare(b.brand));
+  if(sortMode==='votes')data.sort((a,b)=>b.votes-a.votes);
+  document.getElementById('fc-tbody').innerHTML=data.map(b=>{
+    const h=hi(b.heat),p=Math.round(b.heat*100);
+    const tags=(b.focus||[]).map(f=>`<span style="font-size:9px;padding:1px 7px;border-radius:10px;background:rgba(255,63,142,0.08);color:rgba(255,63,142,0.65);font-weight:600;letter-spacing:0.04em;text-transform:uppercase">${f}</span>`).join('');
+    return`<tr><td><div class="bn">${b.brand}</div><div class="bb">Booth ${b.booth} · ${b.cat}</div></td><td><span class="spill ${h.cls}">${h.lbl}</span></td><td><div class="hrow"><div class="hbar"><div class="hfill" style="width:${p}%;background:${h.col}"></div></div><span class="hpct" style="color:${h.col}">${p}%</span></div></td><td><span class="ptag">${pw(b.heat)}</span></td><td style="font-weight:700;color:var(--pink)">${b.votes}</td><td><div style="display:flex;gap:4px;flex-wrap:wrap">${tags||'<span style="font-size:10px;color:var(--text-4)">general</span>'}</div></td></tr>`;
+  }).join('');
+}
+
+function renderDonut(rec){
+  const CATS=['Skincare','Haircare','Makeup','Fragrance','Nails','Wellness','Tools'];
+  const COLS=['#FF3F8E','#9333EA','#F59E0B','#0891B2','#059669','#65A30D','#4F46E5'];
+  const cnts={};rec.forEach(r=>(r.interests||[]).forEach(c=>{cnts[c]=(cnts[c]||0)+1;}));
+  const tot=Object.values(cnts).reduce((a,b)=>a+b,1);
+  const svg=document.getElementById('donut-svg');
+  while(svg.children.length>1)svg.removeChild(svg.lastChild);
+  const r=42,cx=55,cy=55,circ=2*Math.PI*r;let cum=0;
+  const sls=CATS.map((c,i)=>({c,cnt:cnts[c]||0,col:COLS[i]})).sort((a,b)=>b.cnt-a.cnt);
+  sls.forEach(s=>{
+    if(!s.cnt)return;
+    const pct=s.cnt/tot,dash=pct*circ,gap=circ-dash;
+    const el=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    el.setAttribute('cx',cx);el.setAttribute('cy',cy);el.setAttribute('r',r);
+    el.setAttribute('fill','none');el.setAttribute('stroke',s.col);el.setAttribute('stroke-width','16');
+    el.setAttribute('stroke-dasharray',`${dash} ${gap}`);
+    el.setAttribute('stroke-dashoffset',`${-cum*circ}`);
+    el.setAttribute('transform',`rotate(-90 ${cx} ${cy})`);
+    svg.appendChild(el);cum+=pct;
+  });
+  document.getElementById('dleg').innerHTML=sls.filter(s=>s.cnt).slice(0,5).map(s=>`<div class="dlr"><div class="dld" style="background:${s.col}"></div><span class="dll">${s.c}</span><span class="dlp">${Math.round(s.cnt/tot*100)}%</span></div>`).join('');
+}
+
+function renderIbars(rec){
+  const FL={melanin:'Melanin-friendly',kbeauty:'K-Beauty',clean:'Clean / Organic',curly:'Curly / Textured',sensitive:'Sensitive Skin',hyperpig:'Hyperpigmentation',celebrity:'Celebrity',exclusive:'Exclusives'};
+  const FC={melanin:'#FB923C',kbeauty:'#06B6D4',clean:'#34D399',curly:'#A855F7',sensitive:'#60A5FA',hyperpig:'#FBBF24',celebrity:'#F472B6',exclusive:'#E8A020'};
+  const cnts={};rec.forEach(r=>(r.focus||[]).forEach(f=>{cnts[f]=(cnts[f]||0)+1;}));
+  const srt=Object.entries(cnts).sort((a,b)=>b[1]-a[1]);
+  const mx=srt[0]?.[1]||1;
+  document.getElementById('ibars').innerHTML=srt.slice(0,6).map(([f,cnt])=>`<div><div class="ibar-top"><span class="ibn">${FL[f]||f}</span><span class="ibc">${cnt}</span></div><div class="ibar-track"><div class="ibar-fill" style="width:${Math.round(cnt/mx*100)}%;background:${FC[f]||'var(--pink)'}"></div></div></div>`).join('');
+}
+
+function renderHourly(){
+  const hrs=['9 AM','10 AM','11 AM','12 PM','1 PM','2 PM','3 PM','4 PM'];
+  const int=[0.75,0.95,0.88,0.62,0.52,0.70,0.78,0.58];
+  const lbl=['High','Peak','High','Medium','Low','High','High','Medium'];
+  const col=h=>h>=.85?'#F87171':h>=.7?'#FB923C':h>=.5?'#FBBF24':'#34D399';
+  document.getElementById('hm-grid').innerHTML=hrs.map((h,i)=>`<div class="hm-cell" style="background:${col(int[i])};opacity:${.25+int[i]*.65}"><div class="hm-tip">${h}: ${lbl[i]}</div></div>`).join('');
+  document.getElementById('hm-lbls').innerHTML=hrs.map(h=>`<div class="hm-lbl">${h}</div>`).join('');
+}
+
+function renderZones(){
+  const zones={A:{s:0,n:0},B:{s:0,n:0},C:{s:0,n:0},D:{s:0,n:0}};
+  fc.forEach(b=>{const num=parseInt(b.booth),z=isNaN(num)?null:num<1000?'A':num<1750?'B':num<2000?'C':'D';if(z){zones[z].s+=b.heat;zones[z].n++;}});
+  const ZI={A:{lbl:'Zone A',desc:'Booths 100–999 · Left wing'},B:{lbl:'Zone B',desc:'Booths 1000–1749 · Center-left'},C:{lbl:'Zone C',desc:'Booths 1750–1999 · Center-right'},D:{lbl:'Zone D',desc:'Booths 2000–2500 · Right wing'}};
+  document.getElementById('zone-list').innerHTML=Object.entries(zones).map(([z,v])=>{
+    const avg=v.n?v.s/v.n:0,h=hi(avg),p=Math.round(avg*100);
+    return`<div class="zone-row"><div class="zltr" style="background:${h.col}15;color:${h.col};border:1px solid ${h.col}30">${z}</div><div class="zinfo"><div class="zname">${ZI[z].lbl}</div><div class="zdesc">${ZI[z].desc}</div></div><div class="zbar-wrap"><div class="zbar"><div class="zbar-fill" style="width:${p}%;background:${h.col}"></div></div><div class="zpct">${p}%</div></div><span class="spill ${h.cls}">${h.lbl}</span></div>`;
+  }).join('');
+}
+
+function renderTrend(){
+  const rec=loadRec(),days=7,now=Date.now(),dm=86400000;
+  const cnts=Array.from({length:days},(_,i)=>{const s=now-(days-1-i)*dm;return rec.filter(r=>r.ts>=s&&r.ts<s+dm).length;});
+  const lbls=Array.from({length:days},(_,i)=>new Date(now-(days-1-i)*dm).toLocaleDateString('en-US',{month:'short',day:'numeric'}));
+  const mx=Math.max(...cnts,1),w=500,h=140,pad=20;
+  const pts=cnts.map((c,i)=>({x:pad+i*(w-pad*2)/(days-1),y:h-pad-(c/mx)*(h-pad*2),c}));
+  const path='M '+pts.map(p=>`${p.x},${p.y}`).join(' L ');
+  const area=path+` L ${pts[pts.length-1].x},${h} L ${pts[0].x},${h} Z`;
+  document.getElementById('trend-svg').innerHTML=`<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF3F8E" stop-opacity=".35"/><stop offset="100%" stop-color="#FF3F8E" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#tg)"/><path d="${path}" fill="none" stroke="#FF3F8E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>${pts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="3.5" fill="#FF3F8E" stroke="var(--bg)" stroke-width="1.5"/>`).join('')}${pts.map(p=>`<text x="${p.x}" y="${p.y-9}" text-anchor="middle" font-size="9" fill="rgba(245,238,248,0.4)" font-family="DM Sans">${p.c}</text>`).join('')}`;
+  document.getElementById('trend-lbls').innerHTML=lbls.map(l=>`<span>${l}</span>`).join('');
+}
+
+function renderFeed(){
+  const rec=[...loadRec()].reverse().slice(0,8);
+  const el=document.getElementById('afeed');
+  if(!rec.length){el.innerHTML=`<div style="text-align:center;padding:2rem;font-size:12px;color:var(--text-4)">No activity yet. Goal submissions will appear here.</div>`;return;}
+  el.innerHTML=rec.map(r=>{
+    const t=new Date(r.ts||Date.now()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    const ints=(r.interests||[]).join(', ')||'general';
+    const focs=(r.focus||[]).slice(0,2).join(', ')||'none';
+    return`<div class="fi"><div class="fi-time">${t}</div><div class="fi-dot-w"><div class="fi-dot" style="background:var(--pink)"></div><div class="fi-line"></div></div><div class="fi-text"><b>${ints}</b> · Focus: ${focs} · Samples: ${r.samplesW||'?'}/10</div></div>`;
+  }).join('');
+}
+
+function renderFocus(rec){
+  const CFG={melanin:{lbl:'Melanin-Friendly',icon:'✊🏾',col:'#FB923C',desc:'Skin of color focus'},kbeauty:{lbl:'K-Beauty',icon:'🌸',col:'#06B6D4',desc:'Korean skincare'},clean:{lbl:'Clean / Organic',icon:'🌿',col:'#34D399',desc:'Clean beauty'},curly:{lbl:'Curly / Textured',icon:'🌀',col:'#A855F7',desc:'Natural hair types'},sensitive:{lbl:'Sensitive Skin',icon:'🤍',col:'#60A5FA',desc:'Gentle formulas'},hyperpig:{lbl:'Hyperpigmentation',icon:'✨',col:'#FBBF24',desc:'Tone-evening'},celebrity:{lbl:'Celebrity Brands',icon:'⭐',col:'#F472B6',desc:'Celeb brand interest'},exclusive:{lbl:'Exclusives',icon:'🔖',col:'#E8A020',desc:'New launches and drops'}};
+  const cnts={};rec.forEach(r=>(r.focus||[]).forEach(f=>{cnts[f]=(cnts[f]||0)+1;}));
+  const tot=rec.length||1;
+  document.getElementById('focus-grid').innerHTML=Object.entries(CFG).map(([k,c])=>{
+    const cnt=cnts[k]||0,pct=Math.round(cnt/tot*100);
+    return`<div class="fc-card"><div class="fc-icon">${c.icon}</div><div class="fc-title">${c.lbl}</div><div class="fc-desc">${c.desc}</div><div class="fc-cr"><span class="fc-num" style="color:${c.col}">${cnt}</span><span class="fc-pct">${pct}%</span></div><div class="fc-bar"><div class="fc-fill" style="width:${Math.min(100,pct*2)}%;background:${c.col}"></div></div></div>`;
+  }).join('');
+}
+
+function filterTbl(){renderTbl();}
+function setSort(m,btn){sortMode=m;document.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active'));btn.classList.add('active');renderTbl();}
+
+function refreshAll(){
+  document.getElementById('rl').innerHTML='<span class="spin">↺</span>';
+  document.getElementById('ri2').innerHTML='<span class="spin">↺</span>';
+  setTimeout(()=>{renderAll();renderTrend();renderFeed();document.getElementById('rl').textContent='Refresh';document.getElementById('ri2').textContent='Refresh';showToast('Refreshed');},700);
+}
+
+function exportCSV(){
+  const rec=loadRec();
+  if(!rec.length){showToast('No data to export');return;}
+  const h='timestamp,session,source,interests,focus,samplesW,roiW\n';
+  const rows=rec.map(r=>[new Date(r.ts).toISOString(),r.session||'',r.source||'',(r.interests||[]).join('|'),(r.focus||[]).join('|'),r.samplesW||'',r.roiW||''].join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h+rows],{type:'text/csv'}));
+  a.download='ubw2026_goals_'+new Date().toISOString().slice(0,10)+'.csv';a.click();showToast('CSV exported');
+}
+
+const ALERTS=['Cécred (1903) tracking Critical — recommend first-wave strategy for melanin and curly users','Zone C and D peak congestion 9:00–10:30 AM — celebrity brand concentration','Touchland (1247) has 58% heat with low wait — high-ROI freebie stop','K-Beauty interest trending — COSRX and Tatcha may see 30+ min waits by 9:30 AM','Medium-heat window 12:00–2:00 PM — optimal Zone A sweep timing','Sol de Janeiro and Supergoop! best hit before 10 AM for shortest lines'];
+
+function generateAlert(){
+  const a=ALERTS[Math.floor(Math.random()*ALERTS.length)];
+  const t=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  const el=document.getElementById('afeed');
+  const div=document.createElement('div');div.className='fi';
+  div.innerHTML=`<div class="fi-time">${t}</div><div class="fi-dot-w"><div class="fi-dot" style="background:var(--green)"></div><div class="fi-line"></div></div><div class="fi-text" style="color:var(--text-2)"><b style="color:var(--green)">Alert</b> · ${a}</div>`;
+  el.insertBefore(div,el.firstChild);showToast('Alert generated');
+}
+
+function scrollSec(id,btn){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+let t0=Date.now();
+function startClock(){setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);document.getElementById('s-clock').textContent='Session '+Math.floor(s/60)+'m '+s%60+'s';},1000);}
+
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+window.UBW={track(d){try{const r=JSON.parse(localStorage.getItem(STORE)||'[]');let s=sessionStorage.getItem('ubw_sid');if(!s){s=Math.random().toString(36).slice(2,10);sessionStorage.setItem('ubw_sid',s);}r.push({ts:Date.now(),session:s,...d});localStorage.setItem(STORE,JSON.stringify(r.slice(-5000)));}catch(e){}}};
+
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  initCountdown('countdown');
+  // Init dash immediately sin

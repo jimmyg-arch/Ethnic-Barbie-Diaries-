@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulta Beauty World 2026 — Route Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --hot: #E8194B;
+  --hot-light: #FDE8EE;
+  --gold: #C9923A;
+  --gold-light: #FDF3E7;
+  --deep: #1A0A0E;
+  --ink: #2D1520;
+  --muted: #7A5C64;
+  --border: #EDD9DE;
+  --surface: #FFF8F9;
+  --white: #FFFFFF;
+  --melanin: #8B4513;
+  --melanin-bg: #FFF0E6;
+  --kbeauty: #5B7FA6;
+  --kbeauty-bg: #EBF2FA;
+  --organic: #4A7C59;
+  --organic-bg: #EAF4EE;
+  --curly: #9B59B6;
+  --curly-bg: #F5EEF8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+  background: var(--deep);
+  padding: 2.5rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,25,75,0.3) 0%, transparent 70%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,146,58,0.2) 0%, transparent 70%);
+}
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hot);
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.hero-title span { color: var(--hot); }
+.hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+}
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+.hero-pill {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+.hero-pill strong { color: #fff; }
+
+/* MAIN LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 180px);
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1.25rem;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.sidebar-section { margin-bottom: 1.5rem; }
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.tag-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 5px 11px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.tag:hover { border-color: var(--hot); color: var(--hot); }
+.tag.active {
+  background: var(--hot);
+  border-color: var(--hot);
+  color: #fff;
+  font-weight: 500;
+}
+
+.slider-block { margin-bottom: 12px; }
+.slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.slider-name { font-size: 12px; color: var(--ink); }
+.slider-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--hot);
+  min-width: 18px;
+  text-align: right;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--hot);
+  cursor: pointer;
+}
+
+.gen-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--hot);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-top: 0.5rem;
+}
+.gen-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+.gen-btn:active { transform: translateY(0); }
+.gen-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* MAIN CONTENT */
+.main { padding: 1.5rem; overflow-y: auto; }
+
+/* LOADING */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 16px;
+}
+.loading-ring {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--hot);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--muted); }
+
+/* STATS ROW */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--hot);
+  line-height: 1.1;
+}
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  background: var(--white);
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+  transition: all 0.15s;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: var(--hot); color: #fff; }
+
+/* ROUTE STOP */
+.route-list { display: flex; flex-direction: column; gap: 0; }
+
+.stop-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.stop-spine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.stop-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--hot);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.stop-dot.priority {
+  background: var(--deep);
+  box-shadow: 0 0 0 3px var(--hot);
+}
+.stop-connector {
+  width: 1px;
+  flex: 1;
+  min-height: 28px;
+  background: var(--border);
+  margin: 4px 0;
+}
+.stop-card {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 4px;
+  transition: box-shadow 0.2s;
+}
+.stop-card:hover { box-shadow: 0 4px 20px rgba(232,25,75,0.08); }
+.stop-card.priority { border-color: var(--hot); border-width: 1.5px; }
+
+.stop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.stop-name-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.stop-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+.booth-num {
+  font-size: 10px;
+  background: var(--hot-light);
+  color: var(--hot);
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.cat-badge {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.03em;
+}
+.b-melanin { background: var(--melanin-bg); color: var(--melanin); }
+.b-kbeauty { background: var(--kbeauty-bg); color: var(--kbeauty); }
+.b-organic { background: var(--organic-bg); color: var(--organic); }
+.b-curly { background: var(--curly-bg); color: var(--curly); }
+.b-exclusive { background: #FDF3E7; color: #9B6B1A; }
+.b-freebie { background: #FDE8EE; color: var(--hot); }
+.b-celebrity { background: #F0ECFF; color: #5B3FA8; }
+
+.stop-desc { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 10px; }
+
+.stop-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.meta-item { font-size: 12px; color: var(--muted); }
+.meta-item strong { color: var(--ink); font-weight: 600; }
+
+.review-line {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  padding: 8px 10px;
+  background: var(--surface);
+  border-radius: 6px;
+  border-left: 2px solid var(--hot);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.stars { color: var(--gold); font-size: 13px; letter-spacing: -1px; }
+.rating-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.rating-num { font-size: 13px; font-weight: 600; color: var(--ink); }
+.review-count { font-size: 12px; color: var(--muted); }
+
+.roi-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.roi-fill { height: 100%; background: linear-gradient(90deg, var(--hot), var(--gold)); border-radius: 2px; }
+.roi-label { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+
+.travel-gap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 4px 42px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* COMPARE TAB */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+.compare-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.compare-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
+.compare-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+.compare-row:last-child { border-bottom: none; }
+.compare-row .label { color: var(--muted); }
+.compare-row .winner { color: var(--hot); font-weight: 600; }
+.compare-note { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+/* TIPS TAB */
+.tips-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  line-height: 1.7;
+  font-size: 13px;
+  color: var(--muted);
+}
+.tips-card h4 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+
+/* SUMMARY */
+.summary-card {
+  background: var(--deep);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 1.25rem;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.65;
+}
+.summary-card strong { color: #fff; }
+
+/* EMPTY */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 1rem;
+}
+.empty-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.empty-sub { font-size: 14px; color: var(--muted); }
+
+/* SCROLL FADE IN */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeUp 0.35s ease both; }
+.stop-wrapper:nth-child(1) .stop-card { animation-delay: 0.05s; }
+.stop-wrapper:nth-child(2) .stop-card { animation-delay: 0.1s; }
+.stop-wrapper:nth-child(3) .stop-card { animation-delay: 0.15s; }
+.stop-wrapper:nth-child(4) .stop-card { animation-delay: 0.2s; }
+.stop-wrapper:nth-child(5) .stop-card { animation-delay: 0.25s; }
+
+/* MOBILE */
+@media (max-width: 700px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stop-meta-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Personalized AI Route Planner</div>
+  <h1 class="hero-title">Ulta Beauty World <span>2026</span></h1>
+  <p class="hero-sub">April 16 · Orange County Convention Center, Orlando FL · 9am–5pm</p>
+  <div class="hero-pills">
+    <div class="hero-pill"><strong>200+</strong> real booths</div>
+    <div class="hero-pill"><strong>$2,000+</strong> swag bag</div>
+    <div class="hero-pill">ROI-ranked route</div>
+    <div class="hero-pill">Real booth numbers</div>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Beauty interests</div>
+      <div class="tag-grid" id="interestTags">
+        <div class="tag active" data-val="skincare">Skincare</div>
+        <div class="tag active" data-val="haircare">Haircare</div>
+        <div class="tag" data-val="makeup">Makeup</div>
+        <div class="tag" data-val="fragrance">Fragrance</div>
+        <div class="tag" data-val="nails">Nails</div>
+        <div class="tag" data-val="wellness">Wellness</div>
+        <div class="tag" data-val="tools">Tools</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Skin & community focus</div>
+      <div class="tag-grid" id="skinTags">
+        <div class="tag active" data-val="melanin-friendly">Melanin-friendly</div>
+        <div class="tag active" data-val="kbeauty">K-beauty</div>
+        <div class="tag" data-val="organic">Organic / clean</div>
+        <div class="tag" data-val="curly-textured">Curly / textured hair</div>
+        <div class="tag" data-val="sensitive">Sensitive skin</div>
+        <div class="tag" data-val="hyperpigmentation">Hyperpigmentation</div>
+        <div class="tag" data-val="anti-aging">Anti-aging</div>
+        <div class="tag" data-val="vegan">Vegan</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Priority weights</div>
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-name">Free samples / haul value</span>
+          <span class="slider-val" id="s1v">9</span>
+        </div>
+        <input type="range" min="1" max="10" value="9" step="1" id="s1" oninput="document.getElementById('s1v').textContent=this.value">
+      </div>
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-name">Product retail ROI</span>
+          <span class="slider-val" id="s2v">9</span>
+        </div>
+        <input type="range" min="1" max="10" value="9" step="1" id="s2" oninput="document.getElementById('s2v').textContent=this.value">
+      </div>
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-name">Exclusive launches</span>
+          <span class="slider-val" id="s3v">7</span>
+        </div>
+        <input type="range" min="1" max="10" value="7" step="1" id="s3" oninput="document.getElementById('s3v').textContent=this.value">
+      </div>
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-name">Avoid long lines</span>
+          <span class="slider-val" id="s4v">6</span>
+        </div>
+        <input type="range" min="1" max="10" value="6" step="1" id="s4" oninput="document.getElementById('s4v').textContent=this.value">
+      </div>
+      <div class="slider-block">
+        <div class="slider-row">
+          <span class="slider-name">Celebrity / prestige brands</span>
+          <span class="slider-val" id="s5v">5</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" step="1" id="s5" oninput="document.getElementById('s5v').textContent=this.value">
+      </div>
+    </div>
+
+    <button class="gen-btn" id="genBtn" onclick="generateRoute()">✦ Build my route</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="mainContent">
+    <div class="empty-state">
+      <div class="empty-icon">🗺️</div>
+      <div class="empty-title">Your route awaits</div>
+      <div class="empty-sub">Select your interests and hit "Build my route" to get a personalized, ROI-ranked booth plan built from the real 2026 expo map.</div>
+    </div>
+  </main>
+</div>
+
+<script>
+// Toggle tags
+['interestTags','skinTags'].forEach(id => {
+  document.getElementById(id).querySelectorAll('.tag').forEach(t => {
+    t.addEventListener('click', () => t.classList.toggle('active'));
+  });
+});
+
+// Real booth data from official expo map
+const BOOTHS = [
+  {booth:'830',brand:'18.21 Man Made',cat:'Haircare'},
+  {booth:'1129',brand:'about-face',cat:'Makeup'},
+  {booth:'329',brand:'Alterna, Joico, Kenra',cat:'Haircare'},
+  {booth:'1931',brand:'amika',cat:'Haircare'},
+  {booth:'832',brand:'AmLactin',cat:'Skincare'},
+  {booth:'1517',brand:'Anastasia Beverly Hills',cat:'Makeup'},
+  {booth:'801',brand:'Anus',cat:'Skincare'},
+  {booth:'FT10',brand:'Apothékary',cat:'Wellness'},
+  {booth:'1441',brand:'Ardell, China Glaze, Flowers, GiGi, Hollywood Fashion Secrets, Nail Tek, Sache',cat:'Nails'},
+  {booth:'528',brand:'Avène',cat:'Skincare'},
+  {booth:'529',brand:'Azzaro, Mugler, Viktor&Rolf',cat:'Fragrance'},
+  {booth:'2117',brand:'BaBylissPRO, Conair, Scünci, Tartan + Twine',cat:'Tools'},
+  {booth:'2408',brand:'BALMAIN',cat:'Haircare'},
+  {booth:'639',brand:'bareMinerals, BUXOM, Laura Mercier',cat:'Makeup'},
+  {booth:'920',brand:'Bed Head',cat:'Haircare'},
+  {booth:'1941',brand:'Beekman 1802',cat:'Skincare'},
+  {booth:'1047',brand:'belif, CNP Laboratory',cat:'Skincare'},
+  {booth:'401',brand:'Benefit Cosmetics',cat:'Makeup'},
+  {booth:'1917',brand:'Better World Fragrance House by Drake, Eilish Fragrances',cat:'Fragrance'},
+  {booth:'921',brand:'BEVEL, Mielle',cat:'Haircare'},
+  {booth:'2047',brand:'Bio Ionic, Ouidad, Wet Brush',cat:'Tools'},
+  {booth:'2024',brand:'Bio-Oil, Bondi Sands',cat:'Skincare'},
+  {booth:'1918',brand:'Bioderma',cat:'Skincare'},
+  {booth:'615',brand:'Biolage',cat:'Haircare'},
+  {booth:'FT7',brand:'Bird&Be',cat:'Wellness'},
+  {booth:'1135',brand:'Blind Barber',cat:'Haircare'},
+  {booth:'115',brand:'Bloomeffects',cat:'Skincare'},
+  {booth:'2401',brand:'Bobbi Brown',cat:'Makeup'},
+  {booth:'1819',brand:'BondiBoost',cat:'Haircare'},
+  {booth:'1747',brand:'Briogeo',cat:'Haircare'},
+  {booth:'1609',brand:'Bubble Skincare',cat:'Skincare'},
+  {booth:'2409',brand:'Bumble and bumble.',cat:'Haircare'},
+  {booth:'1503',brand:'Burberry, Calvin Klein, Gucci, Hugo Boss, Philosophy',cat:'Fragrance'},
+  {booth:'GS3',brand:'Bushbalm',cat:'Skincare'},
+  {booth:'609',brand:'Buttah Skin',cat:'Skincare'},
+  {booth:'1039',brand:'BYOMA',cat:'Skincare'},
+  {booth:'431',brand:'Camille Rose',cat:'Haircare'},
+  {booth:'2317',brand:'Carolina Herrera',cat:'Fragrance'},
+  {booth:'1903',brand:'Cécred',cat:'Haircare'},
+  {booth:'1647',brand:'Celimax, d\'Alba Piedmont',cat:'Skincare'},
+  {booth:'409',brand:'Cerave, La Roche Posay, Vichy',cat:'Skincare'},
+  {booth:'834',brand:'Eylure',cat:'Makeup'},
+  {booth:'201',brand:'Charlotte Tilbury',cat:'Makeup'},
+  {booth:'2225',brand:'CHI',cat:'Haircare'},
+  {booth:'609',brand:'Clarins',cat:'Skincare'},
+  {booth:'2331',brand:'Clean Skin Club',cat:'Skincare'},
+  {booth:'2103',brand:'Clinique',cat:'Skincare'},
+  {booth:'301',brand:'Coco & Eve, Loving Tan',cat:'Skincare'},
+  {booth:'640',brand:'Cocokind',cat:'Skincare'},
+  {booth:'2240',brand:'COSRX',cat:'Skincare'},
+  {booth:'2417',brand:'CoverGirl, Sally Hansen',cat:'Makeup'},
+  {booth:'1717',brand:'Curlsmith, Drybar, Hot Tools',cat:'Haircare'},
+  {booth:'FT11',brand:'Cymbiotika',cat:'Wellness'},
+  {booth:'1131',brand:'Dashing Diva',cat:'Nails'},
+  {booth:'GS7',brand:'Denman Brush',cat:'Tools'},
+  {booth:'1803',brand:'Derma E',cat:'Skincare'},
+  {booth:'1121',brand:'Dermalogica',cat:'Skincare'},
+  {booth:'116',brand:'Design Essentials',cat:'Haircare'},
+  {booth:'2341',brand:'Deve Curl, Sexy Hair',cat:'Haircare'},
+  {booth:'2031',brand:'DIBS Beauty',cat:'Makeup'},
+  {booth:'316',brand:'DIME',cat:'Skincare'},
+  {booth:'1246',brand:'Divi Growth Care',cat:'Haircare'},
+  {booth:'547',brand:'Dolce & Gabbana',cat:'Fragrance'},
+  {booth:'547',brand:'Donna\'s Recipe',cat:'Skincare'},
+  {booth:'539',brand:'DRMTLGY',cat:'Skincare'},
+  {booth:'1221',brand:'Drunk Elephant',cat:'Skincare'},
+  {booth:'2231',brand:'Dyson',cat:'Tools'},
+  {booth:'1229',brand:'e.l.f. cosmetics, e.l.f. skin',cat:'Makeup'},
+  {booth:'433',brand:'Earth Therapeutics',cat:'Wellness'},
+  {booth:'315',brand:'ELEMIS',cat:'Skincare'},
+  {booth:'FT5',brand:'Ellis Brooklyn',cat:'Fragrance'},
+  {booth:'1234',brand:'EOS',cat:'Skincare'},
+  {booth:'2325',brand:'Essence Cosmetics',cat:'Makeup'},
+  {booth:'601',brand:'essie, L\'Oréal Paris, Maybelline',cat:'Makeup'},
+  {booth:'2109',brand:'Estée Lauder',cat:'Skincare'},
+  {booth:'940',brand:'Ethique Beauty',cat:'Organic'},
+  {booth:'308',brand:'Eva NYC',cat:'Haircare'},
+  {booth:'1541',brand:'Exuviance, OGX',cat:'Skincare'},
+  {booth:'409',brand:'Farmacy Beauty',cat:'Skincare'},
+  {booth:'2009',brand:'Fenty Beauty, OLEHENRIKSEN',cat:'Makeup'},
+  {booth:'120',brand:'Florence by Mills',cat:'Skincare'},
+  {booth:'2125',brand:'fwee',cat:'Skincare'},
+  {booth:'821',brand:'Garnier, Thayers',cat:'Skincare'},
+  {booth:'100',brand:'Gimme Beauty',cat:'Haircare'},
+  {booth:'1508',brand:'Givenchy Beauty',cat:'Makeup'},
+  {booth:'1239',brand:'Glamnetic',cat:'Nails'},
+  {booth:'942',brand:'Good Molecules',cat:'Skincare'},
+  {booth:'1916',brand:'Grande Cosmetics',cat:'Makeup'},
+  {booth:'FT3',brand:'GuruNanda',cat:'Wellness'},
+  {booth:'GS5',brand:'Hairstory',cat:'Haircare'},
+  {booth:'1514',brand:'Half Magic',cat:'Makeup'},
+  {booth:'1724',brand:'Hempz',cat:'Skincare'},
+  {booth:'1934',brand:'Herbivore',cat:'Skincare'},
+  {booth:'541',brand:'Heritage Store',cat:'Wellness'},
+  {booth:'1731',brand:'Hero, Batiste',cat:'Skincare'},
+  {booth:'FT9',brand:'Hum Nutrition',cat:'Wellness'},
+  {booth:'2124',brand:'IGK',cat:'Haircare'},
+  {booth:'1725',brand:'ILIA Beauty',cat:'Makeup'},
+  {booth:'321',brand:'Innersense',cat:'Haircare'},
+  {booth:'209',brand:'isima',cat:'Skincare'},
+  {booth:'829',brand:'IT Cosmetics',cat:'Makeup'},
+  {booth:'1741',brand:'It\'s a 10',cat:'Haircare'},
+  {booth:'2241',brand:'Juicy Couture, Revlon',cat:'Fragrance'},
+  {booth:'1534',brand:'JVN',cat:'Haircare'},
+  {booth:'1841',brand:'K-Beauty World',cat:'Skincare'},
+  {booth:'2131',brand:'Kate Somerville, Patchology',cat:'Skincare'},
+  {booth:'747',brand:'Keratin Complex',cat:'Haircare'},
+  {booth:'715',brand:'KIEHL\'S SINCE 1851',cat:'Skincare'},
+  {booth:'214',brand:'KISS',cat:'Nails'},
+  {booth:'1449',brand:'Kitsch',cat:'Haircare'},
+  {booth:'2116',brand:'Kopari',cat:'Skincare'},
+  {booth:'228',brand:'Kristin Ess Hair, Party of You',cat:'Haircare'},
+  {booth:'709',brand:'Kylie Cosmetics',cat:'Makeup'},
+  {booth:'847',brand:'L.A. Girl',cat:'Makeup'},
+  {booth:'2246',brand:'L\'ange Hair',cat:'Haircare'},
+  {booth:'501',brand:'Lake & Skye, Le Monde Gourmand, Supersuite',cat:'Fragrance'},
+  {booth:'515',brand:'Lancôme',cat:'Makeup'},
+  {booth:'1932',brand:'Lanolips',cat:'Skincare'},
+  {booth:'1625',brand:'Lemme',cat:'Wellness'},
+  {booth:'1438',brand:'Live Tinted',cat:'Makeup'},
+  {booth:'2017',brand:'Living Proof',cat:'Haircare'},
+  {booth:'633',brand:'Locks & Mane',cat:'Haircare'},
+  {booth:'1709',brand:'LolaVie',cat:'Haircare'},
+  {booth:'1847',brand:'Lumé',cat:'Wellness'},
+  {booth:'1833',brand:'Luna Bronze',cat:'Skincare'},
+  {booth:'2046',brand:'ma:nyo',cat:'Skincare'},
+  {booth:'2209',brand:'MAC Cosmetics',cat:'Makeup'},
+  {booth:'347',brand:'Madison Reed',cat:'Haircare'},
+  {booth:'217',brand:'Magic Molecule',cat:'Skincare'},
+  {booth:'429',brand:'MaryRuth\'s',cat:'Wellness'},
+  {booth:'721',brand:'Matrix',cat:'Haircare'},
+  {booth:'1617',brand:'MAËLYS',cat:'Skincare'},
+  {booth:'FT4',brand:'Medicine Mama',cat:'Wellness'},
+  {booth:'1502',brand:'Medicube',cat:'Skincare'},
+  {booth:'101',brand:'MEDIHEAL',cat:'Skincare'},
+  {booth:'FT2',brand:'Meesi Elixir',cat:'Skincare'},
+  {booth:'947',brand:'method',cat:'Wellness'},
+  {booth:'2040',brand:'Milani Cosmetics',cat:'Makeup'},
+  {booth:'1802',brand:'Milk Makeup',cat:'Makeup'},
+  {booth:'2217',brand:'Moroccanoil',cat:'Haircare'},
+  {booth:'309',brand:'Morphe',cat:'Makeup'},
+  {booth:'114',brand:'Naked Sundays',cat:'Skincare'},
+  {booth:'638',brand:'Nakery Beauty',cat:'Skincare'},
+  {booth:'1403',brand:'NARS Cosmetics',cat:'Makeup'},
+  {booth:'2130',brand:'Natasha Denona',cat:'Makeup'},
+  {booth:'109',brand:'Naturium',cat:'Skincare'},
+  {booth:'1909',brand:'Nemet',cat:'Fragrance'},
+  {booth:'1546',brand:'NEOM Wellbeing',cat:'Wellness'},
+  {booth:'1429',brand:'NEST New York',cat:'Fragrance'},
+  {booth:'1531',brand:'Neutrogena',cat:'Skincare'},
+  {booth:'2431',brand:'Nexxus, Vaseline',cat:'Haircare'},
+  {booth:'229',brand:'Nioxin, OPI, Sebastian, Wella Professionals',cat:'Haircare'},
+  {booth:'828',brand:'No7',cat:'Skincare'},
+  {booth:'FT8',brand:'Nodpod',cat:'Wellness'},
+  {booth:'2141',brand:'Not Your Mother\'s Haircare',cat:'Haircare'},
+  {booth:'2008',brand:'NOYZ',cat:'Fragrance'},
+  {booth:'110',brand:'NuFACE',cat:'Tools'},
+  {booth:'809',brand:'NYX Professional Makeup',cat:'Makeup'},
+  {booth:'GS6',brand:'Ocoe',cat:'Skincare'},
+  {booth:'GS1',brand:'OCTAVIA MORGAN LOS ANGELES',cat:'Fragrance'},
+  {booth:'310',brand:'Odele',cat:'Haircare'},
+  {booth:'1809',brand:'OLAPLEX',cat:'Haircare'},
+  {booth:'211',brand:'Olive & June',cat:'Nails'},
+  {booth:'1631',brand:'ONYX Professional',cat:'Nails'},
+  {booth:'2202',brand:'Origins',cat:'Skincare'},
+  {booth:'635',brand:'ORLY',cat:'Nails'},
+  {booth:'1520',brand:'OSEA Malibu',cat:'Skincare'},
+  {booth:'1415',brand:'OUAI',cat:'Haircare'},
+  {booth:'2140',brand:'Pacifica',cat:'Skincare'},
+  {booth:'915',brand:'Paris Hilton Fragrance, Sam Edelman Fragrance',cat:'Fragrance'},
+  {booth:'1821',brand:'Pat McGrath Labs',cat:'Makeup'},
+  {booth:'1421',brand:'PATTERN',cat:'Haircare'},
+  {booth:'524',brand:'Paul Mitchell',cat:'Haircare'},
+  {booth:'1825',brand:'Peach & Lily',cat:'Skincare'},
+  {booth:'1730',brand:'Peach Slices',cat:'Skincare'},
+  {booth:'309',brand:'Perricone MD',cat:'Skincare'},
+  {booth:'1925',brand:'Personal Day',cat:'Skincare'},
+  {booth:'1930',brand:'Peter Thomas Roth',cat:'Skincare'},
+  {booth:'1603',brand:'Polite Society',cat:'Fragrance'},
+  {booth:'415',brand:'Prada, YSL Libre',cat:'Fragrance'},
+  {booth:'1528',brand:'r.e.m. beauty by Ariana Grande',cat:'Makeup'},
+  {booth:'538',brand:'Reel',cat:'Wellness'},
+  {booth:'121',brand:'The INKEY List',cat:'Skincare'},
+  {booth:'2203',brand:'The Ordinary',cat:'Skincare'},
+  {booth:'1015',brand:'TIR TIR',cat:'Skincare'},
+  {booth:'521',brand:'Ralph Lauren',cat:'Fragrance'},
+  {booth:'621',brand:'Pureology',cat:'Haircare'},
+  {booth:'2003',brand:'Rare Beauty',cat:'Makeup'},
+  {booth:'1038',brand:'Real Techniques',cat:'Tools'},
+  {booth:'1835',brand:'Red Carpet Manicure',cat:'Nails'},
+  {booth:'929',brand:'REDKEN',cat:'Haircare'},
+  {booth:'2041',brand:'Revive Collagen',cat:'Wellness'},
+  {booth:'1215',brand:'Revolution Beauty',cat:'Makeup'},
+  {booth:'1947',brand:'Rizos Curls',cat:'Haircare'},
+  {booth:'642',brand:'RMS Beauty',cat:'Makeup'},
+  {booth:'439',brand:'Rodan + Fields',cat:'Skincare'},
+  {booth:'213',brand:'Round Lab',cat:'Skincare'},
+  {booth:'1230',brand:'SACHEU',cat:'Skincare'},
+  {booth:'208',brand:'Saje Natural Wellness',cat:'Wellness'},
+  {booth:'1920',brand:'Saltair',cat:'Skincare'},
+  {booth:'GS2',brand:'Scarlet by RedDrop',cat:'Wellness'},
+  {booth:'312',brand:'SEEN',cat:'Haircare'},
+  {booth:'839',brand:'Shampooheiat',cat:'Haircare'},
+  {booth:'1409',brand:'Shiseido',cat:'Skincare'},
+  {booth:'1029',brand:'Shark Beauty',cat:'Tools'},
+  {booth:'716',brand:'SKIN1004',cat:'Skincare'},
+  {booth:'1716',brand:'Snif',cat:'Fragrance'},
+  {booth:'1021',brand:'Sol de Janeiro',cat:'Skincare'},
+  {booth:'1228',brand:'Sulawave',cat:'Haircare'},
+  {booth:'1808',brand:'Squishmallows Fragrances',cat:'Fragrance'},
+  {booth:'2247',brand:'St.Tropez',cat:'Skincare'},
+  {booth:'938',brand:'Starface',cat:'Skincare'},
+  {booth:'1524',brand:'Stila Cosmetics',cat:'Makeup'},
+  {booth:'1115',brand:'Supergoop!',cat:'Skincare'},
+  {booth:'939',brand:'Sweet Tooth by Sabrina Carpenter',cat:'Fragrance'},
+  {booth:'2025',brand:'Tangle Teezer',cat:'Tools'},
+  {booth:'1703',brand:'tarte',cat:'Makeup'},
+  {booth:'1803',brand:'Tatcha',cat:'Skincare'},
+  {booth:'1840',brand:'tgin',cat:'Haircare'},
+  {booth:'532',brand:'The Crème Shop',cat:'Skincare'},
+  {booth:'2309',brand:'TOM FORD BEAUTY',cat:'Makeup'},
+  {booth:'1540',brand:'TONYMOLY',cat:'Skincare'},
+  {booth:'2302',brand:'Too Faced Cosmetics',cat:'Makeup'},
+  {booth:'1247',brand:'Touchland',cat:'Wellness'},
+  {booth:'2347',brand:'Tree Hut',cat:'Skincare'},
+  {booth:'1831',brand:'Truly Beauty',cat:'Skincare'},
+  {booth:'901',brand:'Ulta Beauty Neighborhood',cat:'Makeup'},
+  {booth:'FT1',brand:'UNbrush',cat:'Tools'},
+  {booth:'1930',brand:'Uni',cat:'Haircare'},
+  {booth:'543',brand:'UNITE Hair',cat:'Haircare'},
+  {booth:'815',brand:'Urban Decay',cat:'Makeup'},
+  {booth:'1435',brand:'Vacation',cat:'Skincare'},
+  {booth:'509',brand:'Valentino Armani',cat:'Fragrance'},
+  {booth:'215',brand:'Vanicream Sensitive Skin Care',cat:'Skincare'},
+  {booth:'2147',brand:'Verb',cat:'Haircare'},
+  {booth:'FT6',brand:'Versace Crystal Emerald',cat:'Fragrance'},
+  {booth:'435',brand:'Virtue',cat:'Haircare'},
+  {booth:'108',brand:'VOESH',cat:'Nails'},
+  {booth:'220',brand:'VT COSMETICS',cat:'Skincare'},
+  {booth:'1817',brand:'Winky Lux',cat:'Makeup'},
+  {booth:'421',brand:'YSL MYSLF',cat:'Fragrance'},
+  {booth:'FV',brand:'Food Vendors',cat:'Food'}
+];
+
+let currentTab = 'route';
+let lastResult = null;
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = p.dataset.panel === tab ? 'block' : 'none');
+}
+
+function starStr(r) {
+  const n = Math.round(r * 2) / 2;
+  let s = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= Math.floor(n)) s += '★';
+    else if (i - 0.5 === n) s += '½';
+    else s += '☆';
+  }
+  return s;
+}
+
+function badgeHTML(badges) {
+  if (!badges?.length) return '';
+  const map = {
+    'melanin-friendly': ['b-melanin', 'Melanin ✓'],
+    'kbeauty': ['b-kbeauty', 'K-Beauty'],
+    'organic': ['b-organic', 'Clean/Organic'],
+    'curly-textured': ['b-curly', 'Curly/Textured'],
+    'exclusive-launch': ['b-exclusive', 'Exclusive Launch'],
+    'high-freebie': ['b-freebie', 'Big Samples'],
+    'celebrity-brand': ['b-celebrity', 'Celebrity Brand'],
+    'vegan': ['b-organic', 'Vegan'],
+    'hyperpigmentation': ['b-melanin', 'Hyperpig. Focus'],
+  };
+  return badges.map(b => {
+    const m = map[b] || ['b-exclusive', b];
+    return `<span class="badge ${m[0]}">${m[1]}</span>`;
+  }).join('');
+}
+
+async function generateRoute() {
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  const main = document.getElementById('mainContent');
+  main.innerHTML = `<div class="loading"><div class="loading-ring"></div><div class="loading-text">Building your personalized route from the real expo map…</div></div>`;
+
+  const interests = [...document.querySelectorAll('#interestTags .tag.active')].map(t => t.dataset.val);
+  const skin = [...document.querySelectorAll('#skinTags .tag.active')].map(t => t.dataset.val);
+  const s1 = document.getElementById('s1').value;
+  const s2 = document.getElementById('s2').value;
+  const s3 = document.getElementById('s3').value;
+  const s4 = document.getElementById('s4').value;
+  const s5 = document.getElementById('s5').value;
+
+  // Build brand list from real data
+  const relevantBooths = BOOTHS.filter(b => {
+    if (b.cat === 'Food') return false;
+    if (interests.includes('skincare') && ['Skincare','Organic'].includes(b.cat)) return true;
+    if (interests.includes('haircare') && b.cat === 'Haircare') return true;
+    if (interests.includes('makeup') && b.cat === 'Makeup') return true;
+    if (interests.includes('fragrance') && b.cat === 'Fragrance') return true;
+    if (interests.includes('nails') && b.cat === 'Nails') return true;
+    if (interests.includes('wellness') && b.cat === 'Wellness') return true;
+    if (interests.includes('tools') && b.cat === 'Tools') return true;
+    return false;
+  });
+
+  const boothList = relevantBooths.slice(0, 80).map(b => `Booth ${b.booth}: ${b.brand} (${b.cat})`).join('\n');
+
+  const prompt = `You are an expert Ulta Beauty World 2026 expo strategist. The event is April 16, 2026 at the Orange County Convention Center, Orlando. Doors 9am–5pm (8 hours).
+
+Below is the REAL official booth list from the expo map. Use ONLY these real booths and brand names exactly as listed.
+
+REAL BOOTHS (subset matching user's interests):
+${boothList}
+
+User preferences:
+- Beauty interests: ${interests.join(', ') || 'all'}
+- Skin/community focus: ${skin.join(', ') || 'general'}
+- Free samples/haul value priority: ${s1}/10
+- Product retail ROI priority: ${s2}/10
+- Exclusive launches priority: ${s3}/10
+- Avoid long lines priority: ${s4}/10
+- Celebrity/prestige brand priority: ${s5}/10
+
+Task: Generate a highly strategic 14–18 booth route ordered by ROI score, accounting for floor flow (group nearby booth numbers to minimize walking). Use ONLY the real brands and booth numbers from the list above.
+
+Respond ONLY with valid JSON (no markdown fences, no preamble):
+{
+  "summary": "2 sentence personalized strategy summary",
+  "totalEstimatedValue": "$XXX",
+  "totalTime": "X hrs X min",
+  "boothCount": number,
+  "tips": "4 specific tactical tips for these interests and skin focus",
+  "route": [
+    {
+      "order": 1,
+      "brand": "exact brand name from list",
+      "booth": "exact booth number",
+      "cat": "category",
+      "badges": ["melanin-friendly","kbeauty","organic","curly-textured","exclusive-launch","high-freebie","celebrity-brand","vegan","hyperpigmentation"] (include only truly applicable),
+      "whyVisit": "2 sentences on why this booth is top ROI for this specific user",
+      "topProduct": "Specific product name — $XX",
+      "sampleValue": "$XX",
+      "timeAtBooth": "X min",
+      "walkFromPrev": "X min walk",
+      "roiScore": 85,
+      "rating": 4.6,
+      "reviewCount": 12400,
+      "reviewHighlight": "One sentence authentic-sounding user review relevant to this person's focus area",
+      "priority": true or false
+    }
+  ],
+  "compareInsights": [
+    {
+      "brand1": "Brand A",
+      "brand2": "Brand B",
+      "category": "Skincare",
+      "winner": "Brand A",
+      "whyWin": "One sentence explanation relevant to user's skin/interest focus",
+      "brand1Score": 88,
+      "brand2Score": 74
+    }
+  ]
+}
+
+Priority true = top 6 must-visit booths. roiScore 0–100. Ensure real booth numbers match the brands exactly.`;
+
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 4000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await resp.json();
+    const raw = (data.content || []).map(i => i.text || "").join("");
+    const clean = raw.replace(/```json|```/g, "").trim();
+    const result = JSON.parse(clean);
+    lastResult = result;
+    renderResults(result);
+  } catch(e) {
+    main.innerHTML = `<div class="loading"><div style="color:#E8194B;font-size:14px">Something went wrong — please try again.</div></div>`;
+    console.error(e);
+  }
+  btn.disabled = false;
+}
+
+function renderResults(r) {
+  const main = document.getElementById('mainContent');
+
+  let html = `
+  <div class="stats-bar fade-in">
+    <div class="stat-card"><div class="stat-num">${r.totalEstimatedValue}</div><div class="stat-label">Est. sample value</div></div>
+    <div class="stat-card"><div class="stat-num">${r.totalTime}</div><div class="stat-label">Total route time</div></div>
+    <div class="stat-card"><div class="stat-num">${r.boothCount}</div><div class="stat-label">Priority booths</div></div>
+    <div class="stat-card"><div class="stat-num">${r.route.filter(s=>s.priority).length}</div><div class="stat-label">Must-hit stops</div></div>
+  </div>
+
+  <div class="summary-card fade-in">${r.summary}</div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="route" onclick="switchTab('route')">Route</button>
+    <button class="tab-btn" data-tab="compare" onclick="switchTab('compare')">Compare</button>
+    <button class="tab-btn" data-tab="tips" onclick="switchTab('tips')">Tips</button>
+  </div>
+
+  <div class="tab-panel" data-panel="route" style="display:block">
+    <div class="route-list">`;
+
+  r.route.forEach((stop, i) => {
+    const roiPct = Math.min(100, Math.max(0, stop.roiScore));
+    html += `
+    <div class="stop-wrapper">
+      <div class="stop-spine">
+        <div class="stop-dot ${stop.priority ? 'priority' : ''}">${stop.order}</div>
+        ${i < r.route.length - 1 ? '<div class="stop-connector"></div>' : ''}
+      </div>
+      <div style="flex:1">
+        <div class="stop-card ${stop.priority ? 'priority' : ''} fade-in">
+          <div class="stop-header">
+            <div>
+              <div class="stop-name-row">
+                <span class="stop-name">${stop.brand}</span>
+                <span class="booth-num">Booth ${stop.booth}</span>
+              </div>
+            </div>
+            <span class="cat-badge">${stop.cat}</span>
+          </div>
+          ${stop.badges?.length ? `<div class="badges">${badgeHTML(stop.badges)}</div>` : ''}
+          <div class="rating-row">
+            <span class="stars">${starStr(stop.rating)}</span>
+            <span class="rating-num">${stop.rating}</span>
+            <span class="review-count">(${(stop.reviewCount||0).toLocaleString()} reviews)</span>
+          </div>
+          <div class="stop-desc">${stop.whyVisit}</div>
+          <div class="review-line">"${stop.reviewHighlight}"</div>
+          <div class="stop-meta-grid">
+            <div class="meta-item"><strong>Top pick:</strong> ${stop.topProduct}</div>
+            <div class="meta-item"><strong>Sample value:</strong> ${stop.sampleValue}</div>
+            <div class="meta-item"><strong>Time needed:</strong> ${stop.timeAtBooth}</div>
+            <div class="meta-item"><strong>Walk from prev:</strong> ${stop.walkFromPrev}</div>
+          </div>
+          <div class="roi-track"><div class="roi-fill" style="width:${roiPct}%"></div></div>
+          <div class="roi-label"><span>ROI Score</span><span>${stop.roiScore}/100</span></div>
+        </div>
+        ${i < r.route.length - 1 ? `<div class="travel-gap">→ ${r.route[i+1]?.walkFromPrev || '2 min'} to next</div>` : ''}
+      </div>
+    </div>`;
+  });
+
+  html += `</div></div>
+
+  <div class="tab-panel" data-panel="compare" style="display:none">
+    <div class="compare-grid">`;
+
+  (r.compareInsights || []).forEach(ci => {
+    const b1pct = Math.min(100, ci.brand1Score || 75);
+    const b2pct = Math.min(100, ci.brand2Score || 60);
+    html += `
+    <div class="compare-card">
+      <div class="compare-title">${ci.brand1} vs ${ci.brand2}</div>
+      <div class="compare-row"><span class="label">Category</span><span>${ci.category}</span></div>
+      <div class="compare-row">
+        <span class="label">${ci.brand1}</span>
+        <span>${ci.brand1Score}/100</span>
+      </div>
+      <div style="margin:4px 0">
+        <div class="roi-track"><div class="roi-fill" style="width:${b1pct}%"></div></div>
+      </div>
+      <div class="compare-row">
+        <span class="label">${ci.brand2}</span>
+        <span>${ci.brand2Score}/100</span>
+      </div>
+      <div style="margin:4px 0">
+        <div class="roi-track" style=""><div class="roi-fill" style="width:${b2pct}%;background:linear-gradient(90deg,#C9923A,#E8C47A)"></div></div>
+      </div>
+      <div class="compare-row" style="margin-top:6px"><span class="label">Winner for you</span><span class="winner">${ci.winner}</span></div>
+      <div class="compare-note">${ci.whyWin}</div>
+    </div>`;
+  });
+
+  html += `</div></div>
+
+  <div class="tab-panel" data-panel="tips" style="display:none">
+    <div class="tips-card">
+      <h4>Your personalized strategy</h4>
+      ${r.tips}
+    </div>
+    <div class="tips-card">
+      <h4>Expo essentials</h4>
+      <strong>Check-in:</strong> Doors open 8am, expo starts 9am sharp — arrive early for shorter lines.<br>
+      <strong>Bags:</strong> No wheeled bags except the $50 Ulta roller bag at registration. Bring multiple totes.<br>
+      <strong>Payment:</strong> Cashless event — card, Apple Pay, Google Pay only.<br>
+      <strong>Shipping:</strong> On-site shipping station to send your haul home (no international).<br>
+      <strong>Storage:</strong> Free luggage storage 9am–5:30pm so you can come and go.<br>
+      <strong>Power:</strong> Bring a portable charger — you'll be photographing everything.
+    </div>
+    <div class="tips-card">
+      <h4>High-traffic timing</h4>
+      Hit your top priority booths (marked in red) as soon as doors open at 9am. Celeb brand booths — CÉCRED, Fenty, Rare Beauty, tarte — draw the longest lines early. Loop back to medium-priority stops after 12pm when initial rush clears.
+    </div>
+  </div>`;
+
+  main.innerHTML = html;
+}
+</script>
+</body>
+</html>

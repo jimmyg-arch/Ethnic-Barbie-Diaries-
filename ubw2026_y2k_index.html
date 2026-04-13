@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JemUBW 2026 — Beauty Made Easier</title>
+<meta name="description" content="Your Y2K pink-coded guide to Ulta Beauty World 2026. Brand directory, expo planner, AI route builder and more.">
+<meta property="og:title" content="JemUBW — Ulta Beauty World 2026 Survival Guide">
+<meta property="og:description" content="200+ brands. One day. Your pink-coded expo playbook for UBW 2026.">
+<meta property="og:image" content="https://yourusername.github.io/ubw2026/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💗</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/y2k.css">
+<style>
+/* ── HERO ─────────────────────────────────────── */
+.hero-win{position:relative;z-index:2;margin:1.5rem 0 1rem;}
+.hero-win .win-body{padding:2.5rem 2rem;text-align:center;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--p4);border:2px solid var(--p);box-shadow:2px 2px 0 #C01458;
+  padding:5px 14px;margin-bottom:1.25rem;
+  font-family:var(--scr);font-size:8px;color:var(--ink2);
+}
+.display-title{font-size:clamp(14px,3vw,22px);margin-bottom:10px;}
+.hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;}
+@media(max-width:700px){.hero-grid{grid-template-columns:1fr;}}
+
+/* ── COUNTDOWN ────────────────────────────────── */
+.cd-row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;}
+.cd-box{background:var(--p5);border:2px solid var(--p);box-shadow:2px 2px 0 #C01458;min-width:62px;text-align:center;padding:10px 8px 8px;}
+.cd-num{font-family:var(--scr);font-size:clamp(18px,3vw,26px);color:var(--p);display:block;line-height:1;}
+.cd-lbl{font-family:var(--scr);font-size:7px;color:var(--lav4);margin-top:5px;display:block;letter-spacing:0.5px;}
+.cd-sep{font-family:var(--scr);font-size:22px;color:var(--p);padding-bottom:12px;}
+
+/* ── QUICK FACTS ──────────────────────────────── */
+.qf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px;}
+.qf-item{background:var(--p5);border:2px solid var(--btn-bd);box-shadow:2px 2px 0 #C01458;padding:12px 10px;text-align:center;}
+.qf-icon{font-size:22px;display:block;margin-bottom:6px;}
+.qf-val{font-family:var(--scr);font-size:11px;color:var(--p);display:block;margin-bottom:3px;}
+.qf-lbl{font-family:var(--vt);font-size:14px;color:var(--lav4);}
+
+/* ── ESSENTIALS ───────────────────────────────── */
+.ess-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.ess-card{background:var(--p5);border:2px solid var(--btn-bd);box-shadow:2px 2px 0 #C01458;padding:14px;}
+.ess-card:hover{background:var(--p4);transform:translate(1px,1px);box-shadow:1px 1px 0 #C01458;}
+.ess-icon{font-size:26px;display:block;margin-bottom:8px;}
+.ess-title{font-family:var(--scr);font-size:8px;color:var(--p);margin-bottom:6px;line-height:1.5;}
+.ess-desc{font-family:var(--vt);font-size:15px;color:var(--ink2);line-height:1.5;}
+
+/* ── BRING LIST ───────────────────────────────── */
+.bring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.bring-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--p5);border:2px solid var(--btn-bd);box-shadow:2px 2px 0 #C01458;
+  cursor:none;transition:all 0.1s;font-family:var(--vt);font-size:16px;color:var(--ink2);
+}
+.bring-item:hover{background:var(--p4);}
+.bring-item.checked{background:var(--p);color:#fff;border-color:#C01458;}
+.bring-check{
+  width:16px;height:16px;border:2px solid var(--p);background:#fff;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--scr);font-size:8px;color:var(--p);
+}
+.bring-item.checked .bring-check{background:var(--p);color:#fff;border-color:#C01458;}
+
+/* ── TIPS ─────────────────────────────────────── */
+.tip-list{display:flex;flex-direction:column;gap:10px;max-width:700px;margin:0 auto;}
+.tip-card{background:var(--p5);border:2px solid var(--btn-bd);box-shadow:2px 2px 0 #C01458;padding:14px 16px;display:flex;gap:12px;}
+.tip-card:hover{border-color:var(--p);}
+.tip-num{
+  font-family:var(--scr);font-size:11px;color:#fff;
+  background:var(--p);border:2px solid #C01458;
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.tip-title{font-family:var(--scr);font-size:8px;color:var(--p);margin-bottom:6px;line-height:1.5;}
+.tip-desc{font-family:var(--vt);font-size:16px;color:var(--ink2);line-height:1.5;}
+
+/* ── CTA ──────────────────────────────────────── */
+.cta-section{background:var(--p);border:3px solid #C01458;box-shadow:5px 5px 0 #C01458;padding:3rem 2rem;text-align:center;}
+.cta-title{font-family:var(--scr);font-size:clamp(12px,2.5vw,18px);color:#fff;line-height:1.7;margin-bottom:1rem;text-shadow:2px 2px 0 rgba(0,0,0,0.2);}
+.cta-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+.cta-buttons .btn{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.5);color:#fff;}
+.cta-buttons .btn:hover{background:rgba(255,255,255,0.3);}
+.cta-buttons .btn-primary{background:#fff;color:var(--p);border-color:#fff;}
+.cta-buttons .btn-primary:hover{background:var(--p4);color:var(--p);}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="resources.html">Brands</a>
+    <a href="community.html">Community</a>
+    <a href="reminders.html">Reminders</a>
+    <a href="brand-hub.html">Brand Hub</a>
+    <a href="planner.html">Planner</a>
+    <a href="about.html">About</a>
+    <a href="resources.html" class="nav-cta">Plan Route &gt;&gt;</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Home</a><a href="resources.html">Brands</a>
+  <a href="community.html">Community</a><a href="reminders.html">Reminders</a>
+  <a href="brand-hub.html">Brand Hub</a><a href="planner.html">Planner</a><a href="about.html">About</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" style="position:sticky;top:var(--nav-h);z-index:89;">
+    <div class="ticker-track">
+      <span class="ticker-item">✦ UBW 2026 · APR 16 · ORLANDO FL</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲+3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲+1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼-2.1%</span></span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼-0.5%</span></span>
+      <span class="ticker-item">💗 200+ BRANDS · $2,000+ SWAG BAG · $165 TICKET</span>
+      <span class="ticker-item">✦ UBW 2026 · APR 16 · ORLANDO FL</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲+3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲+1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼-2.1%</span></span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼-0.5%</span></span>
+      <span class="ticker-item">💗 200+ BRANDS · $2,000+ SWAG BAG · $165 TICKET</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+
+      <!-- ── HERO ── -->
+      <div class="hero-grid">
+        <div>
+          <div class="win hero-win" data-reveal>
+            <div class="win-bar"><span class="win-title">survival_guide.exe</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+            <div class="win-body">
+              <div class="hero-badge"><span class="blink">●</span> Apr 16, 2026 · Orlando, FL</div>
+              <div class="display-title">Ulta Beauty<br>World <span style="color:var(--p)">2026</span></div>
+              <div class="lead" style="margin-top:8px;max-width:400px;margin-left:auto;margin-right:auto">200+ brands. One day. Zero time to waste. Your pink-coded expo playbook.</div>
+              <div class="hero-actions">
+                <a href="#essentials" class="btn btn-primary">Start Planning &gt;&gt;</a>
+                <a href="resources.html" class="btn">Browse Brands</a>
+                <a href="planner.html" class="btn">My Planner</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- COUNTDOWN -->
+          <div class="win" data-reveal delay-1>
+            <div class="win-bar"><span class="win-title">countdown.exe — Time until doors open</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+            <div style="padding:1.25rem">
+              <div class="sec-label">TIME REMAINING</div>
+              <div id="countdown"></div>
+            </div>
+          </div>
+          <!-- QUICK FACTS -->
+          <div class="win" style="margin-top:10px" data-reveal delay-2>
+            <div class="win-bar"><span class="win-title">event_stats.dat</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+            <div style="padding:1rem">
+              <div class="qf-grid">
+                <div class="qf-item"><span class="qf-icon">💄</span><span class="qf-val">200+</span><span class="qf-lbl">Brands</span></div>
+                <div class="qf-item"><span class="qf-icon">🎁</span><span class="qf-val">$2,000+</span><span class="qf-lbl">Swag bag</span></div>
+                <div class="qf-item"><span class="qf-icon">🕘</span><span class="qf-val">8 HRS</span><span class="qf-lbl">9AM–5PM</span></div>
+                <div class="qf-item"><span class="qf-icon">💳</span><span class="qf-val">$165</span><span class="qf-lbl">Ticket</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LOCATION ── -->
+      <div class="win" style="margin-top:1.5rem" id="location" data-reveal>
+        <div class="win-bar"><span class="win-title">venue_info.txt — Orange County Convention Center</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+        <div style="padding:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+          <div>
+            <div class="sec-label">VENUE DETAILS</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="ess-card" style="padding:10px 12px"><span style="font-family:var(--scr);font-size:7px;color:var(--p)">ADDRESS</span><div style="font-family:var(--vt);font-size:15px;color:var(--ink2);margin-top:3px">9800 International Drive, Orlando FL 32819 — West Building</div></div>
+              <div class="ess-card" style="padding:10px 12px"><span style="font-family:var(--scr);font-size:7px;color:var(--p)">PARKING</span><div style="font-family:var(--vt);font-size:15px;color:var(--ink2);margin-top:3px">West Lot · $20 cashless (card/Apple Pay)</div></div>
+              <div class="ess-card" style="padding:10px 12px"><span style="font-family:var(--scr);font-size:7px;color:var(--p)">HOURS</span><div style="font-family:var(--vt);font-size:15px;color:var(--ink2);margin-top:3px">Check-in 8AM · Expo 9AM–5PM · Storage closes 5:30PM</div></div>
+              <div class="ess-card" style="padding:10px 12px"><span style="font-family:var(--scr);font-size:7px;color:var(--p)">AIRPORT</span><div style="font-family:var(--vt);font-size:15px;color:var(--ink2);margin-top:3px">MCO (Orlando Int'l) — ~20 min drive</div></div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+              <a href="https://maps.google.com/?q=Orange+County+Convention+Center" target="_blank" class="btn btn-primary btn-sm">Get Directions &gt;&gt;</a>
+              <a href="about.html#map-download" class="btn btn-sm">Download Map</a>
+            </div>
+          </div>
+          <div>
+            <div class="sec-label">MAP PREVIEW</div>
+            <div onclick="window.open('https://maps.google.com/?q=Orange+County+Convention+Center+Orlando','_blank')" style="background:var(--p4);border:2px solid var(--p);box-shadow:3px 3px 0 #C01458;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:none;transition:all 0.1s;" onmouseover="this.style.background='var(--p3)'" onmouseout="this.style.background='var(--p4)'">
+              <div style="font-size:36px;margin-bottom:8px">📍</div>
+              <div style="font-family:var(--scr);font-size:7px;color:var(--p);text-align:center;line-height:1.6">Orange County<br>Convention Center</div>
+              <div style="font-family:var(--vt);font-size:14px;color:var(--lav4);margin-top:6px">[click for Google Maps]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ESSENTIALS ── -->
+      <div class="win" style="margin-top:1.5rem" id="essentials" data-reveal>
+        <div class="win-bar"><span class="win-title">event_essentials.exe — Read before attending!</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">MUST-KNOW BEFORE YOU GO</div>
+          <div class="ess-grid">
+            <div class="ess-card" data-reveal><span class="ess-icon">🆔</span><div class="ess-title">ID Required</div><div class="ess-desc">Government ID must match ticket name. No ID = no entry. Must be 18+.</div></div>
+            <div class="ess-card" data-reveal delay-1><span class="ess-icon">💳</span><div class="ess-title">Cashless Event</div><div class="ess-desc">No cash anywhere on-site. Bring card, Apple Pay, or Google Pay.</div></div>
+            <div class="ess-card" data-reveal delay-2><span class="ess-icon">👜</span><div class="ess-title">Bag Policy</div><div class="ess-desc">No wheeled bags except the $50 Ulta roller. Bring multiple tote bags!</div></div>
+            <div class="ess-card" data-reveal delay-3><span class="ess-icon">📦</span><div class="ess-title">Free Storage</div><div class="ess-desc">Complimentary monitored luggage storage 9AM–5:30PM.</div></div>
+            <div class="ess-card" data-reveal><span class="ess-icon">📬</span><div class="ess-title">Ship It Home</div><div class="ess-desc">On-site shipping boxes available. Domestic only — no international.</div></div>
+            <div class="ess-card" data-reveal delay-1><span class="ess-icon">🎁</span><div class="ess-title">Swag Bag $2K+</div><div class="ess-desc">Must be present to claim. Don't leave without it!!</div></div>
+            <div class="ess-card" data-reveal delay-2><span class="ess-icon">🎟️</span><div class="ess-title">Digital Ticket</div><div class="ess-desc">Check email for event pass. No transfers — name must match ID.</div></div>
+            <div class="ess-card" data-reveal delay-3><span class="ess-icon">👟</span><div class="ess-title">Comfy Shoes!!</div><div class="ess-desc">You'll walk 5–8 miles. Cute AND comfy. Your feet will thank you.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PACKING LIST ── -->
+      <div class="win" style="margin-top:1.5rem" id="bring" data-reveal>
+        <div class="win-bar"><span class="win-title">packing_list.exe — tap to check off items</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">PACKING CHECKLIST</div>
+          <div class="bring-grid" id="bring-list">
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Government-issued ID</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital ticket (email)</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Credit / debit card</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Multiple tote bags</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Portable charger</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Reusable water bottle</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Comfortable shoes</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Phone + headphones</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Lip liner (for testing)</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Hand sanitizer</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Snacks for energy</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital / printed map</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Priority brand list</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Small makeup bag</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Mini mirror</div>
+            <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Business cards (optional)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TIPS ── -->
+      <div class="win" style="margin-top:1.5rem" id="tips" data-reveal>
+        <div class="win-bar"><span class="win-title">pro_tips.txt — Strategy from veterans</span><div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div></div>
+        <div style="padding:1.5rem">
+          <div class="sec-label">SURVIVAL TIPS</div>
+          <div class="tip-list">
+            <div class="tip-card" data-reveal><div class="tip-num">1</div><div><div class="tip-title">Arrive at 8AM — NOT 9AM</div><div class="tip-desc">Doors open at 8AM for check-in. Expo starts 9AM sharp. The Fenty, Cécred, and Rare Beauty booths have 40+ min lines by 9:15AM.</div></div></div>
+            <div class="tip-card" data-reveal delay-1><div class="tip-num">2</div><div><div class="tip-title">Split up with your crew</div><div class="tip-desc">Divide and conquer. Cover different zones simultaneously, then text each other when you find hidden gem booths or freebies.</div></div></div>
+            <div class="tip-card" data-reveal delay-2><div class="tip-num">3</div><div><div class="tip-title">Hit high-ROI booths first</div><div class="tip-desc">Celebrity brand booths — Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — draw the longest lines early. Hit those in the first 90 minutes.</div></div></div>
+            <div class="tip-card" data-reveal delay-3><div class="tip-num">4</div><div><div class="tip-title">Bring MULTIPLE tote bags</div><div class="tip-desc">No wheels allowed (except $50 Ulta roller). Pack multiple large tote bags. Some booths give away bags you can reuse all day.</div></div></div>
+            <div class="tip-card" data-reveal><div class="tip-num">5</div><div><div class="tip-title">Use the shipping station</div><div class="tip-desc">Flying home? Box up your haul at the on-site shipping station before you leave. Domestic only — boxes and labels available.</div></div></div>
+            <div class="tip-card" data-reveal delay-1><div class="tip-num">6</div><div><div class="tip-title">Use our Expo Planner</div><div class="tip-desc">Build your custom route, track your checklist, and log visited booths in real-time on your phone. Zero wasted time, maximum haul.</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CTA ── -->
+      <div class="cta-section" style="margin-top:1.5rem" data-reveal>
+        <div class="cta-title">Ready to Build Your<br>Perfect Expo Day? ✦</div>
+        <div style="font-family:var(--vt);font-size:18px;color:rgba(255,255,255,0.8)">Explore brands · Plan your route · Download your map</div>
+        <div class="cta-buttons">
+          <a href="resources.html" class="btn btn-primary">Browse 200+ Brands &gt;&gt;</a>
+          <a href="planner.html" class="btn">My Planner</a>
+          <a href="about.html#map-download" class="btn">Download Map</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your Y2K pink-coded guide to UBW 2026. Built with 💗 by Jem.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a><a href="#">📌</a><a href="#">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="index.html">Home</a><a href="resources.html">Resources</a><a href="community.html">Community</a><a href="about.html">About Jem</a></div></div>
+      <div><div class="footer-col-title">Tools</div><div class="footer-links"><a href="planner.html">My Planner</a><a href="reminders.html">Reminders</a><a href="brand-hub.html">Brand Hub</a><a href="brand-intel.html">Intelligence</a></div></div>
+      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="legal.html">Terms & Privacy</a><a href="legal.html#disclaimer">Disclaimer</a><a href="legal.html#financial">Financial Notice</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Beauty Made Easier 💗</span><div style="display:flex;gap:1rem"><a href="legal.html">Legal</a><a href="legal.html#privacy">Privacy</a></div></div>
+  </div>
+</footer>
+
+<div class="toast" id="y2k-toast"></div>
+
+<script src="js/y2k-shared.js"></script>
+<script src="js/psychology.js"></script>
+<script>
+function toggleBring(el){
+  el.classList.toggle('checked');
+  const chk=el.querySelector('.bring-check');
+  chk.textContent=el.classList.contains('checked')?'✓':'';
+  showToast(el.classList.contains('checked')?'Packed! ✓':'Unpacked');
+}
+</script>
+</body>
+</html>

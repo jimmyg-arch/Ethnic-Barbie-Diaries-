@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JemUBW 2026 — Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ═══ EXACT PALETTE — matches reference image ═══ */
+:root {
+  --bg:      #C8BFEA;
+  --bg2:     #D4CAED;
+  --grid-c:  rgba(160,145,210,0.22);
+  --win-bg:  #F5EDE8;
+  --win-bar: #8B5CF6;
+  --win-bar2:#7C3AED;
+  --win-bd:  #C4A8E0;
+  --win-sh:  3px 3px 0 rgba(100,60,180,0.28);
+  --purple:  #7C5CBF;
+  --purple2: #9B7DD4;
+  --purple3: #C4A8E0;
+  --ink:     #4A3070;
+  --muted:   #9B88B8;
+  --pink:    #F06292;
+  --pink2:   #F8BBD9;
+  --pink3:   #FDE8F0;
+  --btn-bg:  #EDE0F5;
+  --btn-bd:  #B09AD0;
+  --green:   #66BB6A;
+  --gold:    #FFA726;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* grid bg */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(var(--grid-c) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-c) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+/* scanlines */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(120,80,200,0.018) 3px,rgba(120,80,200,0.018) 4px);
+}
+
+/* cursor */
+#cur{position:fixed;pointer-events:none;z-index:99999;left:0;top:0;}
+
+/* layout */
+.wrap{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:20px;}
+
+/* ── WINDOW ── */
+.win{background:var(--win-bg);border:2px solid var(--win-bd);box-shadow:var(--win-sh),inset 1px 1px 0 rgba(255,255,255,0.55);}
+.win-bar{background:linear-gradient(90deg,var(--win-bar),var(--win-bar2));padding:5px 9px;display:flex;align-items:center;justify-content:space-between;user-select:none;}
+.win-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#fff;}
+.win-btns{display:flex;gap:3px;}
+.win-btn{width:18px;height:16px;background:var(--btn-bg);border:1px solid var(--win-bar2);font-size:10px;color:var(--purple);display:flex;align-items:center;justify-content:center;cursor:none;transition:background 0.1s;font-weight:700;}
+.win-btn:hover{background:var(--pink2);}
+
+/* ── NAV ── */
+.navbar{background:linear-gradient(90deg,var(--win-bar),var(--win-bar2));padding:0 1rem;height:48px;display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--win-bar2);box-shadow:0 2px 8px rgba(100,60,180,0.3);}
+.nav-logo{font-family:'Nunito',sans-serif;font-size:19px;font-weight:900;color:#fff;letter-spacing:-0.5px;flex-shrink:0;margin-right:6px;}
+.nav-link{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:5px 11px;white-space:nowrap;cursor:none;transition:all 0.15s;}
+.nav-link:hover{background:rgba(255,255,255,0.25);color:#fff;}
+.nav-link.active{background:rgba(255,255,255,0.95);color:var(--win-bar);}
+.nav-cta{background:var(--pink)!important;border-color:var(--pink)!important;color:#fff!important;}
+
+/* ── TICKER ── */
+.ticker{background:var(--win-bar2);padding:6px 0;overflow:hidden;border-bottom:2px solid rgba(0,0,0,0.12);}
+.ticker-track{display:flex;gap:3rem;white-space:nowrap;animation:tick 28s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+.tick-item{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,0.9);display:inline-flex;align-items:center;gap:5px;}
+.tc-up{color:#A5F3C8;font-weight:700;}
+.tc-dn{color:#FCA5A5;font-weight:700;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── BTNS ── */
+.btn{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--purple);background:var(--btn-bg);border:1.5px solid var(--btn-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.22);padding:9px 18px;cursor:none;transition:all 0.12s;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{background:var(--purple3);transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(100,60,180,0.2);}
+.btn-primary{background:var(--win-bar);border-color:var(--win-bar2);color:#fff;box-shadow:2px 2px 0 var(--win-bar2);}
+.btn-primary:hover{background:var(--win-bar2);}
+.btn-pink{background:var(--pink);border-color:#d04070;color:#fff;box-shadow:2px 2px 0 #d04070;}
+.btn-pink:hover{background:#e0507a;}
+
+/* ── TYPOGRAPHY ── */
+h1,h2,h3,.heading{font-family:'Nunito',sans-serif;font-weight:900;color:var(--purple);letter-spacing:-0.3px;line-height:1.15;}
+.eyebrow{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:6px;}
+.lead{font-size:14px;color:var(--muted);line-height:1.7;}
+.sec-label{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--purple2);text-transform:uppercase;letter-spacing:0.12em;display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.sec-label::before,.sec-label::after{content:'';flex:1;height:1px;background:var(--purple3);}
+.pixel{font-family:'Press Start 2P',monospace;font-size:9px;}
+
+/* ── COUNTDOWN ── */
+.cd-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;}
+.cd-box{background:#fff;border:1.5px solid var(--btn-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.2);min-width:60px;text-align:center;padding:10px 8px 8px;}
+.cd-num{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--win-bar);display:block;line-height:1;}
+.cd-lbl{font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;color:var(--muted);margin-top:4px;display:block;text-transform:uppercase;letter-spacing:0.08em;}
+.cd-sep{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--purple2);padding-bottom:10px;}
+.blink{animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+/* ── TABS ── */
+.tab-bar{background:var(--win-bg);border-bottom:2px solid var(--win-bd);display:flex;overflow-x:auto;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--muted);background:transparent;border:none;border-bottom:3px solid transparent;padding:11px 15px;white-space:nowrap;cursor:none;transition:all 0.15s;}
+.tab:hover{color:var(--purple);}
+.tab.on{color:var(--win-bar);border-bottom-color:var(--win-bar);}
+.panel{display:none;}.panel.on{display:block;animation:fadeUp 0.2s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── BRAND CARD ── */
+.brand-card{background:#fff;border:1.5px solid var(--win-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.15);padding:14px;transition:all 0.15s;}
+.brand-card:hover{border-color:var(--win-bar);box-shadow:3px 3px 0 rgba(100,60,180,0.25);transform:translate(-1px,-1px);}
+.bc-emoji{font-size:26px;margin-bottom:8px;display:block;}
+.bc-name{font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--purple);margin-bottom:3px;}
+.bc-booth{font-size:11px;color:var(--muted);margin-bottom:6px;}
+.bc-tag{font-family:'Nunito',sans-serif;font-size:10px;font-weight:700;padding:2px 8px;border:1px solid var(--btn-bd);background:var(--btn-bg);color:var(--purple);display:inline-block;margin-right:3px;margin-bottom:3px;}
+
+/* ── STATS ── */
+.stat{background:#fff;border:1.5px solid var(--win-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.15);padding:14px;text-align:center;}
+.stat-val{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--win-bar);display:block;margin-bottom:3px;}
+.stat-lbl{font-size:12px;color:var(--muted);}
+
+/* ── CHECKLIST ── */
+.check-item{display:flex;align-items:center;gap:9px;padding:10px 12px;background:#fff;border:1.5px solid var(--win-bd);font-size:13px;font-weight:500;color:var(--ink);cursor:none;transition:all 0.12s;}
+.check-item:hover{background:var(--btn-bg);}
+.check-item.done{background:var(--win-bar);color:#fff;border-color:var(--win-bar2);}
+.check-box{width:16px;height:16px;border:2px solid var(--btn-bd);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:var(--win-bar);}
+.check-item.done .check-box{background:#fff;border-color:#fff;color:var(--win-bar);}
+
+/* ── VERDICT ── */
+.verdict{text-align:center;padding:1.5rem;border:2px solid;}
+.verdict-yes{background:linear-gradient(135deg,#DCFCE7,#BBF7D0);border-color:var(--green);}
+.verdict-no{background:linear-gradient(135deg,var(--pink3),#ffd6e8);border-color:var(--pink);}
+
+/* ── PROGRESS ── */
+.prog-wrap{height:14px;background:var(--btn-bg);border:1.5px solid var(--btn-bd);overflow:hidden;}
+.prog-fill{height:100%;background:repeating-linear-gradient(90deg,var(--win-bar) 0,var(--win-bar) 12px,var(--purple2) 12px,var(--purple2) 14px);transition:width 0.6s ease;}
+
+/* ── INPUT ── */
+.inp{background:#fff;border:1.5px solid var(--btn-bd);padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);width:100%;transition:border-color 0.15s;}
+.inp:focus{border-color:var(--win-bar);outline:none;}
+.inp::placeholder{color:var(--purple3);}
+select.inp{cursor:none;}
+
+/* ── BADGE ── */
+.badge{font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;padding:3px 9px;border:1px solid;display:inline-flex;align-items:center;gap:4px;}
+.b-live{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.4);color:#fff;}
+.b-up{background:#DCFCE7;border-color:#86EFAC;color:#15803D;}
+.b-dn{background:#FEE2E2;border-color:#FCA5A5;color:#DC2626;}
+.b-purple{background:var(--btn-bg);border-color:var(--btn-bd);color:var(--purple);}
+
+/* ── TOAST ── */
+.toast-msg{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--win-bar);color:#fff;padding:10px 22px;border:2px solid var(--win-bar2);box-shadow:3px 3px 0 rgba(80,40,160,0.3);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all 0.25s;white-space:nowrap;pointer-events:none;}
+.toast-msg.show{opacity:1;}
+
+/* ── FOOTER ── */
+.footer{background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));padding:2rem 1.5rem 1.25rem;border-top:2px solid var(--win-bar2);}
+.footer-logo{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;}
+.footer-col-title{font-family:'Nunito',sans-serif;font-size:10px;font-weight:800;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.footer-link{display:block;font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:5px;font-weight:500;text-decoration:none;cursor:none;}
+.footer-link:hover{color:#fff;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.18);margin-bottom:1rem;}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:rgba(255,255,255,0.4);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--win-bar);}
+
+@media(max-width:600px){
+  .footer-grid{grid-template-columns:1fr 1fr;gap:1.25rem;}
+  .hero-grid{grid-template-columns:1fr!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- cursor -->
+<svg id="cur" width="20" height="24" viewBox="0 0 20 24">
+  <polygon points="0,0 0,20 5,15 9,22 12,21 8,14 15,14" fill="#8B5CF6" stroke="#5B21B6" stroke-width="1.2"/>
+</svg>
+
+<!-- NAV -->
+<nav class="navbar">
+  <span class="nav-logo">✦ JemUBW</span>
+  <a class="nav-link active" href="#">Home</a>
+  <a class="nav-link" href="#">Brands</a>
+  <a class="nav-link" href="#">Community</a>
+  <a class="nav-link" href="#">Brand Hub</a>
+  <a class="nav-link" href="#">Planner</a>
+  <a class="nav-link" href="#">About</a>
+  <a class="nav-link nav-cta" href="#">Plan Route →</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="tick-item">✦ UBW 2026 · April 16 · Orlando FL</span>
+    <span class="tick-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+    <span class="tick-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+    <span class="tick-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+    <span class="tick-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+    <span class="tick-item">💗 200+ Brands · $2,000+ Swag Bag · $165 Ticket</span>
+    <span class="tick-item">Beauty Made Easier by Jem ✦</span>
+    <span class="tick-item">✦ UBW 2026 · April 16 · Orlando FL</span>
+    <span class="tick-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+    <span class="tick-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+    <span class="tick-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+    <span class="tick-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+    <span class="tick-item">💗 200+ Brands · $2,000+ Swag Bag · $165 Ticket</span>
+    <span class="tick-item">Beauty Made Easier by Jem ✦</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ══ HERO ══ -->
+  <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:14px;margin-bottom:14px" class="hero-grid">
+
+    <!-- main hero window -->
+    <div class="win">
+      <div class="win-bar">
+        <span class="win-title">survival_guide.exe — UBW 2026</span>
+        <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+      </div>
+      <div style="padding:2rem;text-align:center">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:var(--btn-bg);border:1px solid var(--btn-bd);padding:4px 14px;margin-bottom:1.1rem">
+          <span class="blink" style="width:7px;height:7px;border-radius:50%;background:var(--pink);display:inline-block"></span>
+          <span style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:0.08em">April 16 · 2026 · Orlando FL · Live</span>
+        </div>
+        <h1 style="font-size:clamp(24px,4vw,42px);margin-bottom:10px;line-height:1.1">
+          Ulta Beauty<br>World <span style="color:var(--pink)">2026</span>
+        </h1>
+        <p class="lead" style="max-width:340px;margin:0 auto 1.5rem">200+ brands. One day. Zero time to waste.<br>Your pink-coded expo playbook. 💗</p>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="showToastMsg('Planning started! 💗')">Start Planning →</button>
+          <button class="btn" onclick="switchSection('brands')">Browse Brands</button>
+          <button class="btn btn-pink" onclick="switchSection('planner')">My Planner 🧮</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- countdown + stats -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="win">
+        <div class="win-bar">
+          <span class="win-title">countdown.exe</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:1.1rem">
+          <div class="sec-label">Time Until Doors Open</div>
+          <div class="cd-row" id="cd"></div>
+        </div>
+      </div>
+      <div class="win">
+        <div class="win-bar">
+          <span class="win-title">event_stats.dat</span>
+          <div class="win-btns"><div class="win-btn">&#9633;</div><div class="win-btn">&#9135;</div><div class="win-btn">&#215;</div></div>
+        </div>
+        <div style="padding:.9rem;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div class="stat"><span class="stat-val">200+</span><span class="stat-lbl">💄 Brands</span></div>
+          <div class="stat"><span class="stat-val">$2K+</span><span class="stat-lbl">🎁 Swag bag</span></div>
+          <div class="stat"><span class="stat-val">8 hrs</span><span class="stat-lbl">🕘 9AM–5PM</span></div>
+          <div class="stat"><span class="stat-val">$165</span><span class="stat-lbl">💳 Ticket</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION SWITCHER ══ -->
+  <div class="win" style="margin-bottom:14px">
+    <div class="tab-bar" id="main-tabs">
+      <button class="tab on" onclick="switchSection('home',this)">🏠 Home</button>
+      <button class="tab" onclick="switchSection('brands',this)">💄 Brand Directory</button>
+      <button class="tab" onclick="switchSection('planner',this)">🧮 Planner</button>
+      <button class="tab" onclick="switchSection('intel',this)">📈 Brand Intel</button>
+      <button class="tab" onclick="switchSection('essentials',this)">📋 Essentials</button>
+    </div>
+
+    <!-- HOME PANEL -->
+    <div class="panel on" id="sec-home" style="padding:1.5rem">
+      <div class="sec-label">Event Essentials</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <span style="font-size:26px;display:block;margin-bottom:8px">🆔</span>
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px">ID Required</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55">Government ID must match ticket name. No ID = no entry. Must be 18+.</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <span style="font-size:26px;display:block;margin-bottom:8px">💳</span>
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px">Cashless Event</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55">No cash accepted. Bring card, Apple Pay, or Google Pay.</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <span style="font-size:26px;display:block;margin-bottom:8px">🎁</span>
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px">Swag Bag $2,000+</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55">Must be present to claim. Do NOT leave without it!</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <span style="font-size:26px;display:block;margin-bottom:8px">👟</span>
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px">Wear Comfy Shoes</div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.55">You'll walk 5–8 miles. Cute AND comfortable is the goal.</div>
+        </div>
+      </div>
+
+      <div class="sec-label" style="margin-top:1.5rem">Packing Checklist — click to check off</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px" id="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Government-issued ID</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Digital ticket (email)</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Credit / debit card</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Multiple tote bags</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Portable charger</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Comfortable shoes</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Reusable water bottle</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Hand sanitizer</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Snacks for energy</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Priority brand list</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Mini mirror + lip liner</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>Phone + headphones</div>
+      </div>
+    </div>
+
+    <!-- BRANDS PANEL -->
+    <div class="panel" id="sec-brands" style="padding:1.5rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1rem">
+        <div class="sec-label" style="margin-bottom:0;flex:1">Brand Directory — 200+ booths</div>
+        <input type="search" class="inp" placeholder="Search brands…" style="max-width:220px" oninput="filterBrands(this.value)">
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem" id="brand-filters">
+        <button class="btn on-filter" onclick="filterCat('All',this)" style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:5px 12px;background:var(--win-bar);border:1.5px solid var(--win-bar2);color:#fff;box-shadow:2px 2px 0 var(--win-bar2);cursor:none">All</button>
+        <button class="btn" onclick="filterCat('Makeup',this)" style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:5px 12px;cursor:none">💄 Makeup</button>
+        <button class="btn" onclick="filterCat('Skincare',this)" style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:5px 12px;cursor:none">🌿 Skincare</button>
+        <button class="btn" onclick="filterCat('Haircare',this)" style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:5px 12px;cursor:none">💆🏾 Haircare</button>
+        <button class="btn" onclick="filterCat('Tools',this)" style="font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:5px 12px;cursor:none">⚡ Tools</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px" id="brand-grid"></div>
+    </div>
+
+    <!-- PLANNER PANEL -->
+    <div class="panel" id="sec-planner" style="padding:1.5rem">
+      <div style="display:flex;gap:0;margin-bottom:1.25rem;border-bottom:2px solid var(--win-bd)">
+        <button class="tab on" onclick="switchPlanner('booth',this)" id="pt-booth">⏱ Booth Timer</button>
+        <button class="tab" onclick="switchPlanner('money',this)" id="pt-money">💰 Money Back</button>
+        <button class="tab" onclick="switchPlanner('girlmath',this)" id="pt-gm">🧮 Girl Math</button>
+        <button class="tab" onclick="switchPlanner('shipping',this)" id="pt-ship">📦 Shipping Calc</button>
+      </div>
+
+      <!-- Booth Timer -->
+      <div id="pp-booth">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:1.25rem">
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600">Arrival time</div><select class="inp" id="arr"><option value="8">8:00 AM</option><option value="9" selected>9:00 AM</option><option value="10">10:00 AM</option></select></div>
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600">Departure</div><select class="inp" id="dep"><option value="17" selected>5:00 PM</option><option value="16">4:00 PM</option><option value="15">3:00 PM</option></select></div>
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:600">Lunch break</div><select class="inp" id="lnch"><option value="45" selected>45 min</option><option value="30">30 min</option><option value="60">1 hour</option><option value="0">Skip</option></select></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:1rem;margin-bottom:1.25rem">
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:space-around;margin-bottom:12px">
+            <div style="text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--win-bar)" id="t-total">0h 0m</div><div style="font-size:11px;color:var(--muted)">Available</div></div>
+            <div style="text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--gold)" id="t-need">0h 0m</div><div style="font-size:11px;color:var(--muted)">Needed</div></div>
+            <div style="text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--green)" id="t-buf">—</div><div style="font-size:11px;color:var(--muted)">Buffer</div></div>
+            <div style="text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--purple)" id="t-cnt">0</div><div style="font-size:11px;color:var(--muted)">Booths</div></div>
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:5px;display:flex;justify-content:space-between"><span>Time budget used</span><span id="t-pct">0%</span></div>
+          <div class="prog-wrap"><div class="prog-fill" id="t-prog" style="width:0%"></div></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+          <input type="text" class="inp" id="b-name" placeholder="Brand name (e.g. Cécred)" style="flex:1;min-width:160px">
+          <select class="inp" id="b-pri" style="width:150px"><option value="high">🔥 High priority</option><option value="medium" selected>⭐ Medium</option><option value="low">🌸 Nice to have</option></select>
+          <button class="btn btn-primary" onclick="addBooth()">+ Add Booth</button>
+        </div>
+        <div id="b-list"><div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">Add booths above to start planning ✦</div></div>
+        <button class="btn btn-pink" style="margin-top:10px" onclick="switchPlanner('money',document.getElementById('pt-money'))">Send to Tracker & Money Back →</button>
+      </div>
+
+      <!-- Money Back -->
+      <div id="pp-money" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:1rem">
+            <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:12px">💸 What I Spent</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Ticket ($165)</label><input type="number" class="inp" id="mb-ticket" value="165" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Transport</label><input type="number" class="inp" id="mb-trans" value="40" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Parking</label><input type="number" class="inp" id="mb-park" value="20" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Food / drinks</label><input type="number" class="inp" id="mb-food" value="25" oninput="calcMB()"></div>
+              <div style="background:var(--btn-bg);border:1.5px solid var(--btn-bd);padding:8px 12px;display:flex;justify-content:space-between;font-weight:700"><span>Total spent</span><span id="mb-spent" style="color:var(--win-bar)">$250</span></div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:1rem">
+            <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple);margin-bottom:12px">🎁 What I Received</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Official swag bag (est.)</label><input type="number" class="inp" id="mb-swag" value="2000" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Booth samples</label><input type="number" class="inp" id="mb-samp" value="0" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Services received</label><input type="number" class="inp" id="mb-serv" value="0" oninput="calcMB()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Education / demos</label><input type="number" class="inp" id="mb-edu" value="150" oninput="calcMB()"></div>
+              <div style="background:var(--btn-bg);border:1.5px solid var(--btn-bd);padding:8px 12px;display:flex;justify-content:space-between;font-weight:700"><span>Total received</span><span id="mb-recv" style="color:var(--green)">$2,150</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="mb-verdict" style="margin-top:14px"></div>
+      </div>
+
+      <!-- Girl Math -->
+      <div id="pp-gm" style="display:none">
+        <div style="background:linear-gradient(135deg,var(--win-bar),var(--pink));padding:1.25rem;margin-bottom:1.25rem">
+          <div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;font-style:italic;margin-bottom:4px">"If the swag bag covers the ticket, it's basically free." 💅</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.75)">Enter all your costs. We'll apply Girl Math logic and find the profit angle.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px;margin-bottom:1.25rem">
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">🏨 Hotel</label><input type="number" class="inp" id="gm-hotel" placeholder="0.00" oninput="calcGM()"></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">✈️ Flights / Transport</label><input type="number" class="inp" id="gm-flight" placeholder="0.00" oninput="calcGM()"></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">🎟️ Tickets × <input type="number" id="gm-tix" value="1" min="1" max="10" style="width:40px;border:1px solid var(--btn-bd);padding:2px 4px;font-size:12px;text-align:center" oninput="calcGM()"> × $165</label><div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:var(--pink)" id="gm-tix-total">= $165.00</div></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">🅿️ Parking</label><input type="number" class="inp" id="gm-park" value="20" oninput="calcGM()"></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">🍕 Food & Drinks</label><input type="number" class="inp" id="gm-food" placeholder="0.00" oninput="calcGM()"></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">👗 New Outfit</label><input type="number" class="inp" id="gm-fit" placeholder="0.00" oninput="calcGM()"><div style="font-size:10px;color:var(--muted);margin-top:4px">That's a confidence investment 💅</div></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">📦 Shipping</label><input type="number" class="inp" id="gm-ship" placeholder="0.00" oninput="calcGM()"></div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px"><label style="font-size:11px;font-weight:700;color:var(--purple);display:block;margin-bottom:6px">✨ Other</label><input type="number" class="inp" id="gm-other" placeholder="0.00" oninput="calcGM()"></div>
+        </div>
+        <div id="gm-results" style="display:none"></div>
+        <button class="btn btn-primary" onclick="calcGM()">Calculate Girl Math 🧮</button>
+      </div>
+
+      <!-- SHIPPING CALCULATOR -->
+      <div id="pp-shipping" style="display:none">
+        <div style="background:linear-gradient(135deg,var(--win-bar),var(--win-bar2));padding:1.25rem;margin-bottom:1.25rem">
+          <div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;margin-bottom:4px">📦 Shipping Cost Calculator</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.75)">Compare USPS, UPS, and FedEx rates. Figure out if shipping beats checking a bag.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1.25rem">
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px">
+            <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--purple);margin-bottom:10px">📐 Box Dimensions</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Length (inches)</label><input type="number" class="inp" id="sh-l" value="18" min="1" oninput="calcShip()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Width (inches)</label><input type="number" class="inp" id="sh-w" value="14" min="1" oninput="calcShip()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Height (inches)</label><input type="number" class="inp" id="sh-h" value="10" min="1" oninput="calcShip()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Weight (lbs)</label><input type="number" class="inp" id="sh-wt" value="15" min="1" oninput="calcShip()"></div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px">
+            <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--purple);margin-bottom:10px">📦 Shipment Details</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Number of boxes</label><input type="number" class="inp" id="sh-boxes" value="1" min="1" max="20" oninput="calcShip()"></div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Delivery speed</label>
+                <select class="inp" id="sh-speed" onchange="calcShip()">
+                  <option value="ground">Ground (3–5 days)</option>
+                  <option value="express">2-Day Express</option>
+                  <option value="overnight">Overnight</option>
+                </select>
+              </div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Destination zone</label>
+                <select class="inp" id="sh-zone" onchange="calcShip()">
+                  <option value="1">Zone 1–2 (nearby SE)</option>
+                  <option value="2" selected>Zone 3–4 (mid-US)</option>
+                  <option value="3">Zone 5–6 (far West)</option>
+                  <option value="4">Zone 7–8 (AK/HI/PR)</option>
+                </select>
+              </div>
+              <div><label style="font-size:11px;color:var(--muted);display:block;margin-bottom:3px">Declared value ($)</label><input type="number" class="inp" id="sh-val" value="200" oninput="calcShip()"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carrier results -->
+        <div style="margin-bottom:1.25rem">
+          <div class="sec-label">Carrier Comparison</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="sh-carriers">
+            <div style="background:#fff;border:2px solid var(--win-bar);box-shadow:3px 3px 0 rgba(100,60,180,0.25);padding:1rem;text-align:center">
+              <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">USPS Priority</div>
+              <div style="font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--win-bar)" id="sh-usps">$0.00</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px" id="sh-usps-lbl">per box</div>
+              <div style="margin-top:8px;font-size:10px;background:var(--btn-bg);border:1px solid var(--btn-bd);padding:3px 8px;color:var(--purple);font-weight:700">Best value</div>
+            </div>
+            <div style="background:#fff;border:1.5px solid var(--win-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.15);padding:1rem;text-align:center">
+              <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">UPS Ground</div>
+              <div style="font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--purple)" id="sh-ups">$0.00</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px" id="sh-ups-lbl">per box</div>
+            </div>
+            <div style="background:#fff;border:1.5px solid var(--win-bd);box-shadow:2px 2px 0 rgba(100,60,180,0.15);padding:1rem;text-align:center">
+              <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">FedEx Home</div>
+              <div style="font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:var(--purple)" id="sh-fdx">$0.00</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px" id="sh-fdx-lbl">per box</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total + bag comparison -->
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:1rem;margin-bottom:1.25rem">
+          <div class="sec-label">Full Cost Summary</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--win-bd);font-size:13px"><span style="color:var(--muted)">Best carrier (USPS) × <span id="sh-box-ct">1</span> box</span><span id="sh-total-best" style="font-weight:700;color:var(--win-bar)">$0.00</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--win-bd);font-size:13px"><span style="color:var(--muted)">Estimated haul weight</span><span id="sh-haul-wt" style="font-weight:700;color:var(--ink)">—</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--win-bd);font-size:13px"><span style="color:var(--muted)">Cost per item (est. 30 items)</span><span id="sh-per-item" style="font-weight:700;color:var(--ink)">—</span></div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;background:var(--btn-bg);border:1.5px solid var(--btn-bd);font-size:14px;font-weight:700"><span>✈️ Checked bag cost (comparison)</span><span style="color:var(--purple)">~$35–$80</span></div>
+          </div>
+        </div>
+
+        <!-- Ship vs Bag verdict -->
+        <div id="sh-verdict" style="padding:1.25rem;border:2px solid;text-align:center"></div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="sendShipToGM()">Send shipping cost to Girl Math →</button>
+          <button class="btn" onclick="calcShip()">Recalculate ↺</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTEL PANEL -->
+    <div class="panel" id="sec-intel" style="padding:1.5rem">
+      <div class="sec-label">Live Stock Data — Yahoo Finance</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem">
+        <div class="win" style="overflow:hidden">
+          <div style="padding:12px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--pink)">ELF</div><div style="font-size:11px;color:var(--muted)">e.l.f. Beauty · NYSE</div></div>
+              <div style="text-align:right"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--ink)">$38.42</div><span class="badge b-up">▲ +3.2%</span></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;padding:6px 8px;background:var(--btn-bg);border:1px solid var(--btn-bd)"><span>vs 1 month ago</span><span style="font-weight:700;color:var(--green)">▲ +8.4%</span></div>
+          </div>
+        </div>
+        <div class="win" style="overflow:hidden">
+          <div style="padding:12px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--pink)">ULTA</div><div style="font-size:11px;color:var(--muted)">Ulta Beauty · NASDAQ</div></div>
+              <div style="text-align:right"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--ink)">$342.18</div><span class="badge b-up">▲ +1.4%</span></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;padding:6px 8px;background:var(--btn-bg);border:1px solid var(--btn-bd)"><span>vs 1 month ago</span><span style="font-weight:700;color:var(--green)">▲ +2.1%</span></div>
+          </div>
+        </div>
+        <div class="win" style="overflow:hidden">
+          <div style="padding:12px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--pink)">EL</div><div style="font-size:11px;color:var(--muted)">Estée Lauder · NYSE</div></div>
+              <div style="text-align:right"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--ink)">$68.55</div><span class="badge b-dn">▼ -2.1%</span></div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;padding:6px 8px;background:var(--btn-bg);border:1px solid var(--btn-bd)"><span>vs 1 month ago</span><span style="font-weight:700;color:var(--red)">▼ -9.3%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-label">Rising Stars 🌟 — Trending Brands</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px">
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;position:relative">
+          <span style="position:absolute;top:8px;right:8px;font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;background:var(--pink);color:#fff;padding:2px 7px;text-transform:uppercase;letter-spacing:0.06em">New 2024</span>
+          <div style="font-size:28px;margin-bottom:8px">🌟</div>
+          <div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--purple);margin-bottom:3px">Ami Colé</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.5">Melanin-rich skin — sheer, natural formulas. Google Trends: +94%</div>
+          <div style="height:6px;background:var(--btn-bg);border:1px solid var(--btn-bd);overflow:hidden"><div style="height:100%;width:94%;background:linear-gradient(90deg,var(--win-bar),var(--pink))"></div></div>
+          <div style="font-size:10px;font-weight:700;color:var(--pink);margin-top:3px">94/100 trend score</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;position:relative">
+          <span style="position:absolute;top:8px;right:8px;font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;background:var(--win-bar);color:#fff;padding:2px 7px;text-transform:uppercase;letter-spacing:0.06em">Rising Fast</span>
+          <div style="font-size:28px;margin-bottom:8px">🗼</div>
+          <div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--purple);margin-bottom:3px">TOWER 28</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.5">Clean beauty for sensitive + eczema-prone skin. TikTok +88%</div>
+          <div style="height:6px;background:var(--btn-bg);border:1px solid var(--btn-bd);overflow:hidden"><div style="height:100%;width:88%;background:linear-gradient(90deg,var(--win-bar),var(--pink))"></div></div>
+          <div style="font-size:10px;font-weight:700;color:var(--pink);margin-top:3px">88/100 trend score</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;position:relative">
+          <span style="position:absolute;top:8px;right:8px;font-family:'Nunito',sans-serif;font-size:9px;font-weight:800;background:var(--gold);color:#fff;padding:2px 7px;text-transform:uppercase;letter-spacing:0.06em">Buzzing</span>
+          <div style="font-size:28px;margin-bottom:8px">💊</div>
+          <div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:var(--purple);margin-bottom:3px">Topicals</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.5">Hyperpigmentation + eczema science for deeper tones. +86%</div>
+          <div style="height:6px;background:var(--btn-bg);border:1px solid var(--btn-bd);overflow:hidden"><div style="height:100%;width:86%;background:linear-gradient(90deg,var(--win-bar),var(--pink))"></div></div>
+          <div style="font-size:10px;font-weight:700;color:var(--pink);margin-top:3px">86/100 trend score</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESSENTIALS PANEL -->
+    <div class="panel" id="sec-essentials" style="padding:1.5rem">
+      <div class="sec-label">Pro Tips from Expo Veterans</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;display:flex;gap:12px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:#fff;background:var(--win-bar);min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0">01</div>
+          <div><div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--purple);margin-bottom:4px">Arrive at 8AM — not 9AM</div><div style="font-size:13px;color:var(--muted);line-height:1.6">Doors open at 8AM for check-in. Expo starts 9AM sharp. Fenty, Cécred, and Rare Beauty booths have 40+ minute lines by 9:15AM.</div></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;display:flex;gap:12px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:#fff;background:var(--win-bar);min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0">02</div>
+          <div><div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--purple);margin-bottom:4px">Hit celebrity booths in the first 90 minutes</div><div style="font-size:13px;color:var(--muted);line-height:1.6">Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — long lines form early. These are your highest ROI stops. Get there first.</div></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--win-bd);padding:14px;display:flex;gap:12px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--win-bar)'" onmouseout="this.style.borderColor='var(--win-bd)'">
+          <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:#fff;background:var(--pink);min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0">03</div>
+          <div><div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:var(--purple);margin-bottom:4px">Use our Shipping Calculator to plan your haul</div><div style="font-size:13px;color:var(--muted);line-height:1.6">Compare USPS, UPS, FedEx rates before the event. Know your shipping budget so you're not surprised at the on-site shipping station.</div></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /win -->
+
+  <!-- FOOTER -->
+  <footer class="footer" style="margin-top:16px">
+    <div class="footer-grid">
+      <div><div class="footer-logo">✦ JemUBW</div><div style="font-size:13px;color:rgba(255,255,255,0.7);max-width:200px;line-height:1.6">Your Y2K pink-coded guide to Ulta Beauty World 2026. Built with 💗 by Jem.</div></div>
+      <div><div class="footer-col-title">Navigate</div><a class="footer-link" href="#">Home</a><a class="footer-link" href="#">Resources</a><a class="footer-link" href="#">Community</a><a class="footer-link" href="#">About Jem</a></div>
+      <div><div class="footer-col-title">Tools</div><a class="footer-link" href="#">My Planner</a><a class="footer-link" href="#">Reminders</a><a class="footer-link" href="#">Brand Hub</a><a class="footer-link" href="#">Intelligence</a></div>
+      <div><div class="footer-col-title">Legal</div><a class="footer-link" href="#">Terms &amp; Privacy</a><a class="footer-link" href="#">Disclaimer</a><a class="footer-link" href="#">Financial Notice</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Beauty Made Easier by Jem 💗</span><span>Not affiliated with Ulta Beauty. Independent fan resource.</span></div>
+  </footer>
+
+</div><!-- /wrap -->
+
+<div class="toast-msg" id="toast-el"></div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';},{passive:true});
+
+/* TOAST */
+function showToastMsg(m){
+  const t=document.getElementById('toast-el');
+  t.textContent=m;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* COUNTDOWN */
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  const target=new Date('2026-04-16T09:00:00-04:00');
+  const diff=target-new Date();
+  if(diff<=0){document.getElementById('cd').innerHTML='<div class="cd-box" style="padding:10px 20px"><span class="cd-num" style="font-size:16px">🎉 It\'s UBW Day!!</span></div>';return;}
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd').innerHTML=`
+    <div class="cd-box"><span class="cd-num">${pad(d)}</span><span class="cd-lbl">Days</span></div>
+    <span class="cd-sep blink">:</span>
+    <div class="cd-box"><span class="cd-num">${pad(h)}</span><span class="cd-lbl">Hours</span></div>
+    <span class="cd-sep blink">:</span>
+    <div class="cd-box"><span class="cd-num">${pad(m)}</span><span class="cd-lbl">Min</span></div>
+    <span class="cd-sep blink">:</span>
+    <div class="cd-box"><span class="cd-num">${pad(s)}</span><span class="cd-lbl">Sec</span></div>`;
+}
+tick();setInterval(tick,1000);
+
+/* SECTION TABS */
+const sections=['home','brands','planner','intel','essentials'];
+function switchSection(id,btn){
+  sections.forEach(s=>{
+    const p=document.getElementById('sec-'+s);if(p)p.classList.remove('on');
+  });
+  document.querySelectorAll('#main-tabs .tab').forEach(b=>b.classList.remove('on'));
+  const panel=document.getElementById('sec-'+id);
+  if(panel)panel.classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(id==='brands'){renderBrands();}
+  if(id==='planner'){calcMB();calcGM();calcShip();}
+}
+
+/* PLANNER TABS */
+const plannerPanels=['booth','money','gm','shipping'];
+function switchPlanner(id,btn){
+  plannerPanels.forEach(p=>{
+    const el=document.getElementById('pp-'+p);if(el)el.style.display='none';
+  });
+  document.querySelectorAll('#sec-planner .tab').forEach(b=>b.classList.remove('on'));
+  const panel=document.getElementById('pp-'+id);
+  if(panel)panel.style.display='block';
+  if(btn)btn.classList.add('on');
+}
+
+/* BRAND DATA */
+const BRANDS=[
+  {name:'Cécred',booth:'1903',cat:'Haircare',emoji:'👸🏾',tags:['Celebrity','Melanin','Curly'],roi:96},
+  {name:'Fenty Beauty',booth:'2009',cat:'Makeup',emoji:'💄',tags:['Celebrity','Melanin'],roi:94},
+  {name:'Rare Beauty',booth:'2003',cat:'Makeup',emoji:'🌸',tags:['Celebrity','Melanin'],roi:91},
+  {name:'COSRX',booth:'2240',cat:'Skincare',emoji:'🐌',tags:['K-Beauty'],roi:89},
+  {name:'Charlotte Tilbury',booth:'201',cat:'Makeup',emoji:'💋',tags:['Celebrity','Luxury'],roi:85},
+  {name:'Tatcha',booth:'1803',cat:'Skincare',emoji:'🍵',tags:['K-Beauty','Clean'],roi:80},
+  {name:'PATTERN Beauty',booth:'1421',cat:'Haircare',emoji:'🌀',tags:['Celebrity','Curly'],roi:88},
+  {name:'Dyson',booth:'2231',cat:'Tools',emoji:'💨',tags:['Tools'],roi:82},
+  {name:'Peach & Lily',booth:'1825',cat:'Skincare',emoji:'🍑',tags:['K-Beauty','Melanin'],roi:78},
+  {name:'Mielle Organics',booth:'921',cat:'Haircare',emoji:'🌿',tags:['Melanin','Curly'],roi:75},
+  {name:'tarte',booth:'1703',cat:'Makeup',emoji:'🍑',tags:['Clean'],roi:72},
+  {name:'NARS',booth:'1403',cat:'Makeup',emoji:'🖤',tags:['Melanin'],roi:74},
+];
+
+let activeCat='All',searchQ='';
+function renderBrands(){
+  const filtered=BRANDS.filter(b=>{
+    const catOk=activeCat==='All'||b.cat===activeCat;
+    const qOk=!searchQ||b.name.toLowerCase().includes(searchQ)||b.cat.toLowerCase().includes(searchQ);
+    return catOk&&qOk;
+  });
+  document.getElementById('brand-grid').innerHTML=filtered.map(b=>`
+    <div class="brand-card">
+      <span class="bc-emoji">${b.emoji}</span>
+      <div class="bc-name">${b.name}</div>
+      <div class="bc-booth">Booth ${b.booth} · ${b.cat}</div>
+      <div style="margin-bottom:6px">${b.tags.map(t=>`<span class="bc-tag">${t}</span>`).join('')}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:var(--btn-bg);border:1px solid var(--btn-bd)">
+        <span style="font-size:11px;color:var(--muted)">ROI Score</span>
+        <span style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:var(--win-bar)">${b.roi}/100</span>
+      </div>
+    </div>`).join('');
+}
+
+function filterBrands(q){searchQ=q;renderBrands();}
+function filterCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('#brand-filters button').forEach(b=>{
+    b.style.background='var(--btn-bg)';b.style.color='var(--purple)';
+    b.style.borderColor='var(--btn-bd)';b.style.boxShadow='2px 2px 0 rgba(100,60,180,0.22)';
+  });
+  btn.style.background='var(--win-bar)';btn.style.color='#fff';
+  btn.style.borderColor='var(--win-bar2)';btn.style.boxShadow='2px 2px 0 var(--win-bar2)';
+  renderBrands();
+}
+renderBrands();
+
+/* CHECKLIST */
+function toggleCheck(el){
+  el.classList.toggle('done');
+  const box=el.querySelector('.check-box');
+  box.textContent=el.classList.contains('done')?'✓':'';
+  showToastMsg(el.classList.contains('done')?'Packed! ✓':'Removed');
+}
+
+/* BOOTH TIMER */
+const PT={high:{base:25,line:20},medium:{base:15,line:10},low:{base:8,line:3}};
+let booths=[];
+function fmtT(m){if(m<0)m=0;const h=Math.floor(m/60),mm=m%60;return h>0?`${h}h ${mm}m`:`${mm}m`;}
+function addBooth(){
+  const n=document.getElementById('b-name').value.trim();
+  const p=document.getElementById('b-pri').value;
+  if(!n){showToastMsg('Enter a brand name first 💗');return;}
+  booths.push({id:Date.now(),name:n,priority:p});
+  document.getElementById('b-name').value='';
+  renderBooths();
+}
+function removeB(id){booths=booths.filter(b=>b.id!==id);renderBooths();}
+function renderBooths(){
+  const arr=parseFloat(document.getElementById('arr').value)||9;
+  const dep=parseFloat(document.getElementById('dep').value)||17;
+  const lnch=parseFloat(document.getElementById('lnch').value)||45;
+  const total=Math.round((dep-arr)*60-lnch);
+  const wt=booths.length>1?(booths.length-1)*4:0;
+  const bm=booths.reduce((s,b)=>{const t=PT[b.priority];return s+t.base+t.line;},0);
+  const need=bm+wt;const buf=total-need;
+  const pct=total>0?Math.min(100,Math.round(need/total*100)):0;
+  document.getElementById('t-total').textContent=fmtT(total);
+  document.getElementById('t-need').textContent=fmtT(need);
+  document.getElementById('t-buf').textContent=buf>=0?fmtT(buf):'Over '+fmtT(-buf);
+  document.getElementById('t-buf').style.color=buf>=0?'var(--green)':'var(--red)';
+  document.getElementById('t-cnt').textContent=booths.length;
+  document.getElementById('t-prog').style.width=pct+'%';
+  document.getElementById('t-pct').textContent=pct+'%';
+  const el=document.getElementById('b-list');
+  if(!booths.length){el.innerHTML='<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">Add booths above to start planning ✦</div>';return;}
+  el.innerHTML=booths.map((b,i)=>{
+    const t=PT[b.priority];
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1.5px solid var(--win-bd);margin-bottom:7px">
+      <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:#fff;background:var(--win-bar);width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div>
+      <div style="flex:1">
+        <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple)">${b.name}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">
+          <span style="background:var(--btn-bg);border:1px solid var(--btn-bd);padding:1px 7px;font-size:10px;font-weight:700;color:var(--purple);margin-right:4px">${t.base} min</span>
+          <span style="background:#FFF3E0;border:1px solid #FCD34D;padding:1px 7px;font-size:10px;font-weight:700;color:#92400E">+${t.line} min line</span>
+        </div>
+      </div>
+      <button onclick="removeB(${b.id})" style="background:none;border:none;color:var(--muted);font-size:16px;cursor:none;padding:4px" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">×</button>
+    </div>`;
+  }).join('');
+}
+['arr','dep','lnch'].forEach(id=>document.getElementById(id).addEventListener('change',renderBooths));
+
+/* MONEY BACK */
+function calcMB(){
+  const spent=(+document.getElementById('mb-ticket').value||0)+(+document.getElementById('mb-trans').value||0)+(+document.getElementById('mb-park').value||0)+(+document.getElementById('mb-food').value||0);
+  const recv=(+document.getElementById('mb-swag').value||0)+(+document.getElementById('mb-samp').value||0)+(+document.getElementById('mb-serv').value||0)+(+document.getElementById('mb-edu').value||0);
+  document.getElementById('mb-spent').textContent='$'+spent.toLocaleString();
+  document.getElementById('mb-recv').textContent='$'+recv.toLocaleString();
+  const diff=recv-spent;const roi=spent>0?Math.round(diff/spent*100):0;
+  const v=document.getElementById('mb-verdict');
+  if(!recv){v.innerHTML='';return;}
+  if(diff>=0){
+    v.className='verdict verdict-yes';
+    v.innerHTML=`<div style="font-size:36px;margin-bottom:8px">🎉</div><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--green);margin-bottom:6px">You Made Your Money Back!</div><div style="font-size:13px;color:var(--green)">+${roi}% ROI · Net gain of <strong>$${diff.toLocaleString()}</strong>. This trip PAID you. 💅</div>`;
+  } else {
+    v.className='verdict verdict-no';
+    v.innerHTML=`<div style="font-size:36px;margin-bottom:8px">💗</div><div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:var(--pink);margin-bottom:6px">So Close!</div><div style="font-size:13px;color:var(--ink)">Only <strong>$${Math.abs(diff).toLocaleString()}</strong> short of breaking even. A few more strategic booth stops and you're in profit. 🌸</div>`;
+  }
+}
+
+/* GIRL MATH */
+function calcGM(){
+  const hotel=+document.getElementById('gm-hotel').value||0;
+  const flight=+document.getElementById('gm-flight').value||0;
+  const tix=(+document.getElementById('gm-tix').value||1)*165;
+  const park=+document.getElementById('gm-park').value||0;
+  const food=+document.getElementById('gm-food').value||0;
+  const fit=+document.getElementById('gm-fit').value||0;
+  const ship=+document.getElementById('gm-ship').value||0;
+  const other=+document.getElementById('gm-other').value||0;
+  const cost=hotel+flight+tix+park+food+fit+ship+other;
+  const value=2000+350+200+150;
+  const roi=cost>0?Math.round(value/cost*100):0;
+  document.getElementById('gm-tix-total').textContent=`= $${tix.toFixed(2)}`;
+  const r=document.getElementById('gm-results');
+  if(!cost){r.style.display='none';return;}
+  r.style.display='block';
+  const mx=Math.max(cost,value);
+  r.innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:1rem">
+      <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--win-bar)">$${cost.toLocaleString()}</div><div style="font-size:11px;color:var(--muted)">Total Cost</div></div>
+      <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--green)">$${value.toLocaleString()}</div><div style="font-size:11px;color:var(--muted)">Value Received</div></div>
+      <div style="background:#fff;border:1.5px solid var(--win-bd);padding:12px;text-align:center"><div style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:var(--pink)">${roi}%</div><div style="font-size:11px;color:var(--muted)">ROI</div></div>
+    </div>
+    <div style="background:linear-gradient(135deg,var(--win-bar),var(--pink));padding:1rem;color:#fff">
+      <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;margin-bottom:8px">🧮 The Girl Math Breakdown</div>
+      ${fit>0?`<div style="font-size:13px;margin-bottom:5px;line-height:1.5">👗 The $${fit} outfit isn't a cost — it's a confidence investment. Priceless.</div>`:''}
+      ${hotel>0?`<div style="font-size:13px;margin-bottom:5px;line-height:1.5">🏨 The $${hotel} hotel splits across every memory you'll make. Per memory? Basically nothing.</div>`:''}
+      <div style="font-size:13px;margin-bottom:5px;line-height:1.5">🎁 The $2,000 swag bag alone is ${Math.round(2000/cost*100)}% of your trip cost. The bag PAID for the trip.</div>
+      <div style="font-size:13px;line-height:1.5">${value>=cost?'✅ Final verdict: This trip MADE you money. Financially iconic. 👑':'💗 You\'re close — every sample received is a product you don\'t buy retail later.'}</div>
+    </div>
+    <div style="margin-top:10px;padding:1rem;background:${value>=cost*1.5?'linear-gradient(135deg,#DCFCE7,#BBF7D0)':value>=cost?'linear-gradient(135deg,#FEF3C7,#FDE68A)':'linear-gradient(135deg,var(--pink3),var(--pink2))'};border:2px solid ${value>=cost*1.5?'var(--green)':value>=cost?'var(--gold)':'var(--pink)'};text-align:center">
+      <div style="font-size:36px;margin-bottom:6px">${value>=cost*1.5?'👑':value>=cost?'💰':'💗'}</div>
+      <div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:${value>=cost*1.5?'var(--green)':value>=cost?'#92400E':'var(--purple)'}">${value>=cost*1.5?'Financially Iconic':value>=cost?'Profitable Queen':'Worth Every Penny'}</div>
+    </div>`;
+}
+
+/* SHIPPING CALCULATOR */
+const CARRIER_RATES={
+  usps:{ground:[0.095,0.11,0.13,0.18],express:[0.18,0.22,0.28,0.38],overnight:[0.35,0.42,0.52,0.70]},
+  ups: {ground:[0.12,0.14,0.165,0.22],express:[0.22,0.27,0.33,0.45],overnight:[0.42,0.50,0.62,0.82]},
+  fdx: {ground:[0.115,0.135,0.16,0.21],express:[0.21,0.26,0.32,0.44],overnight:[0.40,0.48,0.60,0.80]},
+};
+const SPEED_MULT={ground:1,express:1.9,overnight:3.6};
+const BASE_MIN={ground:9.50,express:26,overnight:52};
+function calcShip(){
+  const l=+document.getElementById('sh-l').value||18;
+  const w=+document.getElementById('sh-w').value||14;
+  const h=+document.getElementById('sh-h').value||10;
+  const wt=+document.getElementById('sh-wt').value||15;
+  const boxes=+document.getElementById('sh-boxes').value||1;
+  const speed=document.getElementById('sh-speed').value;
+  const zone=+document.getElementById('sh-zone').value-1;
+  const val=+document.getElementById('sh-val').value||200;
+  const dimWt=Math.round((l*w*h)/139);
+  const billedWt=Math.max(wt,dimWt);
+  const ins=val>100?(val-100)*0.02:0;
+  function getRate(carrier){
+    const ratePerLb=CARRIER_RATES[carrier][speed][zone];
+    const base=Math.max(BASE_MIN[speed],billedWt*ratePerLb*SPEED_MULT[speed]);
+    return Math.max(BASE_MIN[speed],base+ins).toFixed(2);
+  }
+  const usps=getRate('usps'),ups=getRate('ups'),fdx=getRate('fdx');
+  const best=Math.min(parseFloat(usps),parseFloat(ups),parseFloat(fdx));
+  const totalBest=(best*boxes).toFixed(2);
+  document.getElementById('sh-usps').textContent='$'+usps;
+  document.getElementById('sh-ups').textContent='$'+ups;
+  document.getElementById('sh-fdx').textContent='$'+fdx;
+  document.getElementById('sh-usps-lbl').textContent=`per box · $${(parseFloat(usps)*boxes).toFixed(2)} total`;
+  document.getElementById('sh-ups-lbl').textContent=`per box · $${(parseFloat(ups)*boxes).toFixed(2)} total`;
+  document.getElementById('sh-fdx-lbl').textContent=`per box · $${(parseFloat(fdx)*boxes).toFixed(2)} total`;
+  document.getElementById('sh-box-ct').textContent=boxes;
+  document.getElementById('sh-total-best').textContent='$'+totalBest;
+  const haulWt=boxes*billedWt;
+  document.getElementById('sh-haul-wt').textContent=haulWt+' lbs (estimated)';
+  const perItem=(parseFloat(totalBest)/30).toFixed(2);
+  document.getElementById('sh-per-item').textContent='$'+perItem+' per item';
+  const checkedBagMin=35;const checkedBagMax=80;
+  const v=document.getElementById('sh-verdict');
+  if(parseFloat(totalBest)<checkedBagMin){
+    v.style.cssText='padding:1.25rem;border:2px solid var(--green);background:linear-gradient(135deg,#DCFCE7,#BBF7D0);text-align:center';
+    v.innerHTML=`<div style="font-size:32px;margin-bottom:8px">✅</div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--green);margin-bottom:5px">Ship it — better than checking a bag!</div><div style="font-size:13px;color:var(--green)">Shipping is <strong>$${totalBest}</strong> vs $35–$80 checked bag fee. Shipping wins by $${(checkedBagMin-parseFloat(totalBest)).toFixed(0)}+. Your haul arrives at your door safely. 📦</div>`;
+  } else if(parseFloat(totalBest)<=checkedBagMax){
+    v.style.cssText='padding:1.25rem;border:2px solid var(--gold);background:linear-gradient(135deg,#FEF3C7,#FDE68A);text-align:center';
+    v.innerHTML=`<div style="font-size:32px;margin-bottom:8px">⚖️</div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#92400E;margin-bottom:5px">About the same — your call!</div><div style="font-size:13px;color:#92400E">Shipping is <strong>$${totalBest}</strong>, checked bag is $35–$80. Shipping is more convenient (no airport drag), but costs are comparable. Consider the convenience factor.</div>`;
+  } else {
+    v.style.cssText='padding:1.25rem;border:2px solid var(--win-bd);background:var(--btn-bg);text-align:center';
+    v.innerHTML=`<div style="font-size:32px;margin-bottom:8px">✈️</div><div style="font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--purple);margin-bottom:5px">Check the bag instead</div><div style="font-size:13px;color:var(--muted)">Shipping at <strong>$${totalBest}</strong> is more than a checked bag ($35–$80). Pack lighter, check a bag, and save money on your haul home. 💗</div>`;
+  }
+}
+
+function sendShipToGM(){
+  const best=parseFloat(document.getElementById('sh-usps').textContent.replace('$',''))||0;
+  const boxes=+document.getElementById('sh-boxes').value||1;
+  const total=(best*boxes).toFixed(2);
+  document.getElementById('gm-ship').value=total;
+  switchPlanner('gm',document.getElementById('pt-gm'));
+  calcGM();
+  showToastMsg('Shipping cost sent to Girl Math! 💗');
+}
+
+/* INIT */
+calcMB();calcShip();
+</script>
+</body>
+</html>

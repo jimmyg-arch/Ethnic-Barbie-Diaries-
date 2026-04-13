@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ulta Beauty World 2026 Survival Guide — everything you need for April 16, Orlando FL">
+<title>UBW 2026 — Survival Guide by Jem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css/global.css">
+<style>
+/* ══ HOME-SPECIFIC ══════════════════════════ */
+
+/* HERO */
+.hero {
+  min-height: calc(100dvh - var(--nav-h));
+  background: linear-gradient(150deg, #fff 0%, #FFE8F3 35%, #FFD6E8 70%, #FFC4E0 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0 4rem;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,127,181,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -60px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,63,142,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pink-hot);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  animation: pulse-pink 1.5s infinite;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 2rem; }
+.hero-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* COUNTDOWN */
+.countdown-card {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  color: #fff;
+  box-shadow: var(--shadow-pink);
+  position: relative;
+  overflow: hidden;
+}
+.countdown-card::before {
+  content: '💗';
+  position: absolute;
+  font-size: 80px;
+  right: -10px; top: -10px;
+  opacity: 0.15;
+  transform: rotate(15deg);
+}
+.countdown-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#countdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  min-width: 56px;
+  backdrop-filter: blur(4px);
+}
+.countdown-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+}
+.countdown-lbl {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-top: 4px;
+}
+.countdown-sep {
+  font-size: 24px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.5);
+  margin-top: -8px;
+}
+
+/* QUICK FACTS */
+.quick-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.quick-fact {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+.quick-fact:hover { box-shadow: var(--shadow-soft); transform: translateY(-2px); }
+.qf-icon { font-size: 20px; margin-bottom: 6px; }
+.qf-value { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.qf-label { font-size: 11px; color: var(--mist); margin-top: 2px; }
+
+/* LOCATION SECTION */
+.location-card {
+  background: linear-gradient(135deg, #fff 0%, var(--pink-blush) 100%);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.map-preview {
+  background: var(--pink-pale);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid var(--pink-border);
+}
+.map-preview-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--pink-blush), var(--pink-pale));
+  transition: all 0.2s;
+}
+.map-preview:hover .map-preview-inner { background: var(--pink-pale); }
+.map-pin-icon { font-size: 40px; animation: float 3s ease-in-out infinite; }
+.map-preview-label { font-size: 13px; font-weight: 600; color: var(--pink-hot); }
+.directions-btn { font-size: 12px; color: var(--pink); text-decoration: underline; cursor: pointer; }
+
+/* ESSENTIALS */
+.essentials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+.essential-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  transition: all 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+.essential-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-soft));
+}
+.essential-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.ec-icon { font-size: 28px; margin-bottom: 10px; }
+.ec-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.ec-desc { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+/* BRING LIST */
+.bring-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+.bring-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink2);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.bring-item:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-blush); }
+.bring-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--pink-border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  transition: all 0.15s;
+}
+.bring-item.checked .bring-check {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+}
+.bring-item.checked { border-color: var(--pink-pale); color: var(--mist); text-decoration: line-through; }
+
+/* TIPS SECTION */
+.tip-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+.tip-card:hover { box-shadow: var(--shadow-soft); }
+.tip-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255,63,142,0.3);
+}
+.tip-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.tip-desc { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+/* CTA SECTION */
+.cta-section {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-hot) 100%);
+  border-radius: var(--radius-xl);
+  padding: 4rem;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '✦ ✦ ✦';
+  position: absolute;
+  top: 20px; left: 0; right: 0;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 20px;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 40px);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.cta-sub { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 2rem; }
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* SECTION HEADER */
+.sec-head { text-align: center; margin-bottom: 3rem; }
+.sec-head .divider { margin: 1rem auto; }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-visual { order: -1; }
+  .location-card { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 640px) {
+  .quick-facts-grid { grid-template-columns: repeat(2,1fr); }
+  .hero { padding: 3rem 0 4rem; }
+  .countdown-item { min-width: 48px; padding: 8px 10px; }
+  .countdown-num { font-size: 22px; }
+  .cta-section { padding: 2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">About Jem</a>
+    <a href="resources.html" class="nav-cta">Explore Brands →</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html" class="active">Home</a>
+  <a href="resources.html">Resources</a>
+  <a href="community.html">Community</a>
+  <a href="about.html">About Jem</a>
+</div>
+
+<!-- ══ PAGE WRAP ═════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── HERO ─────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy fade-up">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            April 16, 2026 · Orlando, FL
+          </div>
+          <h1 class="display-title">Ulta Beauty World<br><em>Survival Guide</em></h1>
+          <div class="divider" style="margin-top:1.25rem"></div>
+          <p class="lead" style="margin-top:1rem;max-width:460px">
+            200+ brands. One day. Zero time to waste. Your ultimate pink-coded playbook to conquer the floor, maximize every sample, and slay from open to close.
+          </p>
+          <div class="hero-actions">
+            <a href="#essentials" class="btn btn-pink btn-lg">
+              <span>Start planning</span>
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="resources.html" class="btn btn-outline btn-lg">Browse brands</a>
+          </div>
+        </div>
+
+        <div class="hero-visual fade-up delay-2">
+          <!-- Countdown -->
+          <div class="countdown-card">
+            <div class="countdown-label">
+              <span>⏰</span> Time until the doors open
+            </div>
+            <div id="countdown">Loading…</div>
+            <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6)">Thu Apr 16 · Doors 8AM · Expo 9AM–5PM</div>
+          </div>
+
+          <!-- Quick facts -->
+          <div class="quick-facts-grid">
+            <div class="quick-fact">
+              <div class="qf-icon">💄</div>
+              <div class="qf-value">200+</div>
+              <div class="qf-label">Brand booths</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">🎁</div>
+              <div class="qf-value">$2,000+</div>
+              <div class="qf-label">Swag bag value</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">🕘</div>
+              <div class="qf-value">8 Hours</div>
+              <div class="qf-label">Expo time (9–5)</div>
+            </div>
+            <div class="quick-fact">
+              <div class="qf-icon">💳</div>
+              <div class="qf-value">$160</div>
+              <div class="qf-label">Ticket price</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LOCATION ──────────────────────────── -->
+  <section class="section bg-smoke" id="location">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">📍 Where</span>
+        <h2 class="section-title">Find <em>Your Way</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Orange County Convention Center, Orlando, Florida</p>
+      </div>
+      <div class="location-card" data-reveal>
+        <div>
+          <div class="map-preview" onclick="window.open('https://maps.google.com/?q=Orange+County+Convention+Center+Orlando+FL','_blank')">
+            <div class="map-preview-inner">
+              <div class="map-pin-icon">📍</div>
+              <div class="map-preview-label">Orange County Convention Center</div>
+              <div class="directions-btn">Click for Google Maps →</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow">Venue Details</span>
+          <h3 class="section-title" style="font-size:clamp(20px,3vw,28px)">Orange County<br>Convention Center</h3>
+          <div class="divider"></div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:1.25rem">
+            <div class="bring-item" style="cursor:default">
+              <span>🏛️</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">West Building</div>
+                <div style="font-size:12px;color:var(--mist)">9800 International Drive, Orlando, FL 32819</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>🚗</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Parking — $20</div>
+                <div style="font-size:12px;color:var(--mist)">West Parking Lot · Cashless (card/Apple Pay)</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>🕗</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Doors open 8:00 AM</div>
+                <div style="font-size:12px;color:var(--mist)">Expo: 9AM–5PM · Storage closes 5:30PM</div>
+              </div>
+            </div>
+            <div class="bring-item" style="cursor:default">
+              <span>✈️</span>
+              <div>
+                <div style="font-weight:600;font-size:13px">Nearest Airport</div>
+                <div style="font-size:12px;color:var(--mist)">Orlando International (MCO) — ~20 min drive</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;display:flex;gap:10px;flex-wrap:wrap">
+            <a href="https://maps.google.com/?q=Orange+County+Convention+Center+Orlando+FL" target="_blank" class="btn btn-pink btn-sm">Get Directions 🗺️</a>
+            <a href="about.html#map-download" class="btn btn-outline btn-sm">Download Map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ESSENTIALS ────────────────────────── -->
+  <section class="section" id="essentials">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">✨ What to know</span>
+        <h2 class="section-title">Event <em>Essentials</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Everything you need before stepping on that floor</p>
+      </div>
+      <div class="essentials-grid">
+        <div class="essential-card" data-reveal>
+          <div class="ec-icon">🆔</div>
+          <div class="ec-title">ID Required</div>
+          <div class="ec-desc">Government-issued ID must match your ticket name. No ID = no entry. Must be 18+ to attend.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-1>
+          <div class="ec-icon">💳</div>
+          <div class="ec-title">Cashless Event</div>
+          <div class="ec-desc">Cash is not accepted anywhere on-site. Bring Visa, Mastercard, Amex, Apple Pay, or Google Pay.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-2>
+          <div class="ec-icon">👜</div>
+          <div class="ec-title">Bag Policy</div>
+          <div class="ec-desc">No wheeled bags except the official $50 Ulta roller bag. Bring multiple tote bags — you'll need them.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-3>
+          <div class="ec-icon">📦</div>
+          <div class="ec-title">Free Storage</div>
+          <div class="ec-desc">Complimentary monitored luggage storage from 9AM–5:30PM. Come and go as needed.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-4>
+          <div class="ec-icon">📬</div>
+          <div class="ec-title">Ship It Home</div>
+          <div class="ec-desc">On-site shipping boxes & labels available. Domestic shipping only — no international.</div>
+        </div>
+        <div class="essential-card" data-reveal>
+          <div class="ec-icon">🎁</div>
+          <div class="ec-title">Swag Bag $2K+</div>
+          <div class="ec-desc">You must be present to receive your swag bag. Don't leave before grabbing it at pick-up!</div>
+        </div>
+        <div class="essential-card" data-reveal delay-1>
+          <div class="ec-icon">🎟️</div>
+          <div class="ec-title">Digital Ticket</div>
+          <div class="ec-desc">Check your email for your event pass. No transfer allowed — name on ID must match ticket.</div>
+        </div>
+        <div class="essential-card" data-reveal delay-2>
+          <div class="ec-icon">🌡️</div>
+          <div class="ec-title">Wear Comfy Shoes</div>
+          <div class="ec-desc">You'll walk 5–8 miles on this floor. Wear cute but comfortable shoes. Your feet will thank you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BRING LIST ─────────────────────────── -->
+  <section class="section bg-gradient" id="bring">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">🎒 Packing list</span>
+        <h2 class="section-title">What to <em>Bring</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Tap to check off items as you pack</p>
+      </div>
+      <div class="bring-list" id="bring-list">
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Government-issued ID</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital ticket (email)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Credit/debit card</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Multiple tote bags</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Portable charger</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Reusable water bottle</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Comfortable shoes</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Phone + headphones</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Lip liner (for testing)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Hand sanitizer</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Snacks for energy</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Printed/digital map</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Priority brand list</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Small makeup bag</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Business cards (optional)</div>
+        <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Mini mirror</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIPS ──────────────────────────────── -->
+  <section class="section" id="tips">
+    <div class="container">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">💡 Strategy</span>
+        <h2 class="section-title">Things to Know<br><em>Before You Go</em></h2>
+        <div class="divider divider-center"></div>
+        <p class="lead">Pro tips straight from veterans of last year's San Antonio event</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;max-width:750px;margin:0 auto">
+        <div class="tip-card" data-reveal>
+          <div class="tip-num">1</div>
+          <div>
+            <div class="tip-title">Arrive at 8AM — not 9AM</div>
+            <div class="tip-desc">Doors open at 8AM for check-in. The expo starts at 9AM sharp. Get there early to avoid the registration line and get your wristband first. The Fenty, Rare Beauty, and Cécred booths will have 40+ minute lines by 9:15.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-1>
+          <div class="tip-num">2</div>
+          <div>
+            <div class="tip-title">Split up with your friends</div>
+            <div class="tip-desc">If you're going with a group, divide and conquer. Cover different sections simultaneously, then text each other when you find hidden gem booths or freebies. You'll cover 2x the ground.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-2>
+          <div class="tip-num">3</div>
+          <div>
+            <div class="tip-title">Hit high-ROI booths first</div>
+            <div class="tip-desc">Celebrity brand booths — Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — draw the longest lines early. Hit those in the first 90 minutes, then loop back to mid-tier booths after noon when crowds thin.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-3>
+          <div class="tip-num">4</div>
+          <div>
+            <div class="tip-title">Bring MULTIPLE bags</div>
+            <div class="tip-desc">Last year attendees brought full suitcases. No wheels allowed (except the $50 Ulta roller), so pack multiple large tote bags. Polite Society was giving away huge bags — grab those and re-use them throughout the day.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal>
+          <div class="tip-num">5</div>
+          <div>
+            <div class="tip-title">Use the shipping station</div>
+            <div class="tip-desc">If you're flying home, use the on-site shipping station to box up your haul before you leave. Boxes and labels are available on-site. Domestic only — no international shipping.</div>
+          </div>
+        </div>
+        <div class="tip-card" data-reveal delay-1>
+          <div class="tip-num">6</div>
+          <div>
+            <div class="tip-title">Use our Expo Planner tool</div>
+            <div class="tip-desc">Download our free interactive planner to build your custom route, track your checklist, and log visited booths in real time from your phone. Zero wasted time, maximum haul.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────── -->
+  <section class="section" id="cta">
+    <div class="container">
+      <div class="cta-section" data-reveal>
+        <span class="eyebrow" style="color:rgba(255,255,255,0.7)">Ready?</span>
+        <h2 class="cta-title">Let's Build Your<br>Perfect Expo Day ✨</h2>
+        <p class="cta-sub">Explore brands, plan your route, and download your map</p>
+        <div class="cta-buttons">
+          <a href="resources.html" class="btn btn-white btn-lg">Browse 200+ Brands</a>
+          <a href="resources.html#route" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:#fff">Build My Route</a>
+          <a href="about.html#map-download" class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,0.4);color:#fff">Download Map 🗺️</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">✦ JemUBW</div>
+        <p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p>
+        <div class="footer-social" style="margin-top:1rem">
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="TikTok">🎵</a>
+          <a href="#" title="Pinterest">📌</a>
+          <a href="#" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="resources.html">Resources</a>
+          <a href="community.html">Community</a>
+          <a href="about.html">About Jem</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Event Info</div>
+        <div class="footer-links">
+          <a href="index.html#location">Venue & Directions</a>
+          <a href="index.html#essentials">Event Essentials</a>
+          <a href="index.html#bring">Packing List</a>
+          <a href="index.html#tips">Pro Tips</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="resources.html#brands">Brand Directory</a>
+          <a href="resources.html#route">Route Builder</a>
+          <a href="about.html#map-download">Download Map</a>
+          <a href="community.html">Community Chat</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JemUBW · Made with 💗 for beauty lovers</span>
+      <span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shared.js"></script>
+<script>
+function toggleBring(el) {
+  el.classList.toggle('checked');
+  const check = el.querySelector('.bring-check');
+  if (el.classList.contains('checked')) check.textContent = '✓';
+  else check.textContent = '';
+}
+</script>
+</body>
+</html>

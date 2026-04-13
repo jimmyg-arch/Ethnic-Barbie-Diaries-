@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulta Beauty World 2026 — Expo Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D0508;
+  --surface: #1A0B10;
+  --card: #221219;
+  --border: #3D1F28;
+  --hot: #F0184E;
+  --hot2: #FF6B8A;
+  --gold: #E8A830;
+  --gold2: #F5C96A;
+  --cream: #FFF0F3;
+  --muted: #9A7080;
+  --text: #F5E8EC;
+
+  --skincare: #E8184E;
+  --haircare: #A855F7;
+  --makeup: #F59E0B;
+  --fragrance: #06B6D4;
+  --nails: #10B981;
+  --wellness: #84CC16;
+  --tools: #6366F1;
+  --prestige: #EC4899;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,5,8,0.95);
+  backdrop-filter: blur(12px);
+}
+.header-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hot);
+  margin-bottom: 2px;
+}
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1;
+}
+.header-title em {
+  font-style: italic;
+  color: var(--hot);
+}
+.header-meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.brand-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--hot);
+  line-height: 1;
+}
+.brand-count-label { font-size: 11px; color: var(--muted); }
+
+/* CONTROLS */
+.controls {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--surface);
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+.search-wrap svg {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+}
+#searchInput {
+  width: 100%;
+  padding: 9px 12px 9px 34px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+#searchInput::placeholder { color: var(--muted); }
+#searchInput:focus { border-color: var(--hot); }
+
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  background: var(--card);
+  color: var(--muted);
+}
+.chip:hover { color: var(--text); }
+.chip.active { color: #fff; }
+.chip[data-cat="all"] { border-color: var(--border); }
+.chip[data-cat="all"].active { background: var(--hot); border-color: var(--hot); color: #fff; }
+.chip[data-cat="Skincare"].active { background: var(--skincare); border-color: var(--skincare); }
+.chip[data-cat="Haircare"].active { background: var(--haircare); border-color: var(--haircare); }
+.chip[data-cat="Makeup"].active { background: var(--makeup); border-color: var(--makeup); color: #000; }
+.chip[data-cat="Fragrance"].active { background: var(--fragrance); border-color: var(--fragrance); color: #000; }
+.chip[data-cat="Nails"].active { background: var(--nails); border-color: var(--nails); color: #000; }
+.chip[data-cat="Wellness"].active { background: var(--wellness); border-color: var(--wellness); color: #000; }
+.chip[data-cat="Tools"].active { background: var(--tools); border-color: var(--tools); }
+.chip[data-cat="Prestige"].active { background: var(--prestige); border-color: var(--prestige); }
+
+.view-toggle {
+  display: flex;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.view-btn {
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.view-btn.active { background: var(--hot); color: #fff; }
+
+/* COUNT BAR */
+.count-bar {
+  padding: 8px 1.5rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.count-text { font-size: 12px; color: var(--muted); }
+.count-text span { color: var(--text); font-weight: 600; }
+
+/* GRID VIEW */
+.grid-view {
+  padding: 1.25rem 1.5rem;
+  display: none;
+}
+.grid-view.active { display: block; }
+
+.cat-section { margin-bottom: 2rem; }
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.cat-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cat-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+}
+.cat-cnt {
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.brand-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.brand-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+.brand-card.Skincare::before { background: var(--skincare); }
+.brand-card.Haircare::before { background: var(--haircare); }
+.brand-card.Makeup::before { background: var(--makeup); }
+.brand-card.Fragrance::before { background: var(--fragrance); }
+.brand-card.Nails::before { background: var(--nails); }
+.brand-card.Wellness::before { background: var(--wellness); }
+.brand-card.Tools::before { background: var(--tools); }
+.brand-card.Prestige::before { background: var(--prestige); }
+
+.brand-card:hover {
+  border-color: var(--hot);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(240,24,78,0.15);
+}
+.brand-card.highlighted {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.brand-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.brand-booth {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.brand-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.mini-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.mb-melanin { background: rgba(139,69,19,0.3); color: #F4A460; }
+.mb-kbeauty { background: rgba(6,182,212,0.2); color: #67E8F9; }
+.mb-organic { background: rgba(16,185,129,0.2); color: #6EE7B7; }
+.mb-curly { background: rgba(168,85,247,0.2); color: #D8B4FE; }
+.mb-celebrity { background: rgba(236,72,153,0.2); color: #F9A8D4; }
+.mb-exclusive { background: rgba(232,168,48,0.2); color: var(--gold2); }
+
+/* MAP VIEW */
+.map-view {
+  padding: 1.25rem 1.5rem;
+  display: none;
+}
+.map-view.active { display: block; }
+
+.map-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+.expo-floor {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow-x: auto;
+}
+
+.floor-label {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.zones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-width: 600px;
+}
+
+.zone {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.zone-header {
+  padding: 8px 14px;
+  background: var(--card);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.zone-booths {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.map-booth {
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+  line-height: 1.3;
+  max-width: 120px;
+}
+.map-booth:hover { transform: scale(1.05); z-index: 10; position: relative; }
+.map-booth.Skincare { background: rgba(240,24,78,0.15); border-color: rgba(240,24,78,0.3); color: #FF8FAB; }
+.map-booth.Haircare { background: rgba(168,85,247,0.15); border-color: rgba(168,85,247,0.3); color: #C4B5FD; }
+.map-booth.Makeup { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.3); color: #FCD34D; }
+.map-booth.Fragrance { background: rgba(6,182,212,0.15); border-color: rgba(6,182,212,0.3); color: #67E8F9; }
+.map-booth.Nails { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3); color: #6EE7B7; }
+.map-booth.Wellness { background: rgba(132,204,22,0.15); border-color: rgba(132,204,22,0.3); color: #BEF264; }
+.map-booth.Tools { background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); color: #A5B4FC; }
+.map-booth.Prestige { background: rgba(236,72,153,0.15); border-color: rgba(236,72,153,0.3); color: #F9A8D4; }
+.map-booth.dimmed { opacity: 0.15; }
+.map-booth.highlighted { box-shadow: 0 0 0 2px var(--gold); z-index: 10; position: relative; }
+.map-booth.route-stop {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(255,214,10,0.45), inset 0 0 0 1px rgba(255,214,10,0.4);
+}
+
+.booth-num-tag { font-size: 9px; opacity: 0.6; display: block; }
+.route-order-tag {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #2A1F00;
+  font-size: 10px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 1px solid rgba(42,31,0,0.35);
+}
+
+/* TOOLTIP / PANEL */
+.detail-panel {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 200;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.detail-panel.open { transform: translateY(0); }
+.detail-close {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+.detail-cat-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.detail-booth { font-size: 11px; color: var(--hot); font-weight: 600; }
+.detail-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.detail-cat { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.detail-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.detail-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 400px;
+}
+.detail-actions { display: flex; gap: 8px; margin-top: 2px; flex-wrap: wrap; }
+.detail-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  border: none;
+  transition: opacity 0.15s;
+}
+.detail-btn:hover { opacity: 0.8; }
+.btn-primary { background: var(--hot); color: #fff; }
+.btn-secondary { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+
+/* ENTRANCE MARKERS */
+.entrance-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+.entrance-marker {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--hot);
+  border: 1px solid rgba(240,24,78,0.3);
+  padding: 5px 16px;
+  border-radius: 20px;
+  background: rgba(240,24,78,0.08);
+}
+
+/* WISHLIST */
+.wishlist-bar {
+  position: fixed;
+  top: 0; right: 0;
+  height: 100vh;
+  width: 280px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 300;
+  overflow-y: auto;
+  padding: 1rem;
+}
+.wishlist-bar.open { transform: translateX(0); }
+.wishlist-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.wishlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+.wishlist-item-name { font-size: 13px; color: var(--text); line-height: 1.3; }
+.wishlist-item-booth { font-size: 11px; color: var(--hot); }
+.wishlist-remove {
+  background: none; border: none;
+  color: var(--muted); cursor: pointer; font-size: 16px; flex-shrink: 0;
+}
+.wishlist-remove:hover { color: var(--hot); }
+.wishlist-empty { font-size: 13px; color: var(--muted); text-align: center; padding: 2rem 0; }
+.wishlist-item-main { cursor: pointer; }
+
+.wishlist-toggle {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: var(--hot);
+  color: #fff;
+  border: none;
+  padding: 12px 6px;
+  border-radius: 8px 0 0 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  z-index: 250;
+  letter-spacing: 0.05em;
+  font-family: 'DM Sans', sans-serif;
+}
+.route-builder {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.route-builder-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.route-time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.route-time-grid label {
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.route-time-grid input {
+  background: #141225;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 8px;
+}
+.route-actions { display: flex; gap: 8px; margin-top: 8px; }
+.route-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.route-btn.primary { background: linear-gradient(135deg, #F0184E, #FF5B88); color: #fff; }
+.route-btn.secondary { background: #16132B; color: var(--text); border: 1px solid var(--border); }
+.route-summary {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.route-budget {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #6F3A73;
+  background: #FFEAF6;
+  border: 1px solid #E2B5D3;
+  padding: 6px 8px;
+}
+.route-budget.over {
+  color: #9D174D;
+  background: #FFE3EF;
+  border-color: #F5A2C5;
+}
+.route-list {
+  margin-top: 8px;
+  display: grid;
+  gap: 6px;
+}
+.route-stop-item {
+  background: #FFF6FC;
+  border: 1px solid #E3B7D6;
+  border-radius: 10px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 8px;
+  cursor: pointer;
+}
+.route-stop-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #2A1F00;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.route-stop-meta { font-size: 10px; color: #7B4B84; margin-top: 2px; }
+
+/* FADE ANIM */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.brand-card { animation: fadeIn 0.25s ease both; }
+
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Y2K THEME OVERRIDES (match main site) */
+:root{
+  --bg:#CC88FF;
+  --surface:#FFE4F0;
+  --card:#FFF0F8;
+  --border:#D4A0C8;
+  --hot:#FF69B4;
+  --hot2:#FFB6D9;
+  --gold:#FFCC66;
+  --gold2:#FFE4A0;
+  --cream:#4A0060;
+  --muted:#9966AA;
+  --text:#4A0060;
+  --nav-h:52px;
+}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding-top:var(--nav-h);
+}
+.header,.controls,.count-bar,.detail-panel,.wishlist-bar,.zone,.cat-header,.brand-card,.search-wrap input,.route-stop-item,.route-btn.secondary{
+  border-top:2px solid #fff !important;
+  border-left:2px solid #fff !important;
+  border-right:2px solid #B070A0 !important;
+  border-bottom:2px solid #B070A0 !important;
+  border-radius:0 !important;
+  box-shadow:3px 3px 0 rgba(100,0,80,0.12);
+}
+.header,.controls{background:var(--surface) !important;}
+.count-bar{background:var(--card) !important;}
+.header-eyebrow,.zone-header,.cat-cnt,.count-text,.route-summary,.route-stop-meta,.brand-count-label{font-family:'Nunito',sans-serif;font-weight:700;}
+.header-title,.wishlist-title,.cat-title{font-family:'Nunito',sans-serif;font-weight:900;}
+.chip,.view-btn,.detail-btn,.wishlist-toggle,.route-btn{
+  font-family:'Nunito',sans-serif;
+  font-weight:800;
+  border-top:1px solid #fff;
+  border-left:1px solid #fff;
+  border-right:1px solid #B070A0;
+  border-bottom:1px solid #B070A0;
+  border-radius:0;
+}
+.chip.active,.view-btn.active,.btn-primary,.route-btn.primary{
+  background:linear-gradient(135deg,#FF69B4,#7B68EE) !important;
+  color:#fff !important;
+}
+.search-wrap input,#searchInput{
+  background:var(--card) !important;
+  color:var(--text) !important;
+  border-color:var(--border) !important;
+}
+.wishlist-toggle{
+  background:linear-gradient(135deg,#FF69B4,#7B68EE);
+}
+
+/* top toolbar to match main site */
+.navbar{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+  background:linear-gradient(90deg,#FFE4F0,#E8D5FF,#FFE4F0);
+  border-top:2px solid #fff;border-bottom:2px solid #B070A0;
+  display:flex;align-items:center;gap:5px;padding:4px 8px;z-index:1000;
+}
+.nav-logo{
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:900;color:var(--text);
+  background:#FFE4F0;border:1px solid #B070A0;padding:4px 10px;white-space:nowrap;
+}
+.nav-links{display:flex;gap:4px;flex:1;overflow:hidden;}
+.nav-links a{
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--text);
+  background:#FFF0F8;border:1px solid #B070A0;padding:4px 8px;white-space:nowrap;
+}
+.nav-links .nav-cta{background:linear-gradient(135deg,#FF69B4,#7B68EE);color:#fff;}
+.nav-tray{
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:var(--text);
+  background:#FFF0F8;border:1px solid #B070A0;padding:4px 8px;white-space:nowrap;
+}
+@media(max-width:780px){.nav-links a:nth-child(n+5){display:none;}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ EBD</a>
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="resources.html">💄 Brands</a>
+    <a href="community.html">💬 Community</a>
+    <a href="reminders.html">⏰ Reminders</a>
+    <a href="brand-hub.html">📊 Brand Hub</a>
+    <a href="planner.html">📋 Planner</a>
+    <a href="about.html">💗 About</a>
+    <a href="ulta_expo_map.html" class="nav-cta">Map</a>
+  </div>
+  <div class="nav-tray">🌸 UBW 2026</div>
+</nav>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search brand or booth #…" oninput="filterAll()">
+  </div>
+
+  <div class="filter-chips">
+    <div class="chip active" data-cat="all" onclick="setCat('all', this)">All</div>
+    <div class="chip" data-cat="Skincare" onclick="setCat('Skincare', this)" style="border-color:#3D1F28">Skincare</div>
+    <div class="chip" data-cat="Haircare" onclick="setCat('Haircare', this)" style="border-color:#3D1F28">Haircare</div>
+    <div class="chip" data-cat="Makeup" onclick="setCat('Makeup', this)" style="border-color:#3D1F28">Makeup</div>
+    <div class="chip" data-cat="Fragrance" onclick="setCat('Fragrance', this)" style="border-color:#3D1F28">Fragrance</div>
+    <div class="chip" data-cat="Nails" onclick="setCat('Nails', this)" style="border-color:#3D1F28">Nails</div>
+    <div class="chip" data-cat="Wellness" onclick="setCat('Wellness', this)" style="border-color:#3D1F28">Wellness</div>
+    <div class="chip" data-cat="Tools" onclick="setCat('Tools', this)" style="border-color:#3D1F28">Tools</div>
+  </div>
+
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="setView('grid', this)">Grid</button>
+    <button class="view-btn" onclick="setView('map', this)">Map</button>
+  </div>
+</div>
+
+<!-- COUNT BAR -->
+<div class="count-bar">
+  <span class="count-text">Showing <span id="showCount">200+</span> booths</span>
+  <span class="count-text"><span id="visibleCount">200+</span> visible</span>
+  <span class="count-text" id="wishCount" style="color:var(--gold)"></span>
+</div>
+
+<!-- GRID VIEW -->
+<div class="grid-view active" id="gridView"></div>
+
+<!-- MAP VIEW -->
+<div class="map-view" id="mapView">
+  <div class="map-legend" id="mapLegend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--skincare)"></div>Skincare</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--haircare)"></div>Haircare</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--makeup)"></div>Makeup</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--fragrance)"></div>Fragrance</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--nails)"></div>Nails</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--wellness)"></div>Wellness</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--tools)"></div>Tools</div>
+  </div>
+  <div class="expo-floor" id="expoFloor"></div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-close" onclick="closeDetail()">✕</div>
+  <div class="detail-cat-dot" id="detailDot"></div>
+  <div>
+    <div class="detail-booth" id="detailBooth"></div>
+    <div class="detail-name" id="detailName"></div>
+    <div class="detail-cat" id="detailCat"></div>
+    <div class="detail-badges" id="detailBadges"></div>
+  </div>
+  <div>
+    <div class="detail-desc" id="detailDesc"></div>
+    <div class="detail-actions">
+      <button class="detail-btn btn-primary" id="wishBtn" onclick="toggleWish()">+ Add to my list</button>
+      <button class="detail-btn btn-secondary" onclick="closeDetail()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST SIDEBAR -->
+<button class="wishlist-toggle" onclick="toggleWishlist()">My List ✦</button>
+<div class="wishlist-bar" id="wishlistBar">
+  <div class="wishlist-title">My Booth List</div>
+  <div id="wishlistItems"><div class="wishlist-empty">Tap any brand to add it to your list</div></div>
+  <div class="route-builder" id="routeBuilder">
+    <div class="route-builder-title">Route Builder (from your list)</div>
+    <div class="route-time-grid">
+      <label>Start time
+        <input id="routeStartTime" type="time" value="09:00">
+      </label>
+      <label>End time
+        <input id="routeEndTime" type="time" value="17:00">
+      </label>
+    </div>
+    <div class="route-actions">
+      <button class="route-btn primary" onclick="generateWishlistRoute()">Generate Route</button>
+      <button class="route-btn secondary" onclick="downloadWatermarkedRoute()">Download Route</button>
+      <button class="route-btn secondary" onclick="clearRoute()">Clear</button>
+    </div>
+    <div class="route-summary" id="routeSummary">Choose your expo time range, then generate an optimized route from saved booths.</div>
+    <div class="route-budget" id="routeBudget">Time budget appears here after route generation.</div>
+    <div class="route-list" id="routeList"></div>
+  </div>
+</div>
+
+<script id="y2k-cursor-shared">
+(function(){
+function bc(){var M=[[2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0],[2,1,1,1,2,0,0,0,0,0,0,0,0,0,0,0],[2,1,1,1,1,2,0,0,0,0,0,0,0,0,0,0],[2,1,1,1,1,1,2,0,0,0,0,0,0,0,0,0],[2,1,1,1,1,1,1,2,0,0,0,0,0,0,0,0],[2,1,1,1,1,1,1,1,2,0,0,0,0,0,0,0],[2,1,1,1,1,1,2,2,2,0,0,0,0,0,0,0],[2,1,1,2,1,1,2,0,0,0,0,0,0,0,0,0],[2,1,2,0,2,1,1,2,0,0,0,0,0,0,0,0],[2,2,0,0,0,2,1,1,2,0,0,0,0,0,0,0],[0,0,0,0,0,0,2,1,1,2,0,0,0,0,0,0],[0,0,0,0,0,0,0,2,1,2,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0]];
+var SC=3,SZ=48,cv=document.createElement('canvas');cv.width=SZ;cv.height=SZ;var cx=cv.getContext('2d');
+M.forEach(function(row,y){row.forEach(function(v,x){if(!v)return;cx.fillStyle=v===1?'#FF2D88':'#880044';cx.fillRect(x*SC,y*SC,SC,SC);});});
+return cv.toDataURL('image/png');}
+function setup(){if(document.getElementById('__y2kc__'))return;
+var url=bc();var s=document.createElement('style');s.textContent='*,*::before,*::after{cursor:none!important}';document.head.appendChild(s);
+var img=document.createElement('img');img.id='__y2kc__';img.src=url;
+img.style.cssText='position:fixed;top:-200px;left:-200px;width:48px;height:48px;pointer-events:none;z-index:2147483647;image-rendering:pixelated;';
+document.body.appendChild(img);
+var raf;
+document.addEventListener('mousemove',function(e){if(raf)cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){img.style.left=e.clientX+'px';img.style.top=e.clientY+'px';});},{passive:true});
+document.addEventListener('click',function(e){
+  var hearts=['💗','💖','♥','💕','🌸'];
+  for(var i=0;i<5;i++){(function(i){
+    var h=document.createElement('div'),a=(Math.random()*360)*(Math.PI/180),d=30+Math.random()*40;
+    var dx=(Math.cos(a)*d).toFixed(1),dy=(Math.sin(a)*d-40).toFixed(1),id='hf'+(Date.now()+i);
+    var kf=document.createElement('style');
+    kf.textContent='@keyframes '+id+'{0%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px)) scale(1.4)}}';
+    document.head.appendChild(kf);
+    h.style.cssText='position:fixed;left:'+e.clientX+'px;top:'+e.clientY+'px;font-size:'+(10+Math.floor(Math.random()*8))+'px;pointer-events:none;z-index:2147483646;animation:'+id+' 0.65s ease forwards;';
+    h.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+    document.body.appendChild(h);
+    setTimeout(function(){h.remove();kf.remove();},700);
+  })(i);}
+});
+}
+if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',setup);}
+})();
+</script>
+
+<script>
+const BRANDS = [
+  {booth:'830',brand:'18.21 Man Made',cat:'Haircare',badges:[]},
+  {booth:'1129',brand:'about-face',cat:'Makeup',badges:['celebrity']},
+  {booth:'329',brand:'Alterna, Joico, Kenra',cat:'Haircare',badges:[]},
+  {booth:'1931',brand:'amika',cat:'Haircare',badges:['exclusive']},
+  {booth:'832',brand:'AmLactin',cat:'Skincare',badges:['organic']},
+  {booth:'1517',brand:'Anastasia Beverly Hills',cat:'Makeup',badges:['exclusive']},
+  {booth:'801',brand:'Anus',cat:'Skincare',badges:['organic']},
+  {booth:'FT10',brand:'Apothékary',cat:'Wellness',badges:['organic']},
+  {booth:'1441',brand:'Ardell, China Glaze, Flowers, GiGi, Hollywood Fashion Secrets, Nail Tek, Sache',cat:'Nails',badges:[]},
+  {booth:'528',brand:'Avène',cat:'Skincare',badges:['kbeauty','organic']},
+  {booth:'529',brand:'Azzaro, Mugler, Viktor&Rolf',cat:'Fragrance',badges:['exclusive']},
+  {booth:'2117',brand:'BaBylissPRO, Conair, Scünci, Tartan + Twine',cat:'Tools',badges:[]},
+  {booth:'2408',brand:'BALMAIN',cat:'Haircare',badges:['celebrity','exclusive']},
+  {booth:'639',brand:'bareMinerals, BUXOM, Laura Mercier',cat:'Makeup',badges:['organic']},
+  {booth:'920',brand:'Bed Head',cat:'Haircare',badges:[]},
+  {booth:'1941',brand:'Beekman 1802',cat:'Skincare',badges:['organic']},
+  {booth:'1047',brand:'belif, CNP Laboratory',cat:'Skincare',badges:['kbeauty']},
+  {booth:'401',brand:'Benefit Cosmetics',cat:'Makeup',badges:['exclusive']},
+  {booth:'1917',brand:'Better World Fragrance House by Drake, Eilish Fragrances',cat:'Fragrance',badges:['celebrity','exclusive']},
+  {booth:'921',brand:'BEVEL, Mielle',cat:'Haircare',badges:['melanin','curly']},
+  {booth:'2047',brand:'Bio Ionic, Ouidad, Wet Brush',cat:'Tools',badges:['curly']},
+  {booth:'2024',brand:'Bio-Oil, Bondi Sands',cat:'Skincare',badges:[]},
+  {booth:'1918',brand:'Bioderma',cat:'Skincare',badges:['organic']},
+  {booth:'615',brand:'Biolage',cat:'Haircare',badges:['organic']},
+  {booth:'FT7',brand:'Bird&Be',cat:'Wellness',badges:['organic']},
+  {booth:'1135',brand:'Blind Barber',cat:'Haircare',badges:[]},
+  {booth:'115',brand:'Bloomeffects',cat:'Skincare',badges:['organic']},
+  {booth:'2401',brand:'Bobbi Brown',cat:'Makeup',badges:['melanin','exclusive']},
+  {booth:'1819',brand:'BondiBoost',cat:'Haircare',badges:[]},
+  {booth:'1747',brand:'Briogeo',cat:'Haircare',badges:['organic','curly','melanin']},
+  {booth:'1609',brand:'Bubble Skincare',cat:'Skincare',badges:[]},
+  {booth:'2409',brand:'Bumble and bumble.',cat:'Haircare',badges:[]},
+  {booth:'1503',brand:'Burberry, Calvin Klein, Gucci, Hugo Boss, Philosophy',cat:'Fragrance',badges:['exclusive']},
+  {booth:'GS3',brand:'Bushbalm',cat:'Skincare',badges:['organic']},
+  {booth:'609',brand:'Buttah Skin',cat:'Skincare',badges:['melanin','melanin']},
+  {booth:'1039',brand:'BYOMA',cat:'Skincare',badges:['organic']},
+  {booth:'431',brand:'Camille Rose',cat:'Haircare',badges:['melanin','curly','organic']},
+  {booth:'2317',brand:'Carolina Herrera',cat:'Fragrance',badges:['exclusive']},
+  {booth:'1903',brand:'Cécred',cat:'Haircare',badges:['celebrity','melanin','curly','exclusive']},
+  {booth:'1647',brand:'Celimax, d\'Alba Piedmont',cat:'Skincare',badges:['kbeauty']},
+  {booth:'409',brand:'CeraVe, La Roche Posay, Vichy',cat:'Skincare',badges:[]},
+  {booth:'201',brand:'Charlotte Tilbury',cat:'Makeup',badges:['exclusive','celebrity']},
+  {booth:'2225',brand:'CHI',cat:'Haircare',badges:[]},
+  {booth:'609',brand:'Clarins',cat:'Skincare',badges:['organic']},
+  {booth:'2331',brand:'Clean Skin Club',cat:'Skincare',badges:['organic']},
+  {booth:'2103',brand:'Clinique',cat:'Skincare',badges:[]},
+  {booth:'301',brand:'Coco & Eve, Loving Tan',cat:'Skincare',badges:['organic']},
+  {booth:'640',brand:'Cocokind',cat:'Skincare',badges:['organic']},
+  {booth:'2240',brand:'COSRX',cat:'Skincare',badges:['kbeauty']},
+  {booth:'2417',brand:'CoverGirl, Sally Hansen',cat:'Makeup',badges:['melanin']},
+  {booth:'1717',brand:'Curlsmith, Drybar, Hot Tools',cat:'Haircare',badges:['curly']},
+  {booth:'FT11',brand:'Cymbiotika',cat:'Wellness',badges:['organic']},
+  {booth:'1131',brand:'Dashing Diva',cat:'Nails',badges:[]},
+  {booth:'GS7',brand:'Denman Brush',cat:'Tools',badges:['curly','melanin']},
+  {booth:'1803',brand:'Derma E',cat:'Skincare',badges:['organic']},
+  {booth:'1121',brand:'Dermalogica',cat:'Skincare',badges:[]},
+  {booth:'116',brand:'Design Essentials',cat:'Haircare',badges:['melanin','curly']},
+  {booth:'2341',brand:'Devacurl, Sexy Hair',cat:'Haircare',badges:['curly']},
+  {booth:'2031',brand:'DIBS Beauty',cat:'Makeup',badges:['melanin']},
+  {booth:'316',brand:'DIME',cat:'Skincare',badges:['organic']},
+  {booth:'1246',brand:'Divi Growth Care',cat:'Haircare',badges:[]},
+  {booth:'547',brand:'Dolce & Gabbana',cat:'Fragrance',badges:['exclusive','celebrity']},
+  {booth:'547',brand:'Donna\'s Recipe',cat:'Skincare',badges:['melanin','organic']},
+  {booth:'539',brand:'DRMTLGY',cat:'Skincare',badges:[]},
+  {booth:'1221',brand:'Drunk Elephant',cat:'Skincare',badges:['organic','exclusive']},
+  {booth:'2231',brand:'Dyson',cat:'Tools',badges:['exclusive']},
+  {booth:'1229',brand:'e.l.f. Cosmetics & e.l.f. skin',cat:'Makeup',badges:['organic','melanin']},
+  {booth:'433',brand:'Earth Therapeutics',cat:'Wellness',badges:['organic']},
+  {booth:'315',brand:'ELEMIS',cat:'Skincare',badges:['organic']},
+  {booth:'FT5',brand:'Ellis Brooklyn',cat:'Fragrance',badges:['organic']},
+  {booth:'1234',brand:'EOS',cat:'Skincare',badges:['organic']},
+  {booth:'2325',brand:'Essence Cosmetics',cat:'Makeup',badges:['melanin']},
+  {booth:'601',brand:'essie, L\'Oréal Paris, Maybelline',cat:'Makeup',badges:['melanin']},
+  {booth:'2109',brand:'Estée Lauder',cat:'Makeup',badges:['exclusive','celebrity']},
+  {booth:'940',brand:'Ethique Beauty',cat:'Skincare',badges:['organic']},
+  {booth:'308',brand:'Eva NYC',cat:'Haircare',badges:[]},
+  {booth:'1541',brand:'Exuviance, OGX',cat:'Skincare',badges:[]},
+  {booth:'834',brand:'Eylure',cat:'Makeup',badges:[]},
+  {booth:'409',brand:'Farmacy Beauty',cat:'Skincare',badges:['organic']},
+  {booth:'2009',brand:'Fenty Beauty, OLEHENRIKSEN',cat:'Makeup',badges:['celebrity','melanin','exclusive']},
+  {booth:'120',brand:'Florence by Mills',cat:'Skincare',badges:['organic','celebrity']},
+  {booth:'2125',brand:'fwee',cat:'Skincare',badges:['kbeauty']},
+  {booth:'821',brand:'Garnier, Thayers',cat:'Skincare',badges:['organic']},
+  {booth:'100',brand:'Gimme Beauty',cat:'Haircare',badges:[]},
+  {booth:'1508',brand:'Givenchy Beauty',cat:'Makeup',badges:['exclusive']},
+  {booth:'1239',brand:'Glamnetic',cat:'Nails',badges:['exclusive']},
+  {booth:'942',brand:'Good Molecules',cat:'Skincare',badges:['organic']},
+  {booth:'1916',brand:'Grande Cosmetics',cat:'Makeup',badges:[]},
+  {booth:'FT3',brand:'GuruNanda',cat:'Wellness',badges:['organic']},
+  {booth:'GS5',brand:'Hairstory',cat:'Haircare',badges:['organic']},
+  {booth:'1514',brand:'Half Magic',cat:'Makeup',badges:['celebrity','exclusive']},
+  {booth:'1724',brand:'Hempz',cat:'Skincare',badges:['organic']},
+  {booth:'1934',brand:'Herbivore',cat:'Skincare',badges:['organic']},
+  {booth:'541',brand:'Heritage Store',cat:'Wellness',badges:['organic']},
+  {booth:'1731',brand:'Hero, Batiste',cat:'Skincare',badges:[]},
+  {booth:'FT9',brand:'Hum Nutrition',cat:'Wellness',badges:['organic']},
+  {booth:'2124',brand:'IGK',cat:'Haircare',badges:[]},
+  {booth:'1725',brand:'ILIA Beauty',cat:'Makeup',badges:['organic','melanin']},
+  {booth:'321',brand:'Innersense',cat:'Haircare',badges:['organic','curly']},
+  {booth:'209',brand:'isima',cat:'Skincare',badges:['melanin']},
+  {booth:'829',brand:'IT Cosmetics',cat:'Makeup',badges:['melanin']},
+  {booth:'1741',brand:'It\'s a 10',cat:'Haircare',badges:[]},
+  {booth:'2241',brand:'Juicy Couture, Revlon',cat:'Fragrance',badges:['celebrity']},
+  {booth:'1534',brand:'JVN',cat:'Haircare',badges:['celebrity','organic']},
+  {booth:'1841',brand:'K-Beauty World',cat:'Skincare',badges:['kbeauty']},
+  {booth:'2131',brand:'Kate Somerville, Patchology',cat:'Skincare',badges:['exclusive']},
+  {booth:'747',brand:'Keratin Complex',cat:'Haircare',badges:[]},
+  {booth:'715',brand:'Kiehl\'s Since 1851',cat:'Skincare',badges:['organic','melanin']},
+  {booth:'214',brand:'KISS',cat:'Nails',badges:['melanin']},
+  {booth:'1449',brand:'Kitsch',cat:'Haircare',badges:[]},
+  {booth:'2116',brand:'Kopari',cat:'Skincare',badges:['organic']},
+  {booth:'228',brand:'Kristin Ess Hair, Party of You',cat:'Haircare',badges:[]},
+  {booth:'709',brand:'Kylie Cosmetics',cat:'Makeup',badges:['celebrity','melanin']},
+  {booth:'847',brand:'L.A. Girl',cat:'Makeup',badges:['melanin']},
+  {booth:'2246',brand:'L\'ange Hair',cat:'Haircare',badges:[]},
+  {booth:'501',brand:'Lake & Skye, Le Monde Gourmand, Supersuite',cat:'Fragrance',badges:[]},
+  {booth:'515',brand:'Lancôme',cat:'Makeup',badges:['exclusive','celebrity']},
+  {booth:'1932',brand:'Lanolips',cat:'Skincare',badges:['organic']},
+  {booth:'1625',brand:'Lemme',cat:'Wellness',badges:['celebrity']},
+  {booth:'1438',brand:'Live Tinted',cat:'Makeup',badges:['melanin','exclusive']},
+  {booth:'2017',brand:'Living Proof',cat:'Haircare',badges:[]},
+  {booth:'633',brand:'Locks & Mane',cat:'Haircare',badges:['melanin','curly']},
+  {booth:'1709',brand:'LolaVie',cat:'Haircare',badges:['celebrity']},
+  {booth:'1847',brand:'Lumé',cat:'Wellness',badges:[]},
+  {booth:'1833',brand:'Luna Bronze',cat:'Skincare',badges:['organic']},
+  {booth:'2046',brand:'ma:nyo',cat:'Skincare',badges:['kbeauty']},
+  {booth:'2209',brand:'MAC Cosmetics',cat:'Makeup',badges:['melanin','exclusive']},
+  {booth:'347',brand:'Madison Reed',cat:'Haircare',badges:[]},
+  {booth:'217',brand:'Magic Molecule',cat:'Skincare',badges:['melanin']},
+  {booth:'429',brand:'MaryRuth\'s',cat:'Wellness',badges:['organic']},
+  {booth:'721',brand:'Matrix',cat:'Haircare',badges:[]},
+  {booth:'1617',brand:'MAËLYS',cat:'Skincare',badges:[]},
+  {booth:'FT4',brand:'Medicine Mama',cat:'Wellness',badges:['organic']},
+  {booth:'1502',brand:'Medicube',cat:'Skincare',badges:['kbeauty']},
+  {booth:'101',brand:'MEDIHEAL',cat:'Skincare',badges:['kbeauty']},
+  {booth:'FT2',brand:'Meesi Elixir',cat:'Skincare',badges:['melanin']},
+  {booth:'947',brand:'method',cat:'Wellness',badges:['organic']},
+  {booth:'2040',brand:'Milani Cosmetics',cat:'Makeup',badges:['melanin']},
+  {booth:'1802',brand:'Milk Makeup',cat:'Makeup',badges:['organic']},
+  {booth:'2217',brand:'Moroccanoil',cat:'Haircare',badges:[]},
+  {booth:'309',brand:'Morphe',cat:'Makeup',badges:['melanin']},
+  {booth:'114',brand:'Naked Sundays',cat:'Skincare',badges:['organic']},
+  {booth:'638',brand:'Nakery Beauty',cat:'Skincare',badges:['melanin','organic']},
+  {booth:'1403',brand:'NARS Cosmetics',cat:'Makeup',badges:['melanin','exclusive']},
+  {booth:'2130',brand:'Natasha Denona',cat:'Makeup',badges:['exclusive']},
+  {booth:'109',brand:'Naturium',cat:'Skincare',badges:['organic','melanin']},
+  {booth:'1909',brand:'Nemet',cat:'Fragrance',badges:[]},
+  {booth:'1546',brand:'NEOM Wellbeing',cat:'Wellness',badges:['organic']},
+  {booth:'1429',brand:'NEST New York',cat:'Fragrance',badges:[]},
+  {booth:'1531',brand:'Neutrogena',cat:'Skincare',badges:['melanin']},
+  {booth:'2431',brand:'Nexxus, Vaseline',cat:'Haircare',badges:[]},
+  {booth:'229',brand:'Nioxin, OPI, Sebastian, Wella Professionals',cat:'Haircare',badges:[]},
+  {booth:'828',brand:'No7',cat:'Skincare',badges:[]},
+  {booth:'FT8',brand:'Nodpod',cat:'Wellness',badges:[]},
+  {booth:'2141',brand:'Not Your Mother\'s Haircare',cat:'Haircare',badges:['melanin','curly','organic']},
+  {booth:'2008',brand:'NOYZ',cat:'Fragrance',badges:[]},
+  {booth:'110',brand:'NuFACE',cat:'Tools',badges:[]},
+  {booth:'809',brand:'NYX Professional Makeup',cat:'Makeup',badges:['melanin']},
+  {booth:'GS6',brand:'Ocoe',cat:'Skincare',badges:['kbeauty']},
+  {booth:'GS1',brand:'OCTAVIA MORGAN LOS ANGELES',cat:'Fragrance',badges:['celebrity','exclusive']},
+  {booth:'310',brand:'Odele',cat:'Haircare',badges:['organic']},
+  {booth:'1809',brand:'OLAPLEX',cat:'Haircare',badges:['exclusive']},
+  {booth:'211',brand:'Olive & June',cat:'Nails',badges:['organic']},
+  {booth:'1631',brand:'ONYX Professional',cat:'Nails',badges:['melanin']},
+  {booth:'2202',brand:'Origins',cat:'Skincare',badges:['organic']},
+  {booth:'635',brand:'ORLY',cat:'Nails',badges:['organic']},
+  {booth:'1520',brand:'OSEA Malibu',cat:'Skincare',badges:['organic']},
+  {booth:'1415',brand:'OUAI',cat:'Haircare',badges:[]},
+  {booth:'2140',brand:'Pacifica',cat:'Skincare',badges:['organic']},
+  {booth:'915',brand:'Paris Hilton Fragrance, Sam Edelman Fragrance',cat:'Fragrance',badges:['celebrity']},
+  {booth:'1821',brand:'Pat McGrath Labs',cat:'Makeup',badges:['melanin','exclusive','celebrity']},
+  {booth:'1421',brand:'PATTERN',cat:'Haircare',badges:['celebrity','melanin','curly']},
+  {booth:'524',brand:'Paul Mitchell',cat:'Haircare',badges:[]},
+  {booth:'1825',brand:'Peach & Lily',cat:'Skincare',badges:['kbeauty','melanin']},
+  {booth:'1730',brand:'Peach Slices',cat:'Skincare',badges:['kbeauty']},
+  {booth:'309',brand:'Perricone MD',cat:'Skincare',badges:[]},
+  {booth:'1925',brand:'Personal Day',cat:'Skincare',badges:['melanin']},
+  {booth:'1930',brand:'Peter Thomas Roth',cat:'Skincare',badges:[]},
+  {booth:'1603',brand:'Polite Society',cat:'Fragrance',badges:['exclusive']},
+  {booth:'415',brand:'Prada, YSL Libre',cat:'Fragrance',badges:['exclusive','celebrity']},
+  {booth:'621',brand:'Pureology',cat:'Haircare',badges:['organic']},
+  {booth:'1528',brand:'r.e.m. beauty by Ariana Grande',cat:'Makeup',badges:['celebrity','exclusive']},
+  {booth:'538',brand:'Reel',cat:'Wellness',badges:['organic']},
+  {booth:'2003',brand:'Rare Beauty',cat:'Makeup',badges:['celebrity','melanin','exclusive']},
+  {booth:'1038',brand:'Real Techniques',cat:'Tools',badges:[]},
+  {booth:'1835',brand:'Red Carpet Manicure',cat:'Nails',badges:[]},
+  {booth:'929',brand:'REDKEN',cat:'Haircare',badges:[]},
+  {booth:'2041',brand:'Revive Collagen',cat:'Wellness',badges:[]},
+  {booth:'1215',brand:'Revolution Beauty',cat:'Makeup',badges:['melanin']},
+  {booth:'1947',brand:'Rizos Curls',cat:'Haircare',badges:['melanin','curly','organic']},
+  {booth:'642',brand:'RMS Beauty',cat:'Makeup',badges:['organic']},
+  {booth:'439',brand:'Rodan + Fields',cat:'Skincare',badges:[]},
+  {booth:'213',brand:'Round Lab',cat:'Skincare',badges:['kbeauty']},
+  {booth:'1230',brand:'SACHEU',cat:'Skincare',badges:[]},
+  {booth:'208',brand:'Saje Natural Wellness',cat:'Wellness',badges:['organic']},
+  {booth:'1920',brand:'Saltair',cat:'Skincare',badges:['organic']},
+  {booth:'GS2',brand:'Scarlet by RedDrop',cat:'Wellness',badges:[]},
+  {booth:'312',brand:'SEEN',cat:'Haircare',badges:['organic']},
+  {booth:'839',brand:'Shampooheiat',cat:'Haircare',badges:[]},
+  {booth:'1409',brand:'Shiseido',cat:'Skincare',badges:['kbeauty','exclusive']},
+  {booth:'1029',brand:'Shark Beauty',cat:'Tools',badges:['exclusive']},
+  {booth:'716',brand:'SKIN1004',cat:'Skincare',badges:['kbeauty']},
+  {booth:'1716',brand:'Snif',cat:'Fragrance',badges:['organic']},
+  {booth:'1021',brand:'Sol de Janeiro',cat:'Skincare',badges:[]},
+  {booth:'1228',brand:'Sulawave',cat:'Haircare',badges:['melanin','curly']},
+  {booth:'1808',brand:'Squishmallows Fragrances',cat:'Fragrance',badges:[]},
+  {booth:'2247',brand:'St.Tropez',cat:'Skincare',badges:[]},
+  {booth:'938',brand:'Starface',cat:'Skincare',badges:[]},
+  {booth:'1524',brand:'Stila Cosmetics',cat:'Makeup',badges:[]},
+  {booth:'1115',brand:'Supergoop!',cat:'Skincare',badges:['organic','melanin']},
+  {booth:'939',brand:'Sweet Tooth by Sabrina Carpenter',cat:'Fragrance',badges:['celebrity']},
+  {booth:'2025',brand:'Tangle Teezer',cat:'Tools',badges:['curly']},
+  {booth:'1703',brand:'tarte',cat:'Makeup',badges:['organic','exclusive']},
+  {booth:'1803',brand:'Tatcha',cat:'Skincare',badges:['kbeauty','organic','exclusive']},
+  {booth:'1840',brand:'tgin',cat:'Haircare',badges:['melanin','curly','organic']},
+  {booth:'532',brand:'The Crème Shop',cat:'Skincare',badges:['kbeauty','melanin']},
+  {booth:'121',brand:'The INKEY List',cat:'Skincare',badges:['organic']},
+  {booth:'2203',brand:'The Ordinary',cat:'Skincare',badges:['organic']},
+  {booth:'1015',brand:'TIR TIR',cat:'Skincare',badges:['kbeauty']},
+  {booth:'2309',brand:'TOM FORD BEAUTY',cat:'Makeup',badges:['exclusive','celebrity']},
+  {booth:'1540',brand:'TONYMOLY',cat:'Skincare',badges:['kbeauty']},
+  {booth:'2302',brand:'Too Faced Cosmetics',cat:'Makeup',badges:[]},
+  {booth:'1247',brand:'Touchland',cat:'Wellness',badges:[]},
+  {booth:'2347',brand:'Tree Hut',cat:'Skincare',badges:['organic']},
+  {booth:'1831',brand:'Truly Beauty',cat:'Skincare',badges:[]},
+  {booth:'901',brand:'Ulta Beauty Neighborhood',cat:'Makeup',badges:['exclusive','melanin']},
+  {booth:'FT1',brand:'UNbrush',cat:'Tools',badges:['curly']},
+  {booth:'1930',brand:'Uni',cat:'Haircare',badges:['organic']},
+  {booth:'543',brand:'UNITE Hair',cat:'Haircare',badges:[]},
+  {booth:'815',brand:'Urban Decay',cat:'Makeup',badges:['melanin']},
+  {booth:'1435',brand:'Vacation',cat:'Skincare',badges:['organic']},
+  {booth:'509',brand:'Valentino Armani',cat:'Fragrance',badges:['exclusive','celebrity']},
+  {booth:'215',brand:'Vanicream Sensitive Skin Care',cat:'Skincare',badges:[]},
+  {booth:'2147',brand:'Verb',cat:'Haircare',badges:['organic']},
+  {booth:'FT6',brand:'Versace Crystal Emerald',cat:'Fragrance',badges:['exclusive','celebrity']},
+  {booth:'435',brand:'Virtue',cat:'Haircare',badges:['organic']},
+  {booth:'108',brand:'VOESH',cat:'Nails',badges:['organic','melanin']},
+  {booth:'220',brand:'VT COSMETICS',cat:'Skincare',badges:['kbeauty']},
+  {booth:'1817',brand:'Winky Lux',cat:'Makeup',badges:[]},
+  {booth:'421',brand:'YSL MYSLF',cat:'Fragrance',badges:['exclusive','celebrity']},
+];
+
+const CAT_COLORS = {
+  Skincare: 'var(--skincare)',
+  Haircare: 'var(--haircare)',
+  Makeup: 'var(--makeup)',
+  Fragrance: 'var(--fragrance)',
+  Nails: 'var(--nails)',
+  Wellness: 'var(--wellness)',
+  Tools: 'var(--tools)',
+  Prestige: 'var(--prestige)',
+};
+
+const BADGE_INFO = {
+  melanin: {cls:'mb-melanin', label:'Melanin ✓'},
+  kbeauty: {cls:'mb-kbeauty', label:'K-Beauty'},
+  organic: {cls:'mb-organic', label:'Clean'},
+  curly: {cls:'mb-curly', label:'Curly/Textured'},
+  celebrity: {cls:'mb-celebrity', label:'Celebrity'},
+  exclusive: {cls:'mb-exclusive', label:'Exclusive'},
+};
+
+const DESCS = {
+  'Cécred': 'Beyoncé\'s haircare line built for textured, color-treated, and natural hair. Features bond-repair technology and moisture-locking formulas.',
+  'Fenty Beauty, OLEHENRIKSEN': 'Rihanna\'s inclusive makeup line with 50+ foundation shades plus OLEHENRIKSEN\'s brightening skincare.',
+  'PATTERN': 'Tracee Ellis Ross\'s curly and coily hair brand — the definitive line for 3A–4C curl types.',
+  'COSRX': 'South Korea\'s most beloved skincare line. Famous for snail mucin essence and AHA/BHA treatments for hyperpigmentation.',
+  'Tatcha': 'Luxe Japanese-inspired skincare using Hadasei-3 complex. Cult classics include The Water Cream and Dewy Skin Mist.',
+  'Rare Beauty': 'Selena Gomez\'s inclusive brand. The Soft Pinch Liquid Blush is one of the most viral products in beauty history.',
+  'Pat McGrath Labs': 'Pat McGrath\'s award-winning, deeply pigmented makeup line. Known for rich skin-inclusive shades.',
+  'Live Tinted': 'Inclusive beauty brand by Deepica Mutyala. Huestick multitasker corrects dark spots and adds color for all skin tones.',
+  'Mielle': 'Science-based natural hair care with a focus on curly, coily, and textured hair. Rosemary Mint line is iconic.',
+  'Briogeo': 'Clean, vegan, and inclusive haircare for all hair types and textures.',
+  'Rizos Curls': 'Founded by Julissa Prado for the Latinx and curly community. Curl-defining gels and hydration systems.',
+  'tgin': 'Thank God It\'s Natural — an affordable, deeply moisturizing line for natural and textured hair.',
+  'Shiseido': 'Japanese luxury skincare powerhouse. SPF innovations and anti-aging formulas rooted in 150 years of research.',
+  'Peach & Lily': 'K-beauty brand with glass skin focus. Brightening serums and SPF favorites.',
+  'TIR TIR': 'Korean cushion foundation experts. The Blur Fit Cushion gives flawless coverage in melanin-friendly shades.',
+  'SKIN1004': 'K-beauty brand specializing in centella asiatica (cica) skincare for sensitive and acne-prone skin.',
+  'Round Lab': 'Korean brand known for their Birch Juice Moisturizing line — hydrating, soothing, sensitive-skin approved.',
+  'Medicube': 'Medical-grade K-beauty with advanced retinol and collagen technology.',
+  'TONYMOLY': 'Playful K-beauty brand with viral sheet masks and moisture-locking skincare.',
+  'Buttah Skin': 'Melanin-focused skincare by Dorion Renaud. Formulated to address dry skin, hyperpigmentation, and uneven tone.',
+  'Naturium': 'Science-first, affordable skincare with high-performance actives accessible for all skin tones.',
+  'Drunk Elephant': 'Clean-compatible skincare with no "Suspicious 6" ingredients. Loved for mixing serums and acids.',
+  'Charlotte Tilbury': 'British luxury makeup with Hollywood glamour. Magic Cream and Pillow Talk are perennial bestsellers.',
+  'NARS Cosmetics': 'Iconic brand for deep pigments and bold color. Foundation range includes deep shades for rich complexions.',
+  'Supergoop!': 'SPF-obsessed brand with invisible, wearable sunscreens for all skin tones. Glowscreen is a viral staple.',
+  'Camille Rose': 'Natural hair care rooted in Afrocentric beauty traditions — moisture-rich formulas for 4A–4C hair.',
+  'Not Your Mother\'s Haircare': 'Budget-friendly, inclusive haircare with curl-focused and natural hair lines.',
+  'tarte': 'Clean, eco-chic makeup with cruelty-free formulas. Shape Tape concealer covers every shade.',
+  'Kylie Cosmetics': 'Kylie Jenner\'s viral makeup brand known for lip kits and bold color payoff.',
+  'MAC Cosmetics': 'Professional-grade makeup with the broadest shade range in the industry.',
+  'Urban Decay': 'Edgy, bold makeup with exceptional eyeshadow pigmentation.',
+  'Too Faced Cosmetics': 'Fun, feminine makeup with Chocolate Bar palettes and Better Than Sex mascara.',
+  'Dyson': 'Premium hair tools including the Airwrap and Supersonic. Expect live demos and exclusive event SKUs.',
+  'Shark Beauty': 'Professional-grade hair tools at accessible prices. FlexStyle is a direct Airwrap competitor.',
+  'OLAPLEX': 'Bond-building hair repair system trusted by colorists worldwide for damaged and over-processed hair.',
+  'Sol de Janeiro': 'Brazilian-inspired body care with iconic Bum Bum Cream and beloved fragrance body sprays.',
+  'Touchland': 'Premium hand sanitizer sprays with incredible scents — a wildly popular expo freebie.',
+  'Lemme': 'Kourtney Kardashian\'s wellness gummy brand focused on hair, skin, and gut health.',
+  'default': 'Visit this booth for samples, demos, and exclusive expo-only offers.'
+};
+
+function getDesc(brand) {
+  return DESCS[brand] || DESCS['default'];
+}
+
+let activeFilter = 'all';
+let searchTerm = '';
+let wishlist = [];
+let activeDetail = null;
+let currentView = 'grid';
+let routePlan = [];
+
+function getBrandKey(b) {
+  return `${b.booth}|${b.brand}`;
+}
+
+function boothSortValue(booth) {
+  const num = parseInt(booth, 10);
+  if (!Number.isNaN(num)) return num;
+  const prefix = (booth.match(/[A-Za-z]+/) || ['Z'])[0].toUpperCase();
+  const suffix = parseInt((booth.match(/\d+/) || ['0'])[0], 10);
+  const prefixWeight = prefix.split('').reduce((acc, c) => acc * 26 + (c.charCodeAt(0) - 64), 0);
+  return 10000 + prefixWeight * 100 + suffix;
+}
+
+function minutesToClock(mins) {
+  const h = Math.floor(mins / 60) % 24;
+  const m = mins % 60;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+function parseTimeInput(val) {
+  const [h, m] = (val || '').split(':').map(Number);
+  if (Number.isNaN(h) || Number.isNaN(m)) return null;
+  return h * 60 + m;
+}
+
+function estimateWalkMins(prevBooth, nextBooth) {
+  const delta = Math.abs(boothSortValue(prevBooth) - boothSortValue(nextBooth));
+  return Math.max(2, Math.min(14, Math.round(delta / 180)));
+}
+
+function getDigitalWatermark(productName) {
+  const sid = sessionStorage.getItem('ubw_sid') || (() => {
+    const v = Math.random().toString(36).slice(2, 10);
+    sessionStorage.setItem('ubw_sid', v);
+    return v;
+  })();
+  const stamp = new Date().toISOString();
+  const fingerprint = btoa(`${productName}|${sid}|${stamp}`).slice(0, 24);
+  return {
+    sid,
+    stamp,
+    fingerprint,
+    line: `WATERMARK: EBD-UBW2026 | PRODUCT=${productName} | SID=${sid} | UTC=${stamp} | FP=${fingerprint}`
+  };
+}
+
+function setCat(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterAll();
+}
+
+function setView(view, el) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('gridView').classList.toggle('active', view === 'grid');
+  document.getElementById('mapView').classList.toggle('active', view === 'map');
+  filterAll();
+}
+
+function filterAll() {
+  searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = BRANDS.filter(b => {
+    const catMatch = activeFilter === 'all' || b.cat === activeFilter;
+    const searchMatch = !searchTerm || b.brand.toLowerCase().includes(searchTerm) || b.booth.toLowerCase().includes(searchTerm);
+    return catMatch && searchMatch;
+  });
+  document.getElementById('showCount').textContent = filtered.length;
+  document.getElementById('visibleCount').textContent = filtered.length;
+  if (currentView === 'grid') renderGrid(filtered);
+  else renderMap(filtered);
+}
+
+function renderGrid(filtered) {
+  const cats = ['Skincare','Haircare','Makeup','Fragrance','Nails','Wellness','Tools'];
+  const byCat = {};
+  cats.forEach(c => byCat[c] = []);
+  filtered.forEach(b => { if (byCat[b.cat]) byCat[b.cat].push(b); });
+
+  let html = '';
+  cats.forEach(cat => {
+    const items = byCat[cat];
+    if (!items.length) return;
+    html += `<div class="cat-section">
+      <div class="cat-header">
+        <div class="cat-dot" style="background:${CAT_COLORS[cat]}"></div>
+        <div class="cat-title">${cat}</div>
+        <div class="cat-cnt">${items.length} booths</div>
+      </div>
+      <div class="brand-grid">`;
+    items.forEach((b, i) => {
+      const inWish = wishlist.find(w => w.booth === b.booth && w.brand === b.brand);
+      let bHtml = b.badges.map(bg => BADGE_INFO[bg] ? `<span class="mini-badge ${BADGE_INFO[bg].cls}">${BADGE_INFO[bg].label}</span>` : '').join('');
+      html += `<div class="brand-card ${b.cat} ${inWish ? 'highlighted':''}" onclick="openDetail(${JSON.stringify(b).replace(/"/g,'&quot;')})" style="animation-delay:${i*0.02}s">
+        <div class="brand-name">${b.brand}</div>
+        <div class="brand-booth">Booth ${b.booth}</div>
+        ${bHtml ? `<div class="brand-badges">${bHtml}</div>` : ''}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  if (!html) html = `<div class="no-results">No booths match your search. Try a different brand name or category.</div>`;
+  document.getElementById('gridView').innerHTML = html;
+}
+
+function renderMap(filtered) {
+  const filteredBooths = new Set(filtered.map(b => b.booth + '|' + b.brand));
+  const routeOrderByKey = new Map(routePlan.map((stop, i) => [stop.key, i + 1]));
+
+  // Group booths into ranges for zone display
+  const zones = [
+    { label: 'Zone A · Booths 100–599', range: [100,599] },
+    { label: 'Zone B · Booths 600–1099', range: [600,1099] },
+    { label: 'Zone C · Booths 1100–1599', range: [1100,1599] },
+    { label: 'Zone D · Booths 1600–2500+', range: [1600,9999] },
+  ];
+
+  let html = `<div class="floor-label">Orange County Convention Center · West Building</div>`;
+  html += `<div class="entrance-row"><div class="entrance-marker">Main Entrance</div><div class="entrance-marker">Side Entrance</div></div>`;
+  html += `<div class="zones">`;
+
+  zones.forEach(zone => {
+    const zoneBrands = BRANDS.filter(b => {
+      const num = parseInt(b.booth);
+      if (isNaN(num)) return zone.range[0] === 100; // FT/GS go in zone A
+      return num >= zone.range[0] && num <= zone.range[1];
+    });
+    if (!zoneBrands.length) return;
+
+    html += `<div class="zone"><div class="zone-header">${zone.label}</div><div class="zone-booths">`;
+    zoneBrands.forEach(b => {
+      const isFiltered = filteredBooths.has(b.booth + '|' + b.brand);
+      const inWish = wishlist.find(w => w.booth === b.booth && w.brand === b.brand);
+      const routeOrder = routeOrderByKey.get(getBrandKey(b));
+      html += `<div class="map-booth ${b.cat} ${!isFiltered ? 'dimmed':''} ${inWish?'highlighted':''} ${routeOrder ? 'route-stop' : ''}"
+        onclick="openDetail(${JSON.stringify(b).replace(/"/g,'&quot;')})"
+        title="${b.brand} — Booth ${b.booth}">
+        <span class="booth-num-tag">${b.booth}</span>
+        ${routeOrder ? `<span class="route-order-tag">${routeOrder}</span>` : ''}
+        ${b.brand.split(',')[0].trim()}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  html += `</div>`;
+  document.getElementById('expoFloor').innerHTML = html;
+}
+
+function openDetail(b) {
+  activeDetail = b;
+  document.getElementById('detailBooth').textContent = `Booth ${b.booth}`;
+  document.getElementById('detailName').textContent = b.brand;
+  document.getElementById('detailCat').textContent = b.cat;
+  document.getElementById('detailDot').style.background = CAT_COLORS[b.cat] || '#fff';
+  document.getElementById('detailDesc').textContent = getDesc(b.brand);
+
+  const inWish = wishlist.find(w => w.booth === b.booth && w.brand === b.brand);
+  document.getElementById('wishBtn').textContent = inWish ? '✓ In my list' : '+ Add to my list';
+
+  let badgeHtml = b.badges.map(bg => BADGE_INFO[bg] ? `<span class="mini-badge ${BADGE_INFO[bg].cls}">${BADGE_INFO[bg].label}</span>` : '').join('');
+  document.getElementById('detailBadges').innerHTML = badgeHtml;
+
+  document.getElementById('detailPanel').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  activeDetail = null;
+}
+
+function toggleWish() {
+  if (!activeDetail) return;
+  const idx = wishlist.findIndex(w => w.booth === activeDetail.booth && w.brand === activeDetail.brand);
+  if (idx === -1) {
+    wishlist.push(activeDetail);
+    document.getElementById('wishBtn').textContent = '✓ In my list';
+  } else {
+    wishlist.splice(idx, 1);
+    document.getElementById('wishBtn').textContent = '+ Add to my list';
+  }
+  updateWishCount();
+  syncRouteWithWishlist();
+  filterAll();
+  renderWishlist();
+}
+
+function updateWishCount() {
+  const el = document.getElementById('wishCount');
+  el.textContent = wishlist.length > 0 ? `${wishlist.length} booth${wishlist.length>1?'s':''} in your list` : '';
+}
+
+function toggleWishlist() {
+  document.getElementById('wishlistBar').classList.toggle('open');
+  renderWishlist();
+}
+
+function renderWishlist() {
+  const el = document.getElementById('wishlistItems');
+  if (!wishlist.length) {
+    el.innerHTML = '<div class="wishlist-empty">Tap any brand card to add it to your list</div>';
+    return;
+  }
+  el.innerHTML = wishlist.map((w,i) => `
+    <div class="wishlist-item">
+      <div class="wishlist-item-main" onclick="openDetail(${JSON.stringify(w).replace(/"/g,'&quot;')})">
+        <div class="wishlist-item-name">${w.brand}</div>
+        <div class="wishlist-item-booth">Booth ${w.booth} · ${w.cat}</div>
+      </div>
+      <button class="wishlist-remove" onclick="removeWish(${i})">✕</button>
+    </div>`).join('');
+}
+
+function generateWishlistRoute() {
+  const start = parseTimeInput(document.getElementById('routeStartTime').value);
+  const end = parseTimeInput(document.getElementById('routeEndTime').value);
+  const summary = document.getElementById('routeSummary');
+  const budget = document.getElementById('routeBudget');
+  const list = document.getElementById('routeList');
+
+  if (start === null || end === null || end <= start) {
+    summary.textContent = 'Enter a valid time range where end time is after start time.';
+    budget.textContent = 'Invalid time range.';
+    budget.classList.add('over');
+    list.innerHTML = '';
+    return;
+  }
+  if (!wishlist.length) {
+    summary.textContent = 'Add at least one booth to your list first, then generate a route.';
+    budget.textContent = 'No route to budget yet.';
+    budget.classList.remove('over');
+    list.innerHTML = '';
+    return;
+  }
+
+  const ordered = [...wishlist].sort((a, b) => boothSortValue(a.booth) - boothSortValue(b.booth));
+  const totalMinutes = end - start;
+  const maxStopsByTime = Math.max(1, Math.floor(totalMinutes / 8));
+  const plannedStops = ordered.slice(0, maxStopsByTime);
+  const dwellPerStop = Math.max(6, Math.floor(totalMinutes / plannedStops.length) - 3);
+
+  let cursor = start;
+  routePlan = plannedStops.map((b, idx) => {
+    const walk = idx === 0 ? 0 : estimateWalkMins(plannedStops[idx - 1].booth, b.booth);
+    cursor += walk;
+    const arrive = cursor;
+    const depart = Math.min(end, cursor + dwellPerStop);
+    cursor = depart;
+    return {
+      key: getBrandKey(b),
+      booth: b.booth,
+      brand: b.brand,
+      order: idx + 1,
+      arrive,
+      depart,
+      walk
+    };
+  });
+
+  summary.textContent = `${routePlan.length} stop${routePlan.length > 1 ? 's' : ''} planned from ${minutesToClock(start)} to ${minutesToClock(end)}. Route is now highlighted on the map.`;
+  const availableMins = end - start;
+  const usedMins = routePlan.reduce((acc, stop) => acc + (stop.depart - stop.arrive) + stop.walk, 0);
+  const remainingMins = Math.max(0, availableMins - usedMins);
+  const skippedStops = ordered.length - plannedStops.length;
+  if (skippedStops > 0) {
+    budget.classList.add('over');
+    budget.textContent = `Time budget: ${usedMins}/${availableMins} min used, ${remainingMins} min left. You run out of time for ${skippedStops} saved booth${skippedStops > 1 ? 's' : ''}.`;
+  } else {
+    budget.classList.remove('over');
+    budget.textContent = `Time budget: ${usedMins}/${availableMins} min used, ${remainingMins} min left.`;
+  }
+  list.innerHTML = routePlan.map(stop => {
+    const safeKey = stop.key.replace(/'/g, "\\'");
+    return `<div class="route-stop-item" onclick="openRouteStop('${safeKey}')">
+      <div class="route-stop-num">${stop.order}</div>
+      <div>
+        <div class="wishlist-item-name">${stop.brand}</div>
+        <div class="route-stop-meta">Booth ${stop.booth} · ${minutesToClock(stop.arrive)}-${minutesToClock(stop.depart)}${stop.walk ? ` · ${stop.walk} min walk` : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  currentView = 'map';
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  const mapBtn = document.querySelectorAll('.view-btn')[1];
+  if (mapBtn) mapBtn.classList.add('active');
+  document.getElementById('gridView').classList.remove('active');
+  document.getElementById('mapView').classList.add('active');
+  filterAll();
+}
+
+function openRouteStop(routeKey) {
+  const target = BRANDS.find(b => getBrandKey(b) === routeKey);
+  if (target) openDetail(target);
+}
+
+function clearRoute() {
+  routePlan = [];
+  document.getElementById('routeSummary').textContent = 'Route cleared. Generate again any time with a new expo time range.';
+  const budget = document.getElementById('routeBudget');
+  budget.textContent = 'Time budget appears here after route generation.';
+  budget.classList.remove('over');
+  document.getElementById('routeList').innerHTML = '';
+  filterAll();
+}
+
+function downloadWatermarkedRoute() {
+  if (!routePlan.length) {
+    document.getElementById('routeSummary').textContent = 'Generate a route first, then download it.';
+    return;
+  }
+  const start = document.getElementById('routeStartTime').value || '09:00';
+  const end = document.getElementById('routeEndTime').value || '17:00';
+  const wm = getDigitalWatermark('route-plan');
+  const lines = [
+    'Ethnic Barbie Diaries — UBW 2026 Route Plan',
+    `Time Window: ${start} - ${end}`,
+    '',
+    ...routePlan.map(s => `${s.order}. ${s.brand} (Booth ${s.booth}) | ${minutesToClock(s.arrive)}-${minutesToClock(s.depart)}${s.walk ? ` | walk ${s.walk}m` : ''}`),
+    '',
+    wm.line
+  ];
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `ubw2026_route_${new Date().toISOString().slice(0, 10)}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  document.getElementById('routeSummary').textContent = `Watermarked route downloaded. Fingerprint: ${wm.fingerprint}`;
+}
+
+function syncRouteWithWishlist() {
+  if (!routePlan.length) return;
+  const wishKeys = new Set(wishlist.map(getBrandKey));
+  const budget = document.getElementById('routeBudget');
+  routePlan = routePlan.filter(stop => wishKeys.has(stop.key));
+  if (!routePlan.length) {
+    document.getElementById('routeSummary').textContent = 'Route cleared because all routed stops were removed from your list.';
+    budget.textContent = 'No active route to budget.';
+    budget.classList.remove('over');
+    document.getElementById('routeList').innerHTML = '';
+  } else {
+    routePlan = routePlan.map((stop, idx) => ({ ...stop, order: idx + 1 }));
+    const start = parseTimeInput(document.getElementById('routeStartTime').value) ?? 0;
+    const end = parseTimeInput(document.getElementById('routeEndTime').value) ?? 0;
+    const availableMins = Math.max(0, end - start);
+    const usedMins = routePlan.reduce((acc, stop) => acc + (stop.depart - stop.arrive) + stop.walk, 0);
+    const remainingMins = Math.max(0, availableMins - usedMins);
+    budget.classList.toggle('over', availableMins > 0 && usedMins > availableMins);
+    budget.textContent = availableMins > 0
+      ? `Time budget: ${usedMins}/${availableMins} min used, ${remainingMins} min left.`
+      : `Time budget: ${usedMins} min used.`;
+    document.getElementById('routeList').innerHTML = routePlan.map(stop => {
+      const safeKey = stop.key.replace(/'/g, "\\'");
+      return `<div class="route-stop-item" onclick="openRouteStop('${safeKey}')">
+        <div class="route-stop-num">${stop.order}</div>
+        <div>
+          <div class="wishlist-item-name">${stop.brand}</div>
+          <div class="route-stop-meta">Booth ${stop.booth} · ${minutesToClock(stop.arrive)}-${minutesToClock(stop.depart)}${stop.walk ? ` · ${stop.walk} min walk` : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function removeWish(i) {
+  wishlist.splice(i, 1);
+  updateWishCount();
+  syncRouteWithWishlist();
+  filterAll();
+  renderWishlist();
+}
+
+// Close wishlist on outside click
+document.addEventListener('click', e => {
+  const bar = document.getElementById('wishlistBar');
+  const toggle = document.querySelector('.wishlist-toggle');
+  if (bar.classList.contains('open') && !bar.contains(e.target) && !toggle.contains(e.target)) {
+    bar.classList.remove('open');
+  }
+});
+
+// Init
+filterAll();
+</script>
+</body>
+</html>

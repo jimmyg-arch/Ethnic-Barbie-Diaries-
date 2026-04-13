@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — UBW 2026 by Jem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="css/global.css">
+<style>
+/* ══ RESOURCES PAGE ═══════════════════════════ */
+.page-hero {
+  padding: 5rem 0 4rem;
+  background: linear-gradient(150deg, #fff 0%, #FFE8F3 50%, #FFD6E8 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '✦';
+  position: absolute;
+  font-size: 300px;
+  color: rgba(255,63,142,0.04);
+  top: -60px; right: -60px;
+  font-family: var(--font-display);
+}
+
+/* FILTER BAR */
+.filter-bar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--pink-border);
+  padding: 14px 0;
+}
+.filter-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 1.25rem;
+}
+.filter-inner::-webkit-scrollbar { display: none; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pink-blush);
+  border: 1.5px solid var(--pink-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  flex-shrink: 0;
+  flex: 1;
+  max-width: 280px;
+}
+.search-box svg { width: 14px; height: 14px; stroke: var(--mist); flex-shrink: 0; }
+.search-box input {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--ink);
+  width: 100%;
+}
+.search-box input::placeholder { color: var(--mist); }
+
+/* BRAND CARD */
+.brand-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.22s;
+  cursor: pointer;
+}
+.brand-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.brand-card.hidden { display: none; }
+
+.bc-top {
+  padding: 1.25rem 1.25rem 0.75rem;
+  position: relative;
+}
+.bc-cat-bar {
+  height: 3px;
+  border-radius: 0;
+  margin: 0 -1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+.bc-icon { font-size: 28px; margin-bottom: 8px; }
+.bc-name { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 4px; }
+.bc-booth {
+  font-size: 11px; background: var(--pink-pale);
+  color: var(--pink-hot); padding: 2px 8px;
+  border-radius: var(--radius-pill); font-weight: 700;
+  display: inline-block; margin-bottom: 6px;
+}
+.bc-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.bc-tag {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.bc-body { padding: 0 1.25rem 1.25rem; }
+.bc-desc { font-size: 12px; color: var(--mist); line-height: 1.6; margin-bottom: 10px; }
+.bc-hero-prod {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--pink-blush); border-radius: var(--radius-md);
+  padding: 8px 10px; font-size: 12px; color: var(--ink2); margin-bottom: 10px;
+}
+.bc-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ROUTE BUILDER SECTION */
+.route-section {
+  background: linear-gradient(135deg, #fff 0%, var(--pink-blush) 100%);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+}
+
+/* MAP SECTION */
+.map-section {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+.map-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--pink-border);
+  overflow-x: auto;
+}
+.map-tab {
+  padding: 14px 20px;
+  font-size: 13px; font-weight: 600;
+  color: var(--mist);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.map-tab.active { color: var(--pink); border-bottom-color: var(--pink); }
+.map-tab-content { display: none; padding: 2rem; }
+.map-tab-content.active { display: block; }
+
+/* ZONE DISPLAY */
+.zone-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.zone-block {
+  background: var(--smoke);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.zone-head {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  color: #fff;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.zone-pills {
+  padding: 10px;
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.zone-pill {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 10px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--pink-border);
+  color: var(--ink2);
+}
+.zone-pill:hover { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+/* STOCK DATA */
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.stock-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: all 0.2s;
+}
+.stock-card:hover { box-shadow: var(--shadow-soft); }
+.stock-ticker {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: var(--pink-hot);
+}
+.stock-name { font-size: 11px; color: var(--mist); margin-bottom: 10px; }
+.stock-price { font-size: 22px; font-weight: 700; color: var(--ink); }
+.stock-change {
+  font-size: 12px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+  margin-left: 6px;
+}
+.stock-change.up { background: #DCFCE7; color: #16A34A; }
+.stock-change.down { background: #FEE2E2; color: #DC2626; }
+.stock-note { font-size: 11px; color: var(--mist); margin-top: 8px; }
+
+/* SECTION TABS */
+.page-sections {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2rem 0 0;
+  border-bottom: 1px solid var(--pink-border);
+  margin-bottom: 2.5rem;
+}
+.page-sections::-webkit-scrollbar { display: none; }
+.ps-btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-pill) var(--radius-pill) 0 0;
+  font-size: 13px; font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--pink-border);
+  border-bottom: none;
+  color: var(--mist);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ps-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+.ps-btn:hover:not(.active) { color: var(--pink); border-color: var(--pink); }
+
+.ps-panel { display: none; }
+.ps-panel.active { display: block; }
+
+/* ROI BADGE */
+.roi-bar { height: 4px; background: var(--pink-pale); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+.roi-fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--gold)); border-radius: 2px; }
+
+@media (max-width: 640px) {
+  .route-section { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="resources.html" class="active">Resources</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">About Jem</a>
+    <a href="about.html#map-download" class="nav-cta">Download Map 🗺️</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Home</a>
+  <a href="resources.html" class="active">Resources</a>
+  <a href="community.html">Community</a>
+  <a href="about.html">About Jem</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ── PAGE HERO ─────────────────────────── -->
+  <div class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Everything you need</span>
+      <h1 class="display-title">Brand <em>Directory</em><br>& Resources</h1>
+      <div class="divider divider-center"></div>
+      <p class="lead">All 200+ booths · Interactive floor map · Route builder · Brand profiles</p>
+    </div>
+  </div>
+
+  <!-- ── FILTER BAR ─────────────────────────── -->
+  <div class="filter-bar" id="brands">
+    <div class="filter-inner">
+      <div class="search-box">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="brand-search" placeholder="Search brand or booth #…" oninput="filterBrands()">
+      </div>
+      <div class="chip-row" id="cat-chips" style="flex-shrink:0">
+        <div class="chip active" onclick="setFilter('all',this)">All</div>
+        <div class="chip" onclick="setFilter('Skincare',this)">Skincare</div>
+        <div class="chip" onclick="setFilter('Haircare',this)">Haircare</div>
+        <div class="chip" onclick="setFilter('Makeup',this)">Makeup</div>
+        <div class="chip" onclick="setFilter('Fragrance',this)">Fragrance</div>
+        <div class="chip" onclick="setFilter('Nails',this)">Nails</div>
+        <div class="chip" onclick="setFilter('Wellness',this)">Wellness</div>
+        <div class="chip" onclick="setFilter('Tools',this)">Tools</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- SECTION TABS -->
+    <div class="page-sections">
+      <button class="ps-btn active" onclick="showPanel('brands-panel',this)">💄 Brands</button>
+      <button class="ps-btn" onclick="showPanel('map-panel',this)">🗺️ Floor Map</button>
+      <button class="ps-btn" id="route-tab" onclick="showPanel('route-panel',this)">✨ Route Builder</button>
+      <button class="ps-btn" onclick="showPanel('stock-panel',this)">📈 Stocks</button>
+    </div>
+
+    <!-- ─── BRANDS PANEL ───────────────────── -->
+    <div class="ps-panel active" id="brands-panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:10px">
+        <div>
+          <div class="label">Showing</div>
+          <div style="font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--pink)"><span id="brand-count">200+</span> <span style="font-size:16px;color:var(--mist);font-family:var(--font-body);font-weight:400">brands</span></div>
+        </div>
+        <a href="about.html#map-download" class="btn btn-pink btn-sm">Download Map 💗</a>
+      </div>
+      <div class="grid-auto" id="brand-grid"></div>
+      <div id="no-results" style="display:none;text-align:center;padding:4rem 0;color:var(--mist)">
+        <div style="font-size:40px;margin-bottom:12px">💭</div>
+        <div style="font-size:16px;font-weight:600">No brands found</div>
+        <div style="font-size:13px;margin-top:6px">Try a different search or category</div>
+      </div>
+    </div>
+
+    <!-- ─── MAP PANEL ──────────────────────── -->
+    <div class="ps-panel" id="map-panel">
+      <div class="map-section" style="margin-bottom:1.5rem">
+        <div class="map-tabs">
+          <div class="map-tab active" onclick="showMapTab('zones',this)">Zone Map</div>
+          <div class="map-tab" onclick="showMapTab('entrance',this)">Entry Strategy</div>
+          <div class="map-tab" onclick="showMapTab('download',this)">Official Map</div>
+        </div>
+        <div class="map-tab-content active" id="tab-zones">
+          <div style="text-align:center;margin-bottom:1.5rem">
+            <span class="eyebrow">Floor Layout</span>
+            <h3 class="section-title" style="font-size:clamp(20px,3vw,28px)">Orange County Convention Center<br><em>West Building</em></h3>
+          </div>
+          <div style="margin-bottom:12px;font-size:13px;color:var(--mist)">Booth numbers organized by floor zone. Click any booth to view brand details.</div>
+          <div class="zone-row" id="zone-map"></div>
+          <div style="margin-top:1.5rem;padding:1rem;background:var(--pink-blush);border-radius:var(--radius-lg);font-size:13px;color:var(--mist)">
+            💡 <strong>Tip:</strong> Zones A–D run left to right as you enter from the main entrance. GS = special floor positions. FT = featured tables along the perimeter.
+          </div>
+        </div>
+        <div class="map-tab-content" id="tab-entrance">
+          <span class="eyebrow">Strategy</span>
+          <h3 class="section-title" style="font-size:24px;margin-bottom:1rem">Entry Day <em>Game Plan</em></h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">8A</div>
+              <div><strong style="font-size:14px">Arrive at 8:00 AM</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Check-in line opens. Get wristband and swag bag claim ticket. Use this time to orientate.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">9A</div>
+              <div><strong style="font-size:14px">Doors open — go RIGHT toward Zone C/D</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Most people go left first. Beat the crowd to Fenty (2009), Rare Beauty (2003), Cécred (1903) and Pat McGrath (1821).</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">11A</div>
+              <div><strong style="font-size:14px">Work Zone B (1000–1600s)</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">PATTERN (1421), COSRX (2240), Tatcha (1803), tarte (1703), Charlotte Tilbury (201), NARS (1403).</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">1P</div>
+              <div><strong style="font-size:14px">Lunch break + Zone A sweep</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Grab food, drop bags at storage, then sweep Zone A (100–999s) — CeraVe, Charlotte Tilbury, Lancôme, NYX, Kylie.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;padding:14px;background:var(--pink-blush);border-radius:var(--radius-lg);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--pink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px">4P</div>
+              <div><strong style="font-size:14px">Pick up swag bag & ship haul</strong><p style="font-size:13px;color:var(--mist);margin-top:2px">Collect official swag bag. Use shipping station before 5PM to box up purchases. Storage closes 5:30PM.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="map-tab-content" id="tab-download">
+          <div style="text-align:center;padding:2rem">
+            <div style="font-size:60px;margin-bottom:1rem;animation:float 3s ease-in-out infinite">🗺️</div>
+            <h3 class="section-title" style="font-size:24px;margin-bottom:8px">Official Expo Map</h3>
+            <p style="font-size:14px;color:var(--mist);margin-bottom:1.5rem">Download the official Ulta Beauty World 2026 floor map</p>
+            <a href="about.html#map-download" class="btn btn-pink">Download Map 💗</a>
+            <p style="font-size:12px;color:var(--mist);margin-top:12px">Also available on the About Jem page</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ROUTE PANEL ─────────────────────── -->
+    <div class="ps-panel" id="route-panel">
+      <div class="route-section" id="route">
+        <span class="eyebrow">Plan your day</span>
+        <h2 class="section-title" style="font-size:clamp(22px,4vw,32px);margin-bottom:8px">Build Your <em>Route</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:14px;color:var(--mist);margin:1rem 0 1.5rem;line-height:1.7">Select your interests, skin focus, and priorities — then hit generate. Our AI builds you a custom 14–18 booth itinerary ranked by ROI with real booth numbers, walk times, and sample values.</p>
+        <div style="background:var(--white);border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:2rem;display:flex;flex-direction:column;gap:1.5rem">
+          <div>
+            <div class="label" style="margin-bottom:10px">Beauty interests</div>
+            <div class="chip-row" id="int-chips">
+              <div class="chip active" data-v="Skincare">Skincare</div>
+              <div class="chip active" data-v="Haircare">Haircare</div>
+              <div class="chip" data-v="Makeup">Makeup</div>
+              <div class="chip" data-v="Fragrance">Fragrance</div>
+              <div class="chip" data-v="Nails">Nails</div>
+              <div class="chip" data-v="Wellness">Wellness</div>
+              <div class="chip" data-v="Tools">Tools</div>
+            </div>
+          </div>
+          <div>
+            <div class="label" style="margin-bottom:10px">Skin & community focus</div>
+            <div class="chip-row" id="focus-chips">
+              <div class="chip active" data-v="melanin">Melanin-friendly</div>
+              <div class="chip active" data-v="kbeauty">K-Beauty</div>
+              <div class="chip" data-v="clean">Clean / Organic</div>
+              <div class="chip" data-v="curly">Curly / Textured</div>
+              <div class="chip" data-v="sensitive">Sensitive Skin</div>
+              <div class="chip" data-v="exclusive">Exclusives</div>
+              <div class="chip" data-v="celebrity">Celebrity Brands</div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+                <span style="color:var(--mist)">Free samples priority</span>
+                <span style="color:var(--pink);font-weight:600" id="sv1">9</span>
+              </div>
+              <input type="range" min="1" max="10" value="9" step="1" style="-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--pink-pale);border-radius:2px;outline:none" id="sl1" oninput="document.getElementById('sv1').textContent=this.value">
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+                <span style="color:var(--mist)">ROI / value priority</span>
+                <span style="color:var(--pink);font-weight:600" id="sv2">8</span>
+              </div>
+              <input type="range" min="1" max="10" value="8" step="1" style="-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--pink-pale);border-radius:2px;outline:none" id="sl2" oninput="document.getElementById('sv2').textContent=this.value">
+            </div>
+          </div>
+          <button class="btn btn-pink" id="gen-route-btn" onclick="generateRoute()" style="align-self:flex-start">
+            ✨ Generate My Route
+          </button>
+          <div id="route-output"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── STOCK PANEL ─────────────────────── -->
+    <div class="ps-panel" id="stock-panel">
+      <div style="margin-bottom:1.5rem">
+        <span class="eyebrow">Public companies at UBW 2026</span>
+        <h2 class="section-title" style="font-size:clamp(22px,4vw,32px)">Investor <em>Spotlight</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:13px;color:var(--mist);margin-top:0.75rem">These publicly traded companies have brands exhibiting at UBW 2026. Data is illustrative — check real-time prices on your brokerage.</p>
+      </div>
+      <div class="stock-grid">
+        <div class="stock-card">
+          <div class="stock-ticker">EL</div>
+          <div class="stock-name">Estée Lauder Companies</div>
+          <div><span class="stock-price">~$68</span><span class="stock-change down">▼ –2.1%</span></div>
+          <div class="stock-note">Brands: Estée Lauder, MAC, Clinique, Bobbi Brown, Origins, Lab Series, DARPHIN</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:72%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">ULTA</div>
+          <div class="stock-name">Ulta Beauty Inc.</div>
+          <div><span class="stock-price">~$342</span><span class="stock-change up">▲ +1.4%</span></div>
+          <div class="stock-note">Host of UBW 2026 and the Ulta Beauty Neighborhood booth (#901)</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:85%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">OR.PA</div>
+          <div class="stock-name">L'Oréal Paris</div>
+          <div><span class="stock-price">~€375</span><span class="stock-change up">▲ +0.8%</span></div>
+          <div class="stock-note">Brands: L'Oréal Paris, Maybelline, essie, Garnier, Lancôme, Redken, Matrix</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:90%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">COTY</div>
+          <div class="stock-name">Coty Inc.</div>
+          <div><span class="stock-price">~$8</span><span class="stock-change down">▼ –0.5%</span></div>
+          <div class="stock-note">Brands: CoverGirl, philosophy, Kylie Cosmetics, Gucci Beauty, Rimmel</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:55%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">REV</div>
+          <div class="stock-name">Revlon / Elizabeth Arden</div>
+          <div><span class="stock-price">Private</span></div>
+          <div class="stock-note">Brands at booth: Juicy Couture, Revlon (now under EBA Acquisitions)</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:40%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">NVO</div>
+          <div class="stock-name">Henkel AG (parent: Schwarzkopf)</div>
+          <div><span class="stock-price">~€79</span><span class="stock-change up">▲ +0.3%</span></div>
+          <div class="stock-note">Brands: Kenra, got2b, Syoss. German conglomerate with strong US beauty arm.</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:65%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">SKIN</div>
+          <div class="stock-name">e.l.f. Beauty</div>
+          <div><span class="stock-price">~$38</span><span class="stock-change up">▲ +3.2%</span></div>
+          <div class="stock-note">e.l.f. Cosmetics & e.l.f. skin (Booth 1229) — one of fastest-growing mass beauty stocks</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:88%"></div></div>
+        </div>
+        <div class="stock-card">
+          <div class="stock-ticker">BYMA</div>
+          <div class="stock-name">P&G Prestige / Olay</div>
+          <div><span class="stock-price">~$158</span><span class="stock-change up">▲ +0.9%</span></div>
+          <div class="stock-note">P&G's beauty portfolio includes SK-II, Olay, and licensed fragrance brands.</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--mist);margin-top:1.5rem;padding:12px;background:var(--pink-blush);border-radius:var(--radius-md)">⚠️ Prices are approximate and for informational purposes only. Not financial advice. Always verify on live market data before making investment decisions.</p>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /page-wrap -->
+
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">✦ JemUBW</div>
+        <p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p>
+        <div class="footer-social" style="margin-top:1rem">
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="TikTok">🎵</a>
+          <a href="#" title="Pinterest">📌</a>
+          <a href="#" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Navigate</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a><a href="resources.html">Resources</a>
+          <a href="community.html">Community</a><a href="about.html">About Jem</a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Sections</div>
+        <div class="footer-links">
+          <a href="#brands">Brand Directory</a><a href="#" onclick="showPanel('map-panel',document.querySelectorAll('.ps-btn')[1]);return false">Floor Map</a>
+          <a href="#route">Route Builder</a><a href="#" onclick="showPanel('stock-panel',document.querySelectorAll('.ps-btn')[3]);return false">Stock Data</a>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html#essentials">Event Essentials</a><a href="index.html#tips">Pro Tips</a>
+          <a href="about.html#map-download">Download Map</a><a href="community.html">Community Chat</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JemUBW · Made with 💗</span>
+      <span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/shared.js"></script>
+<script>
+// ─── YOUR API KEY ─────────────────────────────
+// Paste your Anthropic API key below (get one at console.anthropic.com)
+const API_KEY = 'YOUR-API-KEY-HERE';
+// ─────────────────────────────────────────────
+
+// ─── BRAND DATA ──────────────────────────────
+const BRANDS_DATA = [
+  {booth:'1903',brand:'Cécred',cat:'Haircare',tags:['celebrity','melanin','curly'],icon:'👸🏾',desc:"Beyoncé's bond-repair haircare built for textured, natural, and color-treated hair. Features moisture-locking and scalp-nourishing formulas.",hero:'Scalp Serum Treatment — $38',link:'https://cecred.com'},
+  {booth:'2009',brand:'Fenty Beauty & OLEHENRIKSEN',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'💄',desc:"Rihanna's 50-shade-deep inclusive makeup line plus OLEHENRIKSEN's brightening vitamin C skincare — two powerhouses in one booth.",hero:'Pro Filt\'r Soft Matte Foundation — $40',link:'https://fentybeauty.com'},
+  {booth:'2003',brand:'Rare Beauty',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'🌸',desc:"Selena Gomez's inclusive beauty brand. The Soft Pinch Liquid Blush is one of the most viral beauty products in history.",hero:'Soft Pinch Liquid Blush — $24',link:'https://rarebeauty.com'},
+  {booth:'1421',brand:'PATTERN',cat:'Haircare',tags:['celebrity','melanin','curly'],icon:'🌀',desc:"Tracee Ellis Ross's curl-type-specific haircare line. The definitive brand for 3A–4C curl patterns with hydration-first formulas.",hero:'Intensive Conditioner — $24',link:'https://patternbeauty.com'},
+  {booth:'1821',brand:'Pat McGrath Labs',cat:'Makeup',tags:['celebrity','melanin','exclusive'],icon:'✨',desc:"Industry legend Pat McGrath's deeply pigmented, skin-inclusive makeup. Rich deep shades and luxurious textures.",hero:'MatteTrance Lipstick — $42',link:'https://patmcgrath.com'},
+  {booth:'2240',brand:'COSRX',cat:'Skincare',tags:['kbeauty','melanin'],icon:'🐌',desc:"Korea's #1 most-exported skincare brand. Famous for Snail Mucin essence, AHA/BHA actives, and hyperpigmentation treatments.",hero:'Advanced Snail 96 Mucin Essence — $26',link:'https://cosrx.com'},
+  {booth:'1803',brand:'Tatcha',cat:'Skincare',tags:['kbeauty','clean'],icon:'🍵',desc:"Luxe Japanese-inspired skincare using hadasei-3 complex of green tea, rice, and algae. Deeply beloved for dewy, glass-skin results.",hero:'The Water Cream — $72',link:'https://tatcha.com'},
+  {booth:'201',brand:'Charlotte Tilbury',cat:'Makeup',tags:['celebrity','exclusive'],icon:'💋',desc:"British luxury makeup with Hollywood glamour. Magic Cream and Pillow Talk have earned cult-classic status worldwide.",hero:'Magic Cream Moisturizer — $110',link:'https://charlottetilbury.com'},
+  {booth:'409',brand:'CeraVe, La Roche-Posay, Vichy',cat:'Skincare',tags:['sensitive'],icon:'🧴',desc:"Three dermatologist-recommended powerhouses sharing one booth. Essential ceramide, SPF, and soothing formulas for all skin types.",hero:'CeraVe Moisturizing Cream — $20',link:'https://cerave.com'},
+  {booth:'1947',brand:'Rizos Curls',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🌿',desc:"Julissa Prado's Latinx-founded curl brand. Nourishing gels, milks, and hydration systems built for 2C–4C curl patterns.",hero:'Curl Defining Gel — $20',link:'https://rizoscurls.com'},
+  {booth:'431',brand:'Camille Rose',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🌺',desc:"Luxury natural hair care rooted in Afrocentric beauty traditions. Deeply moisturizing, food-grade ingredient formulas for 4A–4C hair.",hero:'Curl Maker Styling Gel — $18',link:'https://camillerose.com'},
+  {booth:'921',brand:'BEVEL & Mielle',cat:'Haircare',tags:['melanin','curly'],icon:'💚',desc:"Two Black-founded brands sharing a booth. Mielle's Rosemary Oil is one of the most-discussed hair care products in recent years.",hero:'Mielle Rosemary & Mint Scalp Oil — $12',link:'https://mielleorganics.com'},
+  {booth:'1825',brand:'Peach & Lily',cat:'Skincare',tags:['kbeauty','melanin','exclusive'],icon:'🍑',desc:"K-beauty glass skin specialists. Glass Skin Serum and brightening SPF products formulated for hyperpigmentation and glow.",hero:'Glass Skin Serum — $39',link:'https://peachandlily.com'},
+  {booth:'1015',brand:'TIR TIR',cat:'Skincare',tags:['kbeauty'],icon:'🌙',desc:"Korean cushion foundation brand with coverage built for deeper skin tones. The Blur Fit Cushion has changed the game for melanin-rich skin.",hero:'Blur Fit Cushion — $45',link:'https://tirtircosmetics.com'},
+  {booth:'2231',brand:'Dyson',cat:'Tools',tags:['exclusive'],icon:'💨',desc:"Premium hair tools including the Airwrap and Supersonic dryer. Expect live demos, exclusive event colorways, and expert stylists.",hero:'Airwrap Multi-Styler — $599',link:'https://dyson.com'},
+  {booth:'1029',brand:'Shark Beauty',cat:'Tools',tags:['exclusive'],icon:'⚡',desc:"Pro-grade hair tools at accessible prices. FlexStyle is a top-rated Dyson Airwrap alternative with rave reviews.",hero:'FlexStyle Styler — $249',link:'https://sharkclean.com'},
+  {booth:'1021',brand:'Sol de Janeiro',cat:'Skincare',tags:[],icon:'🌴',desc:"Brazilian-inspired body care. Bum Bum Cream and Brazilian Crush body fragrance mists are among the most-sampled products at any expo.",hero:'Bum Bum Body Cream — $48',link:'https://soldejaneiro.com'},
+  {booth:'1115',brand:'Supergoop!',cat:'Skincare',tags:['clean','melanin'],icon:'☀️',desc:"SPF innovators. Glowscreen and Unseen Sunscreen disappear on every skin tone — finally, sunscreen with zero white cast.",hero:'Unseen Sunscreen SPF 40 — $42',link:'https://supergoop.com'},
+  {booth:'1221',brand:'Drunk Elephant',cat:'Skincare',tags:['clean'],icon:'🐘',desc:"Clean-compatible skincare free of the 'Suspicious 6'. Perfect for building a custom routine with highly effective actives.",hero:'C-Firma Fresh Day Serum — $90',link:'https://drunkelephant.com'},
+  {booth:'1534',brand:'JVN',cat:'Haircare',tags:['celebrity','clean'],icon:'💫',desc:"Jonathan Van Ness's clean, science-backed haircare. Omegacore Technology nourishes and protects with healthy scalp formulas.",hero:'Complete Hydration Serum — $30',link:'https://jvnhair.com'},
+  {booth:'1703',brand:'tarte',cat:'Makeup',tags:['clean','exclusive'],icon:'🍑',desc:"Clean, eco-friendly makeup with cruelty-free formulas. Shape Tape is one of the best-selling concealers in the US.",hero:'Shape Tape Concealer — $32',link:'https://tartecosmetics.com'},
+  {booth:'1403',brand:'NARS Cosmetics',cat:'Makeup',tags:['melanin','exclusive'],icon:'🖤',desc:"Bold pigments and deep-shade inclusivity. The Sheer Glow Foundation range covers the full spectrum of melanin-rich skin tones.",hero:'Sheer Glow Foundation — $52',link:'https://narscosmetics.com'},
+  {booth:'109',brand:'Naturium',cat:'Skincare',tags:['clean','melanin'],icon:'🌱',desc:"Science-first, no-markup skincare. High-potency niacinamide, vitamin C, and retinol formulas at accessible price points.",hero:'Niacinamide Serum 12% — $22',link:'https://naturium.com'},
+  {booth:'1438',brand:'Live Tinted',cat:'Makeup',tags:['melanin','exclusive'],icon:'🌈',desc:"Deepica Mutyala's brand for melanin-rich complexions. The Huestick multitasks as a color corrector, bronzer, blush, and lip color.",hero:'Huestick Universal Stick — $30',link:'https://livetinted.com'},
+  {booth:'715',brand:'Kiehl\'s Since 1851',cat:'Skincare',tags:['clean','melanin'],icon:'🏺',desc:"New York apothecary heritage brand. Ultra Facial Cream and Midnight Recovery Concentrate are universally loved classics.",hero:'Ultra Facial Cream — $42',link:'https://kiehls.com'},
+  {booth:'1809',brand:'OLAPLEX',cat:'Haircare',tags:['exclusive'],icon:'🔗',desc:"Bond-building hair repair system trusted by professional colorists worldwide. Essential for color-treated, bleached, or heat-damaged hair.",hero:'No.3 Hair Perfector — $30',link:'https://olaplex.com'},
+  {booth:'1840',brand:'tgin',cat:'Haircare',tags:['melanin','curly','clean'],icon:'🍯',desc:"Thank God It's Natural — affordable, deeply moisturizing natural haircare. Honey Whip and Triple Moisture Replenishing line are fan favorites.",hero:'Honey Whip Protective Styling Butter — $15',link:'https://tginaturals.com'},
+  {booth:'1528',brand:'r.e.m. beauty by Ariana Grande',cat:'Makeup',tags:['celebrity','exclusive'],icon:'🌙',desc:"Ariana Grande's cruelty-free beauty line inspired by space and science fiction aesthetics. Playful but polished.",hero:'At The Borderline Mascara — $26',link:'https://rembeauty.com'},
+  {booth:'1247',brand:'Touchland',cat:'Wellness',tags:[],icon:'✋',desc:"Premium hand sanitizer sprays in gorgeous scents. One of the most popular freebie items at beauty expos — people line up just for the minis.",hero:'Power Mist Hand Sanitizer — $12',link:'https://touchland.com'},
+  {booth:'815',brand:'Urban Decay',cat:'Makeup',tags:['melanin'],icon:'🌆',desc:"Edgy, high-pigment makeup with exceptional eyeshadow blendability. All Nighter Setting Spray is a ride-or-die for every makeup look.",hero:'All Nighter Setting Spray — $36',link:'https://urbandecay.com'},
+];
+
+const CAT_COLORS = {
+  Skincare:  {bg:'#FFE8F3',color:'#C01450',bar:'linear-gradient(90deg,#FF3F8E,#FF7FB5)'},
+  Haircare:  {bg:'#F3E8FF',color:'#6D28D9',bar:'linear-gradient(90deg,#9333EA,#C084FC)'},
+  Makeup:    {bg:'#FEF3C7',color:'#92400E',bar:'linear-gradient(90deg,#F59E0B,#FCD34D)'},
+  Fragrance: {bg:'#E0F2FE',color:'#075985',bar:'linear-gradient(90deg,#0EA5E9,#67E8F9)'},
+  Nails:     {bg:'#D1FAE5',color:'#065F46',bar:'linear-gradient(90deg,#059669,#6EE7B7)'},
+  Wellness:  {bg:'#ECFCCB',color:'#3F6212',bar:'linear-gradient(90deg,#65A30D,#BEF264)'},
+  Tools:     {bg:'#E0E7FF',color:'#3730A3',bar:'linear-gradient(90deg,#4F46E5,#A5B4FC)'},
+};
+const TAG_LABELS = {melanin:'Melanin ✓',kbeauty:'K-Beauty',clean:'Clean',curly:'Curly',celebrity:'Celebrity',exclusive:'Exclusive',sensitive:'Sensitive'};
+const TAG_COLORS = {melanin:'#FFF0E6|#8B4513',kbeauty:'#EBF7FB|#0E7490',clean:'#ECFDF5|#065F46',curly:'#F5F3FF|#5B21B6',celebrity:'#FDF2F8|#9D174D',exclusive:'#FDF3E3|#92400E',sensitive:'#EFF6FF|#1D4ED8'};
+
+let activeFilter = 'all';
+
+function buildBrandGrid(data) {
+  const grid = document.getElementById('brand-grid');
+  grid.innerHTML = '';
+  data.forEach(b => {
+    const cc = CAT_COLORS[b.cat] || CAT_COLORS.Skincare;
+    const tagHtml = b.tags.map(t => {
+      const [bg,col] = (TAG_COLORS[t]||'#f0f0f0|#333').split('|');
+      return `<span class="bc-tag" style="background:${bg};color:${col}">${TAG_LABELS[t]||t}</span>`;
+    }).join('');
+    const card = document.createElement('div');
+    card.className = 'brand-card';
+    card.dataset.cat = b.cat;
+    card.dataset.brand = b.brand.toLowerCase();
+    card.dataset.booth = b.booth;
+    card.innerHTML = `
+      <div class="bc-top">
+        <div class="bc-icon">${b.icon}</div>
+        <div class="bc-booth">Booth ${b.booth}</div>
+        <div class="bc-name">${b.brand}</div>
+        <div class="bc-tags">${tagHtml}</div>
+        <div class="bc-cat-bar" style="background:${cc.bar}"></div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-desc">${b.desc}</div>
+        <div class="bc-hero-prod">⭐ <strong style="margin-right:4px">Hero product:</strong> ${b.hero}</div>
+        <div class="bc-actions">
+          <a href="${b.link}" target="_blank" class="btn btn-pink btn-sm">Visit Brand →</a>
+          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();addToWishlist('${b.brand.replace(/'/g,"\\'")}','${b.booth}')">+ Wishlist</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  document.getElementById('brand-count').textContent = data.length;
+}
+
+function setFilter(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('#cat-chips .chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  filterBrands();
+}
+
+function filterBrands() {
+  const q = document.getElementById('brand-search').value.toLowerCase();
+  const cards = document.querySelectorAll('.brand-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const catOk = activeFilter === 'all' || c.dataset.cat === activeFilter;
+    const qOk   = !q || c.dataset.brand.includes(q) || c.dataset.booth.includes(q);
+    const show  = catOk && qOk;
+    c.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('brand-count').textContent = visible;
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function showPanel(id, btn) {
+  document.querySelectorAll('.ps-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ps-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showMapTab(id, el) {
+  document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.map-tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+function addToWishlist(brand, booth) {
+  showToast(`${brand} added to your list 💗`);
+}
+
+// Build zone map
+function buildZoneMap() {
+  const ALL_BOOTHS = [
+    {z:'A',b:'100',n:'Gimme Beauty'},{z:'A',b:'101',n:'MEDIHEAL'},{z:'A',b:'108',n:'VOESH'},{z:'A',b:'109',n:'Naturium'},{z:'A',b:'110',n:'NuFACE'},{z:'A',b:'114',n:'Naked Sundays'},{z:'A',b:'115',n:'Bloomeffects'},{z:'A',b:'116',n:'Design Essentials'},{z:'A',b:'120',n:'Florence by Mills'},{z:'A',b:'121',n:'The INKEY List'},{z:'A',b:'201',n:'Charlotte Tilbury'},{z:'A',b:'208',n:'Saje Natural'},{z:'A',b:'209',n:'isima'},{z:'A',b:'211',n:'Olive & June'},{z:'A',b:'213',n:'Round Lab'},{z:'A',b:'214',n:'KISS'},{z:'A',b:'215',n:'Vanicream'},{z:'A',b:'217',n:'Magic Molecule'},{z:'A',b:'220',n:'VT COSMETICS'},{z:'A',b:'228',n:'Kristin Ess'},{z:'A',b:'229',n:'Nioxin/OPI'},{z:'A',b:'301',n:'Coco & Eve'},{z:'A',b:'308',n:'Eva NYC'},{z:'A',b:'309',n:'Morphe'},{z:'A',b:'310',n:'Odele'},{z:'A',b:'312',n:'SEEN'},{z:'A',b:'315',n:'ELEMIS'},{z:'A',b:'316',n:'DIME'},{z:'A',b:'321',n:'Innersense'},{z:'A',b:'329',n:'Alterna/Joico'},{z:'A',b:'347',n:'Madison Reed'},{z:'A',b:'401',n:'Benefit'},{z:'A',b:'409',n:'CeraVe/LRP'},{z:'A',b:'415',n:'Prada/YSL'},{z:'A',b:'421',n:'YSL MYSLF'},{z:'A',b:'429',n:"MaryRuth's"},{z:'A',b:'431',n:'Camille Rose'},{z:'A',b:'433',n:'Earth Therapeutics'},{z:'A',b:'435',n:'Virtue'},{z:'A',b:'439',n:'Rodan+Fields'},{z:'A',b:'501',n:'Lake & Skye'},{z:'A',b:'509',n:'Valentino'},{z:'A',b:'515',n:'Lancôme'},{z:'A',b:'521',n:'Ralph Lauren'},{z:'A',b:'524',n:'Paul Mitchell'},{z:'A',b:'528',n:'Avène'},{z:'A',b:'529',n:'Azzaro/Viktor&Rolf'},{z:'A',b:'532',n:'The Crème Shop'},{z:'A',b:'538',n:'Reel'},{z:'A',b:'539',n:'DRMTLGY'},{z:'A',b:'543',n:'UNITE Hair'},{z:'A',b:'547',n:"D&G/Donna's"},{z:'A',b:'601',n:"essie/L'Oréal"},{z:'A',b:'609',n:'Buttah/Clarins'},{z:'A',b:'615',n:'Biolage'},{z:'A',b:'621',n:'Pureology'},{z:'A',b:'633',n:'Locks & Mane'},{z:'A',b:'635',n:'ORLY'},{z:'A',b:'638',n:'Nakery Beauty'},{z:'A',b:'639',n:'bareMinerals'},{z:'A',b:'640',n:'Cocokind'},{z:'A',b:'709',n:'Kylie Cosmetics'},{z:'A',b:'715',n:"Kiehl's"},{z:'A',b:'716',n:'SKIN1004'},{z:'A',b:'721',n:'Matrix'},{z:'A',b:'747',n:'Keratin Complex'},{z:'A',b:'809',n:'NYX'},{z:'A',b:'815',n:'Urban Decay'},{z:'A',b:'821',n:'Garnier/Thayers'},{z:'A',b:'828',n:'No7'},{z:'A',b:'829',n:'IT Cosmetics'},{z:'A',b:'830',n:'18.21 Man Made'},{z:'A',b:'832',n:'AmLactin'},{z:'A',b:'834',n:'Eylure'},{z:'A',b:'839',n:'Shampooheiat'},{z:'A',b:'847',n:'L.A. Girl'},{z:'A',b:'901',n:'Ulta Neighborhood'},{z:'A',b:'915',n:'Paris Hilton Frag.'},{z:'A',b:'920',n:'Bed Head'},{z:'A',b:'921',n:'BEVEL/Mielle'},{z:'A',b:'929',n:'REDKEN'},{z:'A',b:'938',n:'Starface'},{z:'A',b:'939',n:'Sweet Tooth'},{z:'A',b:'940',n:'Ethique Beauty'},{z:'A',b:'942',n:'Good Molecules'},{z:'A',b:'947',n:'method'},
+    {z:'B',b:'1015',n:'TIR TIR'},{z:'B',b:'1021',n:'Sol de Janeiro'},{z:'B',b:'1029',n:'Shark Beauty'},{z:'B',b:'1038',n:'Real Techniques'},{z:'B',b:'1039',n:'BYOMA'},{z:'B',b:'1047',n:'belif/CNP'},{z:'B',b:'1115',n:'Supergoop!'},{z:'B',b:'1121',n:'Dermalogica'},{z:'B',b:'1129',n:'about-face'},{z:'B',b:'1131',n:'Dashing Diva'},{z:'B',b:'1135',n:'Blind Barber'},{z:'B',b:'1215',n:'Revolution Beauty'},{z:'B',b:'1221',n:'Drunk Elephant'},{z:'B',b:'1229',n:'e.l.f.'},{z:'B',b:'1234',n:'EOS'},{z:'B',b:'1239',n:'Glamnetic'},{z:'B',b:'1246',n:'Divi Growth Care'},{z:'B',b:'1247',n:'Touchland'},{z:'B',b:'1403',n:'NARS'},{z:'B',b:'1409',n:'Shiseido'},{z:'B',b:'1415',n:'OUAI'},{z:'B',b:'1421',n:'PATTERN'},{z:'B',b:'1429',n:'NEST New York'},{z:'B',b:'1438',n:'Live Tinted'},{z:'B',b:'1441',n:'Ardell/China Glaze'},{z:'B',b:'1449',n:'Kitsch'},{z:'B',b:'1502',n:'Medicube'},{z:'B',b:'1508',n:'Givenchy Beauty'},{z:'B',b:'1514',n:'Half Magic'},{z:'B',b:'1517',n:'ABH'},{z:'B',b:'1520',n:'OSEA Malibu'},{z:'B',b:'1524',n:'Stila'},{z:'B',b:'1528',n:'r.e.m. beauty'},{z:'B',b:'1531',n:'Neutrogena'},{z:'B',b:'1534',n:'JVN'},{z:'B',b:'1541',n:'Exuviance/OGX'},{z:'B',b:'1546',n:'NEOM Wellbeing'},{z:'B',b:'1603',n:'Polite Society'},{z:'B',b:'1609',n:'Bubble Skincare'},{z:'B',b:'1617',n:'MAËLYS'},{z:'B',b:'1625',n:'Lemme'},{z:'B',b:'1631',n:'ONYX Pro'},{z:'B',b:'1647',n:'Celimax/dAlba'},{z:'B',b:'1703',n:'tarte'},{z:'B',b:'1709',n:'LolaVie'},{z:'B',b:'1716',n:'Snif'},{z:'B',b:'1717',n:'Curlsmith/Drybar'},{z:'B',b:'1724',n:'Hempz'},{z:'B',b:'1725',n:'ILIA Beauty'},{z:'B',b:'1731',n:'Hero/Batiste'},{z:'B',b:'1741',n:"It's a 10"},
+    {z:'C',b:'1747',n:'Briogeo'},{z:'C',b:'1803',n:'Tatcha'},{z:'C',b:'1808',n:'Squishmallows Frag.'},{z:'C',b:'1809',n:'OLAPLEX'},{z:'C',b:'1817',n:'Winky Lux'},{z:'C',b:'1819',n:'BondiBoost'},{z:'C',b:'1821',n:'Pat McGrath'},{z:'C',b:'1825',n:'Peach & Lily'},{z:'C',b:'1830',n:'PTR'},{z:'C',b:'1831',n:'Truly Beauty'},{z:'C',b:'1833',n:'Luna Bronze'},{z:'C',b:'1835',n:'Red Carpet Manicure'},{z:'C',b:'1840',n:'tgin'},{z:'C',b:'1841',n:'K-Beauty World'},{z:'C',b:'1847',n:'Lumé'},{z:'C',b:'1903',n:'Cécred'},{z:'C',b:'1909',n:'Nemet'},{z:'C',b:'1916',n:'Grande Cosmetics'},{z:'C',b:'1917',n:'Drake/Eilish Frag.'},{z:'C',b:'1918',n:'Bioderma'},{z:'C',b:'1920',n:'Saltair'},{z:'C',b:'1925',n:'Personal Day'},{z:'C',b:'1931',n:'amika'},{z:'C',b:'1932',n:'Lanolips'},{z:'C',b:'1934',n:'Herbivore'},{z:'C',b:'1941',n:'Beekman 1802'},{z:'C',b:'1947',n:'Rizos Curls'},
+    {z:'D',b:'2003',n:'Rare Beauty'},{z:'D',b:'2008',n:'NOYZ'},{z:'D',b:'2009',n:'Fenty/OLEHENRIKSEN'},{z:'D',b:'2017',n:'Living Proof'},{z:'D',b:'2024',n:'Bio-Oil/Bondi Sands'},{z:'D',b:'2025',n:'Tangle Teezer'},{z:'D',b:'2031',n:'DIBS Beauty'},{z:'D',b:'2040',n:'Milani'},{z:'D',b:'2041',n:'Revive Collagen'},{z:'D',b:'2046',n:'ma:nyo'},{z:'D',b:'2047',n:'Bio Ionic/Wet Brush'},{z:'D',b:'2103',n:'Clinique'},{z:'D',b:'2109',n:'Estée Lauder'},{z:'D',b:'2116',n:'Kopari'},{z:'D',b:'2117',n:'BaBylissPRO/Conair'},{z:'D',b:'2124',n:'IGK'},{z:'D',b:'2125',n:'fwee'},{z:'D',b:'2130',n:'Natasha Denona'},{z:'D',b:'2131',n:'Kate Somerville'},{z:'D',b:'2141',n:"Not Your Mother's"},{z:'D',b:'2147',n:'Verb'},{z:'D',b:'2202',n:'Origins'},{z:'D',b:'2203',n:'The Ordinary'},{z:'D',b:'2209',n:'MAC Cosmetics'},{z:'D',b:'2217',n:'Moroccanoil'},{z:'D',b:'2225',n:'CHI'},{z:'D',b:'2231',n:'Dyson'},{z:'D',b:'2240',n:'COSRX'},{z:'D',b:'2241',n:'Juicy Couture/Revlon'},{z:'D',b:'2246',n:"L'ange Hair"},{z:'D',b:'2247',n:'St.Tropez'},{z:'D',b:'2302',n:'Too Faced'},{z:'D',b:'2309',n:'TOM FORD'},{z:'D',b:'2317',n:'Carolina Herrera'},{z:'D',b:'2325',n:'Essence'},{z:'D',b:'2331',n:'Clean Skin Club'},{z:'D',b:'2341',n:'DevaCurl'},{z:'D',b:'2347',n:'Tree Hut'},{z:'D',b:'2401',n:'Bobbi Brown'},{z:'D',b:'2408',n:'BALMAIN'},{z:'D',b:'2409',n:'Bumble and bumble.'},{z:'D',b:'2431',n:'Nexxus/Vaseline'},
+    {z:'GS',b:'GS1',n:'OCTAVIA MORGAN'},{z:'GS',b:'GS2',n:'Scarlet/RedDrop'},{z:'GS',b:'GS3',n:'Bushbalm'},{z:'GS',b:'GS5',n:'Hairstory'},{z:'GS',b:'GS6',n:'Ocoe'},{z:'GS',b:'GS7',n:'Denman Brush'},
+    {z:'FT',b:'FT1',n:'UNbrush'},{z:'FT',b:'FT2',n:'Meesi Elixir'},{z:'FT',b:'FT3',n:'GuruNanda'},{z:'FT',b:'FT4',n:'Medicine Mama'},{z:'FT',b:'FT5',n:'Ellis Brooklyn'},{z:'FT',b:'FT6',n:'Versace Crystal'},{z:'FT',b:'FT7',n:'Bird&Be'},{z:'FT',b:'FT8',n:'Nodpod'},{z:'FT',b:'FT9',n:'Hum Nutrition'},{z:'FT',b:'FT10',n:'Apothékary'},{z:'FT',b:'FT11',n:'Cymbiotika'},
+  ];
+  const zones = ['A','B','C','D','GS','FT'];
+  const zoneLabels = {'A':'Zone A · 100–999','B':'Zone B · 1000–1749','C':'Zone C · 1750–1999','D':'Zone D · 2000–2500','GS':'GS · Special Positions','FT':'FT · Featured Tables'};
+  const zm = document.getElementById('zone-map');
+  zones.forEach(z => {
+    const items = ALL_BOOTHS.filter(b => b.z === z);
+    const block = document.createElement('div');
+    block.className = 'zone-block';
+    block.innerHTML = `<div class="zone-head">${zoneLabels[z]}</div><div class="zone-pills">${items.map(i=>`<div class="zone-pill" title="${i.n}">${i.b}</div>`).join('')}</div>`;
+    zm.appendChild(block);
+  });
+}
+
+// Route generator
+document.querySelectorAll('#int-chips .chip, #focus-chips .chip').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('active'));
+});
+
+async function generateRoute() {
+  const btn = document.getElementById('gen-route-btn');
+  btn.disabled = true; btn.textContent = '⏳ Building your route…';
+  const interests = [...document.querySelectorAll('#int-chips .chip.active')].map(c=>c.dataset.v);
+  const focus     = [...document.querySelectorAll('#focus-chips .chip.active')].map(c=>c.dataset.v);
+  const s1 = document.getElementById('sl1').value;
+  const s2 = document.getElementById('sl2').value;
+
+  // ── TRACK GOAL DATA for creator dashboard ──
+  try {
+    const _store = 'ubw_goal_data';
+    const _sid = (() => { let s=sessionStorage.getItem('ubw_sid'); if(!s){s=Math.random().toString(36).slice(2,10);sessionStorage.setItem('ubw_sid',s);} return s; })();
+    const _recs = JSON.parse(localStorage.getItem(_store)||'[]');
+    _recs.push({ ts:Date.now(), session:_sid, source:'route_builder', interests, focus, samplesW:+s1, roiW:+s2 });
+    localStorage.setItem(_store, JSON.stringify(_recs.slice(-5000)));
+  } catch(e) {}
+
+  const boothSnippet = BRANDS_DATA.filter(b => interests.includes(b.cat)).slice(0,40)
+    .map(b=>`Booth ${b.booth}: ${b.brand} (${b.cat})`).join('\n');
+
+  const prompt = `You are a Ulta Beauty World 2026 expo strategist. Real official booths:
+${boothSnippet}
+
+User: interests=${interests.join(',')}, focus=${focus.join(',')}, samples_priority=${s1}/10, roi_priority=${s2}/10
+
+Create an optimal 10-booth ROI-ranked route. Respond ONLY in valid JSON (no fences):
+{"summary":"2 sentence pink-coded strategy","totalValue":"$XXX","route":[{"order":1,"brand":"exact name","booth":"exact #","cat":"cat","why":"1 sentence reason for this user","topProduct":"Product — $XX","sampleValue":"$XX","time":"X min","walk":"X min","roi":85}]}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
+    const data = await res.json();
+    const raw = (data.content||[]).map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const r = JSON.parse(raw);
+    renderRoute(r);
+  } catch(e) {
+    document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">Error generating route — please try again.</p>';
+  }
+  btn.disabled = false; btn.textContent = '✨ Generate My Route';
+}
+
+function renderRoute(r) {
+  let html = `<div style="background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:var(--radius-lg);padding:1.25rem;color:#fff;margin-bottom:1rem">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-bottom:4px">Your Strategy</div>
+    <div style="font-size:14px;line-height:1.65">${r.summary}</div>
+    <div style="margin-top:10px;font-size:13px;opacity:0.85">Estimated sample value: <strong>${r.totalValue}</strong></div>
+  </div>`;
+  r.route.forEach((s,i) => {
+    html += `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:12px">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${s.order}</div>
+      <div style="flex:1;background:var(--pink-blush);border:1px solid var(--pink-border);border-radius:var(--radius-lg);padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:4px">
+          <strong style="font-size:14px">${s.brand}</strong>
+          <span style="font-size:10px;background:var(--pink-pale);color:var(--pink-hot);padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap">Booth ${s.booth}</span>
+        </div>
+        <div style="font-size:12px;color:var(--mist);margin-bottom:6px">${s.why}</div>
+        <div style="font-size:12px;display:flex;flex-wrap:wrap;gap:10px;color:var(--ink2)">
+          <span>⭐ ${s.topProduct}</span>
+          <span>🎁 ${s.sampleValue}</span>
+          <span>⏱ ${s.time}</span>
+          <span>🚶 ${s.walk} to next</span>
+        </div>
+        <div class="roi-bar" style="margin-top:8px"><div class="roi-fill" style="width:${s.roi}%"></div></div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('route-output').innerHTML = html;
+}
+
+// Init
+buildBrandGrid(BRANDS_DATA);
+buildZoneMap();
+</script>
+</body>
+</html>

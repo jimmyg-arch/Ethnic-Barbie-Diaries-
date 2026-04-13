@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>UBW 2026 — My Expo Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Canela+Deck:ital,wght@0,300;0,400;1,300&family=Sohne:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ────────────────────────────────────────── */
+:root {
+  --ink:    #0E0408;
+  --ink2:   #2C1220;
+  --blush:  #FBF0F3;
+  --rose:   #E8173D;
+  --rose2:  #FF5577;
+  --petal:  #FBDDE5;
+  --gold:   #C8872A;
+  --goldt:  #FDF3E3;
+  --mist:   #8A6B74;
+  --border: #EDD6DE;
+  --white:  #FFFFFF;
+  --card:   #FFF7F9;
+
+  --hair:  #9333EA;
+  --skin:  #E8173D;
+  --make:  #D97706;
+  --frag:  #0891B2;
+  --nail:  #059669;
+  --well:  #65A30D;
+  --tool:  #4F46E5;
+
+  --r: 14px;
+  --rs: 8px;
+}
+
+/* ─── RESET ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--blush);
+  color: var(--ink);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+
+/* ─── SCROLLBAR ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ─── TOPBAR ─────────────────────────────────────────── */
+.topbar {
+  background: var(--ink);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  flex-shrink: 0;
+}
+.topbar-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.topbar-logo span { color: var(--rose2); }
+
+.topbar-date {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+/* ─── NAV ────────────────────────────────────────────── */
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: 56px;
+  z-index: 400;
+  flex-shrink: 0;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mist);
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.nav-btn svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.nav-btn.active { color: var(--rose); border-bottom-color: var(--rose); }
+.nav-btn:hover:not(.active) { color: var(--ink); }
+
+/* ─── PAGES ──────────────────────────────────────────── */
+.page { display: none; flex: 1; flex-direction: column; animation: pgIn 0.25s ease; }
+.page.active { display: flex; }
+@keyframes pgIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+/* ─── SECTION HEADER ─────────────────────────────────── */
+.pg-header {
+  padding: 1.5rem 1.5rem 1rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.pg-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.pg-title em { color: var(--rose); font-style: italic; }
+.pg-sub { font-size: 13px; color: var(--mist); margin-top: 4px; }
+
+/* ─── CARDS ──────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.card-pad { padding: 1.25rem; }
+
+/* ─── CHIPS / TAGS ───────────────────────────────────── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--mist);
+  cursor: pointer;
+  transition: all 0.14s;
+  white-space: nowrap;
+  user-select: none;
+}
+.chip:hover { border-color: var(--rose); color: var(--rose); }
+.chip.on { background: var(--rose); border-color: var(--rose); color: #fff; }
+.chip.on-gold { background: var(--gold); border-color: var(--gold); color: #fff; }
+.chip.on-purple { background: var(--hair); border-color: var(--hair); color: #fff; }
+.chip.cat-skin.on { background: var(--skin); border-color: var(--skin); }
+.chip.cat-hair.on { background: var(--hair); border-color: var(--hair); }
+.chip.cat-make.on { background: var(--make); border-color: var(--make); }
+.chip.cat-frag.on { background: var(--frag); border-color: var(--frag); }
+.chip.cat-nail.on { background: var(--nail); border-color: var(--nail); }
+.chip.cat-well.on { background: var(--well); border-color: var(--well); }
+.chip.cat-tool.on { background: var(--tool); border-color: var(--tool); }
+
+/* ─── SLIDERS ────────────────────────────────────────── */
+.slider-wrap { margin-bottom: 14px; }
+.slider-top { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.slider-name { font-size: 13px; color: var(--ink); }
+.slider-val { font-size: 13px; font-weight: 600; color: var(--rose); }
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: var(--border); border-radius: 2px; outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--rose);
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(232,23,61,0.3);
+}
+
+/* ─── BTN ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 11px 20px;
+  border-radius: var(--rs);
+  font-size: 13px; font-weight: 600;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: 0.02em;
+}
+.btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.4; pointer-events: none; }
+.btn-rose { background: var(--rose); color: #fff; }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--ink2); }
+.btn-outline:hover { border-color: var(--rose); color: var(--rose); opacity: 1; }
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-sm { padding: 7px 13px; font-size: 12px; }
+.btn-full { width: 100%; }
+
+/* ─── BADGE ──────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 6px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.b-melanin { background: #FFF0E6; color: #8B4513; }
+.b-kbeauty { background: #EBF7FB; color: #0E7490; }
+.b-clean   { background: #ECFDF5; color: #065F46; }
+.b-curly   { background: #F5F3FF; color: #5B21B6; }
+.b-celeb   { background: #FDF2F8; color: #9D174D; }
+.b-excl    { background: var(--goldt); color: #92400E; }
+.b-hyp     { background: #FEF3C7; color: #92400E; }
+.b-sens    { background: #EFF6FF; color: #1D4ED8; }
+
+/* ══════════════════════════════════════════════════════
+   PAGE 1 — MAP
+══════════════════════════════════════════════════════ */
+#pg-map .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.map-toolbar {
+  padding: 10px 1rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.search-wrap {
+  position: relative;
+  flex: 1; min-width: 180px; max-width: 280px;
+}
+.search-wrap svg {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  stroke: var(--mist); pointer-events: none;
+}
+#map-search {
+  width: 100%;
+  padding: 8px 10px 8px 32px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--rs);
+  font-size: 13px; color: var(--ink);
+  background: var(--blush);
+  outline: none;
+}
+#map-search:focus { border-color: var(--rose); background: #fff; }
+#map-search::placeholder { color: var(--mist); }
+
+.map-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.mf-chip {
+  padding: 5px 11px;
+  border-radius: 16px;
+  font-size: 11px; font-weight: 600;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.14s;
+  background: var(--blush);
+  color: var(--mist);
+}
+.mf-chip.on { color: #fff; }
+.mf-chip[data-c="Skincare"].on { background: var(--skin); border-color: var(--skin); }
+.mf-chip[data-c="Haircare"].on { background: var(--hair); border-color: var(--hair); }
+.mf-chip[data-c="Makeup"].on   { background: var(--make); border-color: var(--make); }
+.mf-chip[data-c="Fragrance"].on { background: var(--frag); border-color: var(--frag); }
+.mf-chip[data-c="Nails"].on    { background: var(--nail); border-color: var(--nail); }
+.mf-chip[data-c="Wellness"].on { background: var(--well); border-color: var(--well); }
+.mf-chip[data-c="Tools"].on    { background: var(--tool); border-color: var(--tool); }
+
+.map-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 80px;
+}
+
+.floor-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.zone-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.zone-label {
+  padding: 8px 14px;
+  background: var(--ink);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.zone-label span { color: rgba(255,255,255,0.25); }
+.zone-grid {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.booth-pill {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  max-width: 140px;
+  position: relative;
+}
+.booth-pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.booth-pill.dimmed { opacity: 0.18; pointer-events: none; }
+.booth-pill.visited { opacity: 0.45; }
+.booth-pill.visited::after {
+  content: '✓';
+  position: absolute; top: -6px; right: -5px;
+  width: 16px; height: 16px;
+  background: #22C55E;
+  color: #fff;
+  font-size: 9px; font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 16px; text-align: center;
+}
+.booth-pill.in-route { box-shadow: 0 0 0 2px var(--gold); }
+.booth-pill.in-checklist { box-shadow: 0 0 0 2px #22C55E; }
+
+.bp-cat-Skincare  { background: rgba(232,23,61,0.08); border-color: rgba(232,23,61,0.2); }
+.bp-cat-Haircare  { background: rgba(147,51,234,0.08); border-color: rgba(147,51,234,0.2); }
+.bp-cat-Makeup    { background: rgba(217,119,6,0.08); border-color: rgba(217,119,6,0.2); }
+.bp-cat-Fragrance { background: rgba(8,145,178,0.08); border-color: rgba(8,145,178,0.2); }
+.bp-cat-Nails     { background: rgba(5,150,105,0.08); border-color: rgba(5,150,105,0.2); }
+.bp-cat-Wellness  { background: rgba(101,163,13,0.08); border-color: rgba(101,163,13,0.2); }
+.bp-cat-Tools     { background: rgba(79,70,229,0.08); border-color: rgba(79,70,229,0.2); }
+
+.bp-name { font-size: 11px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.bp-booth { font-size: 9px; color: var(--mist); margin-top: 2px; }
+
+.map-legend {
+  padding: 10px 14px;
+  background: var(--blush);
+  border-top: 1px solid var(--border);
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.legend-item { font-size: 11px; color: var(--mist); display: flex; align-items: center; }
+
+/* DETAIL DRAWER */
+.drawer-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(14,4,8,0.5);
+  z-index: 600;
+  backdrop-filter: blur(2px);
+}
+.drawer-overlay.open { display: block; }
+.drawer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  padding: 0 1.5rem 2rem;
+  z-index: 700;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.16,1,0.3,1);
+  max-height: 85dvh;
+  overflow-y: auto;
+}
+.drawer.open { transform: translateY(0); }
+.drawer-handle {
+  width: 40px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 14px auto 20px;
+}
+.drawer-booth-num {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: 4px;
+}
+.drawer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 700;
+  line-height: 1.1; margin-bottom: 6px;
+}
+.drawer-cat { font-size: 13px; color: var(--mist); margin-bottom: 10px; }
+.drawer-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+.drawer-desc {
+  font-size: 14px; line-height: 1.65;
+  color: var(--ink2); margin-bottom: 16px;
+  padding: 12px; background: var(--blush);
+  border-radius: var(--rs);
+}
+.drawer-actions {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+
+/* ══════════════════════════════════════════════════════
+   PAGE 2 — ROUTE BUILDER
+══════════════════════════════════════════════════════ */
+#pg-route .content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mist); margin-bottom: 10px;
+}
+
+.route-result { display: flex; flex-direction: column; gap: 0; }
+
+.route-stop-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.route-spine {
+  display: flex; flex-direction: column; align-items: center;
+  flex-shrink: 0; padding-top: 2px;
+}
+.route-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--rose);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.route-dot.priority { background: var(--ink); box-shadow: 0 0 0 3px var(--rose); }
+.route-line { width: 1px; flex: 1; min-height: 22px; background: var(--border); margin: 3px 0; }
+.route-card {
+  flex: 1;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  transition: box-shadow 0.18s;
+}
+.route-card:hover { box-shadow: 0 4px 16px rgba(232,23,61,0.08); }
+.route-card.priority { border-color: var(--rose); }
+.rc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; margin-bottom: 6px; }
+.rc-name { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.2; }
+.rc-num {
+  font-size: 10px; background: var(--petal);
+  color: var(--rose); padding: 2px 7px;
+  border-radius: 6px; font-weight: 700;
+  white-space: nowrap;
+}
+.rc-cat-dot {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; margin-right: 5px;
+  vertical-align: middle;
+}
+.rc-cat { font-size: 12px; color: var(--mist); margin-bottom: 6px; }
+.rc-desc { font-size: 12px; color: var(--mist); line-height: 1.55; margin-bottom: 8px; }
+.rc-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.rc-meta-item { font-size: 12px; color: var(--mist); }
+.rc-meta-item strong { color: var(--ink); }
+.rc-review {
+  font-size: 12px; font-style: italic;
+  color: var(--mist); line-height: 1.5;
+  padding: 8px 10px;
+  border-left: 2px solid var(--rose);
+  background: var(--blush);
+  border-radius: 0 var(--rs) var(--rs) 0;
+  margin-bottom: 8px;
+}
+.roi-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.roi-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--rose), var(--gold)); }
+.roi-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--mist); margin-top: 3px; }
+
+.walk-gap {
+  padding: 3px 0 3px 38px;
+  font-size: 11px; color: var(--mist);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.loading-state {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 3rem; gap: 14px;
+}
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--rose);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════════
+   PAGE 3 — CHECKLIST
+══════════════════════════════════════════════════════ */
+#pg-check .content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.progress-bar-wrap {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.check-group { margin-bottom: 8px; }
+.check-group-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--mist); padding: 0 4px; margin-bottom: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.check-group-cnt {
+  font-size: 11px; color: var(--rose); font-weight: 600;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.check-item:hover { border-color: var(--rose); }
+.check-item.done {
+  background: var(--blush);
+  border-color: #22C55E;
+  opacity: 0.7;
+}
+.check-box {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  background: #fff;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s;
+}
+.check-item.done .check-box {
+  background: #22C55E;
+  border-color: #22C55E;
+}
+.check-tick { color: #fff; font-size: 12px; display: none; }
+.check-item.done .check-tick { display: block; }
+.check-info { flex: 1; min-width: 0; }
+.check-name {
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  line-height: 1.2;
+}
+.check-item.done .check-name {
+  text-decoration: line-through;
+  color: var(--mist);
+}
+.check-meta { font-size: 11px; color: var(--mist); margin-top: 2px; }
+.check-note {
+  font-size: 12px; color: var(--mist);
+  margin-top: 6px; padding: 6px 8px;
+  background: var(--blush); border-radius: 6px;
+  line-height: 1.4;
+  display: none;
+}
+.check-note.show { display: block; }
+.check-note-input {
+  width: 100%;
+  background: transparent; border: none; outline: none;
+  font-size: 12px; color: var(--ink2); font-family: inherit;
+  resize: none; min-height: 32px;
+}
+.check-note-input::placeholder { color: var(--mist); }
+
+.check-actions { display: flex; gap: 6px; margin-top: 6px; }
+.check-action-btn {
+  font-size: 11px; padding: 4px 9px;
+  border-radius: 6px; border: 1px solid var(--border);
+  background: transparent; color: var(--mist);
+  font-family: inherit;
+}
+.check-action-btn:hover { border-color: var(--rose); color: var(--rose); }
+
+.empty-state {
+  text-align: center; padding: 3rem 1rem;
+}
+.empty-icon { font-size: 40px; margin-bottom: 10px; }
+.empty-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.empty-sub { font-size: 13px; color: var(--mist); line-height: 1.6; }
+
+/* ══════════════════════════════════════════════════════
+   PAGE 4 — VISITED TRACKER
+══════════════════════════════════════════════════════ */
+#pg-visited .content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.stat-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px; font-weight: 700;
+  color: var(--rose); line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-lbl { font-size: 12px; color: var(--mist); }
+
+.visited-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+.vi-check {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: #22C55E;
+  color: #fff;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.vi-name { font-size: 14px; font-weight: 600; flex: 1; }
+.vi-meta { font-size: 11px; color: var(--mist); }
+.vi-time { font-size: 11px; color: var(--mist); white-space: nowrap; }
+.vi-remove {
+  background: none; border: none;
+  color: var(--border); font-size: 18px;
+  line-height: 1;
+}
+.vi-remove:hover { color: var(--rose); }
+
+.visited-note {
+  font-size: 12px; color: var(--mist);
+  margin-top: 4px; font-style: italic;
+}
+
+/* ─── TOAST ──────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── COMPARE PANEL ──────────────────────────────────── */
+.compare-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.compare-scroll::-webkit-scrollbar { display: none; }
+.compare-card {
+  min-width: 220px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+  flex-shrink: 0;
+}
+.cc-header { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.cc-row {
+  display: flex; justify-content: space-between;
+  font-size: 12px; padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--mist);
+}
+.cc-row:last-of-type { border-bottom: none; }
+.cc-val { font-weight: 600; color: var(--ink); }
+.cc-win { color: var(--rose); }
+.cc-note { font-size: 11px; color: var(--mist); margin-top: 8px; line-height: 1.5; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (min-width: 640px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .map-body { padding: 1.25rem 1.5rem 80px; }
+  #pg-route .content,
+  #pg-check .content,
+  #pg-visited .content { padding: 1.5rem 1.5rem 80px; }
+}
+
+@media (min-width: 900px) {
+  #pg-route .content { max-width: 700px; margin: 0 auto; }
+  #pg-check .content { max-width: 700px; margin: 0 auto; }
+  #pg-visited .content { max-width: 700px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-logo">UBW<span>2026</span></div>
+  <div class="topbar-date">APR 16 · ORLANDO</div>
+</header>
+
+<!-- NAV -->
+<nav class="nav" role="tablist">
+  <button class="nav-btn active" onclick="goPage('map',this)" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    Expo Map
+  </button>
+  <button class="nav-btn" onclick="goPage('route',this)" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3m-4.22-7.78-2.12 2.12M7.1 16.9l-2.12 2.12M16.9 16.9l2.12 2.12M7.1 7.1 4.98 4.98"/></svg>
+    Build Route
+  </button>
+  <button class="nav-btn" onclick="goPage('check',this)" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    Checklist
+  </button>
+  <button class="nav-btn" onclick="goPage('visited',this)" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    Visited
+  </button>
+</nav>
+
+<!-- ══ PAGE: MAP ══════════════════════════════════════ -->
+<section class="page active" id="pg-map" role="tabpanel">
+  <div class="pg-header">
+    <div class="pg-title">Expo <em>Floor Map</em></div>
+    <div class="pg-sub">Tap any booth for details · Add to route or checklist</div>
+  </div>
+  <div class="content">
+    <div class="map-toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="map-search" placeholder="Search brand or booth #…" oninput="renderMap()">
+      </div>
+      <div class="map-filters" id="map-filter-chips">
+        <div class="mf-chip on" data-c="all" onclick="toggleMapFilter('all',this)">All</div>
+        <div class="mf-chip" data-c="Skincare" onclick="toggleMapFilter('Skincare',this)">Skin</div>
+        <div class="mf-chip" data-c="Haircare" onclick="toggleMapFilter('Haircare',this)">Hair</div>
+        <div class="mf-chip" data-c="Makeup" onclick="toggleMapFilter('Makeup',this)">Makeup</div>
+        <div class="mf-chip" data-c="Fragrance" onclick="toggleMapFilter('Fragrance',this)">Fragrance</div>
+        <div class="mf-chip" data-c="Nails" onclick="toggleMapFilter('Nails',this)">Nails</div>
+        <div class="mf-chip" data-c="Wellness" onclick="toggleMapFilter('Wellness',this)">Wellness</div>
+        <div class="mf-chip" data-c="Tools" onclick="toggleMapFilter('Tools',this)">Tools</div>
+      </div>
+    </div>
+    <div class="map-body">
+      <div class="floor-plan" id="floor-plan"></div>
+    </div>
+    <div class="map-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--skin)"></span>Skincare</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--hair)"></span>Haircare</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--make)"></span>Makeup</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--frag)"></span>Fragrance</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--nail)"></span>Nails</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--well)"></span>Wellness</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--tool)"></span>Tools</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAGE: ROUTE ════════════════════════════════════ -->
+<section class="page" id="pg-route" role="tabpanel">
+  <div class="pg-header">
+    <div class="pg-title">Build My <em>Route</em></div>
+    <div class="pg-sub">AI-ranked by ROI, tailored to your interests</div>
+  </div>
+  <div class="content">
+    <!-- INTERESTS -->
+    <div class="card card-pad">
+      <div class="section-label">Beauty interests</div>
+      <div class="chip-row" id="interest-chips">
+        <div class="chip cat-skin on" data-v="Skincare">Skincare</div>
+        <div class="chip cat-hair on" data-v="Haircare">Haircare</div>
+        <div class="chip cat-make" data-v="Makeup">Makeup</div>
+        <div class="chip cat-frag" data-v="Fragrance">Fragrance</div>
+        <div class="chip cat-nail" data-v="Nails">Nails</div>
+        <div class="chip cat-well" data-v="Wellness">Wellness</div>
+        <div class="chip cat-tool" data-v="Tools">Tools</div>
+      </div>
+    </div>
+
+    <!-- FOCUS TAGS -->
+    <div class="card card-pad">
+      <div class="section-label">Skin &amp; community focus</div>
+      <div class="chip-row" id="focus-chips">
+        <div class="chip on" data-v="melanin">Melanin-friendly</div>
+        <div class="chip on" data-v="kbeauty">K-Beauty</div>
+        <div class="chip" data-v="clean">Clean / Organic</div>
+        <div class="chip" data-v="curly">Curly / Textured</div>
+        <div class="chip" data-v="sensitive">Sensitive Skin</div>
+        <div class="chip" data-v="hyperpig">Hyperpigmentation</div>
+        <div class="chip" data-v="celebrity">Celebrity Brands</div>
+        <div class="chip" data-v="exclusive">Exclusives / Launches</div>
+      </div>
+    </div>
+
+    <!-- SLIDERS -->
+    <div class="card card-pad">
+      <div class="section-label">Priority weights</div>
+      <div class="slider-wrap">
+        <div class="slider-top"><span class="slider-name">Free samples &amp; haul value</span><span class="slider-val" id="sv1">9</span></div>
+        <input type="range" min="1" max="10" value="9" step="1" id="sl1" oninput="document.getElementById('sv1').textContent=this.value">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top"><span class="slider-name">Product retail ROI</span><span class="slider-val" id="sv2">9</span></div>
+        <input type="range" min="1" max="10" value="9" step="1" id="sl2" oninput="document.getElementById('sv2').textContent=this.value">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top"><span class="slider-name">Exclusive launches</span><span class="slider-val" id="sv3">7</span></div>
+        <input type="range" min="1" max="10" value="7" step="1" id="sl3" oninput="document.getElementById('sv3').textContent=this.value">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-top"><span class="slider-name">Avoid long lines</span><span class="slider-val" id="sv4">6</span></div>
+        <input type="range" min="1" max="10" value="6" step="1" id="sl4" oninput="document.getElementById('sv4').textContent=this.value">
+      </div>
+    </div>
+
+    <button class="btn btn-rose btn-full" id="gen-btn" onclick="generateRoute()">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Generate My Route
+    </button>
+
+    <!-- RESULTS -->
+    <div id="route-results"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: CHECKLIST ════════════════════════════════ -->
+<section class="page" id="pg-check" role="tabpanel">
+  <div class="pg-header">
+    <div class="pg-title">Day-Of <em>Checklist</em></div>
+    <div class="pg-sub">Your must-see booths · tap to check off as you go</div>
+  </div>
+  <div class="content">
+    <div id="check-progress-card" class="card card-pad" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:13px;font-weight:600">Progress</span>
+        <span id="check-progress-label" style="font-size:13px;color:var(--rose);font-weight:700">0 / 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="check-progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-rose btn-sm" onclick="addToChecklistFromRoute()">+ Add from my route</button>
+      <button class="btn btn-outline btn-sm" onclick="openAddCustom()">+ Add custom booth</button>
+      <button class="btn btn-outline btn-sm" onclick="clearChecklist()">Clear all</button>
+    </div>
+
+    <div id="checklist-body"></div>
+  </div>
+</section>
+
+<!-- ══ PAGE: VISITED ══════════════════════════════════ -->
+<section class="page" id="pg-visited" role="tabpanel">
+  <div class="pg-header">
+    <div class="pg-title">Booths <em>Visited</em></div>
+    <div class="pg-sub">Track where you've been · add notes &amp; ratings</div>
+  </div>
+  <div class="content">
+    <div class="stats-grid" id="visited-stats">
+      <div class="stat-box"><div class="stat-num" id="vs-total">0</div><div class="stat-lbl">Visited</div></div>
+      <div class="stat-box"><div class="stat-num" id="vs-remaining">200+</div><div class="stat-lbl">Remaining</div></div>
+      <div class="stat-box"><div class="stat-num" id="vs-cats">0</div><div class="stat-lbl">Categories</div></div>
+      <div class="stat-box"><div class="stat-num" id="vs-pct">0%</div><div class="stat-lbl">Complete</div></div>
+    </div>
+    <div id="visited-body"></div>
+  </div>
+</section>
+
+<!-- DRAWER OVERLAY + DRAWER -->
+<div class="drawer-overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-booth-num" id="d-booth"></div>
+  <div class="drawer-name" id="d-name"></div>
+  <div class="drawer-cat" id="d-cat"></div>
+  <div class="drawer-badges" id="d-badges"></div>
+  <div class="drawer-desc" id="d-desc"></div>
+  <div class="drawer-actions" id="d-actions"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// BRAND DATA
+// ═══════════════════════════════════════════
+const BRANDS = [
+  {booth:'830', brand:'18.21 Man Made', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1129', brand:'about-face', cat:'Makeup', tags:['celebrity'], zone:'B'},
+  {booth:'329', brand:'Alterna, Joico, Kenra', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1931', brand:'amika', cat:'Haircare', tags:['exclusive'], zone:'C'},
+  {booth:'832', brand:'AmLactin', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'1517', brand:'Anastasia Beverly Hills', cat:'Makeup', tags:['exclusive'], zone:'B'},
+  {booth:'FT10', brand:'Apothékary', cat:'Wellness', tags:['clean','organic'], zone:'FT'},
+  {booth:'1441', brand:'Ardell, China Glaze, Nail Tek', cat:'Nails', tags:[], zone:'B'},
+  {booth:'528', brand:'Avène', cat:'Skincare', tags:['clean','sensitive'], zone:'A'},
+  {booth:'529', brand:'Azzaro, Mugler, Viktor&Rolf', cat:'Fragrance', tags:['exclusive'], zone:'A'},
+  {booth:'2117', brand:'BaBylissPRO, Conair, Scünci', cat:'Tools', tags:[], zone:'D'},
+  {booth:'2408', brand:'BALMAIN', cat:'Haircare', tags:['celebrity','exclusive'], zone:'D'},
+  {booth:'639', brand:'bareMinerals, BUXOM, Laura Mercier', cat:'Makeup', tags:['clean'], zone:'A'},
+  {booth:'920', brand:'Bed Head', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1941', brand:'Beekman 1802', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'1047', brand:'belif, CNP Laboratory', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'401', brand:'Benefit Cosmetics', cat:'Makeup', tags:['exclusive'], zone:'A'},
+  {booth:'1917', brand:'Better World Fragrance — Drake & Eilish', cat:'Fragrance', tags:['celebrity','exclusive'], zone:'C'},
+  {booth:'921', brand:'BEVEL, Mielle', cat:'Haircare', tags:['melanin','curly'], zone:'A'},
+  {booth:'2047', brand:'Bio Ionic, Ouidad, Wet Brush', cat:'Tools', tags:['curly'], zone:'D'},
+  {booth:'2024', brand:'Bio-Oil, Bondi Sands', cat:'Skincare', tags:[], zone:'D'},
+  {booth:'1918', brand:'Bioderma', cat:'Skincare', tags:['clean','sensitive'], zone:'C'},
+  {booth:'615', brand:'Biolage', cat:'Haircare', tags:['clean'], zone:'A'},
+  {booth:'FT7', brand:'Bird&Be', cat:'Wellness', tags:['clean'], zone:'FT'},
+  {booth:'1135', brand:'Blind Barber', cat:'Haircare', tags:[], zone:'B'},
+  {booth:'115', brand:'Bloomeffects', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'2401', brand:'Bobbi Brown', cat:'Makeup', tags:['melanin','exclusive'], zone:'D'},
+  {booth:'1819', brand:'BondiBoost', cat:'Haircare', tags:[], zone:'C'},
+  {booth:'1747', brand:'Briogeo', cat:'Haircare', tags:['clean','curly','melanin'], zone:'B'},
+  {booth:'1609', brand:'Bubble Skincare', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'2409', brand:'Bumble and bumble.', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'1503', brand:'Burberry, Calvin Klein, Gucci, Hugo Boss', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'B'},
+  {booth:'GS3', brand:'Bushbalm', cat:'Skincare', tags:['clean'], zone:'GS'},
+  {booth:'609', brand:'Buttah Skin', cat:'Skincare', tags:['melanin'], zone:'A'},
+  {booth:'1039', brand:'BYOMA', cat:'Skincare', tags:['clean','sensitive'], zone:'B'},
+  {booth:'431', brand:'Camille Rose', cat:'Haircare', tags:['melanin','curly','clean'], zone:'A'},
+  {booth:'2317', brand:'Carolina Herrera', cat:'Fragrance', tags:['exclusive'], zone:'D'},
+  {booth:'1903', brand:'Cécred', cat:'Haircare', tags:['celebrity','melanin','curly','exclusive'], zone:'C'},
+  {booth:'1647', brand:'Celimax, d\'Alba Piedmont', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'409', brand:'CeraVe, La Roche Posay, Vichy', cat:'Skincare', tags:['sensitive'], zone:'A'},
+  {booth:'201', brand:'Charlotte Tilbury', cat:'Makeup', tags:['exclusive','celebrity'], zone:'A'},
+  {booth:'2225', brand:'CHI', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'609', brand:'Clarins', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'2331', brand:'Clean Skin Club', cat:'Skincare', tags:['clean'], zone:'D'},
+  {booth:'2103', brand:'Clinique', cat:'Skincare', tags:['sensitive'], zone:'D'},
+  {booth:'301', brand:'Coco & Eve, Loving Tan', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'640', brand:'Cocokind', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'2240', brand:'COSRX', cat:'Skincare', tags:['kbeauty','hyperpig'], zone:'D'},
+  {booth:'2417', brand:'CoverGirl, Sally Hansen', cat:'Makeup', tags:['melanin'], zone:'D'},
+  {booth:'1717', brand:'Curlsmith, Drybar, Hot Tools', cat:'Haircare', tags:['curly'], zone:'B'},
+  {booth:'FT11', brand:'Cymbiotika', cat:'Wellness', tags:['clean'], zone:'FT'},
+  {booth:'1131', brand:'Dashing Diva', cat:'Nails', tags:[], zone:'B'},
+  {booth:'GS7', brand:'Denman Brush', cat:'Tools', tags:['curly','melanin'], zone:'GS'},
+  {booth:'1803', brand:'Derma E', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'1121', brand:'Dermalogica', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'116', brand:'Design Essentials', cat:'Haircare', tags:['melanin','curly'], zone:'A'},
+  {booth:'2341', brand:'DevaCurl, Sexy Hair', cat:'Haircare', tags:['curly'], zone:'D'},
+  {booth:'2031', brand:'DIBS Beauty', cat:'Makeup', tags:['melanin'], zone:'D'},
+  {booth:'316', brand:'DIME', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'1246', brand:'Divi Growth Care', cat:'Haircare', tags:[], zone:'B'},
+  {booth:'547', brand:'Dolce & Gabbana', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'A'},
+  {booth:'547', brand:'Donna\'s Recipe', cat:'Skincare', tags:['melanin'], zone:'A'},
+  {booth:'539', brand:'DRMTLGY', cat:'Skincare', tags:[], zone:'A'},
+  {booth:'1221', brand:'Drunk Elephant', cat:'Skincare', tags:['clean','exclusive'], zone:'B'},
+  {booth:'2231', brand:'Dyson', cat:'Tools', tags:['exclusive'], zone:'D'},
+  {booth:'1229', brand:'e.l.f. Cosmetics & e.l.f. skin', cat:'Makeup', tags:['clean','melanin'], zone:'B'},
+  {booth:'433', brand:'Earth Therapeutics', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'315', brand:'ELEMIS', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'FT5', brand:'Ellis Brooklyn', cat:'Fragrance', tags:['clean'], zone:'FT'},
+  {booth:'1234', brand:'EOS', cat:'Skincare', tags:['clean'], zone:'B'},
+  {booth:'2325', brand:'Essence Cosmetics', cat:'Makeup', tags:['melanin'], zone:'D'},
+  {booth:'601', brand:'essie, L\'Oréal Paris, Maybelline', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'2109', brand:'Estée Lauder', cat:'Makeup', tags:['exclusive','celebrity'], zone:'D'},
+  {booth:'940', brand:'Ethique Beauty', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'308', brand:'Eva NYC', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1541', brand:'Exuviance, OGX', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'834', brand:'Eylure', cat:'Makeup', tags:[], zone:'A'},
+  {booth:'409', brand:'Farmacy Beauty', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'2009', brand:'Fenty Beauty, OLEHENRIKSEN', cat:'Makeup', tags:['celebrity','melanin','exclusive'], zone:'D'},
+  {booth:'120', brand:'Florence by Mills', cat:'Skincare', tags:['clean','celebrity'], zone:'A'},
+  {booth:'2125', brand:'fwee', cat:'Skincare', tags:['kbeauty'], zone:'D'},
+  {booth:'821', brand:'Garnier, Thayers', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'100', brand:'Gimme Beauty', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1508', brand:'Givenchy Beauty', cat:'Makeup', tags:['exclusive'], zone:'B'},
+  {booth:'1239', brand:'Glamnetic', cat:'Nails', tags:['exclusive'], zone:'B'},
+  {booth:'942', brand:'Good Molecules', cat:'Skincare', tags:['clean','hyperpig'], zone:'A'},
+  {booth:'1916', brand:'Grande Cosmetics', cat:'Makeup', tags:[], zone:'C'},
+  {booth:'FT3', brand:'GuruNanda', cat:'Wellness', tags:['clean'], zone:'FT'},
+  {booth:'GS5', brand:'Hairstory', cat:'Haircare', tags:['clean'], zone:'GS'},
+  {booth:'1514', brand:'Half Magic', cat:'Makeup', tags:['celebrity','exclusive'], zone:'B'},
+  {booth:'1724', brand:'Hempz', cat:'Skincare', tags:['clean'], zone:'B'},
+  {booth:'1934', brand:'Herbivore', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'541', brand:'Heritage Store', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'1731', brand:'Hero, Batiste', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'FT9', brand:'Hum Nutrition', cat:'Wellness', tags:['clean'], zone:'FT'},
+  {booth:'2124', brand:'IGK', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'1725', brand:'ILIA Beauty', cat:'Makeup', tags:['clean','melanin'], zone:'B'},
+  {booth:'321', brand:'Innersense', cat:'Haircare', tags:['clean','curly'], zone:'A'},
+  {booth:'209', brand:'isima', cat:'Skincare', tags:['melanin','hyperpig'], zone:'A'},
+  {booth:'829', brand:'IT Cosmetics', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'1741', brand:'It\'s a 10', cat:'Haircare', tags:[], zone:'B'},
+  {booth:'2241', brand:'Juicy Couture, Revlon', cat:'Fragrance', tags:['celebrity'], zone:'D'},
+  {booth:'1534', brand:'JVN', cat:'Haircare', tags:['celebrity','clean'], zone:'B'},
+  {booth:'1841', brand:'K-Beauty World', cat:'Skincare', tags:['kbeauty'], zone:'C'},
+  {booth:'2131', brand:'Kate Somerville, Patchology', cat:'Skincare', tags:[], zone:'D'},
+  {booth:'747', brand:'Keratin Complex', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'715', brand:'Kiehl\'s Since 1851', cat:'Skincare', tags:['clean','melanin'], zone:'A'},
+  {booth:'214', brand:'KISS', cat:'Nails', tags:['melanin'], zone:'A'},
+  {booth:'1449', brand:'Kitsch', cat:'Haircare', tags:[], zone:'B'},
+  {booth:'2116', brand:'Kopari', cat:'Skincare', tags:['clean'], zone:'D'},
+  {booth:'228', brand:'Kristin Ess Hair', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'709', brand:'Kylie Cosmetics', cat:'Makeup', tags:['celebrity','melanin'], zone:'A'},
+  {booth:'847', brand:'L.A. Girl', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'2246', brand:'L\'ange Hair', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'501', brand:'Lake & Skye, Le Monde Gourmand', cat:'Fragrance', tags:[], zone:'A'},
+  {booth:'515', brand:'Lancôme', cat:'Makeup', tags:['exclusive','celebrity'], zone:'A'},
+  {booth:'1932', brand:'Lanolips', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'1625', brand:'Lemme', cat:'Wellness', tags:['celebrity'], zone:'B'},
+  {booth:'1438', brand:'Live Tinted', cat:'Makeup', tags:['melanin','hyperpig','exclusive'], zone:'B'},
+  {booth:'2017', brand:'Living Proof', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'633', brand:'Locks & Mane', cat:'Haircare', tags:['melanin','curly'], zone:'A'},
+  {booth:'1709', brand:'LolaVie', cat:'Haircare', tags:['celebrity'], zone:'B'},
+  {booth:'1847', brand:'Lumé', cat:'Wellness', tags:[], zone:'C'},
+  {booth:'1833', brand:'Luna Bronze', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'2046', brand:'ma:nyo', cat:'Skincare', tags:['kbeauty'], zone:'D'},
+  {booth:'2209', brand:'MAC Cosmetics', cat:'Makeup', tags:['melanin','exclusive'], zone:'D'},
+  {booth:'347', brand:'Madison Reed', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'217', brand:'Magic Molecule', cat:'Skincare', tags:['melanin','hyperpig'], zone:'A'},
+  {booth:'429', brand:'MaryRuth\'s', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'721', brand:'Matrix', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1617', brand:'MAËLYS', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'FT4', brand:'Medicine Mama', cat:'Wellness', tags:['clean'], zone:'FT'},
+  {booth:'1502', brand:'Medicube', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'101', brand:'MEDIHEAL', cat:'Skincare', tags:['kbeauty'], zone:'A'},
+  {booth:'FT2', brand:'Meesi Elixir', cat:'Skincare', tags:['melanin'], zone:'FT'},
+  {booth:'947', brand:'method', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'2040', brand:'Milani Cosmetics', cat:'Makeup', tags:['melanin'], zone:'D'},
+  {booth:'1802', brand:'Milk Makeup', cat:'Makeup', tags:['clean'], zone:'C'},
+  {booth:'2217', brand:'Moroccanoil', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'309', brand:'Morphe', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'114', brand:'Naked Sundays', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'638', brand:'Nakery Beauty', cat:'Skincare', tags:['melanin','clean'], zone:'A'},
+  {booth:'1403', brand:'NARS Cosmetics', cat:'Makeup', tags:['melanin','exclusive'], zone:'B'},
+  {booth:'2130', brand:'Natasha Denona', cat:'Makeup', tags:['exclusive'], zone:'D'},
+  {booth:'109', brand:'Naturium', cat:'Skincare', tags:['clean','melanin','hyperpig'], zone:'A'},
+  {booth:'1909', brand:'Nemet', cat:'Fragrance', tags:[], zone:'C'},
+  {booth:'1546', brand:'NEOM Wellbeing', cat:'Wellness', tags:['clean'], zone:'B'},
+  {booth:'1429', brand:'NEST New York', cat:'Fragrance', tags:[], zone:'B'},
+  {booth:'1531', brand:'Neutrogena', cat:'Skincare', tags:['melanin'], zone:'B'},
+  {booth:'2431', brand:'Nexxus, Vaseline', cat:'Haircare', tags:[], zone:'D'},
+  {booth:'229', brand:'Nioxin, OPI, Sebastian, Wella', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'828', brand:'No7', cat:'Skincare', tags:[], zone:'A'},
+  {booth:'FT8', brand:'Nodpod', cat:'Wellness', tags:[], zone:'FT'},
+  {booth:'2141', brand:"Not Your Mother's Haircare", cat:'Haircare', tags:['melanin','curly','clean'], zone:'D'},
+  {booth:'2008', brand:'NOYZ', cat:'Fragrance', tags:[], zone:'D'},
+  {booth:'110', brand:'NuFACE', cat:'Tools', tags:[], zone:'A'},
+  {booth:'809', brand:'NYX Professional Makeup', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'GS6', brand:'Ocoe', cat:'Skincare', tags:['kbeauty'], zone:'GS'},
+  {booth:'GS1', brand:'OCTAVIA MORGAN LOS ANGELES', cat:'Fragrance', tags:['celebrity','exclusive'], zone:'GS'},
+  {booth:'310', brand:'Odele', cat:'Haircare', tags:['clean'], zone:'A'},
+  {booth:'1809', brand:'OLAPLEX', cat:'Haircare', tags:['exclusive'], zone:'C'},
+  {booth:'211', brand:'Olive & June', cat:'Nails', tags:['clean'], zone:'A'},
+  {booth:'1631', brand:'ONYX Professional', cat:'Nails', tags:['melanin'], zone:'B'},
+  {booth:'2202', brand:'Origins', cat:'Skincare', tags:['clean'], zone:'D'},
+  {booth:'635', brand:'ORLY', cat:'Nails', tags:['clean'], zone:'A'},
+  {booth:'1520', brand:'OSEA Malibu', cat:'Skincare', tags:['clean'], zone:'B'},
+  {booth:'1415', brand:'OUAI', cat:'Haircare', tags:[], zone:'B'},
+  {booth:'2140', brand:'Pacifica', cat:'Skincare', tags:['clean'], zone:'D'},
+  {booth:'915', brand:'Paris Hilton Fragrance, Sam Edelman', cat:'Fragrance', tags:['celebrity'], zone:'A'},
+  {booth:'1821', brand:'Pat McGrath Labs', cat:'Makeup', tags:['melanin','exclusive','celebrity'], zone:'C'},
+  {booth:'1421', brand:'PATTERN', cat:'Haircare', tags:['celebrity','melanin','curly'], zone:'B'},
+  {booth:'524', brand:'Paul Mitchell', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1825', brand:'Peach & Lily', cat:'Skincare', tags:['kbeauty','melanin','hyperpig'], zone:'C'},
+  {booth:'1730', brand:'Peach Slices', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'309', brand:'Perricone MD', cat:'Skincare', tags:[], zone:'A'},
+  {booth:'1925', brand:'Personal Day', cat:'Skincare', tags:['melanin'], zone:'C'},
+  {booth:'1930', brand:'Peter Thomas Roth', cat:'Skincare', tags:[], zone:'C'},
+  {booth:'1603', brand:'Polite Society', cat:'Fragrance', tags:['exclusive'], zone:'B'},
+  {booth:'415', brand:'Prada, YSL Libre', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'A'},
+  {booth:'621', brand:'Pureology', cat:'Haircare', tags:['clean'], zone:'A'},
+  {booth:'1528', brand:'r.e.m. beauty by Ariana Grande', cat:'Makeup', tags:['celebrity','exclusive'], zone:'B'},
+  {booth:'538', brand:'Reel', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'2003', brand:'Rare Beauty', cat:'Makeup', tags:['celebrity','melanin','exclusive'], zone:'D'},
+  {booth:'1038', brand:'Real Techniques', cat:'Tools', tags:[], zone:'B'},
+  {booth:'1835', brand:'Red Carpet Manicure', cat:'Nails', tags:[], zone:'C'},
+  {booth:'929', brand:'REDKEN', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'2041', brand:'Revive Collagen', cat:'Wellness', tags:[], zone:'D'},
+  {booth:'1215', brand:'Revolution Beauty', cat:'Makeup', tags:['melanin'], zone:'B'},
+  {booth:'1947', brand:'Rizos Curls', cat:'Haircare', tags:['melanin','curly','clean'], zone:'C'},
+  {booth:'642', brand:'RMS Beauty', cat:'Makeup', tags:['clean'], zone:'A'},
+  {booth:'439', brand:'Rodan + Fields', cat:'Skincare', tags:[], zone:'A'},
+  {booth:'213', brand:'Round Lab', cat:'Skincare', tags:['kbeauty','sensitive'], zone:'A'},
+  {booth:'1230', brand:'SACHEU', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'208', brand:'Saje Natural Wellness', cat:'Wellness', tags:['clean'], zone:'A'},
+  {booth:'1920', brand:'Saltair', cat:'Skincare', tags:['clean'], zone:'C'},
+  {booth:'312', brand:'SEEN', cat:'Haircare', tags:['clean'], zone:'A'},
+  {booth:'839', brand:'Shampooheiat', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'1409', brand:'Shiseido', cat:'Skincare', tags:['kbeauty','exclusive'], zone:'B'},
+  {booth:'1029', brand:'Shark Beauty', cat:'Tools', tags:['exclusive'], zone:'B'},
+  {booth:'716', brand:'SKIN1004', cat:'Skincare', tags:['kbeauty','sensitive'], zone:'A'},
+  {booth:'1716', brand:'Snif', cat:'Fragrance', tags:['clean'], zone:'B'},
+  {booth:'1021', brand:'Sol de Janeiro', cat:'Skincare', tags:[], zone:'B'},
+  {booth:'1228', brand:'Sulawave', cat:'Haircare', tags:['melanin','curly'], zone:'B'},
+  {booth:'1808', brand:'Squishmallows Fragrances', cat:'Fragrance', tags:[], zone:'C'},
+  {booth:'2247', brand:'St.Tropez', cat:'Skincare', tags:[], zone:'D'},
+  {booth:'938', brand:'Starface', cat:'Skincare', tags:[], zone:'A'},
+  {booth:'1524', brand:'Stila Cosmetics', cat:'Makeup', tags:[], zone:'B'},
+  {booth:'1115', brand:'Supergoop!', cat:'Skincare', tags:['clean','melanin'], zone:'B'},
+  {booth:'939', brand:'Sweet Tooth by Sabrina Carpenter', cat:'Fragrance', tags:['celebrity'], zone:'A'},
+  {booth:'2025', brand:'Tangle Teezer', cat:'Tools', tags:['curly'], zone:'D'},
+  {booth:'1703', brand:'tarte', cat:'Makeup', tags:['clean','exclusive'], zone:'B'},
+  {booth:'1803', brand:'Tatcha', cat:'Skincare', tags:['kbeauty','clean','exclusive'], zone:'C'},
+  {booth:'1840', brand:'tgin', cat:'Haircare', tags:['melanin','curly','clean'], zone:'C'},
+  {booth:'532', brand:'The Crème Shop', cat:'Skincare', tags:['kbeauty','melanin'], zone:'A'},
+  {booth:'121', brand:'The INKEY List', cat:'Skincare', tags:['clean'], zone:'A'},
+  {booth:'2203', brand:'The Ordinary', cat:'Skincare', tags:['clean','hyperpig'], zone:'D'},
+  {booth:'1015', brand:'TIR TIR', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'2309', brand:'TOM FORD BEAUTY', cat:'Makeup', tags:['exclusive','celebrity'], zone:'D'},
+  {booth:'1540', brand:'TONYMOLY', cat:'Skincare', tags:['kbeauty'], zone:'B'},
+  {booth:'2302', brand:'Too Faced Cosmetics', cat:'Makeup', tags:[], zone:'D'},
+  {booth:'1247', brand:'Touchland', cat:'Wellness', tags:[], zone:'B'},
+  {booth:'2347', brand:'Tree Hut', cat:'Skincare', tags:['clean'], zone:'D'},
+  {booth:'1831', brand:'Truly Beauty', cat:'Skincare', tags:[], zone:'C'},
+  {booth:'901', brand:'Ulta Beauty Neighborhood', cat:'Makeup', tags:['exclusive','melanin'], zone:'A'},
+  {booth:'FT1', brand:'UNbrush', cat:'Tools', tags:['curly'], zone:'FT'},
+  {booth:'1930', brand:'Uni', cat:'Haircare', tags:['clean'], zone:'C'},
+  {booth:'543', brand:'UNITE Hair', cat:'Haircare', tags:[], zone:'A'},
+  {booth:'815', brand:'Urban Decay', cat:'Makeup', tags:['melanin'], zone:'A'},
+  {booth:'1435', brand:'Vacation', cat:'Skincare', tags:['clean'], zone:'B'},
+  {booth:'509', brand:'Valentino Armani', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'A'},
+  {booth:'215', brand:'Vanicream Sensitive Skin Care', cat:'Skincare', tags:['sensitive'], zone:'A'},
+  {booth:'2147', brand:'Verb', cat:'Haircare', tags:['clean'], zone:'D'},
+  {booth:'FT6', brand:'Versace Crystal Emerald', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'FT'},
+  {booth:'435', brand:'Virtue', cat:'Haircare', tags:['clean'], zone:'A'},
+  {booth:'108', brand:'VOESH', cat:'Nails', tags:['clean','melanin'], zone:'A'},
+  {booth:'220', brand:'VT COSMETICS', cat:'Skincare', tags:['kbeauty'], zone:'A'},
+  {booth:'1817', brand:'Winky Lux', cat:'Makeup', tags:[], zone:'C'},
+  {booth:'421', brand:'YSL MYSLF', cat:'Fragrance', tags:['exclusive','celebrity'], zone:'A'},
+];
+
+const CAT_COLOR = {
+  Skincare:'var(--skin)', Haircare:'var(--hair)', Makeup:'var(--make)',
+  Fragrance:'var(--frag)', Nails:'var(--nail)', Wellness:'var(--well)', Tools:'var(--tool)'
+};
+
+const DESCRIPTIONS = {
+  'Cécred': "Beyoncé's bond-repair haircare line for all textures. Features moisture-locking formulas designed specifically with Black hair in mind.",
+  'Fenty Beauty, OLEHENRIKSEN': "Rihanna's 50-shade-deep inclusive makeup line plus OLEHENRIKSEN's brightening vitamin C skincare.",
+  'PATTERN': "Tracee Ellis Ross's curl-type-specific line. The definitive brand for 3A–4C curl patterns.",
+  'COSRX': "Korea's #1 skincare export. Snail mucin essence, AHA/BHA actives, and the viral Advanced Snail 96.",
+  'Tatcha': "Luxe Japanese skincare anchored in hadasei-3 complex. The Water Cream and Dewy Skin Mist are iconic.",
+  'Rare Beauty': "Selena Gomez's shade-inclusive brand. Soft Pinch Liquid Blush is one of beauty's most viral products ever.",
+  'Pat McGrath Labs': "Industry legend Pat McGrath's deeply pigmented, skin-inclusive makeup. Expect rich deep shades.",
+  'Live Tinted': "Deepica Mutyala's brand for melanin-rich complexions. Huestick multitasks as corrector + color.",
+  'BEVEL, Mielle': "Two beloved Black-founded brands sharing a booth. Mielle's rosemary oil is one of the most-talked-about hair products in recent years.",
+  'Briogeo': "Clean, vegan, inclusive haircare with dedicated lines for curly, coily, and damaged hair.",
+  'Rizos Curls': "Julissa Prado's Latinx-founded curl brand with nourishing gels and hydration systems for 2C–4C.",
+  'tgin': "Thank God It's Natural — deeply moisturizing, affordable natural haircare. Known for honey whip and triple moisture.",
+  'Peach & Lily': "K-beauty glass skin specialists. Brightening toners, SPF, and the viral Glass Skin Serum.",
+  'TIR TIR': "Korean cushion foundation brand with coverage built for deeper skin tones. Blur Fit Cushion is a must-try.",
+  'SKIN1004': "Centella asiatica (cica) experts for acne-prone and sensitive skin. Madagascar Centella line is a breakout hero.",
+  'Round Lab': "Birch Juice Moisturizing Line — deeply hydrating, sensitive-skin approved K-beauty.",
+  'Medicube': "Medical-grade K-beauty. Known for advanced retinol, collagen, and anti-aging tech.",
+  'TONYMOLY': "Playful K-beauty with viral sheet masks, moisture toners, and cute packaging.",
+  'Buttah Skin': "Melanin-focused brand by Dorion Renaud addressing dry skin, uneven tone, and hyperpigmentation.",
+  'Naturium': "Science-first, no-markup skincare. Niacinamide, vitamin C, and retinol formulas for all complexions.",
+  'Drunk Elephant': "Clean-compatible skincare without the 'suspicious six'. Perfect for sensitive or reactive skin.",
+  'Charlotte Tilbury': "Luxury British makeup with Hollywood allure. Magic Cream and Pillow Talk are forever bestsellers.",
+  'NARS Cosmetics': "Bold pigments and deep-shade inclusivity. The foundation range covers the full spectrum of skin tones.",
+  'Supergoop!': "SPF innovators. Glowscreen and Unseen Sunscreen disappear on skin of every tone — no white cast.",
+  'Camille Rose': "Deep-moisture natural haircare rooted in Afrocentric traditions for 4A–4C textures.",
+  'tarte': "Clean-ish eco beauty with cruelty-free claims. Shape Tape is one of the best-selling concealers in the US.",
+  'Dyson': "Premium hair tools. Expect live Airwrap demos and exclusive expo SKUs — line up early.",
+  'Shark Beauty': "Pro-grade tools at more accessible prices. FlexStyle is a top Airwrap alternative.",
+  'OLAPLEX': "Bond-building repair system trusted by colorists worldwide. Essential for color-treated or damaged hair.",
+  'Sol de Janeiro': "Brazilian-inspired body care. Bum Bum Cream and Brazilian Crush fragrances are expo crowd favorites.",
+  'MAC Cosmetics': "Professional-grade with the industry's broadest shade range. Pro artists often demo here.",
+  'default': "Visit this booth for samples, exclusive offers, live demos, and expert tips."
+};
+
+function desc(brand) { return DESCRIPTIONS[brand] || DESCRIPTIONS.default; }
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let mapFilter = 'all';
+let activeDrawerBrand = null;
+let route = [];        // [{...brand, roiScore, priority, whyVisit, topProduct, sampleValue, timeAtBooth, walkFromPrev, rating, reviewCount, reviewHighlight}]
+let checklist = JSON.parse(localStorage.getItem('ubw_checklist') || '[]');
+let visited = JSON.parse(localStorage.getItem('ubw_visited') || '[]');
+
+function save() {
+  localStorage.setItem('ubw_checklist', JSON.stringify(checklist));
+  localStorage.setItem('ubw_visited', JSON.stringify(visited));
+}
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+function goPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  btn.classList.add('active');
+  if (id==='check') renderChecklist();
+  if (id==='visited') renderVisited();
+}
+
+// ═══════════════════════════════════════════
+// MAP PAGE
+// ═══════════════════════════════════════════
+const ZONES = [
+  { id:'A', label:'Zone A · Booths 100–999', desc:'Left wing — enter from main entrance' },
+  { id:'B', label:'Zone B · Booths 1000–1599', desc:'Center-left · high-traffic brands' },
+  { id:'C', label:'Zone C · Booths 1600–1999', desc:'Center-right · mid-floor' },
+  { id:'D', label:'Zone D · Booths 2000–2500', desc:'Right wing · far end of floor' },
+  { id:'GS', label:'GS / Feature Booths', desc:'Special floor positions' },
+  { id:'FT', label:'FT · Featured Tables', desc:'Featured tables along perimeter' },
+];
+
+function toggleMapFilter(cat, el) {
+  mapFilter = cat;
+  document.querySelectorAll('.mf-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderMap();
+}
+
+function renderMap() {
+  const q = document.getElementById('map-search').value.toLowerCase();
+  const fp = document.getElementById('floor-plan');
+  fp.innerHTML = '';
+
+  ZONES.forEach(zone => {
+    const zoneBrands = BRANDS.filter(b => {
+      if (b.zone !== zone.id) return false;
+      const catOk = mapFilter === 'all' || b.cat === mapFilter;
+      const qOk = !q || b.brand.toLowerCase().includes(q) || b.booth.toLowerCase().includes(q);
+      return catOk || qOk; // show all but dim non-matching
+    });
+    if (!zoneBrands.length) return;
+
+    const block = document.createElement('div');
+    block.className = 'zone-block';
+    block.innerHTML = `<div class="zone-label">${zone.label}<span>${zone.desc}</span></div><div class="zone-grid" id="zg-${zone.id}"></div>`;
+    fp.appendChild(block);
+
+    const grid = document.getElementById('zg-' + zone.id);
+    zoneBrands.forEach(b => {
+      const inRoute = route.find(r => r.booth===b.booth && r.brand===b.brand);
+      const inCheck = checklist.find(c => c.booth===b.booth && c.brand===b.brand);
+      const isVisited = visited.find(v => v.booth===b.booth && v.brand===b.brand);
+      const catMatch = mapFilter==='all' || b.cat===mapFilter;
+      const qMatch = !q || b.brand.toLowerCase().includes(q) || b.booth.toLowerCase().includes(q);
+      const show = catMatch && qMatch;
+
+      const pill = document.createElement('div');
+      pill.className = `booth-pill bp-cat-${b.cat}${!show?' dimmed':''}${isVisited?' visited':''}${inRoute?' in-route':''}${inCheck?' in-checklist':''}`;
+      pill.innerHTML = `<span class="bp-name">${b.brand}</span><span class="bp-booth">Booth ${b.booth}</span>`;
+      pill.onclick = () => openDrawer(b);
+      grid.appendChild(pill);
+    });
+  });
+}
+
+// ═══════════════════════════════════════════
+// DRAWER
+// ═══════════════════════════════════════════
+const BADGE_MAP = {
+  melanin:   ['b-melanin','Melanin ✓'],
+  kbeauty:   ['b-kbeauty','K-Beauty'],
+  clean:     ['b-clean','Clean'],
+  curly:     ['b-curly','Curly/Textured'],
+  celebrity: ['b-celeb','Celebrity Brand'],
+  exclusive: ['b-excl','Exclusive'],
+  hyperpig:  ['b-hyp','Hyperpigmentation'],
+  sensitive: ['b-sens','Sensitive Skin'],
+};
+
+function openDrawer(b) {
+  activeDrawerBrand = b;
+  document.getElementById('d-booth').textContent = `Booth ${b.booth}`;
+  document.getElementById('d-name').textContent = b.brand;
+  document.getElementById('d-cat').innerHTML = `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${CAT_COLOR[b.cat]||'#999'};margin-right:6px;vertical-align:middle"></span>${b.cat}`;
+  document.getElementById('d-desc').textContent = desc(b.brand);
+  document.getElementById('d-badges').innerHTML = b.tags.map(t => BADGE_MAP[t] ? `<span class="badge ${BADGE_MAP[t][0]}">${BADGE_MAP[t][1]}</span>` : '').join('');
+
+  const inRoute = route.find(r => r.booth===b.booth && r.brand===b.brand);
+  const inCheck = checklist.find(c => c.booth===b.booth && c.brand===b.brand);
+  const isVisited = visited.find(v => v.booth===b.booth && v.brand===b.brand);
+
+  document.getElementById('d-actions').innerHTML = `
+    <button class="btn btn-rose btn-sm" onclick="addToChecklistDirect()">${inCheck?'✓ In checklist':'+ Add to checklist'}</button>
+    <button class="btn btn-outline btn-sm" onclick="markVisitedDirect()">${isVisited?'✓ Visited':'Mark visited'}</button>
+  `;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+
+function addToChecklistDirect() {
+  if (!activeDrawerBrand) return;
+  const b = activeDrawerBrand;
+  if (!checklist.find(c => c.booth===b.booth && c.brand===b.brand)) {
+    checklist.push({...b, done:false, note:''});
+    save();
+    toast('Added to checklist ✓');
+  } else {
+    toast('Already in your checklist');
+  }
+  closeDrawer();
+  renderMap();
+}
+
+function markVisitedDirect() {
+  if (!activeDrawerBrand) return;
+  const b = activeDrawerBrand;
+  if (!visited.find(v => v.booth===b.booth && v.brand===b.brand)) {
+    visited.push({...b, time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}), note:''});
+    save();
+    toast(`${b.brand} marked as visited ✓`);
+  } else {
+    toast('Already in visited list');
+  }
+  closeDrawer();
+  renderMap();
+}
+
+// ═══════════════════════════════════════════
+// ROUTE BUILDER
+// ═══════════════════════════════════════════
+document.querySelectorAll('#interest-chips .chip, #focus-chips .chip').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('on'));
+});
+
+async function generateRoute() {
+  const interests = [...document.querySelectorAll('#interest-chips .chip.on')].map(c=>c.dataset.v);
+  const focus = [...document.querySelectorAll('#focus-chips .chip.on')].map(c=>c.dataset.v);
+  const s1=document.getElementById('sl1').value, s2=document.getElementById('sl2').value;
+  const s3=document.getElementById('sl3').value, s4=document.getElementById('sl4').value;
+
+  const btn = document.getElementById('gen-btn');
+  btn.disabled = true;
+  document.getElementById('route-results').innerHTML = `<div class="loading-state"><div class="spinner"></div><p style="font-size:13px;color:var(--mist)">Building your personalized route…</p></div>`;
+
+  // Filter to relevant brands
+  const relevant = BRANDS.filter(b => {
+    const catOk = interests.includes(b.cat);
+    const tagOk = focus.length === 0 || b.tags.some(t => focus.includes(t));
+    return catOk;
+  });
+
+  const boothList = relevant.slice(0, 90).map(b => `Booth ${b.booth}: ${b.brand} (${b.cat}${b.tags.length?' | '+b.tags.join(', '):''})`).join('\n');
+
+  const prompt = `You are a strategic Ulta Beauty World 2026 expo planner. The event is April 16, 2026 at the Orange County Convention Center, Orlando. 9am–5pm.
+
+REAL OFFICIAL BOOTHS (use ONLY these, exact names and numbers):
+${boothList}
+
+User profile:
+- Interests: ${interests.join(', ') || 'all categories'}
+- Community/skin focus: ${focus.join(', ') || 'general'}
+- Free samples weight: ${s1}/10
+- Product ROI weight: ${s2}/10
+- Exclusives weight: ${s3}/10
+- Avoid long lines: ${s4}/10
+
+Build an optimal 14–18 booth route ordered by ROI, grouped by floor zone to minimize walking. Priority:true for top 6.
+
+Respond ONLY with valid JSON — no markdown fences:
+{
+  "summary": "2 sentences personalized strategy",
+  "totalValue": "$XXX",
+  "totalTime": "X hrs X min",
+  "tips": "3 tactical tips for these specific interests",
+  "route": [
+    {
+      "order": 1,
+      "brand": "exact name",
+      "booth": "exact booth #",
+      "cat": "category",
+      "priority": true,
+      "whyVisit": "2 sentences on ROI for this user",
+      "topProduct": "Product — $XX",
+      "sampleValue": "$XX",
+      "timeAtBooth": "X min",
+      "walkFromPrev": "X min",
+      "roiScore": 88,
+      "rating": 4.6,
+      "reviewCount": 12400,
+      "reviewHighlight": "One authentic-sounding user review"
+    }
+  ],
+  "comparisons": [
+    {"brand1":"A","brand2":"B","cat":"Skincare","winner":"A","reason":"short note"}
+  ]
+}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:4000, messages:[{role:'user',content:prompt}]})
+    });
+    const data = await res.json();
+    const raw = (data.content||[]).map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const result = JSON.parse(raw);
+    route = result.route.map(r => ({...BRANDS.find(b=>b.brand===r.brand&&b.booth===r.booth)||{tags:[]}, ...r}));
+    renderRoute(result);
+  } catch(e) {
+    document.getElementById('route-results').innerHTML = `<div class="loading-state" style="color:var(--rose)">Something went wrong — please try again.</div>`;
+    console.error(e);
+  }
+  btn.disabled = false;
+}
+
+function renderRoute(r) {
+  let html = `
+  <div class="card card-pad" style="background:var(--ink);color:rgba(255,255,255,0.8);font-size:13px;line-height:1.65">
+    <strong style="color:#fff">Strategy:</strong> ${r.summary}
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <div class="card card-pad" style="flex:1;text-align:center;min-width:120px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--rose)">${r.totalValue}</div>
+      <div style="font-size:11px;color:var(--mist)">Est. sample value</div>
+    </div>
+    <div class="card card-pad" style="flex:1;text-align:center;min-width:120px">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--rose)">${r.totalTime}</div>
+      <div style="font-size:11px;color:var(--mist)">Route duration</div>
+    </div>
+  </div>`;
+
+  html += `<div class="route-result">`;
+  r.route.forEach((s,i) => {
+    const roi = Math.min(100, s.roiScore||75);
+    const stars = '★'.repeat(Math.floor(s.rating||4))+'☆'.repeat(5-Math.floor(s.rating||4));
+    html += `
+    <div class="route-stop-row">
+      <div class="route-spine">
+        <div class="route-dot ${s.priority?'priority':''}">${s.order}</div>
+        ${i<r.route.length-1?'<div class="route-line"></div>':''}
+      </div>
+      <div style="flex:1">
+        <div class="route-card ${s.priority?'priority':''}">
+          <div class="rc-top">
+            <div class="rc-name">${s.brand}</div>
+            <span class="rc-num">Booth ${s.booth}</span>
+          </div>
+          <div class="rc-cat"><span class="rc-cat-dot" style="background:${CAT_COLOR[s.cat]||'#999'}"></span>${s.cat}</div>
+          <div class="rc-desc">${s.whyVisit}</div>
+          <div class="rc-meta">
+            <span class="rc-meta-item"><strong>Top pick:</strong> ${s.topProduct}</span>
+            <span class="rc-meta-item"><strong>Samples:</strong> ${s.sampleValue}</span>
+            <span class="rc-meta-item"><strong>Time:</strong> ${s.timeAtBooth}</span>
+            <span class="rc-meta-item"><strong>Walk:</strong> ${s.walkFromPrev}</span>
+          </div>
+          <div class="rc-review" style="color:var(--mist);font-size:12px">${stars} ${s.rating} (${(s.reviewCount||0).toLocaleString()}) &nbsp;·&nbsp; "${s.reviewHighlight}"</div>
+          <div class="roi-bar"><div class="roi-fill" style="width:${roi}%"></div></div>
+          <div class="roi-row"><span>ROI Score</span><span>${s.roiScore}/100</span></div>
+          <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn btn-rose btn-sm" onclick="addRouteStopToChecklist(${i})">+ Checklist</button>
+            <button class="btn btn-outline btn-sm" onclick="markRouteVisited(${i})">Mark visited</button>
+          </div>
+        </div>
+        ${i<r.route.length-1?`<div class="walk-gap">→ ${r.route[i+1]?.walkFromPrev||'2 min'} walk to next</div>`:''}
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  if (r.comparisons?.length) {
+    html += `<div>
+      <div class="section-label" style="margin-bottom:10px">Brand comparisons</div>
+      <div class="compare-scroll">`;
+    r.comparisons.forEach(c => {
+      html += `<div class="compare-card">
+        <div class="cc-header">${c.brand1} vs ${c.brand2}</div>
+        <div class="cc-row"><span class="label">Category</span><span class="cc-val">${c.cat}</span></div>
+        <div class="cc-row"><span class="label">Winner for you</span><span class="cc-val cc-win">${c.winner}</span></div>
+        <div class="cc-note">${c.reason}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  if (r.tips) {
+    html += `<div class="card card-pad" style="border-left:3px solid var(--rose);border-radius:0 var(--r) var(--r) 0">
+      <div class="section-label">Your expo tips</div>
+      <p style="font-size:13px;color:var(--mist);line-height:1.7">${r.tips}</p>
+    </div>`;
+  }
+
+  html += `<button class="btn btn-gold btn-full" onclick="addAllToChecklist()">Add entire route to checklist →</button>`;
+
+  document.getElementById('route-results').innerHTML = html;
+}
+
+function addRouteStopToChecklist(i) {
+  const s = route[i];
+  if (!s) return;
+  if (!checklist.find(c => c.booth===s.booth && c.brand===s.brand)) {
+    checklist.push({...s, done:false, note:''});
+    save(); toast(`${s.brand} added to checklist ✓`);
+  } else toast('Already in checklist');
+}
+
+function markRouteVisited(i) {
+  const s = route[i];
+  if (!s) return;
+  if (!visited.find(v => v.booth===s.booth && v.brand===s.brand)) {
+    visited.push({...s, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), note:''});
+    save(); toast(`${s.brand} marked visited ✓`);
+    renderMap();
+  } else toast('Already in visited list');
+}
+
+function addAllToChecklist() {
+  let added = 0;
+  route.forEach(s => {
+    if (!checklist.find(c => c.booth===s.booth && c.brand===s.brand)) {
+      checklist.push({...s, done:false, note:''});
+      added++;
+    }
+  });
+  save(); toast(`${added} booths added to checklist ✓`);
+}
+
+// ═══════════════════════════════════════════
+// CHECKLIST PAGE
+// ═══════════════════════════════════════════
+function addToChecklistFromRoute() {
+  if (!route.length) { toast('Build a route first →'); goPage('route', document.querySelectorAll('.nav-btn')[1]); return; }
+  addAllToChecklist();
+  renderChecklist();
+}
+
+function openAddCustom() {
+  const brand = prompt('Brand name:');
+  if (!brand) return;
+  const booth = prompt('Booth number (optional):') || '?';
+  const cat = prompt('Category (Skincare/Haircare/Makeup/Fragrance/Nails/Wellness/Tools):') || 'Other';
+  checklist.push({brand, booth, cat, tags:[], done:false, note:''});
+  save(); toast(`${brand} added ✓`); renderChecklist();
+}
+
+function clearChecklist() {
+  if (!checklist.length) return;
+  if (confirm('Clear entire checklist?')) { checklist = []; save(); renderChecklist(); toast('Checklist cleared'); }
+}
+
+function toggleCheckItem(i) {
+  checklist[i].done = !checklist[i].done;
+  save(); renderChecklist();
+  if (checklist[i].done) {
+    if (!visited.find(v => v.booth===checklist[i].booth && v.brand===checklist[i].brand)) {
+      visited.push({...checklist[i], time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), note:''});
+      save();
+    }
+    toast(`${checklist[i].brand} checked off & added to visited ✓`);
+    renderMap();
+  }
+}
+
+function removeCheckItem(i) {
+  checklist.splice(i,1); save(); renderChecklist(); renderMap();
+}
+
+function saveNote(i, val) {
+  checklist[i].note = val; save();
+}
+
+function renderChecklist() {
+  const body = document.getElementById('checklist-body');
+  const progress = document.getElementById('check-progress-card');
+  if (!checklist.length) {
+    progress.style.display = 'none';
+    body.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">No booths yet</div>
+      <div class="empty-sub">Build a route and tap "Add entire route to checklist", or add booths manually from the map.</div>
+    </div>`;
+    return;
+  }
+  const done = checklist.filter(c => c.done).length;
+  progress.style.display = 'block';
+  document.getElementById('check-progress-label').textContent = `${done} / ${checklist.length}`;
+  document.getElementById('check-progress-bar').style.width = `${Math.round((done/checklist.length)*100)}%`;
+
+  const todo = checklist.filter(c=>!c.done);
+  const doneList = checklist.filter(c=>c.done);
+
+  let html = '';
+  if (todo.length) {
+    html += `<div class="check-group"><div class="check-group-label">To visit <span class="check-group-cnt">${todo.length}</span></div>`;
+    todo.forEach((c,_) => {
+      const i = checklist.indexOf(c);
+      html += renderCheckItem(c, i);
+    });
+    html += `</div>`;
+  }
+  if (doneList.length) {
+    html += `<div class="check-group"><div class="check-group-label" style="margin-top:10px">Completed <span class="check-group-cnt" style="color:#22C55E">${doneList.length}</span></div>`;
+    doneList.forEach((c,_) => {
+      const i = checklist.indexOf(c);
+      html += renderCheckItem(c, i);
+    });
+    html += `</div>`;
+  }
+  body.innerHTML = html;
+}
+
+function renderCheckItem(c, i) {
+  return `<div class="check-item ${c.done?'done':''}" onclick="toggleCheckItem(${i})">
+    <div class="check-box"><span class="check-tick">✓</span></div>
+    <div class="check-info">
+      <div class="check-name">${c.brand}</div>
+      <div class="check-meta">Booth ${c.booth} · ${c.cat}</div>
+      <div class="check-note show" onclick="event.stopPropagation()">
+        <textarea class="check-note-input" placeholder="Add a note… (samples to grab, things to ask)" rows="1"
+          onchange="saveNote(${i},this.value)">${c.note||''}</textarea>
+      </div>
+      <div class="check-actions" onclick="event.stopPropagation()">
+        <button class="check-action-btn" onclick="removeCheckItem(${i})">Remove</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// VISITED PAGE
+// ═══════════════════════════════════════════
+function renderVisited() {
+  const body = document.getElementById('visited-body');
+  document.getElementById('vs-total').textContent = visited.length;
+  document.getElementById('vs-remaining').textContent = Math.max(0, BRANDS.length - visited.length);
+  const cats = new Set(visited.map(v=>v.cat));
+  document.getElementById('vs-cats').textContent = cats.size;
+  document.getElementById('vs-pct').textContent = Math.round((visited.length/BRANDS.length)*100)+'%';
+
+  if (!visited.length) {
+    body.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">✨</div>
+      <div class="empty-title">No booths visited yet</div>
+      <div class="empty-sub">Mark booths as visited from the map, checklist, or route builder. Your expo journey will be tracked here.</div>
+    </div>`;
+    return;
+  }
+
+  // Group by category
+  const byCat = {};
+  visited.forEach(v => { if (!byCat[v.cat]) byCat[v.cat] = []; byCat[v.cat].push(v); });
+
+  let html = '';
+  Object.entries(byCat).sort((a,b)=>b[1].length-a[1].length).forEach(([cat, items]) => {
+    html += `<div style="margin-bottom:4px">
+      <div class="check-group-label" style="margin-bottom:8px">
+        <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${CAT_COLOR[cat]||'#999'};margin-right:5px"></span>${cat}</span>
+        <span class="check-group-cnt" style="color:#22C55E">${items.length}</span>
+      </div>`;
+    items.forEach((v, i) => {
+      const vi = visited.indexOf(v);
+      html += `<div class="visited-item">
+        <div class="vi-check">✓</div>
+        <div style="flex:1;min-width:0">
+          <div class="vi-name">${v.brand}</div>
+          <div class="vi-meta">Booth ${v.booth}</div>
+          ${v.note?`<div class="visited-note">"${v.note}"</div>`:''}
+        </div>
+        <div class="vi-time">${v.time||''}</div>
+        <button class="vi-remove" onclick="removeVisited(${vi})" title="Remove">×</button>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  html += `<button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="clearVisited()">Clear visited list</button>`;
+  body.innerHTML = html;
+}
+
+function removeVisited(i) {
+  visited.splice(i,1); save(); renderVisited(); renderMap();
+}
+function clearVisited() {
+  if (confirm('Clear your visited list?')) { visited = []; save(); renderVisited(); renderMap(); toast('Visited list cleared'); }
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+renderMap();
+renderChecklist();
+</script>
+</body>
+</html>

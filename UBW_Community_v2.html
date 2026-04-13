@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Hub — UBW 2026 by Jem</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF3F8E;--pink-hot:#E8185A;--pink-soft:#FF7FB5;--pink-pale:#FFD6E8;--pink-blush:#FFF0F6;--pink-border:rgba(255,63,142,0.22);--white:#FFFFFF;--cream:#FFF8FB;--mist:#C8809A;--ink:#2D0A1E;--ink2:#5C2040;--shadow-pink:0 8px 32px rgba(255,63,142,0.18);--shadow-soft:0 4px 20px rgba(255,63,142,0.10);--r:16px;--rr:24px;--nav-h:64px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;cursor:none;}
+a{text-decoration:none;color:inherit;}
+button{font-family:'DM Sans',sans-serif;cursor:none;border:none;outline:none;}
+input,textarea,select{font-family:'DM Sans',sans-serif;outline:none;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--pink-blush);}::-webkit-scrollbar-thumb{background:var(--pink-soft);border-radius:4px;}
+
+/* CURSOR */
+.cursor-outer{position:fixed;top:0;left:0;width:36px;height:36px;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform 0.06s ease;}
+.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(255,63,142,0.7);}
+body.hov .cursor-outer{transform:translate(-50%,-50%) scale(1.6);}
+body.hov .cursor-dot{width:4px;height:4px;}
+@keyframes sparkOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-160%) scale(2)}}
+
+/* NAV */
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--pink-border);z-index:1000;display:flex;align-items:center;padding:0 1.5rem;justify-content:space-between;}
+.nav-logo{font-family:'Dancing Script',cursive;font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--pink-hot),var(--pink-soft));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{padding:7px 14px;border-radius:50px;font-size:13px;font-weight:500;color:var(--ink2);transition:all 0.2s;}
+.nav-links a:hover{background:var(--pink-pale);color:var(--pink);}
+.nav-links a.active{background:var(--pink);color:#fff;box-shadow:0 3px 12px rgba(255,63,142,0.35);}
+.nav-cta{background:linear-gradient(135deg,var(--pink),var(--pink-hot))!important;color:#fff!important;padding:8px 18px!important;}
+.ham{display:none;flex-direction:column;gap:5px;padding:8px;background:none;}
+.ham span{display:block;width:22px;height:2px;background:var(--pink);border-radius:2px;transition:all 0.3s;}
+.mob-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--pink-border);padding:1rem 1.5rem 1.5rem;flex-direction:column;gap:6px;z-index:999;}
+.mob-nav.open{display:flex;}
+.mob-nav a{padding:12px 16px;border-radius:var(--r);font-size:15px;font-weight:500;color:var(--ink2);}
+.mob-nav a.active,.mob-nav a:hover{background:var(--pink-pale);color:var(--pink);}
+@media(max-width:640px){.nav-links{display:none;}.ham{display:flex;}}
+
+/* HERO */
+.hero{padding:6rem 0 4rem;background:linear-gradient(150deg,#fff 0%,#FFE8F3 50%,#FFD6E8 100%);text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'✨';position:absolute;font-size:200px;right:-30px;top:-20px;opacity:0.06;}
+
+/* TYPE */
+.eyebrow{font-family:'Dancing Script',cursive;font-size:20px;color:var(--pink);display:block;margin-bottom:8px;}
+.display-title{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,60px);font-weight:900;line-height:1.05;color:var(--ink);}
+.display-title em{color:var(--pink);font-style:italic;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--ink);line-height:1.15;}
+.section-title em{color:var(--pink);font-style:italic;}
+.lead{font-size:clamp(14px,2vw,17px);color:var(--mist);line-height:1.7;font-weight:300;}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--pink),var(--pink-soft));border-radius:2px;margin:1rem 0;}
+.dc{margin:1rem auto;}
+
+/* LAYOUT */
+.page-wrap{padding-top:var(--nav-h);}
+.container{max-width:1100px;margin:0 auto;padding:0 1.25rem;}
+.section{padding:4.5rem 0;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:600;transition:all 0.2s;border:none;cursor:none;}
+.btn:hover{transform:translateY(-2px);}
+.btn-pink{background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;box-shadow:var(--shadow-soft);}
+.btn-pink:hover{box-shadow:var(--shadow-pink);}
+.btn-outline{background:transparent;border:2px solid var(--pink-border);color:var(--pink);}
+.btn-outline:hover{background:var(--pink-pale);border-color:var(--pink);}
+.btn-white{background:#fff;color:var(--pink-hot);box-shadow:var(--shadow-soft);}
+.btn-sm{padding:8px 16px;font-size:12px;}
+.btn-full{width:100%;}
+
+/* TABS */
+.page-tabs{background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--pink-border);position:sticky;top:var(--nav-h);z-index:90;}
+.tab-row{display:flex;overflow-x:auto;scrollbar-width:none;max-width:1100px;margin:0 auto;padding:0 1.25rem;}
+.tab-row::-webkit-scrollbar{display:none;}
+.pg-tab{padding:14px 18px;font-size:13px;font-weight:600;color:var(--mist);background:transparent;border:none;border-bottom:2.5px solid transparent;white-space:nowrap;transition:all 0.15s;display:flex;align-items:center;gap:6px;}
+.pg-tab:hover{color:var(--ink);}
+.pg-tab.active{color:var(--pink);border-bottom-color:var(--pink);}
+.pg-panel{display:none;}
+.pg-panel.active{display:block;}
+
+/* CHAT */
+.chat-box{background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);overflow:hidden;display:flex;flex-direction:column;height:560px;box-shadow:var(--shadow-pink);}
+.chat-hdr{padding:1rem 1.25rem;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.chat-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.chat-online{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;}
+.odot{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.chat-topic{padding:8px 14px;background:var(--pink-blush);border-bottom:1px solid var(--pink-border);font-size:11px;color:var(--pink);font-weight:600;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.chat-msgs-wrap{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px;background:var(--pink-blush);}
+.cmsg{display:flex;gap:8px;align-items:flex-end;animation:fu 0.3s ease both;}
+.cmsg.me{flex-direction:row-reverse;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.mav{width:28px;height:28px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.mbub{max-width:72%;padding:10px 14px;border-radius:18px 18px 18px 4px;font-size:13px;line-height:1.55;background:#fff;border:1px solid var(--pink-border);color:var(--ink);}
+.cmsg.me .mbub{background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;border:none;border-radius:18px 18px 4px 18px;}
+.mname{font-size:10px;color:var(--pink);font-weight:700;margin-bottom:3px;}
+.mtime{font-size:9px;color:var(--mist);margin-top:3px;}
+.chat-name-r{padding:8px 14px 0;background:#fff;display:flex;gap:8px;flex-shrink:0;}
+.chat-name-in{flex:1;padding:7px 12px;border:1.5px solid var(--pink-border);border-radius:50px;font-size:12px;color:var(--ink);background:var(--pink-blush);}
+.chat-name-in:focus{border-color:var(--pink);}
+.chat-in-row{display:flex;gap:8px;padding:10px 14px;background:#fff;border-top:1px solid var(--pink-border);flex-shrink:0;}
+.chat-in{flex:1;padding:10px 16px;border:1.5px solid var(--pink-border);border-radius:50px;font-size:13px;color:var(--ink);background:var(--pink-blush);transition:border-color 0.15s;}
+.chat-in:focus{border-color:var(--pink);background:#fff;}
+.send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-hot));color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;}
+.send-btn:hover{transform:scale(1.08);}
+
+/* QA */
+.qa-ask{background:linear-gradient(135deg,var(--pink-blush),#fff);border:1px solid var(--pink-border);border-radius:var(--rr);padding:2rem;margin-bottom:2rem;}
+.qa-ta{width:100%;padding:14px 16px;border:1.5px solid var(--pink-border);border-radius:var(--r);font-size:14px;color:var(--ink);background:#fff;resize:none;min-height:80px;margin:12px 0;line-height:1.6;}
+.qa-ta:focus{border-color:var(--pink);}
+.qa-item{background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);overflow:hidden;margin-bottom:1rem;transition:box-shadow 0.2s;}
+.qa-item:hover{box-shadow:var(--shadow-soft);}
+.qa-qr{padding:1.25rem 1.5rem;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:background 0.15s;}
+.qa-qr:hover{background:var(--pink-blush);}
+.qa-qr.open .qa-arr{transform:rotate(180deg);}
+.qa-arr{font-size:12px;color:var(--mist);transition:transform 0.25s;flex-shrink:0;margin-top:4px;}
+.qa-q{font-size:15px;font-weight:600;color:var(--ink);flex:1;line-height:1.4;}
+.qa-meta{display:flex;align-items:center;gap:8px;margin-top:4px;}
+.qa-cat{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--pink-pale);color:var(--pink-hot);text-transform:uppercase;letter-spacing:0.06em;}
+.qa-asked{font-size:11px;color:var(--mist);}
+.qa-ans{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--pink-border);}
+.qa-ans.open{display:block;animation:fu 0.25s ease both;}
+.qa-ai-box{background:linear-gradient(135deg,var(--pink-blush),#fff);border-radius:var(--r);padding:1.25rem;margin-top:1rem;border-left:3px solid var(--pink);}
+.ai-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;color:var(--pink);background:var(--pink-pale);padding:3px 9px;border-radius:10px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;}
+.qa-load{display:flex;align-items:center;gap:10px;padding:1rem;color:var(--mist);font-size:13px;}
+.spinner{width:18px;height:18px;border:2px solid var(--pink-pale);border-top-color:var(--pink);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.qa-helpful{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--pink-border);flex-wrap:wrap;}
+.hbtn{padding:5px 12px;border-radius:50px;font-size:11px;font-weight:600;background:transparent;border:1px solid var(--pink-border);color:var(--mist);cursor:none;transition:all 0.15s;}
+.hbtn:hover{background:var(--pink-pale);border-color:var(--pink);color:var(--pink);}
+.qa-chat-btn{padding:5px 12px;border-radius:50px;font-size:11px;font-weight:600;background:var(--pink-pale);border:1px solid var(--pink-border);color:var(--pink-hot);cursor:none;transition:all 0.15s;margin-left:auto;}
+.qa-chat-btn:hover{background:var(--pink);color:#fff;}
+.tq-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.tq-tab{padding:7px 16px;border-radius:50px;font-size:12px;font-weight:600;border:1.5px solid var(--pink-border);background:#fff;color:var(--mist);cursor:none;transition:all 0.15s;}
+.tq-tab:hover{border-color:var(--pink);color:var(--pink);}
+.tq-tab.active{background:var(--pink);border-color:var(--pink);color:#fff;}
+
+/* POLLS */
+.poll-card{background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);padding:1.5rem;transition:box-shadow 0.2s;}
+.poll-card:hover{box-shadow:var(--shadow-soft);}
+.poll-q{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:0.75rem;line-height:1.4;}
+.poll-tot{font-size:11px;color:var(--mist);margin-bottom:14px;display:flex;align-items:center;gap:5px;}
+.ptdot{width:5px;height:5px;border-radius:50%;background:var(--pink);}
+.poll-opts{display:flex;flex-direction:column;gap:8px;}
+.poll-opt{position:relative;border:1.5px solid var(--pink-border);border-radius:12px;overflow:hidden;cursor:none;transition:all 0.2s;}
+.poll-opt:hover:not(.voted){border-color:var(--pink);transform:translateY(-1px);}
+.poll-opt.sel{border-color:var(--pink);}
+.poll-opt.winner{border-color:var(--pink);border-width:2px;}
+.pbar{position:absolute;inset:0;border-radius:10px;background:linear-gradient(90deg,var(--pink-pale),rgba(255,214,232,0.5));width:0%;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1);}
+.poi{position:relative;z-index:1;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.pol{font-size:14px;font-weight:500;color:var(--ink);line-height:1.3;}
+.pr{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ppct{font-size:13px;font-weight:700;color:var(--pink);min-width:36px;text-align:right;}
+.pchk{width:20px;height:20px;border-radius:50%;border:2px solid var(--pink-border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all 0.2s;}
+.poll-opt.sel .pchk{background:var(--pink);border-color:var(--pink);color:#fff;}
+.poll-msg{margin-top:12px;padding:10px 14px;background:var(--pink-blush);border-radius:var(--r);font-size:13px;color:var(--mist);display:none;line-height:1.5;}
+.poll-msg.show{display:block;animation:fu 0.3s ease both;}
+.new-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px;background:rgba(74,222,128,0.15);color:#16A34A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.live-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px;background:rgba(255,63,142,0.1);color:var(--pink);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.ldot{width:5px;height:5px;border-radius:50%;background:var(--pink);animation:pulse 1.2s infinite;}
+
+/* SUGGESTIONS */
+.sug-hero{background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:var(--rr);padding:2.5rem;color:#fff;position:relative;overflow:hidden;margin-bottom:2rem;}
+.sug-hero::before{content:'💡';position:absolute;font-size:120px;right:-10px;top:-10px;opacity:0.12;}
+.sug-form{background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);padding:1.75rem;margin-bottom:1.5rem;}
+.sug-in{width:100%;padding:12px 16px;border:1.5px solid var(--pink-border);border-radius:var(--r);font-size:14px;color:var(--ink);background:var(--pink-blush);margin-bottom:10px;transition:border-color 0.15s;}
+.sug-in:focus{border-color:var(--pink);background:#fff;}
+.stype-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.stype{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;border:1.5px solid var(--pink-border);background:#fff;color:var(--mist);cursor:none;transition:all 0.15s;}
+.stype:hover{border-color:var(--pink);color:var(--pink);}
+.stype.active{background:var(--pink);border-color:var(--pink);color:#fff;}
+.sug-item{display:flex;align-items:flex-start;gap:12px;padding:1rem 1.25rem;background:#fff;border:1px solid var(--pink-border);border-radius:var(--r);margin-bottom:8px;transition:all 0.15s;}
+.sug-item:hover{border-color:var(--pink);box-shadow:var(--shadow-soft);}
+.sv-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
+.sv-btn{width:32px;height:32px;border-radius:10px;border:1.5px solid var(--pink-border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:none;transition:all 0.15s;}
+.sv-btn:hover{background:var(--pink-pale);border-color:var(--pink);}
+.sv-btn.voted{background:var(--pink);border-color:var(--pink);color:#fff;}
+.sv-cnt{font-size:13px;font-weight:700;color:var(--ink2);}
+.sc{flex:1;}
+.st{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.sd{font-size:13px;color:var(--mist);line-height:1.55;}
+.sf{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.stag{font-size:10px;padding:2px 8px;border-radius:8px;background:var(--pink-pale);color:var(--pink-hot);font-weight:600;}
+.sstatus{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;}
+.s-new{background:rgba(74,222,128,0.15);color:#16A34A;}
+.s-rev{background:rgba(234,179,8,0.15);color:#A16207;}
+.s-done{background:rgba(255,63,142,0.15);color:var(--pink-hot);}
+
+/* OUTFITS */
+.outfit-hero{background:linear-gradient(135deg,var(--pink-blush),var(--pink-pale));border:1px solid var(--pink-border);border-radius:var(--rr);padding:2.5rem;text-align:center;margin-bottom:2rem;}
+.style-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:1.5rem 0;}
+.style-chip{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:50px;font-size:13px;font-weight:600;border:2px solid var(--pink-border);background:#fff;color:var(--mist);cursor:none;transition:all 0.2s;}
+.style-chip:hover{border-color:var(--pink);color:var(--pink);}
+.style-chip.active{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 4px 14px rgba(255,63,142,0.3);}
+.outfit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;}
+.ocard{background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);overflow:hidden;transition:all 0.22s;}
+.ocard:hover{box-shadow:var(--shadow-pink);transform:translateY(-4px);}
+.oimg{aspect-ratio:3/4;max-height:200px;background:linear-gradient(135deg,var(--pink-blush),var(--pink-pale));display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:56px;position:relative;}
+.oimg-sub{font-size:11px;color:var(--mist);margin-top:6px;}
+.cbadge{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.9);border-radius:50px;padding:4px 10px;font-size:10px;font-weight:700;color:#16A34A;display:flex;align-items:center;gap:4px;border:1px solid rgba(22,163,74,0.2);}
+.obody{padding:1.25rem;}
+.oname{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.ostyle{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px;background:var(--pink-pale);color:var(--pink-hot);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+.odesc{font-size:13px;color:var(--mist);line-height:1.6;margin-bottom:12px;}
+.opieces{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.opiece{display:flex;align-items:flex-start;gap:8px;font-size:12px;padding:6px 10px;background:var(--pink-blush);border-radius:8px;color:var(--ink2);}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:3px;}
+.ocomf{display:flex;align-items:flex-start;gap:6px;padding:8px 12px;background:rgba(22,163,74,0.06);border-radius:8px;border:1px solid rgba(22,163,74,0.15);}
+.ocomf-t{font-size:11px;color:#16A34A;font-weight:600;line-height:1.5;}
+.onote{font-size:12px;color:var(--mist);font-style:italic;padding:10px 12px;background:var(--pink-blush);border-radius:8px;border-left:3px solid var(--pink);margin-top:10px;line-height:1.55;}
+
+/* FOOTER */
+.footer{background:linear-gradient(135deg,#2D0A1E,#5C1035);color:rgba(255,255,255,0.7);padding:4rem 0 2rem;}
+.ft-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:2rem;}
+.flogo{font-family:'Dancing Script',cursive;font-size:32px;font-weight:700;color:#FF7FB5;margin-bottom:12px;}
+.fcol-t{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px;}
+.flinks{display:flex;flex-direction:column;gap:10px;}
+.flinks a{font-size:14px;color:rgba(255,255,255,0.65);transition:color 0.15s;}
+.flinks a:hover{color:#FF7FB5;}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:12px;color:rgba(255,255,255,0.3);}
+.fsoc{display:flex;gap:10px;}
+.fsoc a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.2s;}
+.fsoc a:hover{background:var(--pink);color:#fff;transform:translateY(-2px);}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 24px;border-radius:50px;font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-pink);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:900px){.ft-top{grid-template-columns:1fr 1fr;gap:2rem;}}
+@media(max-width:640px){.ft-top{grid-template-columns:1fr;}.section{padding:3rem 0;}.outfit-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-outer" id="co">
+  <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="15" fill="rgba(255,63,142,0.12)" stroke="#FF3F8E" stroke-width="1.5"/><text x="18" y="22.5" text-anchor="middle" font-size="12">💗</text></svg>
+</div>
+<div class="cursor-dot" id="cd"></div>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html" class="active">Community</a>
+    <a href="about.html">About Jem</a>
+    <a href="resources.html" class="nav-cta">Explore Brands →</a>
+  </div>
+  <button class="ham" id="ham"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-nav" id="mobnav">
+  <a href="index.html">Home</a><a href="resources.html">Resources</a>
+  <a href="community.html" class="active">Community</a><a href="about.html">About Jem</a>
+</div>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="container">
+      <span class="eyebrow">Connect · Ask · Vote · Suggest · Style</span>
+      <h1 class="display-title">The <em>Community</em> Hub</h1>
+      <div class="divider dc"></div>
+      <p class="lead">Ask questions, cast live votes, share ideas, find your outfit, and chat with the community</p>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="page-tabs">
+    <div class="tab-row">
+      <button class="pg-tab active" onclick="showTab('chat',this)">💬 Live Chat</button>
+      <button class="pg-tab" onclick="showTab('qa',this)">❓ Q&amp;A</button>
+      <button class="pg-tab" onclick="showTab('polls',this)">📊 Live Polls</button>
+      <button class="pg-tab" onclick="showTab('sug',this)">💡 Suggestions</button>
+      <button class="pg-tab" onclick="showTab('outfits',this)">👗 Outfit Ideas</button>
+    </div>
+  </div>
+
+  <!-- ── CHAT ── -->
+  <div class="pg-panel active" id="tab-chat">
+    <section class="section">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start">
+          <div>
+            <span class="eyebrow">Real-time</span>
+            <h2 class="section-title">Chat With the <em>Community</em></h2>
+            <div class="divider"></div>
+            <p class="lead" style="margin-top:1rem;font-size:15px">Linked to the Q&A section — click any hot topic below to instantly share it in the chat and start a discussion.</p>
+            <div style="margin-top:1.5rem">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:10px">🔗 Hot Q&A topics — share in chat:</div>
+              <div style="display:flex;flex-direction:column;gap:6px" id="hot-topics"></div>
+            </div>
+            <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:8px">
+              <div style="padding:12px 14px;background:#fff;border:1px solid var(--pink-border);border-radius:var(--r);font-size:13px;display:flex;align-items:center;gap:10px">
+                <span>📊</span><div><strong>Poll results</strong> appear in chat instantly when you vote</div>
+              </div>
+              <div style="padding:12px 14px;background:#fff;border:1px solid var(--pink-border);border-radius:var(--r);font-size:13px;display:flex;align-items:center;gap:10px">
+                <span>🌸</span><div>Keep it kind and pink ✨ All messages are public</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="chat-box">
+              <div class="chat-hdr">
+                <div class="chat-av">💄</div>
+                <div><div style="font-size:15px;font-weight:700">UBW 2026 Live Chat</div><div style="font-size:11px;opacity:0.8">April 16 · Orlando</div></div>
+                <div class="chat-online"><div class="odot"></div><span id="ocnt">12 online</span></div>
+              </div>
+              <div class="chat-topic" id="chat-topic"><span>📌</span><span id="topic-text">General chat — ask anything!</span></div>
+              <div class="chat-msgs-wrap" id="chat-msgs"></div>
+              <div class="chat-name-r"><input type="text" id="cname" class="chat-name-in" placeholder="Your nickname…" maxlength="20"></div>
+              <div class="chat-in-row">
+                <input type="text" id="cin" class="chat-in" placeholder="Type a message… 💗" maxlength="200" onkeydown="if(event.key==='Enter')sendChat()">
+                <button class="send-btn" onclick="sendChat()">➤</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Community posts -->
+        <div style="margin-top:3.5rem">
+          <h2 class="section-title" style="margin-bottom:1.5rem">What Everyone's <em>Saying</em></h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem">
+            <div style="background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);padding:1.25rem">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center">💅</div><div><div style="font-size:14px;font-weight:700">BeautyQueenRayna</div><div style="font-size:11px;color:var(--mist)">2h ago</div></div></div>
+              <div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px">ALL PINK on April 16. Barbie goes to UBW and no one can stop me 🩷✨</div>
+              <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:var(--pink-pale);color:var(--pink-hot);font-weight:700">#UBW2026</span>
+              <div style="display:flex;gap:12px;margin-top:10px"><span onclick="likePost(this,'24')" style="font-size:12px;color:var(--mist)">🤍 24</span><span style="font-size:12px;color:var(--mist)">💬 Reply</span></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);padding:1.25rem">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center">🌀</div><div><div style="font-size:14px;font-weight:700">CurlGirlMikayla</div><div style="font-size:11px;color:var(--mist)">4h ago</div></div></div>
+              <div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px">Curly girl route → Cécred 1903 → PATTERN 1421 → Rizos 1947 🌀💜 who's with me?</div>
+              <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:var(--pink-pale);color:var(--pink-hot);font-weight:700">#CurlyHair</span>
+              <div style="display:flex;gap:12px;margin-top:10px"><span onclick="likePost(this,'41')" style="font-size:12px;color:var(--mist)">🤍 41</span><span style="font-size:12px;color:var(--mist)">💬 Reply</span></div>
+            </div>
+            <div id="uposts"></div>
+          </div>
+          <div style="margin-top:1.5rem;background:linear-gradient(135deg,var(--pink),var(--pink-hot));border-radius:var(--rr);padding:1.5rem">
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px">Share Your Tip 💡</h3>
+            <textarea id="postin" placeholder="Your UBW tip or must-visit booth…" style="width:100%;padding:12px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:13px;background:rgba(255,255,255,0.2);color:#fff;resize:none;min-height:72px;" rows="3"></textarea>
+            <div style="margin-top:10px"><button class="btn btn-white btn-sm" onclick="sharePost()">Post ✨</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── Q&A ── -->
+  <div class="pg-panel" id="tab-qa">
+    <section class="section">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:2.5rem">
+          <span class="eyebrow">Get answers</span>
+          <h2 class="section-title">Ask <em>Anything</em> About UBW 2026</h2>
+          <div class="divider dc"></div>
+          <p class="lead">AI-powered answers from brands, logistics, strategy, skincare — anything about the expo!</p>
+        </div>
+        <div class="qa-ask">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:8px">Ask a question</div>
+          <textarea class="qa-ta" id="qa-in" placeholder="e.g. What time should I arrive to avoid the Fenty line? Which K-beauty booths give the best samples?" rows="3"></textarea>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-pink btn-sm" onclick="askQ()">✨ Get AI Answer</button>
+            <button class="btn btn-outline btn-sm" onclick="surpriseQ()">🎲 Surprise question</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1rem">
+          <h3 class="section-title" style="font-size:clamp(18px,3vw,26px)">Top <em>Questions</em></h3>
+          <button class="btn btn-outline btn-sm" onclick="moreQs()">Load more</button>
+        </div>
+        <div class="tq-tabs">
+          <div class="tq-tab active" onclick="filterQ('all',this)">All</div>
+          <div class="tq-tab" onclick="filterQ('logistics',this)">📍 Logistics</div>
+          <div class="tq-tab" onclick="filterQ('brands',this)">💄 Brands</div>
+          <div class="tq-tab" onclick="filterQ('strategy',this)">🎯 Strategy</div>
+          <div class="tq-tab" onclick="filterQ('skincare',this)">🌸 Skincare</div>
+          <div class="tq-tab" onclick="filterQ('haircare',this)">💜 Haircare</div>
+          <div class="tq-tab" onclick="filterQ('outfit',this)">👗 Outfit</div>
+        </div>
+        <div id="qa-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── POLLS ── -->
+  <div class="pg-panel" id="tab-polls">
+    <section class="section">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:2.5rem">
+          <span class="eyebrow">Cast your vote</span>
+          <h2 class="section-title">Live <em>Polls</em></h2>
+          <div class="divider dc"></div>
+          <p class="lead">Results update instantly the moment you vote. See what the community thinks!</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem" id="polls-wrap"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── SUGGESTIONS ── -->
+  <div class="pg-panel" id="tab-sug">
+    <section class="section">
+      <div class="container">
+        <div class="sug-hero">
+          <span style="font-family:'Dancing Script',cursive;font-size:20px;color:rgba(255,255,255,0.8);display:block;margin-bottom:8px">Your ideas matter</span>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:900;color:#fff;margin-bottom:8px">Suggestions &amp; <em style="font-style:italic">Feature Requests</em></h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.75);max-width:500px;line-height:1.7">Have an idea to improve this site? The most upvoted suggestions get built first!</p>
+        </div>
+        <div class="sug-form">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mist);margin-bottom:12px">Submit a suggestion</div>
+          <input type="text" class="sug-in" id="sug-title" placeholder="Suggestion title…">
+          <textarea class="sug-in" id="sug-desc" placeholder="Describe your idea…" rows="3" style="min-height:80px;resize:none"></textarea>
+          <div class="stype-row" id="stype-row">
+            <div class="stype active" data-v="Feature">✨ Feature</div>
+            <div class="stype" data-v="Content">📝 Content</div>
+            <div class="stype" data-v="Design">🎨 Design</div>
+            <div class="stype" data-v="Bug">🐛 Bug</div>
+            <div class="stype" data-v="Question">💬 For Jem</div>
+          </div>
+          <button class="btn btn-pink btn-sm" onclick="submitSug()">Submit 💗</button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1rem">
+          <h3 class="section-title" style="font-size:clamp(18px,3vw,26px)"><em>Community</em> Suggestions</h3>
+          <span style="font-size:13px;color:var(--mist)"><span id="sugcnt">0</span> suggestions</span>
+        </div>
+        <div id="sug-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── OUTFITS ── -->
+  <div class="pg-panel" id="tab-outfits">
+    <section class="section">
+      <div class="container">
+        <div class="outfit-hero">
+          <span class="eyebrow">All-day event comfort required</span>
+          <h2 class="section-title">Outfit <em>Ideas</em> for UBW 2026</h2>
+          <div class="divider dc"></div>
+          <p class="lead" style="max-width:560px;margin:0 auto">Every look is styled for 8 hours on your feet in Orlando heat — cute AND functional. Pick your vibe! ✨</p>
+          <div class="style-row" id="style-row">
+            <div class="style-chip active" data-s="all">🌈 All Vibes</div>
+            <div class="style-chip" data-s="barbie">💗 Barbiecore</div>
+            <div class="style-chip" data-s="coquette">🎀 Coquette</div>
+            <div class="style-chip" data-s="streetwear">🖤 Streetwear Glam</div>
+            <div class="style-chip" data-s="boho">🌸 Boho Chic</div>
+            <div class="style-chip" data-s="minimalist">🤍 Clean Minimalist</div>
+            <div class="style-chip" data-s="retro">💫 Retro Glam</div>
+            <div class="style-chip" data-s="athleisure">👟 Glam Athleisure</div>
+          </div>
+        </div>
+        <div class="outfit-grid" id="outfit-grid"></div>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="ft-top">
+      <div><div class="flogo">✦ JemUBW</div><p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.5);max-width:220px">Your pink-coded guide to UBW 2026. Built with love by Jem. 💗</p><div class="fsoc" style="margin-top:1rem"><a href="#">📸</a><a href="#">🎵</a><a href="#">📌</a><a href="#">▶️</a></div></div>
+      <div><div class="fcol-t">Navigate</div><div class="flinks"><a href="index.html">Home</a><a href="resources.html">Resources</a><a href="community.html">Community</a><a href="about.html">About Jem</a></div></div>
+      <div><div class="fcol-t">Community</div><div class="flinks"><a href="#" onclick="showTab('chat',document.querySelectorAll('.pg-tab')[0]);return false">Live Chat</a><a href="#" onclick="showTab('qa',document.querySelectorAll('.pg-tab')[1]);return false">Q&amp;A</a><a href="#" onclick="showTab('polls',document.querySelectorAll('.pg-tab')[2]);return false">Live Polls</a><a href="#" onclick="showTab('sug',document.querySelectorAll('.pg-tab')[3]);return false">Suggestions</a></div></div>
+      <div><div class="fcol-t">More</div><div class="flinks"><a href="#" onclick="showTab('outfits',document.querySelectorAll('.pg-tab')[4]);return false">Outfit Ideas</a><a href="resources.html">Brand Directory</a><a href="about.html#map-download">Download Map</a></div></div>
+    </div>
+    <div class="ft-bot"><span>© 2026 JemUBW · Made with 💗</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── CURSOR ── */
+const co=document.getElementById('co'),cd=document.getElementById('cd');
+let mx=0,my=0,ox=0,oy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px';});
+(function ani(){ox+=(mx-ox)*0.12;oy+=(my-oy)*0.12;co.style.left=ox+'px';co.style.top=oy+'px';requestAnimationFrame(ani);})();
+document.addEventListener('click',e=>{
+  const s=document.createElement('div');
+  s.style.cssText='position:fixed;left:'+e.clientX+'px;top:'+e.clientY+'px;font-size:18px;pointer-events:none;z-index:99990;transform:translate(-50%,-50%);animation:sparkOut 0.6s ease both;';
+  s.textContent=['💗','✨','🌸','💕','⭐'][Math.floor(Math.random()*5)];
+  document.body.appendChild(s);setTimeout(()=>s.remove(),700);
+});
+const sparkCSS=document.createElement('style');
+sparkCSS.textContent='@keyframes sparkOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-180%) scale(2.2)}}';
+document.head.appendChild(sparkCSS);
+document.querySelectorAll('a,button,.style-chip,.tq-tab,.stype,.poll-opt,.sv-btn,.ocard,.qa-qr').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* ── NAV ── */
+const ham=document.getElementById('ham'),mob=document.getElementById('mobnav');
+ham.addEventListener('click',()=>{
+  mob.classList.toggle('open');
+  const ss=ham.querySelectorAll('span');
+  if(mob.classList.contains('open')){ss[0].style.transform='rotate(45deg) translate(5px,5px)';ss[1].style.opacity='0';ss[2].style.transform='rotate(-45deg) translate(5px,-5px)';}
+  else{ss.forEach(s=>{s.style.transform='';s.style.opacity='';});}
+});
+
+/* ── TABS ── */
+function showTab(id,btn){
+  document.querySelectorAll('.pg-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pg-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.page-tabs').offsetTop-10,behavior:'smooth'});
+}
+
+/* ── CHAT ── */
+const SEEDS=[
+  {n:'Jem ✦',a:'👸🏽',t:"Welcome to the UBW 2026 chat! 💗 So excited for April 16 — who's going??",ts:'10:00 AM'},
+  {n:'BeautyJunkie92',a:'💄',t:'Fenty, Cécred, Pat McGrath = my holy trinity 🖤✨',ts:'10:03 AM'},
+  {n:'KBeautyQueen',a:'🌸',t:'COSRX booth 2240 is my FIRST stop. Snail mucin run 🐌',ts:'10:07 AM'},
+  {n:'CurlsAndGloss',a:'🌀',t:'First timer here!! Tips for not getting overwhelmed? 😭',ts:'10:12 AM'},
+  {n:'Jem ✦',a:'👸🏽',t:'@CurlsAndGloss check the Q&A tab for strategy!! Also hit Zone C first 🎯💗',ts:'10:14 AM'},
+  {n:'MelaninQueen',a:'✊🏾',t:'Pat McGrath 1821 + Live Tinted 1438 + Buttah Skin 609 — melanin girlies we are EATING 🍫💗',ts:'10:22 AM'},
+];
+let msgs=[...SEEDS];
+
+function renderChat(){
+  const el=document.getElementById('chat-msgs');
+  el.innerHTML=msgs.map(m=>`<div class="cmsg ${m.me?'me':''}"><div class="mav">${m.a||'🌸'}</div><div>${!m.me?'<div class="mname">'+m.n+'</div>':''}<div class="mbub">${m.t}</div><div class="mtime">${m.ts}</div></div></div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+
+function sendChat(pre){
+  const i=document.getElementById('cin'),nm=document.getElementById('cname').value.trim()||'You';
+  const txt=pre||i.value.trim();if(!txt)return;
+  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  msgs.push({n:nm,a:'💗',t:txt,ts:now,me:true});
+  if(!pre)i.value='';
+  renderChat();
+  setTimeout(()=>{
+    const rr=[{n:'BeautyJunkie92',a:'💄',t:'Omg yes!! Same energy 🙌✨'},{n:'KBeautyQueen',a:'🌸',t:'Love this!! 💗'},{n:'MelaninQueen',a:'✊🏾',t:'periodt!! See you on the floor 💅'},{n:'CurlsAndGloss',a:'🌀',t:'Thank you so much!! 🌸'}];
+    const r={...rr[Math.floor(Math.random()*rr.length)]};
+    r.ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    msgs.push(r);renderChat();
+  },1400+Math.random()*1000);
+}
+
+function setTopic(topic){
+  document.getElementById('topic-text').textContent=topic;
+  const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  msgs.push({n:'📌 Topic',a:'📌',t:'New discussion topic: "'+topic+'"',ts:now});
+  renderChat();showToast('Topic set in chat! 💬');
+  showTab('chat',document.querySelectorAll('.pg-tab')[0]);
+}
+
+function likePost(el,n){const c=parseInt(n);el.textContent='❤️ '+(c+1);}
+
+function sharePost(){
+  const v=document.getElementById('postin').value.trim();
+  if(!v){showToast('Write something first! 💗');return;}
+  const d=document.createElement('div');
+  d.style.cssText='background:#fff;border:1px solid var(--pink-border);border-radius:var(--rr);padding:1.25rem;animation:fu 0.3s ease both';
+  d.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div style="width:36px;height:36px;border-radius:50%;background:var(--pink-pale);display:flex;align-items:center;justify-content:center">💗</div><div><div style="font-size:14px;font-weight:700">You</div><div style="font-size:11px;color:var(--mist)">Just now</div></div></div><div style="font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px">'+v+'</div><span style="font-size:10px;padding:2px 8px;border-radius:10px;background:var(--pink-pale);color:var(--pink-hot);font-weight:700">#UBW2026</span>';
+  document.getElementById('uposts').appendChild(d);
+  document.getElementById('postin').value='';showToast('Posted! 💗');
+}
+
+function buildHotTopics(){
+  const tt=['What time to arrive at UBW 2026?','Best booths for melanin-friendly skincare','How to beat the Cécred booth line','K-beauty must-visit booths ranked','What to wear for 8 hours at an expo'];
+  document.getElementById('hot-topics').innerHTML=tt.map(t=>`<div onclick="setTopic('${t}')" style="padding:10px 12px;background:#fff;border:1px solid var(--pink-border);border-radius:var(--r);display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;cursor:none;transition:all 0.15s;" onmouseenter="this.style.borderColor='var(--pink)'" onmouseleave="this.style.borderColor='var(--pink-border)'"><span style="color:var(--ink2);font-weight:500">${t}</span><span style="font-size:11px;background:var(--pink-pale);color:var(--pink-hot);padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap">Chat →</span></div>`).join('');
+}
+
+setInterval(()=>{document.getElementById('ocnt').textContent=(8+Math.floor(Math.random()*18))+' online';},7000);
+
+/* ── Q&A ── */
+const QS=[
+  {q:'What time should I arrive at Ulta Beauty World?',cat:'logistics',ic:'🕗',asked:'142 asked',ans:null},
+  {q:'Which booths have the best free samples?',cat:'strategy',ic:'🎁',asked:'98 asked',ans:null},
+  {q:'What K-beauty brands are at UBW 2026?',cat:'skincare',ic:'🌸',asked:'87 asked',ans:null},
+  {q:'How do I beat the long lines at celebrity brand booths?',cat:'strategy',ic:'🎯',asked:'76 asked',ans:null},
+  {q:'What melanin-friendly skincare brands are there?',cat:'skincare',ic:'✊🏾',asked:'71 asked',ans:null},
+  {q:'Can I bring a suitcase or rolling bag?',cat:'logistics',ic:'🧳',asked:'68 asked',ans:null},
+  {q:'Which curly hair brands are at UBW 2026?',cat:'haircare',ic:'🌀',asked:'65 asked',ans:null},
+  {q:'What should I wear for an 8-hour expo?',cat:'outfit',ic:'👗',asked:'61 asked',ans:null},
+  {q:'Is the Dyson booth worth the wait?',cat:'brands',ic:'💨',asked:'58 asked',ans:null},
+  {q:'What is the difference between GA and Masterclass tickets?',cat:'logistics',ic:'🎟️',asked:'54 asked',ans:null},
+  {q:'Which Fenty Beauty products will be sampled?',cat:'brands',ic:'💄',asked:'52 asked',ans:null},
+  {q:'How should I plan my route through the expo?',cat:'strategy',ic:'🗺️',asked:'49 asked',ans:null},
+  {q:"What is Cécred and why is everyone obsessed?",cat:'brands',ic:'👸🏾',asked:'47 asked',ans:null},
+  {q:'What food options are at UBW?',cat:'logistics',ic:'🍕',asked:'44 asked',ans:null},
+  {q:"What's rumored to be in the 2026 swag bag?",cat:'brands',ic:'🎀',asked:'43 asked',ans:null},
+];
+let displayQs=[...QS],qCat='all';
+
+function filterQ(cat,el){
+  qCat=cat;
+  document.querySelectorAll('.tq-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderQA();
+}
+
+function renderQA(){
+  const filtered=qCat==='all'?displayQs:displayQs.filter(q=>q.cat===qCat);
+  document.getElementById('qa-list').innerHTML=filtered.map((q,i)=>`
+  <div class="qa-item" id="qi${i}">
+    <div class="qa-qr" onclick="toggleQ(${i},this)">
+      <div style="font-size:20px;flex-shrink:0;margin-top:2px">${q.ic}</div>
+      <div style="flex:1"><div class="qa-q">${q.q}</div><div class="qa-meta"><span class="qa-cat">${q.cat}</span><span class="qa-asked">💬 ${q.asked}</span></div></div>
+      <div class="qa-arr">▼</div>
+    </div>
+    <div class="qa-ans" id="qa${i}">
+      ${q.ans?renderAns(q,i):('<div class="qa-load" id="ql'+i+'"><div class="spinner"></div><span>Generating answer…</span></div>')}
+    </div>
+  </div>`).join('');
+}
+
+function renderAns(q,i){
+  return `<div class="qa-ai-box">
+    <div class="ai-badge">✨ AI Answer</div>
+    <div style="font-size:14px;line-height:1.75;color:var(--ink2)">${q.ans}</div>
+    <div class="qa-helpful">
+      <span style="font-size:12px;color:var(--mist)">Helpful?</span>
+      <button class="hbtn" onclick="this.textContent='👍 Thanks!';this.style.color='var(--pink)'">👍 Yes</button>
+      <button class="hbtn">👎 No</button>
+      <button class="qa-chat-btn" onclick="setTopic('${q.q.replace(/'/g,"\\'")}')">💬 Discuss in chat</button>
+    </div>
+  </div>`;
+}
+
+async function toggleQ(i,row){
+  const ans=document.getElementById('qa'+i);
+  row.classList.toggle('open');
+  ans.classList.toggle('open');
+  if(ans.classList.contains('open')&&!displayQs[i].ans) await genAns(i);
+}
+
+async function genAns(i){
+  const q=displayQs[i];
+  const prompt='You are a friendly Ulta Beauty World 2026 expo expert. Answer in 2-4 sentences with specific UBW 2026 details (April 16, Orange County Convention Center Orlando FL, 200+ brands, 9AM-5PM). Warm and helpful tone. Question: "'+q.q+'"';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const txt=(data.content||[]).map(c=>c.text||'').join('').trim();
+    displayQs[i].ans=txt;
+    const row=document.querySelector('#qi'+i+' .qa-qr');
+    const ans=document.getElementById('qa'+i);
+    const box=ans.querySelector('.qa-ai-box');
+    if(box){box.remove();}
+    const ql=document.getElementById('ql'+i);
+    if(ql) ql.remove();
+    ans.insertAdjacentHTML('beforeend',renderAns(displayQs[i],i));
+    row.classList.add('open');ans.classList.add('open');
+  }catch(e){
+    const ql=document.getElementById('ql'+i);
+    if(ql)ql.innerHTML='<span style="color:var(--pink);font-size:13px">Error — please try again.</span>';
+  }
+}
+
+async function askQ(){
+  const v=document.getElementById('qa-in').value.trim();
+  if(!v){showToast('Type a question first! 💗');return;}
+  displayQs.unshift({q:v,cat:'strategy',ic:'💬',asked:'Just asked',ans:null});
+  document.getElementById('qa-in').value='';
+  renderQA();
+  showToast('Question added! Generating answer… ✨');
+  showTab('qa',document.querySelectorAll('.pg-tab')[1]);
+  await genAns(0);
+}
+
+function surpriseQ(){
+  const q=QS[Math.floor(Math.random()*QS.length)];
+  document.getElementById('qa-in').value=q.q;
+  showToast('Surprise question loaded! 🎲');
+}
+
+function moreQs(){
+  displayQs.push(
+    {q:'What is the best K-beauty routine to build after UBW?',cat:'skincare',ic:'🌙',asked:'38 asked',ans:null},
+    {q:'Are there exclusive products only at UBW?',cat:'brands',ic:'🔖',asked:'36 asked',ans:null},
+    {q:'How far is OCCC from Disney World?',cat:'logistics',ic:'🏰',asked:'34 asked',ans:null},
+    {q:'Will brand founders be attending UBW 2026?',cat:'brands',ic:'⭐',asked:'29 asked',ans:null}
+  );
+  renderQA();showToast('More questions loaded ✨');
+}
+
+/* ── POLLS ── */
+const POLLS=[
+  {id:'p1',q:'What time are you arriving at UBW 2026?',opts:[{l:'7:30AM — Super early 🐦',v:142},{l:'8:00AM — Right at check-in 🕗',v:267},{l:'9:00AM — When doors open 🚪',v:89},{l:'Later — Slow start 😌',v:31}],voted:null,new:false},
+  {id:'p2',q:'Which category are you most excited for?',opts:[{l:'💄 Makeup',v:198},{l:'🌸 Skincare',v:284},{l:'💜 Haircare',v:176},{l:'✨ Fragrance',v:89}],voted:null,new:true},
+  {id:'p3',q:'What is your #1 must-visit booth?',opts:[{l:'👸🏾 Cécred (1903)',v:312},{l:'💄 Fenty Beauty (2009)',v:287},{l:'🌸 Rare Beauty (2003)',v:231},{l:'💋 Pat McGrath (1821)',v:198}],voted:null,new:false},
+  {id:'p4',q:'What style are you wearing to UBW?',opts:[{l:'💗 All pink / Barbiecore',v:178},{l:'🌸 Cute & comfy athleisure',v:143},{l:'👗 Dressed up glam',v:97},{l:'🤍 Casual and chill',v:82}],voted:null,new:false},
+  {id:'p5',q:"What's your haul budget?",opts:[{l:'💸 $0 — free samples only!',v:89},{l:'💵 $50–$100',v:164},{l:'💳 $100–$250',v:142},{l:'🏦 $250+ no limit',v:98}],voted:null,new:true},
+  {id:'p6',q:'Would you attend UBW 2027 if it returns?',opts:[{l:'💯 Absolutely YES',v:487},{l:'🤔 Maybe, depends on lineup',v:78},{l:'❌ Probably not',v:12}],voted:null,new:false},
+];
+
+function totV(p){return p.opts.reduce((a,o)=>a+o.v,0);}
+
+function renderPolls(){
+  document.getElementById('polls-wrap').innerHTML=POLLS.map(p=>{
+    const tot=totV(p);
+    const winIdx=p.opts.indexOf(p.opts.reduce((a,b)=>b.v>a.v?b:a));
+    return `<div class="poll-card" id="pc${p.id}">
+      ${p.new?'<div class="new-badge"><span class="ldot"></span> New</div>':'<div class="live-badge"><span class="ldot"></span> Live</div>'}
+      <div class="poll-q" style="margin-top:8px">${p.q}</div>
+      <div class="poll-tot"><div class="ptdot"></div>${tot.toLocaleString()} votes</div>
+      <div class="poll-opts">
+        ${p.opts.map((o,i)=>{
+          const pct=tot>0?Math.round(o.v/tot*100):0;
+          return `<div class="poll-opt ${p.voted===i?'sel':''} ${p.voted!==null&&i===winIdx?'winner':''}" onclick="vote('${p.id}',${i})">
+            <div class="pbar" style="width:${p.voted!==null?pct:0}%"></div>
+            <div class="poi">
+              <div class="pol">${p.voted!==null&&i===winIdx?'👑 ':''} ${o.l}</div>
+              <div class="pr">${p.voted!==null?'<span class="ppct">'+pct+'%</span>':''}<div class="pchk">${p.voted===i?'✓':''}</div></div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="poll-msg ${p.voted!==null?'show':''}" id="pm${p.id}">
+        ${p.voted!==null?'You voted: <strong>'+p.opts[p.voted].l+'</strong> · '+Math.round(p.opts[p.voted].v/tot*100)+'%  <span class="qa-chat-btn" onclick="setTopic(\'Poll: '+p.q.replace(/'/g,"\\'")+'\')" style="margin-left:8px;cursor:none">Discuss in chat →</span>':''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function vote(pid,idx){
+  const p=POLLS.find(x=>x.id===pid);
+  if(!p||p.voted!==null)return;
+  p.opts[idx].v++;p.voted=idx;
+  renderPolls();
+  showToast('Vote cast! 💗');
+  setTimeout(()=>{
+    const tot=totV(p);const pct=Math.round(p.opts[idx].v/tot*100);
+    const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    msgs.push({n:'📊 Poll',a:'📊',t:`Poll update: "${p.q}" — "${p.opts[idx].l}" now at ${pct}%!`,ts:now});
+    renderChat();
+  },800);
+}
+
+/* ── SUGGESTIONS ── */
+let sugs=[
+  {t:'Budget Mode in route builder',d:'Filter brands by free samples only vs premium buys.',type:'Feature',v:47,voted:false,s:'review'},
+  {t:'Outfit photo upload section',d:'Let community members share planned outfits for inspiration!',type:'Feature',v:38,voted:false,s:'new'},
+  {t:'Wait time estimates per booth',d:'Show estimated wait times based on crowd forecast data.',type:'Feature',v:34,voted:false,s:'review'},
+  {t:'Export checklist as PDF',d:'Would love to print my checklist for the day.',type:'Feature',v:29,voted:false,s:'new'},
+  {t:"Jem's personal routine page",d:"Jem's current skincare/haircare routine featuring fav brands!",type:'Content',v:26,voted:false,s:'new'},
+  {t:'Dark mode',d:'A moody dark pink version for night planning sessions. 🌙',type:'Design',v:21,voted:false,s:'new'},
+  {t:'Brand comparison tool',d:'Side-by-side comparison of similar products across booths.',type:'Feature',v:18,voted:false,s:'done'},
+];
+
+function renderSugs(){
+  document.getElementById('sugcnt').textContent=sugs.length;
+  const sorted=[...sugs].sort((a,b)=>b.v-a.v);
+  const sl={new:'s-new',review:'s-rev',done:'s-done'};
+  const sl2={new:'New ✦',review:'Under review 🔍',done:'Implemented ✅'};
+  document.getElementById('sug-list').innerHTML=sorted.map((s,i)=>{
+    const oi=sugs.indexOf(s);
+    return `<div class="sug-item">
+      <div class="sv-col">
+        <div class="sv-btn ${s.voted?'voted':''}" onclick="upvote(${oi})">▲</div>
+        <div class="sv-cnt">${s.v}</div>
+      </div>
+      <div class="sc">
+        <div class="st">${s.t}</div>
+        <div class="sd">${s.d}</div>
+        <div class="sf"><span class="stag">${s.type}</span><span class="sstatus ${sl[s.s]||'s-new'}">${sl2[s.s]||'New'}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function upvote(i){
+  if(sugs[i].voted){showToast('Already voted! 💗');return;}
+  sugs[i].v++;sugs[i].voted=true;renderSugs();showToast('Upvoted! 💗');
+}
+
+document.getElementById('stype-row').addEventListener('click',e=>{
+  const el=e.target.closest('.stype');if(!el)return;
+  document.querySelectorAll('.stype').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+});
+
+function submitSug(){
+  const t=document.getElementById('sug-title').value.trim();
+  const d=document.getElementById('sug-desc').value.trim();
+  const type=document.querySelector('.stype.active')?.dataset?.v||'Feature';
+  if(!t){showToast('Add a title first! 💗');return;}
+  sugs.unshift({t,d:d||'No details.',type,v:1,voted:true,s:'new'});
+  document.getElementById('sug-title').value='';document.getElementById('sug-desc').value='';
+  renderSugs();showToast('Submitted! Thanks 💗');
+}
+
+/* ── OUTFITS ── */
+const OUTFITS=[
+  {n:'Barbiecore Dream',s:'barbie',e:'💗',d:'Head-to-toe pink that screams "I am here to slay." Bold, cohesive, 100% on brand for a beauty expo.',pieces:['Hot pink wide-leg trousers or high-waist shorts','Fitted white or pink ribbed crop top','Pink platform sneakers (chunky sole = all-day support)','Mini crossbody bag — hands free for samples!','Pink accessories: scrunchie, clips, sunglasses'],c:'Platform sneakers add height without heel pain. Wide-leg stays cool on the warm convention floor. ⭐⭐⭐⭐⭐',note:'Tip: Wear a second scrunchie on your wrist — doubles as a bag holder for sample packets! 💗'},
+  {n:'Soft Coquette Angel',s:'coquette',e:'🎀',d:'Romantic, delicate, and deeply aesthetic. Bows, lace trim, and soft tones for maximum content creation moments.',pieces:['Flowy babydoll mini dress (linen or cotton blend)','White or cream Mary Jane platform flats','Lace trim socks folded over','Satin hair bows — big and multiple','Small structured bag or top handle'],c:'Mary Jane platforms give height without instability. Flowy silhouette allows full range of motion all day. ⭐⭐⭐⭐⭐',note:'Carry a mini fan — coquette fabrics are breezy but convention halls can get warm when packed! 🌸'},
+  {n:'Streetwear Glam',s:'streetwear',e:'🖤',d:'Elevated streetwear with a beauty-girl edge. High fashion meets sneaker culture — effortlessly cool.',pieces:['Cargo pants in black, cream, or olive (POCKETS for samples!)','Oversized graphic tee or fitted bodysuit','Fresh white Nike AF1s or New Balance 550s','Gold layered chains and hoops','Baseball cap or bucket hat'],c:'Cargo pockets hold sample packets, phone, and a folded tote. AF1s are proven all-day expo footwear. ⭐⭐⭐⭐⭐',note:'The cargo pocket holds a folded tote bag for when samples multiply. Zero-waste haul management! 🖤'},
+  {n:'Boho Beauty',s:'boho',e:'🌺',d:'Earthy, feminine, and free-spirited. Flowy fabrics move beautifully for content and stay comfortable in Florida heat.',pieces:['Wide-leg linen pants or flowy maxi skirt (with slit!)','Fitted cami or smocked top','Platform sandals with ankle strap (closed-toe preferred)','Fringe or woven crossbody bag','Layered gold or wooden bead jewelry'],c:'Linen breathes beautifully in Florida April. Platform sandals with ankle strap prevent sliding during long walks. ⭐⭐⭐⭐',note:'If you choose the maxi skirt, get one with a slit — expos involve a lot of quick pivoting and walking! 🌺'},
+  {n:'Clean Minimalist',s:'minimalist',e:'🤍',d:'Understated luxury that lets the products you sample do the talking. Effortless, elegant, timeless.',pieces:['Tailored straight-leg pants in white, cream, or beige','Clean fitted tee or ribbed tank','White leather sneakers or HOKA Clifton','Small structured shoulder bag','Simple gold jewelry — huggies + thin chain'],c:'HOKAs are the unofficial beauty editor shoe for conventions — extreme cushioning, tested for hours. ⭐⭐⭐⭐⭐',note:'HOKAs are used by multiple beauty editors for Fashion Week and expos. Comfort IS fashion, darling. 🤍'},
+  {n:'Retro Glam',s:'retro',e:'💫',d:"60s/70s inspired with a modern beauty girl spin. Fun, head-turning, and perfect for content.",pieces:['High-waist A-line mini or retro flare pants','Fitted cropped knit or wrap top','Chunky platform loafers or block-heel boots (under 3")','Oversized hoop earrings','Structured boxy bag with chain strap'],c:'Block-heel boots under 3" distribute weight evenly. A-line mini allows full movement. Avoid pointed toes! ⭐⭐⭐⭐',note:'Visit Charlotte Tilbury (201) and NARS (1403) for retro makeup that photographs beautifully under convention lighting! 💫'},
+  {n:'Glam Athleisure',s:'athleisure',e:'👟',d:'The practical hero of expo dressing. Elevated gym wear with a polished finish — run from booth to booth AND look incredible.',pieces:['High-waist leggings in black, dusty rose, or lavender','Fitted zip-up or cropped hoodie (matching set!)','HOKA Clifton or Brooks Ghost running shoes','Matching sports backpack (carries more than a bag!)','Baseball cap + large hoops for balance'],c:'Highest comfort of all looks. Leggings = 100% movement freedom. Running shoes = literally designed for this. ⭐⭐⭐⭐⭐',note:'Pack a change of shoes in the backpack for post-expo dinner. Nobody needs to know you walked 8 miles in HOKAs before your reservation. 😌👟'},
+  {n:'Floral Fantasy',s:'boho',e:'🌸',d:'Fresh and feminine with garden-party energy. Great for Instagram moments on the expo floor.',pieces:['Floral midi wrap dress (adjustable fit throughout the day)','White or nude block-heel sandals with ankle strap','Rattan or straw bag with charm detail','Fresh floral hair accessories or headband','Delicate jewelry to let the print shine'],c:'Wrap dress is the comfort hack — adjust tightness as needed. Block-heel ankle-strap sandals prevent sliding. ⭐⭐⭐⭐',note:'Bring a light cardigan — Florida April mornings are warm but convention AC can be aggressive! 🌺'},
+];
+
+let activeStyle='all';
+document.getElementById('style-row').addEventListener('click',e=>{
+  const chip=e.target.closest('.style-chip');if(!chip)return;
+  activeStyle=chip.dataset.s;
+  document.querySelectorAll('.style-chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  renderOutfits();
+});
+
+function renderOutfits(){
+  const filtered=activeStyle==='all'?OUTFITS:OUTFITS.filter(o=>o.s===activeStyle);
+  document.getElementById('outfit-grid').innerHTML=filtered.map(o=>`
+  <div class="ocard">
+    <div class="oimg"><span>${o.e}</span><div class="oimg-sub">${o.n}</div><div class="cbadge">✓ All-day comfort</div></div>
+    <div class="obody">
+      <div class="ostyle">${o.s}</div>
+      <div class="oname">${o.n}</div>
+      <div class="odesc">${o.d}</div>
+      <div class="opieces">${o.pieces.map(p=>'<div class="opiece"><div class="pdot"></div><span>'+p+'</span></div>').join('')}</div>
+      <div class="ocomf"><span style="font-size:14px;flex-shrink:0">👟</span><span class="ocomf-t">${o.c}</span></div>
+      <div class="onote">${o.note}</div>
+    </div>
+  </div>`).join('');
+}
+
+/* ── TOAST ── */
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+
+/* ── INIT ── */
+renderChat();renderQA();renderPolls();renderSugs();renderOutfits();buildHotTopics();
+</script>
+</body>
+</html>

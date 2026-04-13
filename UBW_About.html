@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Jem — UBW 2026</title>
+<link rel="stylesheet" href="css/global.css">
+<style>
+/* HERO */
+.about-hero {
+  min-height: 70vh;
+  background: linear-gradient(150deg, var(--pink) 0%, var(--pink-hot) 60%, #8B0040 100%);
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 6rem 0 5rem;
+}
+.about-hero::before {
+  content: '';
+  position: absolute; top: -120px; right: -120px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 65%);
+}
+.about-hero::after {
+  content: '✦';
+  position: absolute; font-size: 400px;
+  color: rgba(255,255,255,0.04);
+  bottom: -100px; left: -60px;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.profile-ring {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  animation: float 4s ease-in-out infinite;
+}
+.profile-ring::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,255,255,0.25);
+  animation: spin 20s linear infinite;
+}
+
+/* STATS */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin: -3rem 0 4rem;
+  position: relative;
+  z-index: 10;
+}
+.astat {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-pink);
+  transition: all 0.22s;
+}
+.astat:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(255,63,142,0.2); }
+.astat-num {
+  font-family: var(--font-display);
+  font-size: 32px; font-weight: 900;
+  color: var(--pink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.astat-lbl { font-size: 12px; color: var(--mist); }
+
+/* MAP DOWNLOAD SECTION */
+.map-download-card {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: center;
+  box-shadow: var(--shadow-soft);
+}
+.map-mockup {
+  background: linear-gradient(135deg, var(--pink-pale), var(--pink-blush));
+  border-radius: var(--radius-lg);
+  aspect-ratio: 3/4;
+  max-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--pink-border);
+  position: relative;
+  overflow: hidden;
+}
+.map-mockup::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255,63,142,0.04) 20px, rgba(255,63,142,0.04) 21px),
+              repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,63,142,0.04) 20px, rgba(255,63,142,0.04) 21px);
+}
+.map-icon-float { font-size: 48px; animation: float 3s ease-in-out infinite; }
+.map-label { font-size: 13px; font-weight: 700; color: var(--pink-hot); }
+.map-sublabel { font-size: 11px; color: var(--mist); }
+
+/* SOCIAL CARDS */
+.social-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.social-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.22s;
+}
+.social-card:hover { box-shadow: var(--shadow-pink); transform: translateY(-4px); }
+.sc-icon { font-size: 32px; margin-bottom: 8px; }
+.sc-platform { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.sc-handle { font-size: 12px; color: var(--pink); }
+
+/* VISITOR SECTION */
+.visitor-card {
+  background: linear-gradient(135deg, var(--pink), var(--pink-hot));
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.visitor-card::before { content: '👀'; position: absolute; font-size: 120px; right: -20px; top: -20px; opacity: 0.1; }
+.visitor-num {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.visitor-label { font-size: 16px; opacity: 0.85; margin-bottom: 0.5rem; }
+.visitor-sub { font-size: 13px; opacity: 0.65; }
+
+/* FAQ */
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.faq-q {
+  padding: 1rem 1.25rem;
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.faq-q:hover { background: var(--pink-blush); }
+.faq-q.open { color: var(--pink); }
+.faq-q .arrow { transition: transform 0.25s; font-size: 12px; }
+.faq-q.open .arrow { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding: 0 1.25rem 1rem;
+  font-size: 13px; line-height: 1.65;
+  color: var(--mist);
+}
+.faq-a.open { display: block; }
+
+@media(max-width:768px){ .about-stats{grid-template-columns:repeat(2,1fr);margin-top:-2rem;} .map-download-card{grid-template-columns:1fr;} .about-hero{padding:5rem 0 6rem;} }
+@media(max-width:480px){ .about-stats{grid-template-columns:repeat(2,1fr);} }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">✦ JemUBW</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="resources.html">Resources</a>
+    <a href="community.html">Community</a><a href="about.html" class="active">About Jem</a>
+    <a href="#map-download" class="nav-cta">Download Map 🗺️</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Home</a><a href="resources.html">Resources</a>
+  <a href="community.html">Community</a><a href="about.html" class="active">About Jem</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="container">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:1">
+        <div class="profile-ring">👸🏽</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px">Beauty lover · Expo strategist · Content creator</div>
+        <h1 class="display-title" style="color:#fff;margin-bottom:12px">Hi, I'm <em style="color:rgba(255,255,255,0.9);font-style:italic">Jem</em> 💗</h1>
+        <p style="font-size:clamp(15px,2vw,18px);color:rgba(255,255,255,0.8);line-height:1.7;max-width:560px;margin-bottom:2rem">I built this site so every beauty lover going to Ulta Beauty World 2026 can walk in with a plan and walk out with everything on their list. Pink-coded, organized, and ready to slay.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+          <a href="#map-download" class="btn btn-white">Download My Map 🗺️</a>
+          <a href="community.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff">Join the Community</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS FLOATING CARDS -->
+  <section style="position:relative;z-index:10">
+    <div class="container">
+      <div class="about-stats">
+        <div class="astat">
+          <div class="astat-num"><span id="visitor-count">1,248</span></div>
+          <div class="astat-lbl">Site visitors</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">200+</div>
+          <div class="astat-lbl">Brands mapped</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">Apr 16</div>
+          <div class="astat-lbl">Event day</div>
+        </div>
+        <div class="astat">
+          <div class="astat-num">💗</div>
+          <div class="astat-lbl">Made with love</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+        <div data-reveal>
+          <span class="eyebrow">My story</span>
+          <h2 class="section-title">About <em>Jem</em></h2>
+          <div class="divider"></div>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-top:1.25rem;margin-bottom:1rem">I'm a beauty obsessive who went to the inaugural Ulta Beauty World in San Antonio last year and learned a lot from the experience. I watched people leave with half as much as they could have gotten simply because they didn't have a plan.</p>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-bottom:1rem">So for Orlando 2026, I built this — a full Barbie-pink survival guide with an interactive brand directory, AI route planner, day-of checklist, and community chat. Because beauty is better when we're organized AND glamorous.</p>
+          <p style="font-size:15px;color:var(--mist);line-height:1.75;margin-bottom:1.5rem">My personal obsessions: K-beauty, melanin-friendly skincare, curly haircare, and anything that comes in pink packaging. If it's a Tatcha or Peach & Lily product, I've already bought it twice.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="community.html" class="btn btn-pink">Join My Community 💗</a>
+            <a href="resources.html" class="btn btn-outline">Explore Brands</a>
+          </div>
+        </div>
+        <div data-reveal style="display:flex;flex-direction:column;gap:14px">
+          <div style="background:linear-gradient(135deg,var(--pink-pale),var(--pink-blush));border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:1.5rem">
+            <div style="font-size:24px;margin-bottom:10px">💄</div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:6px">My Favorite Categories</div>
+            <div class="chip-row">
+              <span class="chip active" style="font-size:11px">K-Beauty</span>
+              <span class="chip active" style="font-size:11px">Melanin-Friendly</span>
+              <span class="chip active" style="font-size:11px">Curly Hair</span>
+              <span class="chip active" style="font-size:11px">Clean Beauty</span>
+              <span class="chip active" style="font-size:11px">Skincare</span>
+            </div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--pink-border);border-radius:var(--radius-xl);padding:1.5rem">
+            <div style="font-size:24px;margin-bottom:10px">⭐</div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:6px">My Must-Visit Booths</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:13px;color:var(--mist)">🐌 COSRX — Booth 2240</div>
+              <div style="font-size:13px;color:var(--mist)">🍑 Peach & Lily — Booth 1825</div>
+              <div style="font-size:13px;color:var(--mist)">💄 Pat McGrath Labs — Booth 1821</div>
+              <div style="font-size:13px;color:var(--mist)">👸🏾 Cécred — Booth 1903</div>
+              <div style="font-size:13px;color:var(--mist)">🌺 Camille Rose — Booth 431</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP DOWNLOAD -->
+  <section class="section bg-gradient" id="map-download">
+    <div class="container">
+      <div class="sec-head" style="text-align:center;margin-bottom:2.5rem" data-reveal>
+        <span class="eyebrow">Official Expo Map</span>
+        <h2 class="section-title">Download the <em>Map</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+        <p class="lead">The official Ulta Beauty World 2026 expo floor map — all 200+ booths with zones and booth numbers</p>
+      </div>
+      <div class="map-download-card" data-reveal>
+        <div class="map-mockup">
+          <div class="map-icon-float">🗺️</div>
+          <div class="map-label">UBW 2026 Expo Map</div>
+          <div class="map-sublabel">Official floor layout</div>
+          <div style="margin-top:8px;font-size:10px;color:var(--mist)">PNG · High resolution</div>
+        </div>
+        <div>
+          <span class="eyebrow">Official Floor Map</span>
+          <h3 style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--ink);margin-bottom:8px">UBW 2026 <em style="color:var(--pink)">Expo Map</em></h3>
+          <div class="divider"></div>
+          <p style="font-size:14px;color:var(--mist);line-height:1.7;margin:1rem 0 1.5rem">The official Ulta Beauty World 2026 expo floor map showing all booths, zones, food vendors, entrances, and stage areas. Use alongside our interactive digital planner for the ultimate expo strategy.</p>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>📐</span> Full floor with all 200+ booth numbers</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🎯</span> Zone A–D marked for navigation</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🍕</span> Food vendor locations marked</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mist)"><span>🚪</span> Both entrance/exit points</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#" class="btn btn-pink btn-lg" onclick="downloadMap(event)">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Map (PNG)
+            </a>
+            <a href="resources.html#map-panel" class="btn btn-outline">View Interactive Map</a>
+          </div>
+          <p style="font-size:11px;color:var(--mist);margin-top:12px">Source: Official Ulta Beauty World 2026 SpotMe App · Updated April 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL LINKS -->
+  <section class="section">
+    <div class="container">
+      <div class="sec-head" style="text-align:center;margin-bottom:2rem" data-reveal>
+        <span class="eyebrow">Find me everywhere</span>
+        <h2 class="section-title">Follow <em>Jem</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+        <p class="lead">Live updates, haul reveals, and real-time content from April 16</p>
+      </div>
+      <div class="social-row">
+        <a href="https://instagram.com" target="_blank" class="social-card"><div class="sc-icon">📸</div><div class="sc-platform">Instagram</div><div class="sc-handle">@JemBeauty</div></a>
+        <a href="https://tiktok.com" target="_blank" class="social-card"><div class="sc-icon">🎵</div><div class="sc-platform">TikTok</div><div class="sc-handle">@JemUBW2026</div></a>
+        <a href="https://pinterest.com" target="_blank" class="social-card"><div class="sc-icon">📌</div><div class="sc-platform">Pinterest</div><div class="sc-handle">@JemBeautyWorld</div></a>
+        <a href="https://youtube.com" target="_blank" class="social-card"><div class="sc-icon">▶️</div><div class="sc-platform">YouTube</div><div class="sc-handle">Jem Beauty</div></a>
+        <a href="https://twitter.com" target="_blank" class="social-card"><div class="sc-icon">🐦</div><div class="sc-platform">Twitter/X</div><div class="sc-handle">@JemBeauty</div></a>
+        <a href="/cdn-cgi/l/email-protection#0f656a624f7a6d783d3f3d39216c6062" class="social-card"><div class="sc-icon">📧</div><div class="sc-platform">Email</div><div class="sc-handle"><span class="__cf_email__" data-cfemail="78121d15380d1a0f4a484a4e561b1715">[email&#160;protected]</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISITOR COUNT SECTION -->
+  <section class="section bg-smoke">
+    <div class="container container-sm">
+      <div class="visitor-card" data-reveal>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:16px">Community Size</div>
+          <div class="visitor-num" id="visitor-display">1,248</div>
+          <div class="visitor-label">Beauty lovers have visited this site</div>
+          <div class="visitor-sub">And counting… 💗</div>
+          <div style="margin-top:1.5rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <a href="community.html" class="btn btn-white">Join the Community</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container container-sm">
+      <div class="sec-head" style="text-align:center;margin-bottom:2rem" data-reveal>
+        <span class="eyebrow">Questions</span>
+        <h2 class="section-title">FAQ <em>About This Site</em></h2>
+        <div class="divider" style="margin:1rem auto"></div>
+      </div>
+      <div id="faq">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Who built this site? <span class="arrow">▼</span></div><div class="faq-a">This site was built by Jem — a beauty enthusiast and expo veteran who attended the inaugural UBW in San Antonio. It's a passion project built to help the community plan smarter.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is this affiliated with Ulta Beauty? <span class="arrow">▼</span></div><div class="faq-a">No — this is an independent fan site created by Jem. All brand info and booth data comes from the official expo map and public sources. This site has no official affiliation with Ulta Beauty, Inc.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I use the Route Builder? <span class="arrow">▼</span></div><div class="faq-a">Head to the Resources page, click "Route Builder," select your beauty interests and skin focus, adjust the priority sliders, and hit "Generate My Route." The AI will create a personalized 10-booth itinerary with real booth numbers, walk times, and sample values.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I download the expo map? <span class="arrow">▼</span></div><div class="faq-a">Yes! Scroll up to the Map Download section on this page or click the "Download Map" button. It's the official Ulta Beauty World 2026 expo map sourced from the SpotMe event app.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I contact Jem? <span class="arrow">▼</span></div><div class="faq-a">Email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2f454a426f5a4d581d1f1d19014c4042">[email&#160;protected]</a> or DM on Instagram @JemBeauty or TikTok @JemUBW2026. I try to respond within 24 hours!</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Will you post live content on April 16? <span class="arrow">▼</span></div><div class="faq-a">Absolutely! Follow @JemUBW2026 on TikTok for real-time floor coverage, haul reveals, and live reactions. Instagram stories will also be updated throughout the day.</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your pink-coded guide to conquering Ulta Beauty World 2026 in Orlando. Built with love by Jem. 💗</p><div class="footer-social" style="margin-top:1rem"><a href="#">📸</a><a href="#">🎵</a><a href="#">📌</a><a href="#">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="index.html">Home</a><a href="resources.html">Resources</a><a href="community.html">Community</a><a href="about.html">About Jem</a></div></div>
+      <div><div class="footer-col-title">About</div><div class="footer-links"><a href="#map-download">Download Map</a><a href="#social">Social Links</a><a href="community.html">Community Chat</a><a href="#faq">FAQ</a></div></div>
+      <div><div class="footer-col-title">Socials</div><div class="footer-links"><a href="#">Instagram @JemBeauty</a><a href="#">TikTok @JemUBW2026</a><a href="#">Pinterest</a><a href="/cdn-cgi/l/email-protection#5339363e13263124616361657d303c3e">Email Jem</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Made with 💗 by Jem</span><span>Ulta Beauty World · April 16, 2026 · Orlando, FL</span></div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/shared.js"></script>
+<script>
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  el.classList.toggle('open');
+  ans.classList.toggle('open');
+}
+function downloadMap(e) {
+  e.preventDefault();
+  showToast('Map download starting… 💗');
+  // In production this would trigger a rea

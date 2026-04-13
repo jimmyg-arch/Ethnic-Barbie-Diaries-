@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JemUBW 2026 — Beauty Made Easier</title>
+<meta name="description" content="Your Y2K Windows 98 guide to Ulta Beauty World 2026.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>💗</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   JemUBW — KAWAII PASTEL Y2K THEME
+   Win98 window chrome structure + kawaii pastel colors
+   Like image 2: purple desktop, pink/lavender windows,
+   blue title bars, soft pastel everything
+═══════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
+
+:root {
+  /* ── DESKTOP ── */
+  --desk:      #CC88FF;   /* medium purple desktop like image 2 */
+  --desk2:     #BB66EE;   /* deeper purple */
+
+  /* ── WIN98 CHROME — pastel version ── */
+  --win-bar:   #7B68EE;   /* medium slate blue title bar */
+  --win-bar2:  #9B8FFF;   /* lighter purple end */
+  --win-body:  #FFE4F0;   /* soft pink window body */
+  --win-body2: #FFF0F8;   /* lighter pink inner panels */
+  --win-inset: #FFD6EC;   /* slightly deeper pink inset */
+
+  /* ── 3D BORDER COLORS — pastel tinted ── */
+  --win-bd-lt: #FFFFFF;   /* highlight edge */
+  --win-bd:    #D4A0C8;   /* mid border */
+  --win-bd-dk: #B070A0;   /* shadow edge */
+
+  /* ── PINK TITLE BAR VARIANT ── */
+  --pink-bar:  #FF69B4;   /* hot pink bar */
+  --pink-bar2: #FFB6D9;   /* light pink end */
+
+  /* ── ACCENT COLORS ── */
+  --pink:      #FF69B4;   /* hot pink */
+  --pink2:     #FFB6D9;   /* light pink */
+  --pink3:     #FFE4F0;   /* blush */
+  --purple:    #CC88FF;   /* desktop purple */
+  --purple2:   #AA66DD;   /* medium purple */
+  --lavender:  #E8D5FF;   /* soft lavender */
+  --mint:      #C8FFE8;   /* mint green accent */
+  --sky:       #C8E8FF;   /* baby blue accent */
+  --yellow:    #FFF0A0;   /* soft yellow */
+
+  /* ── TEXT ── */
+  --win-txt:   #4A0060;   /* deep purple text (not black) */
+  --win-txt2:  #ffffff;   /* title bar text */
+  --muted:     #9966AA;   /* muted purple */
+
+  /* ── SEMANTIC ── */
+  --green:     #66BB88;
+  --red:       #FF6688;
+  --gold:      #FFCC66;
+  --gold-d:    #AA7700;
+  --green-l:   #D0FFE8;
+  --red-l:     #FFD0DC;
+  --gold-l:    #FFF0C0;
+
+  /* ── FONTS ── */
+  --head: 'Nunito', sans-serif;
+  --scr:  'Press Start 2P', monospace;
+  --sys:  'Nunito', 'DM Sans', sans-serif;
+  --body: 'DM Sans', sans-serif;
+
+  --nav-h: 52px;
+}
+
+/* ── RESET ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--sys);
+  background:var(--desk);
+  color:var(--win-txt);
+  overflow-x:hidden;cursor:none;min-height:100dvh;
+}
+/* sparkle dot pattern on desktop like image 2 */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.15) 2px, transparent 2px);
+  background-size: 40px 40px, 20px 20px, 80px 80px;
+  background-position: 0 0, 10px 10px, 5px 5px;
+}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--sys);cursor:none;border:none;outline:none;}
+input,textarea,select{font-family:var(--sys);outline:none;}
+::-webkit-scrollbar{width:12px;background:var(--win-body);}
+::-webkit-scrollbar-track{background:var(--win-inset);}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,var(--pink),var(--purple2));
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+}
+
+/* ── CURSOR ─────────────────────────────── */
+#y2k-cursor{position:fixed;pointer-events:none;z-index:99999;left:0;top:0;transition:none;}
+
+/* ── PAGE WRAP ──────────────────────────── */
+.page-wrap{position:relative;z-index:2;padding-top:var(--nav-h);min-height:100dvh;}
+
+/* ══════════════════════════════════════════
+   WINDOW CHROME — Win98 structure, kawaii colors
+══════════════════════════════════════════ */
+.win{
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);
+  border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);
+  border-bottom:2px solid var(--win-bd-dk);
+  box-shadow:2px 2px 0 rgba(100,0,80,0.15);
+}
+.win-bar{
+  background:linear-gradient(90deg,var(--win-bar),var(--win-bar2));
+  padding:4px 5px 4px 7px;
+  display:flex;align-items:center;justify-content:space-between;
+  user-select:none;gap:4px;
+}
+.win-bar.pink-bar{
+  background:linear-gradient(90deg,var(--pink-bar),var(--pink-bar2));
+}
+.win-bar.purple-bar{
+  background:linear-gradient(90deg,var(--purple2),var(--purple));
+}
+.win-title{
+  font-family:var(--head);font-size:12px;font-weight:800;
+  color:#fff;letter-spacing:0.01em;
+  display:flex;align-items:center;gap:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  flex:1;text-shadow:1px 1px 0 rgba(0,0,0,0.2);
+}
+.win-title-icon{font-size:13px;}
+.win-btns{display:flex;gap:2px;flex-shrink:0;}
+.win-btn{
+  width:16px;height:14px;
+  background:var(--win-body);
+  border-top:1px solid var(--win-bd-lt);
+  border-left:1px solid var(--win-bd-lt);
+  border-right:1px solid var(--win-bd-dk);
+  border-bottom:1px solid var(--win-bd-dk);
+  font-size:9px;font-weight:900;color:var(--win-txt);
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;font-family:var(--sys);line-height:1;
+}
+.win-btn:hover{background:var(--pink2);}
+.win-menu{
+  background:var(--win-inset);border-bottom:1px solid var(--win-bd);
+  padding:2px 4px;display:flex;gap:0;
+}
+.win-menu-item{
+  font-size:12px;font-family:var(--head);font-weight:600;
+  color:var(--win-txt);padding:2px 8px;cursor:none;
+}
+.win-menu-item:hover{background:var(--win-bar);color:#fff;}
+.win-body{padding:1rem;}
+.win-inner{
+  background:var(--win-body2);
+  border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);
+  border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);
+  padding:1rem;
+}
+
+/* ══════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+  background:linear-gradient(90deg,var(--pink3),var(--lavender),var(--pink3));
+  border-top:2px solid var(--win-bd-lt);
+  border-bottom:2px solid var(--win-bd-dk);
+  box-shadow:0 2px 0 var(--win-bd);
+  z-index:1000;
+  display:flex;align-items:center;padding:4px 8px;gap:5px;
+}
+.nav-logo{
+  font-family:var(--head);font-size:14px;font-weight:900;color:var(--win-txt);
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  padding:4px 12px;white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:5px;
+}
+.nav-logo::before{content:'🌸';font-size:14px;}
+.nav-logo:hover{background:var(--win-inset);}
+.nav-sep{width:2px;height:32px;border-left:1px solid var(--win-bd-dk);border-right:1px solid var(--win-bd-lt);margin:0 3px;}
+.nav-links{display:flex;align-items:center;gap:2px;flex-wrap:nowrap;overflow:hidden;flex:1;}
+.nav-links a{
+  font-family:var(--head);font-size:11px;font-weight:700;color:var(--win-txt);
+  background:var(--win-body);
+  border-top:1px solid var(--win-bd-lt);border-left:1px solid var(--win-bd-lt);
+  border-right:1px solid var(--win-bd-dk);border-bottom:1px solid var(--win-bd-dk);
+  padding:4px 10px;white-space:nowrap;transition:none;display:flex;align-items:center;gap:3px;
+}
+.nav-links a:hover{background:var(--win-inset);}
+.nav-links a.active{
+  background:var(--lavender);
+  border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);
+  border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);
+  font-weight:800;
+}
+.nav-links .nav-cta{
+  background:linear-gradient(135deg,var(--pink),var(--pink-bar));
+  color:#fff;font-weight:800;border-color:var(--pink-bar);
+}
+.nav-links .nav-cta:hover{background:linear-gradient(135deg,var(--pink-bar),var(--purple2));color:#fff;}
+.nav-tray{
+  display:flex;align-items:center;gap:5px;
+  background:var(--win-inset);
+  border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);
+  border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);
+  padding:4px 10px;font-size:11px;font-family:var(--head);font-weight:700;
+  color:var(--win-txt);margin-left:auto;flex-shrink:0;
+}
+.nav-hamburger{
+  display:none;flex-direction:column;gap:4px;padding:5px;
+  background:var(--win-body);
+  border-top:1px solid var(--win-bd-lt);border-left:1px solid var(--win-bd-lt);
+  border-right:1px solid var(--win-bd-dk);border-bottom:1px solid var(--win-bd-dk);
+}
+.nav-hamburger span{display:block;width:16px;height:2px;background:var(--win-txt);transition:all 0.2s;}
+.nav-mobile{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+  background:var(--win-body);border-bottom:2px solid var(--win-bd-dk);
+  padding:4px;flex-direction:column;gap:2px;z-index:999;
+}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{
+  font-family:var(--head);font-size:12px;font-weight:700;color:var(--win-txt);
+  padding:8px 12px;
+}
+.nav-mobile a:hover,.nav-mobile a.active{background:var(--win-bar);color:#fff;}
+@media(max-width:680px){.nav-links{display:none;}.nav-hamburger{display:flex;}}
+
+/* ══════════════════════════════════════════
+   TICKER
+══════════════════════════════════════════ */
+.ticker-wrap{
+  background:linear-gradient(90deg,var(--pink),var(--purple2),var(--pink));
+  border-bottom:2px solid rgba(100,0,80,0.2);
+  padding:5px 0;overflow:hidden;position:relative;z-index:89;
+}
+.ticker-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:tickerScroll 35s linear infinite;
+}
+.ticker-track:hover{animation-play-state:paused;}
+.ticker-item{
+  font-family:var(--head);font-size:11px;font-weight:700;
+  color:#fff;text-shadow:1px 1px 0 rgba(100,0,80,0.3);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.tc-up{color:#C8FFCC;font-weight:800;}
+.tc-dn{color:#FFD0DC;font-weight:800;}
+@keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════
+   BUTTONS — kawaii pastel Win98
+══════════════════════════════════════════ */
+.btn{
+  font-family:var(--head);font-size:12px;font-weight:700;
+  color:var(--win-txt);background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  padding:5px 18px;cursor:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  white-space:nowrap;min-width:75px;
+}
+.btn:hover{background:var(--win-inset);}
+.btn:active{
+  border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);
+  border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);
+}
+.btn-primary{background:var(--lavender);font-weight:800;border:2px solid var(--win-bd-dk);box-shadow:0 0 0 1px var(--win-bd-dk);}
+.btn-primary:hover{background:#D4BBFF;}
+.btn-pink{background:linear-gradient(135deg,var(--pink),var(--pink-bar));color:#fff;border-color:var(--pink-bar);}
+.btn-pink:hover{background:linear-gradient(135deg,var(--pink-bar),var(--purple2));color:#fff;}
+.btn-sm{font-size:11px;padding:4px 12px;}
+.btn-full{width:100%;}
+
+/* ══════════════════════════════════════════
+   INPUTS — kawaii pastel
+══════════════════════════════════════════ */
+.inp{
+  background:var(--win-body2);
+  border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);
+  border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);
+  padding:5px 8px;font-family:var(--head);font-size:12px;font-weight:600;
+  color:var(--win-txt);width:100%;
+}
+.inp:focus{outline:2px solid var(--pink);}
+.inp::placeholder{color:var(--muted);}
+select.inp{cursor:none;}
+
+/* ══════════════════════════════════════════
+   PROGRESS BAR
+══════════════════════════════════════════ */
+.prog-wrap{
+  height:18px;background:var(--win-body2);
+  border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);
+  border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);
+  overflow:hidden;padding:2px;
+}
+.prog-fill{
+  height:100%;
+  background:repeating-linear-gradient(
+    90deg,var(--win-bar) 0,var(--win-bar) 10px,var(--win-bar2) 10px,var(--win-bar2) 12px
+  );
+  transition:width 0.5s ease;
+}
+
+/* ══════════════════════════════════════════
+   PAGE TABS
+══════════════════════════════════════════ */
+.page-tabs{
+  background:var(--win-inset);
+  border-bottom:2px solid var(--win-bd-dk);
+  position:sticky;top:var(--nav-h);z-index:90;
+}
+.tab-row{display:flex;overflow-x:auto;scrollbar-width:none;max-width:1200px;margin:0 auto;padding:4px 8px 0;gap:2px;}
+.tab-row::-webkit-scrollbar{display:none;}
+.pg-tab{
+  font-family:var(--head);font-size:11px;font-weight:700;color:var(--win-txt);
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-body);
+  padding:5px 14px;white-space:nowrap;cursor:none;position:relative;top:2px;
+}
+.pg-tab:hover{background:var(--win-inset);}
+.pg-tab.active{background:var(--win-body);border-bottom:2px solid var(--win-body);z-index:1;font-weight:800;color:var(--pink);}
+.pg-panel{display:none;}
+.pg-panel.active{display:block;animation:fadeUp 0.15s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════════════
+   PAGE HERO
+══════════════════════════════════════════ */
+.page-hero{
+  background:linear-gradient(135deg,var(--pink),var(--purple2),var(--pink));
+  padding:4rem 0 3rem;text-align:center;position:relative;overflow:hidden;
+  border-bottom:3px solid rgba(100,0,80,0.2);
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.2) 1px,transparent 1px);
+  background-size:28px 28px;pointer-events:none;
+}
+.page-hero .display-title,.page-hero .section-title{color:#fff;text-shadow:1px 1px 0 rgba(100,0,80,0.3);}
+.page-hero em{color:#FFE4F0 !important;}
+.page-hero .eyebrow{color:rgba(255,255,255,0.85);}
+.page-hero .lead{color:rgba(255,255,255,0.9);}
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+.display-title,.section-title,.panel-title{
+  font-family:var(--head);font-weight:900;color:var(--win-txt);line-height:1.15;
+}
+.display-title{font-size:clamp(26px,5vw,50px);}
+.section-title{font-size:clamp(20px,4vw,34px);}
+.panel-title{font-size:clamp(16px,3vw,24px);}
+.display-title em,.section-title em,.panel-title em{color:var(--pink);font-style:normal;}
+.eyebrow{font-family:var(--head);font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.1em;}
+.lead{font-size:14px;color:var(--muted);line-height:1.7;font-family:var(--body);}
+.divider{width:60px;height:3px;background:var(--pink);margin:1rem 0;}
+.dc{margin:1rem auto;}
+
+/* ══════════════════════════════════════════
+   ERROR DIALOG
+══════════════════════════════════════════ */
+.error-dialog{
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  min-width:240px;box-shadow:4px 4px 0 rgba(100,0,80,0.2);
+}
+.error-body{display:flex;align-items:flex-start;gap:12px;padding:14px;}
+.error-icon{font-size:28px;flex-shrink:0;}
+.error-msg{font-size:12px;font-family:var(--head);font-weight:600;color:var(--win-txt);line-height:1.6;}
+.error-btns{display:flex;gap:6px;padding:8px 12px;justify-content:center;border-top:1px solid var(--win-bd);}
+
+/* ══════════════════════════════════════════
+   CD PLAYER WIDGET
+══════════════════════════════════════════ */
+.cdp{background:var(--win-body);}
+.cdp-body{padding:10px;display:flex;gap:10px;align-items:center;}
+.cdp-art{
+  width:48px;height:48px;
+  background:linear-gradient(135deg,var(--pink),var(--purple2));
+  border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);
+  border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+.cdp-info{flex:1;}
+.cdp-field{display:flex;align-items:center;gap:5px;margin-bottom:4px;}
+.cdp-label{font-size:11px;font-weight:800;font-family:var(--head);width:38px;flex-shrink:0;color:var(--win-txt);}
+.cdp-value{
+  flex:1;font-size:11px;font-family:var(--head);font-weight:700;
+  background:var(--win-body2);
+  border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);
+  border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);
+  padding:2px 6px;color:var(--win-txt);
+}
+.cdp-progress{
+  width:100%;height:10px;background:var(--win-body2);
+  border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);
+  border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);
+  margin:5px 0;overflow:hidden;
+}
+.cdp-prog-fill{height:100%;background:linear-gradient(90deg,var(--win-bar),var(--pink));width:35%;animation:cdprog 4s linear infinite;}
+@keyframes cdprog{from{width:0%}to{width:100%}}
+.cdp-controls{display:flex;gap:2px;justify-content:center;}
+.cdp-btn{
+  font-size:9px;padding:3px 7px;font-family:var(--head);font-weight:700;
+  background:var(--win-body);color:var(--win-txt);
+  border-top:1px solid var(--win-bd-lt);border-left:1px solid var(--win-bd-lt);
+  border-right:1px solid var(--win-bd-dk);border-bottom:1px solid var(--win-bd-dk);
+  cursor:none;
+}
+.cdp-btn:hover{background:var(--win-inset);}
+
+/* ══════════════════════════════════════════
+   STAT BOX
+══════════════════════════════════════════ */
+.stat-box{
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  padding:12px 10px;text-align:center;
+}
+.stat-val{font-family:var(--head);font-size:22px;font-weight:900;color:var(--pink);display:block;margin-bottom:3px;}
+.stat-lbl{font-size:11px;font-family:var(--head);font-weight:700;color:var(--muted);}
+
+/* ══════════════════════════════════════════
+   SECTION LABEL
+══════════════════════════════════════════ */
+.sec-label{
+  font-family:var(--head);font-size:11px;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.sec-label::before,.sec-label::after{content:'';flex:1;height:1px;background:var(--win-bd);}
+
+/* ══════════════════════════════════════════
+   BADGE
+══════════════════════════════════════════ */
+.badge{font-family:var(--head);font-size:10px;font-weight:700;padding:2px 9px;display:inline-flex;align-items:center;gap:4px;}
+.b-pink{background:var(--pink);color:#fff;}
+.b-purple{background:var(--win-bar);color:#fff;}
+.b-green{background:var(--green);color:#fff;}
+.b-gold{background:var(--gold);color:var(--gold-d);}
+.b-lav{background:var(--lavender);color:var(--purple2);}
+
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+.toast{
+  position:fixed;bottom:1.5rem;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--win-body);
+  border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);
+  border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);
+  box-shadow:3px 3px 0 rgba(100,0,80,0.2);
+  padding:10px 22px;font-family:var(--head);font-size:12px;font-weight:700;color:var(--win-txt);
+  z-index:9999;opacity:0;transition:all 0.2s;pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════ */
+.blink{animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+[data-reveal]{opacity:0;transform:translateY(14px);transition:opacity 0.4s ease,transform 0.4s ease;}
+[data-reveal].revealed{opacity:1;transform:translateY(0);}
+[data-reveal][delay-1]{transition-delay:0.08s;}
+[data-reveal][delay-2]{transition-delay:0.16s;}
+[data-reveal][delay-3]{transition-delay:0.24s;}
+.fade-up{opacity:0;transform:translateY(14px);transition:opacity 0.4s ease,transform 0.4s ease;}
+.fade-up.visible,.fade-up.revealed{opacity:1;transform:translateY(0);}
+.delay-2{transition-delay:0.12s;}
+.section{padding:2.5rem 0;}
+.container{max-width:1100px;margin:0 auto;padding:0 1.25rem;}
+.container-sm{max-width:800px;margin:0 auto;padding:0 1.25rem;}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+.footer{
+  background:linear-gradient(135deg,var(--pink),var(--purple2),var(--pink));
+  padding:3rem 0 1.5rem;position:relative;z-index:2;
+  border-top:3px solid rgba(100,0,80,0.2);
+}
+.footer-brand-name{font-family:var(--head);font-size:20px;font-weight:900;color:#fff;margin-bottom:8px;text-shadow:1px 1px 0 rgba(100,0,80,0.2);}
+.footer-brand-desc{font-size:13px;color:rgba(255,255,255,0.85);max-width:200px;line-height:1.6;font-family:var(--body);}
+.footer-col-title{font-family:var(--head);font-size:11px;font-weight:800;color:rgba(255,255,255,0.75);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;}
+.footer-links{display:flex;flex-direction:column;gap:6px;}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.8);transition:color 0.1s;font-family:var(--head);font-weight:600;}
+.footer-links a:hover{color:#fff;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.2);margin-bottom:1.5rem;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-bottom span,.footer-bottom a{font-size:11px;color:rgba(255,255,255,0.55);font-family:var(--head);font-weight:600;}
+.footer-bottom a:hover{color:#fff;}
+.footer-bottom div{display:flex;gap:1rem;}
+.footer-social{display:flex;gap:4px;margin-top:8px;}
+.footer-social a{width:28px;height:26px;background:rgba(255,255,255,0.2);border-top:1px solid rgba(255,255,255,0.4);border-left:1px solid rgba(255,255,255,0.4);border-right:1px solid rgba(100,0,80,0.15);border-bottom:1px solid rgba(100,0,80,0.15);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.footer-social a:hover{background:rgba(255,255,255,0.35);}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;gap:1.5rem;}}
+@media(max-width:640px){.footer-top{grid-template-columns:1fr;}.section{padding:2rem 0;}}
+
+</style>
+<style>
+/* PAGE-SPECIFIC */
+.hero-layout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:10px;align-items:start;}
+@media(max-width:720px){.hero-layout{grid-template-columns:1fr;}}
+.cd-row{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}
+.cd-box{background:var(--win-body2);border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);min-width:56px;text-align:center;padding:8px 6px 6px;}
+.cd-num{font-family:"Nunito",sans-serif;font-size:clamp(18px,3.5vw,26px);font-weight:900;color:var(--pink);display:block;line-height:1;}
+.cd-lbl{font-family:var(--sys);font-size:9px;font-weight:700;color:#444;margin-top:3px;display:block;text-transform:uppercase;letter-spacing:0.06em;}
+.cd-sep{font-family:"Nunito",sans-serif;font-size:20px;font-weight:900;color:var(--pink);padding-bottom:10px;}
+.qf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-top:7px;}
+.qf-item{background:var(--win-body2);border-top:2px solid var(--win-bd-dk);border-left:2px solid var(--win-bd-dk);border-right:2px solid var(--win-bd-lt);border-bottom:2px solid var(--win-bd-lt);padding:10px 8px;text-align:center;}
+.qf-icon{font-size:20px;display:block;margin-bottom:5px;}
+.qf-val{font-family:"Nunito",sans-serif;font-size:15px;font-weight:900;color:var(--pink);display:block;margin-bottom:2px;}
+.qf-lbl{font-size:10px;color:#444;font-family:var(--sys);}
+.ess-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:5px;}
+.ess-card{background:var(--win-body);border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);padding:13px;}
+.ess-card:hover{background:var(--win-inset);}
+.ess-icon{font-size:22px;display:block;margin-bottom:7px;}
+.ess-title{font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;color:var(--win-txt);margin-bottom:4px;}
+.ess-desc{font-size:11px;color:#444;line-height:1.55;font-family:var(--sys);}
+.bring-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:3px;}
+.bring-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--win-body);border-top:1px solid var(--win-bd-lt);border-left:1px solid var(--win-bd-lt);border-right:1px solid var(--win-bd-dk);border-bottom:1px solid var(--win-bd-dk);cursor:none;font-size:11px;font-family:var(--sys);color:var(--win-txt);}
+.bring-item:hover{background:var(--win-inset);}
+.bring-item.checked{background:var(--win-bar);color:#fff;}
+.bring-check{width:12px;height:12px;border:1px solid var(--win-bd-dk);background:var(--win-body2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:var(--win-txt);}
+.bring-item.checked .bring-check{background:#fff;color:var(--win-bar);}
+.tip-list{display:flex;flex-direction:column;gap:5px;max-width:720px;margin:0 auto;}
+.tip-card{background:var(--win-body);border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);padding:11px 13px;display:flex;gap:11px;align-items:flex-start;}
+.tip-num{font-family:"Nunito",sans-serif;font-size:13px;font-weight:900;color:#fff;background:var(--win-bar);min-width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tip-title{font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;color:var(--win-txt);margin-bottom:3px;}
+.tip-desc{font-size:11px;color:#444;line-height:1.6;font-family:var(--sys);}
+.cta-win{background:linear-gradient(135deg,var(--pink),var(--desk2),var(--purple));padding:3rem 2rem;text-align:center;}
+.cta-title{font-family:"Nunito",sans-serif;font-size:clamp(20px,4vw,34px);font-weight:900;color:#fff;line-height:1.25;margin-bottom:8px;text-shadow:1px 1px 0 rgba(0,0,0,0.2);}
+.cta-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;}
+.cta-btns .btn{background:rgba(255,255,255,0.95);}
+.cta-btns .btn:hover{background:#fff;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">JemUBW</a>
+  <div class="nav-sep"></div>
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a>
+    <a href="resources.html">💄 Brands</a>
+    <a href="community.html">💬 Community</a>
+    <a href="reminders.html">⏰ Reminders</a>
+    <a href="brand-hub.html">📊 Brand Hub</a>
+    <a href="planner.html">📋 Planner</a>
+    <a href="about.html">💗 About</a>
+    <a href="resources.html" class="nav-cta">Plan Route →</a>
+  </div>
+  <div class="nav-tray"><span>🌸</span><span id="nav-tray-time">12:00</span></div>
+  <button class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">🏠 Home</a><a href="resources.html">💄 Brands</a>
+  <a href="community.html">💬 Community</a><a href="reminders.html">⏰ Reminders</a>
+  <a href="brand-hub.html">📊 Brand Hub</a><a href="planner.html">📋 Planner</a>
+  <a href="about.html">💗 About</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- ★ TICKER — always visible, sticky ★ -->
+  <div class="ticker-wrap" style="position:sticky;top:var(--nav-h);z-index:89">
+    <div class="ticker-track">
+      <span class="ticker-item">★ UBW 2026 · April 16 · Orlando FL ★</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+      <span class="ticker-item">💗 200+ Brands · $2,000+ Swag Bag · $165 Ticket</span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+      <span class="ticker-item">OLPX <span class="tc-dn">▼ -1.2%</span></span>
+      <span class="ticker-item">Beauty Made Easier by Jem 💗</span>
+      <span class="ticker-item">★ UBW 2026 · April 16 · Orlando FL ★</span>
+      <span class="ticker-item">ELF <span class="tc-up">▲ +3.2%</span></span>
+      <span class="ticker-item">ULTA <span class="tc-up">▲ +1.4%</span></span>
+      <span class="ticker-item">EL <span class="tc-dn">▼ -2.1%</span></span>
+      <span class="ticker-item">💗 200+ Brands · $2,000+ Swag Bag · $165 Ticket</span>
+      <span class="ticker-item">COTY <span class="tc-dn">▼ -0.5%</span></span>
+      <span class="ticker-item">OLPX <span class="tc-dn">▼ -1.2%</span></span>
+      <span class="ticker-item">Beauty Made Easier by Jem 💗</span>
+    </div>
+  </div>
+
+  <section class="section">
+  <div class="container">
+  <div class="hero-layout">
+
+    <!-- LEFT: Hero window -->
+    <div class="win" data-reveal>
+      <div class="win-bar">
+        <span class="win-title"><span class="win-title-icon">💗</span> survival_guide.exe</span>
+        <div class="win-btns">
+          <div class="win-btn">_</div>
+          <div class="win-btn">□</div>
+          <div class="win-btn">✕</div>
+        </div>
+      </div>
+      <div class="win-menu">
+        <span class="win-menu-item">File</span>
+        <span class="win-menu-item">Edit</span>
+        <span class="win-menu-item">View</span>
+        <span class="win-menu-item">Help</span>
+      </div>
+      <div style="padding:1.5rem;text-align:center;background:var(--win-body);">
+        <div style="font-size:10px;font-family:var(--sys);font-weight:700;color:#555;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px"><span class="blink" style="color:var(--pink)">●</span> April 16, 2026 · Orlando, FL · Live Event</div>
+        <h1 style="font-family:Nunito,sans-serif;font-size:clamp(24px,4.5vw,46px);font-weight:900;color:var(--pink);line-height:1.1;margin-bottom:8px;text-shadow:1px 1px 0 rgba(200,0,80,0.2)">Ulta Beauty<br>World <span style="color:var(--win-bar)">2026</span></h1>
+        <p style="font-size:13px;font-family:var(--sys);color:#444;max-width:380px;margin:0 auto;line-height:1.65">200+ brands. One day. Zero time to waste.<br>Your pink-coded expo playbook. 💗</p>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:1.25rem">
+          <a href="#essentials" class="btn btn-primary">Start Planning</a>
+          <a href="resources.html" class="btn">Browse Brands</a>
+          <a href="planner.html" class="btn btn-pink">My Planner 💗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Countdown + CD Player + Stats -->
+    <div style="display:flex;flex-direction:column;gap:8px">
+
+      <!-- Countdown window -->
+      <div class="win" data-reveal delay-1>
+        <div class="win-bar">
+          <span class="win-title"><span class="win-title-icon">⏰</span> countdown.exe</span>
+          <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+        </div>
+        <div style="padding:10px;background:var(--win-body)">
+          <div style="font-size:10px;font-family:var(--sys);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:8px;text-align:center">Time Until Doors Open</div>
+          <div id="countdown" class="cd-row"></div>
+        </div>
+      </div>
+
+      <!-- CD Player widget (like in the images!) -->
+      <div class="win cdp" data-reveal delay-2>
+        <div class="win-bar">
+          <span class="win-title"><span class="win-title-icon">💿</span> CD Player</span>
+          <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+        </div>
+        <div class="cdp-body">
+          <div class="cdp-art">💄</div>
+          <div class="cdp-info">
+            <div class="cdp-field"><span class="cdp-label">Artist:</span><span class="cdp-value">Beauty Made Easier</span></div>
+            <div class="cdp-field"><span class="cdp-label">Track:</span><span class="cdp-value" id="cdp-track">UBW 2026 Survival</span></div>
+            <div class="cdp-progress"><div class="cdp-prog-fill"></div></div>
+            <div class="cdp-controls">
+              <button class="cdp-btn">⏮</button>
+              <button class="cdp-btn">◀◀</button>
+              <button class="cdp-btn">▶▶</button>
+              <button class="cdp-btn">▶</button>
+              <button class="cdp-btn">■</button>
+              <button class="cdp-btn">●</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick stats -->
+      <div class="win" data-reveal delay-3>
+        <div class="win-bar">
+          <span class="win-title"><span class="win-title-icon">📊</span> event_stats.dat</span>
+          <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+        </div>
+        <div style="padding:8px;background:var(--win-body)">
+          <div class="qf-grid">
+            <div class="qf-item"><span class="qf-icon">💄</span><span class="qf-val">200+</span><span class="qf-lbl">Brands</span></div>
+            <div class="qf-item"><span class="qf-icon">🎁</span><span class="qf-val">$2,000+</span><span class="qf-lbl">Swag bag</span></div>
+            <div class="qf-item"><span class="qf-icon">🕘</span><span class="qf-val">8 hrs</span><span class="qf-lbl">9AM–5PM</span></div>
+            <div class="qf-item"><span class="qf-icon">💳</span><span class="qf-val">$165</span><span class="qf-lbl">Ticket</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="section" id="location" style="padding-top:0">
+  <div class="container">
+    <div class="win" data-reveal>
+      <div class="win-bar">
+        <span class="win-title"><span class="win-title-icon">📍</span> venue_info.txt — Orange County Convention Center</span>
+        <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+      </div>
+      <div class="win-menu"><span class="win-menu-item">File</span><span class="win-menu-item">Edit</span><span class="win-menu-item">View</span><span class="win-menu-item">Help</span></div>
+      <div style="padding:1rem;background:var(--win-body);display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div>
+          <div style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:8px">Venue Details</div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="background:var(--win-body2);border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);padding:7px 10px">
+              <span style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;color:var(--win-bar);display:block;margin-bottom:2px">Address</span>
+              <span style="font-size:11px;font-family:var(--sys);color:var(--win-txt)">9800 International Drive, Orlando FL 32819 — West Building</span>
+            </div>
+            <div style="background:var(--win-body2);border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);padding:7px 10px">
+              <span style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;color:var(--win-bar);display:block;margin-bottom:2px">Parking</span>
+              <span style="font-size:11px;font-family:var(--sys);color:var(--win-txt)">West Lot · $20 cashless · card, Apple Pay, Google Pay</span>
+            </div>
+            <div style="background:var(--win-body2);border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);padding:7px 10px">
+              <span style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;color:var(--win-bar);display:block;margin-bottom:2px">Hours</span>
+              <span style="font-size:11px;font-family:var(--sys);color:var(--win-txt)">Check-in 8AM · Expo 9AM–5PM · Storage closes 5:30PM</span>
+            </div>
+            <div style="background:var(--win-body2);border-top:1px solid var(--win-bd-dk);border-left:1px solid var(--win-bd-dk);border-right:1px solid var(--win-bd-lt);border-bottom:1px solid var(--win-bd-lt);padding:7px 10px">
+              <span style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;color:var(--win-bar);display:block;margin-bottom:2px">Airport</span>
+              <span style="font-size:11px;font-family:var(--sys);color:var(--win-txt)">Orlando Int'l (MCO) — approx. 20 min drive</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+            <a href="https://maps.google.com/?q=Orange+County+Convention+Center" target="_blank" class="btn btn-primary btn-sm">Get Directions</a>
+            <a href="about.html#map-download" class="btn btn-sm">Download Map</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:8px">Map Preview</div>
+          <div onclick="window.open('https://maps.google.com/?q=Orange+County+Convention+Center+Orlando','_blank')"
+            style="background:linear-gradient(135deg,var(--pink),var(--desk2));border-top:2px solid var(--win-bd-lt);border-left:2px solid var(--win-bd-lt);border-right:2px solid var(--win-bd-dk);border-bottom:2px solid var(--win-bd-dk);height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:none;">
+            <div style="font-size:36px;margin-bottom:8px">📍</div>
+            <div style="font-family:Nunito,sans-serif;font-size:13px;font-weight:800;color:#fff;text-align:center;text-shadow:1px 1px 0 rgba(0,0,0,0.3)">Orange County<br>Convention Center</div>
+            <div style="font-size:10px;font-family:var(--sys);color:rgba(255,255,255,0.8);margin-top:6px">Click to open in Google Maps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- ESSENTIALS -->
+  <section class="section" id="essentials" style="padding-top:0">
+  <div class="container">
+    <div class="win" data-reveal>
+      <div class="win-bar">
+        <span class="win-title"><span class="win-title-icon">⚠️</span> event_essentials.exe — Read before attending!</span>
+        <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+      </div>
+      <div class="win-menu"><span class="win-menu-item">File</span><span class="win-menu-item">Edit</span><span class="win-menu-item">View</span></div>
+      <div style="padding:1rem;background:var(--win-body)">
+        <div style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="flex:1;height:1px;background:var(--win-bd);display:block"></span>Must Know Before You Go<span style="flex:1;height:1px;background:var(--win-bd);display:block"></span></div>
+        <div class="ess-grid">
+          <div class="ess-card" data-reveal><span class="ess-icon">🆔</span><div class="ess-title">ID Required</div><div class="ess-desc">Government ID must match ticket name. No ID = no entry. Must be 18+.</div></div>
+          <div class="ess-card" data-reveal delay-1><span class="ess-icon">💳</span><div class="ess-title">Cashless Event</div><div class="ess-desc">No cash accepted anywhere. Bring card, Apple Pay, or Google Pay.</div></div>
+          <div class="ess-card" data-reveal delay-2><span class="ess-icon">👜</span><div class="ess-title">Bag Policy</div><div class="ess-desc">No wheeled bags except the $50 Ulta roller. Bring multiple tote bags!</div></div>
+          <div class="ess-card" data-reveal delay-3><span class="ess-icon">📦</span><div class="ess-title">Free Storage</div><div class="ess-desc">Complimentary monitored luggage storage from 9AM–5:30PM.</div></div>
+          <div class="ess-card" data-reveal><span class="ess-icon">📬</span><div class="ess-title">Ship It Home</div><div class="ess-desc">On-site shipping boxes available. Domestic only — no international.</div></div>
+          <div class="ess-card" data-reveal delay-1><span class="ess-icon">🎁</span><div class="ess-title">Swag Bag $2K+</div><div class="ess-desc">Must be present to claim. Do NOT leave without picking it up!</div></div>
+          <div class="ess-card" data-reveal delay-2><span class="ess-icon">🎟️</span><div class="ess-title">Digital Ticket</div><div class="ess-desc">Check email for pass. No transfers — name must match ID exactly.</div></div>
+          <div class="ess-card" data-reveal delay-3><span class="ess-icon">👟</span><div class="ess-title">Wear Comfy Shoes</div><div class="ess-desc">You'll walk 5–8 miles. Cute AND comfortable is the goal.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- PACKING LIST -->
+  <section class="section" id="bring" style="padding-top:0">
+  <div class="container">
+    <div class="win" data-reveal>
+      <div class="win-bar">
+        <span class="win-title"><span class="win-title-icon">📝</span> Notepad — packing_list.txt</span>
+        <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+      </div>
+      <div class="win-menu"><span class="win-menu-item">File</span><span class="win-menu-item">Edit</span><span class="win-menu-item">Format</span><span class="win-menu-item">View</span><span class="win-menu-item">Help</span></div>
+      <div style="padding:1rem;background:var(--win-body)">
+        <div style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="flex:1;height:1px;background:var(--win-bd);display:block"></span>Click each item to check off<span style="flex:1;height:1px;background:var(--win-bd);display:block"></span></div>
+        <div class="bring-grid">
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Government-issued ID</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Digital ticket (check email)</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Credit / debit card</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Multiple tote bags</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Portable charger</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Reusable water bottle</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Comfortable shoes</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Phone + headphones</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Lip liner (for testing)</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Hand sanitizer</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Snacks for energy</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Event map / route plan</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Priority brand list</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Small makeup bag</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Mini mirror</div>
+          <div class="bring-item" onclick="toggleBring(this)"><div class="bring-check"></div>Business cards (optional)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="section" id="tips" style="padding-top:0">
+  <div class="container">
+    <div class="win" data-reveal>
+      <div class="win-bar">
+        <span class="win-title"><span class="win-title-icon">💡</span> pro_tips.txt — Strategies from expo veterans</span>
+        <div class="win-btns"><div class="win-btn">_</div><div class="win-btn">□</div><div class="win-btn">✕</div></div>
+      </div>
+      <div class="win-menu"><span class="win-menu-item">File</span><span class="win-menu-item">Edit</span><span class="win-menu-item">View</span></div>
+      <div style="padding:1rem;background:var(--win-body)">
+        <div style="font-size:10px;font-weight:700;font-family:var(--sys);text-transform:uppercase;letter-spacing:0.1em;color:#555;margin-bottom:10px;display:flex;align-items:center;gap:8px"><span style="flex:1;height:1px;background:var(--win-bd);display:block"></span>Survival Tips<span style="flex:1;height:1px;background:var(--win-bd);display:block"></span></div>
+        <div class="tip-list">
+          <div class="tip-card" data-reveal><div class="tip-num">01</div><div><div class="tip-title">Arrive at 8AM — not 9AM</div><div class="tip-desc">Doors open 8AM for check-in. Fenty, Cécred, and Rare Beauty booths have 40+ min lines by 9:15AM.</div></div></div>
+          <div class="tip-card" data-reveal delay-1><div class="tip-num">02</div><div><div class="tip-title">Split up with your crew</div><div class="tip-desc">Divide and conquer. Cover different zones simultaneously, text each other about hidden gem booths and freebies.</div></div></div>
+          <div class="tip-card" data-reveal delay-2><div class="tip-num">03</div><div><div class="tip-title">Hit high-ROI booths first</div><div class="tip-desc">Celebrity brand booths — Cécred, Fenty, PATTERN, Pat McGrath, Rare Beauty — draw the longest lines early.</div></div></div>
+          <div class="tip-card" data-reveal delay-3><div class="tip-num">04</div><div><div class="tip-title">Bring multiple tote bags</div><div class="tip-desc">No wheeled bags (except $50 Ulta roller). Some booths give away bags you can reuse all day.</div></div></div>
+          <div class="tip-card" data-reveal><div class="tip-num">05</div><div><div class="tip-title">Use the on-site shipping station</div><div class="tip-desc">Flying home? Box up your haul at the on-site station. Use our <a href="planner.html" style="color:var(--win-bar);font-weight:700">Shipping Calculator</a> to plan costs ahead.</div></div></div>
+          <div class="tip-card" data-reveal delay-1><div class="tip-num">06</div><div><div class="tip-title">Use the Expo Planner</div><div class="tip-desc">Build your route, track your checklist, calculate ROI, run the Girl Math budget analyzer — all in our <a href="planner.html" style="color:var(--win-bar);font-weight:700">free Planner</a>.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0;padding-bottom:3rem">
+  <div class="container">
+    <div class="cta-win" data-reveal>
+      <div class="cta-title">Ready to Build Your<br>Perfect Expo Day? 💗</div>
+      <p style="font-size:13px;font-family:var(--sys);color:rgba(255,255,255,0.9)">Explore brands · Plan your route · Calculate shipping · Run the Girl Math</p>
+      <div class="cta-btns">
+        <a href="resources.html" class="btn btn-primary" style="font-weight:700">Browse 200+ Brands</a>
+        <a href="planner.html" class="btn">My Planner</a>
+        <a href="about.html#map-download" class="btn">Download Map</a>
+      </div>
+    </div>
+  </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div><div class="footer-brand-name">✦ JemUBW</div><p class="footer-brand-desc">Your Y2K pink-coded guide to UBW 2026. Built with 💗 by Jem.</p><div class="footer-social"><a href="#">📸</a><a href="#">🎵</a><a href="#">📌</a><a href="#">▶️</a></div></div>
+      <div><div class="footer-col-title">Navigate</div><div class="footer-links"><a href="index.html">Home</a><a href="resources.html">Resources</a><a href="community.html">Community</a><a href="about.html">About Jem</a></div></div>
+      <div><div class="footer-col-title">Tools</div><div class="footer-links"><a href="planner.html">My Planner</a><a href="reminders.html">Reminders</a><a href="brand-hub.html">Brand Hub</a><a href="brand-intel.html">Intelligence</a></div></div>
+      <div><div class="footer-col-title">Legal</div><div class="footer-links"><a href="legal.html">Terms &amp; Privacy</a><a href="legal.html#disclaimer">Disclaimer</a><a href="legal.html#financial">Financial Notice</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 JemUBW · Beauty Made Easier by Jem 💗</span><div><a href="legal.html">Legal</a><a href="legal.html#privacy">Privacy</a></div></div>
+  </div>
+</footer>
+
+<div class="toast" id="y2k-toast"></div>
+<script>
+(function(){
+'use strict';
+
+/* CURSOR — Win98 arrow in white with black outline */
+function initCursor(){
+  const el=document.createElement('svg');
+  el.id='y2k-cursor';
+  el.setAttribute('width','20');el.setAttribute('height','24');
+  el.setAttribute('viewBox','0 0 20 24');
+  el.style.cssText='position:fixed;pointer-events:none;z-index:99999;left:0;top:0;transition:none;';
+  el.innerHTML=`
+    <polygon points="1,1 1,19 5,14 9,21 12,20 8,13 14,13" fill="white" stroke="black" stroke-width="1.5"/>
+    <polygon points="1,1 1,19 5,14 9,21 12,20 8,13 14,13" fill="#000000" opacity="0"/>
+  `;
+  document.body.appendChild(el);
+  document.addEventListener('mousemove',e=>{el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';},{passive:true});
+  /* Win98 error popup on click */
+  document.addEventListener('click',e=>{
+    if(Math.random()<0.08){ showErrorPopup(); }
+  });
+}
+
+/* Win98 error popup — surprise element */
+let errorCount=0;
+const ERROR_MSGS=[
+  'beauty.exe has stopped working',
+  'Your haul is too iconic for this system',
+  'Error: Swag bag value overflow',
+  'Warning: You are TOO gorgeous',
+  'Critical error: Budget not found',
+];
+function showErrorPopup(){
+  if(errorCount>2)return; errorCount++;
+  const popup=document.createElement('div');
+  popup.style.cssText=`position:fixed;top:${80+Math.random()*200}px;left:${50+Math.random()*200}px;z-index:9990;animation:popIn 0.2s ease both;`;
+  popup.innerHTML=`
+    <div class="error-dialog" style="min-width:240px">
+      <div class="win-bar pink-bar" style="background:linear-gradient(90deg,#c8005c,#ff3399)">
+        <span class="win-title"><span class="win-title-icon">⚠️</span> Error</span>
+        <div class="win-btns"><div class="win-btn" onclick="this.closest('.error-dialog').parentElement.remove()">✕</div></div>
+      </div>
+      <div class="error-body">
+        <span class="error-icon">❌</span>
+        <div>
+          <div class="error-msg">${ERROR_MSGS[Math.floor(Math.random()*ERROR_MSGS.length)]}</div>
+          <div class="error-msg" style="margin-top:4px">Click "Fix" to fix error.</div>
+        </div>
+      </div>
+      <div class="error-btns">
+        <button class="btn btn-primary btn-sm" onclick="this.closest('.error-dialog').parentElement.remove()">Fix</button>
+        <button class="btn btn-sm" onclick="this.closest('.error-dialog').parentElement.remove()">Cancel</button>
+      </div>
+    </div>`;
+  const css=document.createElement('style');
+  css.textContent='@keyframes popIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}';
+  document.head.appendChild(css);
+  document.body.appendChild(popup);
+  setTimeout(()=>popup.remove(),8000);
+}
+
+/* NAV */
+function initNav(){
+  const ham=document.getElementById('hamburger');
+  const mob=document.getElementById('nav-mobile');
+  if(ham&&mob){
+    ham.addEventListener('click',()=>{
+      mob.classList.toggle('open');
+      const ss=ham.querySelectorAll('span');
+      if(mob.classList.contains('open')){ss[0].style.transform='rotate(45deg) translate(5px,5px)';ss[1].style.opacity='0';ss[2].style.transform='rotate(-45deg) translate(5px,-5px)';}
+      else ss.forEach(s=>{s.style.transform='';s.style.opacity='';});
+    });
+  }
+  const path=window.location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.nav-links a,.nav-mobile a').forEach(a=>{
+    if((a.getAttribute('href')||'')===(path||'index.html'))a.classList.add('active');
+  });
+  /* live clock in tray */
+  const tray=document.getElementById('nav-tray-time');
+  if(tray){
+    function updateClock(){tray.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+    updateClock();setInterval(updateClock,1000);
+  }
+}
+
+/* COUNTDOWN */
+function initCountdown(){
+  const el=document.getElementById('countdown');
+  if(!el)return;
+  const target=new Date('2026-04-16T09:00:00-04:00');
+  function pad(n){return String(n).padStart(2,'0');}
+  function update(){
+    const diff=target-new Date();
+    if(diff<=0){el.innerHTML='<span style="font-family:var(--head);font-size:14px;font-weight:900;color:var(--pink)">🎉 UBW 2026 is happening NOW!</span>';return;}
+    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+    el.innerHTML=`
+      <div class="cd-row">
+        <div class="cd-box"><span class="cd-num">${pad(d)}</span><span class="cd-lbl">Days</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(h)}</span><span class="cd-lbl">Hours</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(m)}</span><span class="cd-lbl">Min</span></div>
+        <span class="cd-sep blink">:</span>
+        <div class="cd-box"><span class="cd-num">${pad(s)}</span><span class="cd-lbl">Sec</span></div>
+      </div>`;
+  }
+  update();setInterval(update,1000);
+}
+
+/* TOAST */
+window.showToast=function(msg){
+  let t=document.getElementById('y2k-toast');
+  if(!t){t=document.createElement('div');t.id='y2k-toast';t.className='toast';document.body.appendChild(t);}
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),2800);
+};
+
+/* TABS */
+window.showTab=function(id,btn){
+  document.querySelectorAll('.pg-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pg-tab').forEach(b=>b.classList.remove('active'));
+  const panel=document.getElementById('tab-'+id);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  const tabs=document.querySelector('.page-tabs');
+  if(tabs)window.scrollTo({top:tabs.offsetTop-10,behavior:'smooth'});
+};
+
+/* STARTUP DIALOG — exact match to Win98 dialog */
+function initStartup(){
+  if(sessionStorage.getItem('y2k-boot3'))return;
+  sessionStorage.setItem('y2k-boot3','1');
+  const overlay=document.createElement('div');
+  overlay.id='y2k-overlay';
+  overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99998;display:flex;align-items:center;justify-content:center;';
+  overlay.innerHTML=`
+    <div style="animation:popIn 0.25s ease both;">
+      <div class="win" style="width:340px;">
+        <div class="win-bar">
+          <span class="win-title"><span class="win-title-icon">🌸</span> JemUBW.exe</span>
+          <div class="win-btns">
+            <div class="win-btn" title="Minimize">_</div>
+            <div class="win-btn" title="Maximize">□</div>
+            <div class="win-btn" onclick="document.getElementById('y2k-overlay').remove()" title="Close">✕</div>
+          </div>
+        </div>
+        <div style="padding:24px;background:var(--win-body);text-align:center;">
+          <div style="font-family:'Nunito',sans-serif;font-size:clamp(20px,5vw,28px);font-weight:900;color:var(--pink);margin-bottom:6px;text-shadow:1px 1px 0 rgba(200,0,80,0.2)">Beauty Made<br>Easier? 💗</div>
+          <div style="font-size:12px;font-family:var(--sys);color:#444;margin-bottom:20px;">UBW 2026 · April 16 · Orlando FL</div>
+          <div style="display:flex;gap:8px;justify-content:center;">
+            <button class="btn btn-primary" onclick="document.getElementById('y2k-overlay').remove()" style="min-width:80px">Go!</button>
+            <button class="btn" onclick="document.getElementById('y2k-overlay').remove()" style="min-width:80px">Cancel</button>
+          </div>
+          <div style="text-align:right;margin-top:14px">
+            <svg width="16" height="20" viewBox="0 0 20 24" style="opacity:0.4"><polygon points="1,1 1,19 5,14 9,21 12,20 8,13 14,13" fill="black"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+}
+
+/* SCROLL PROGRESS */
+function initScrollBar(){
+  const bar=document.createElement('div');
+  bar.style.cssText='position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--purple),var(--pink));z-index:2001;width:0%;transition:width 0.1s linear;';
+  document.body.appendChild(bar);
+  window.addEventListener('scroll',()=>{
+    const pct=window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
+    bar.style.width=Math.min(100,pct)+'%';
+  },{passive:true});
+}
+
+/* REVEAL */
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed','visible');obs.unobserve(e.target);}});
+  },{threshold:0.06});
+  document.querySelectorAll('[data-reveal],.fade-up').forEach(el=>obs.observe(el));
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initCursor();initNav();initCountdown();initReveal();initScrollBar();initStartup();
+});
+})();
+
+</script>
+<script>
+function toggleBring(el){
+  el.classList.toggle("checked");
+  el.querySelector(".bring-check").textContent = el.classList.contains("checked") ? "✓" : "";
+  showToast(el.classList.contains("checked") ? "Packed! ✓" : "Removed");
+}
+/* CD Player track rotator */
+const TRACKS=["UBW 2026 Survival","Booth Timer Bop","Girl Math Anthem","Sample Haul Queen","ROI Calculator 💗"];
+let ti=0;
+setInterval(()=>{ti=(ti+1)%TRACKS.length;const el=document.getElementById("cdp-track");if(el)el.textContent=TRACKS[ti];},5000);
+</script>
+</body>
+</html>
