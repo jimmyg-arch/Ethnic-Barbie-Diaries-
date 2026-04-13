@@ -679,8 +679,22 @@ select.inp{cursor:none;}
 .zone-head{font-size:11px;font-weight:800;color:var(--pink);margin-bottom:6px;}
 .zone-pills{display:flex;gap:5px;flex-wrap:wrap;}
 .zone-pill{
-  font-size:10px;font-weight:700;padding:2px 7px;background:#fff;
-  border:1px solid var(--pink-border);border-radius:12px;color:var(--win-txt);
+  font-size:10px;font-weight:700;padding:6px 8px;background:#fff;
+  border:1px solid var(--pink-border);border-radius:10px;color:var(--win-txt);
+  min-width:150px;line-height:1.25;
+}
+.zp-booth{font-size:10px;color:var(--pink-hot);font-weight:900;}
+.zp-brand{font-size:11px;color:var(--win-txt);font-weight:800;}
+.zp-prod{font-size:10px;color:var(--muted);}
+.brand-card.flash{
+  outline:2px solid var(--pink);
+  box-shadow:0 0 0 2px rgba(255,45,136,0.2) inset;
+  animation:flashcard 0.8s ease;
+}
+@keyframes flashcard{
+  0%{transform:translateY(0);}
+  25%{transform:translateY(-2px);}
+  100%{transform:translateY(0);}
 }
 .full-map-card{
   margin-top:0.8rem;padding:0.8rem;background:var(--pink-blush);
@@ -787,6 +801,9 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
       <div class="res-block">
         <div class="sec-label">Brand Directory</div>
         <input id="brand-search" class="inp" placeholder="Search brand or booth number..." oninput="filterBrands()">
+        <select id="brand-select" class="inp" onchange="onBrandSelect(this.value)" style="margin-top:8px">
+          <option value="">All brands (quick jump)</option>
+        </select>
         <div class="brand-controls" id="cat-chips" style="margin-top:8px">
           <button class="chip active" onclick="setFilter('all', this)">All</button>
           <button class="chip" onclick="setFilter('Skincare', this)">Skincare</button>
@@ -833,13 +850,22 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
       <div id="ps-builder" class="ps-panel active">
         <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Select interests</div>
         <div id="int-chips" class="brand-controls">
-          <button class="chip" data-v="Skincare">Skincare</button>
-          <button class="chip" data-v="Haircare">Haircare</button>
-          <button class="chip" data-v="Makeup">Makeup</button>
-          <button class="chip" data-v="Tools">Tools</button>
-          <button class="chip" data-v="Wellness">Wellness</button>
+          <button class="chip" data-v="skincare-routine">Skincare Routine</button>
+          <button class="chip" data-v="hyperpigmentation">Hyperpigmentation</button>
+          <button class="chip" data-v="barrier-repair">Barrier Repair</button>
+          <button class="chip" data-v="spf">SPF + Sun Care</button>
+          <button class="chip" data-v="sensitive-skin">Sensitive Skin</button>
+          <button class="chip" data-v="scalp-care">Scalp Care</button>
+          <button class="chip" data-v="bond-repair">Bond Repair</button>
+          <button class="chip" data-v="curl-definition">Curl Definition</button>
+          <button class="chip" data-v="frizz-control">Frizz Control</button>
+          <button class="chip" data-v="base-makeup">Base Makeup</button>
+          <button class="chip" data-v="lip-products">Lip Products</button>
+          <button class="chip" data-v="tools-styling">Styling Tools</button>
+          <button class="chip" data-v="body-care">Body Care</button>
+          <button class="chip" data-v="fragrance">Fragrance</button>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Focus tags</div>
+        <div style="font-size:12px;color:var(--muted);margin:8px 0 6px">Advanced priorities</div>
         <div id="focus-chips" class="brand-controls">
           <button class="chip" data-v="melanin">Melanin</button>
           <button class="chip" data-v="kbeauty">K-Beauty</button>
@@ -847,6 +873,12 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
           <button class="chip" data-v="curly">Curly</button>
           <button class="chip" data-v="celebrity">Celebrity</button>
           <button class="chip" data-v="exclusive">Exclusive</button>
+          <button class="chip" data-v="budget-finds">Budget Finds</button>
+          <button class="chip" data-v="luxury-splurge">Luxury Splurge</button>
+          <button class="chip" data-v="freebies-max">Max Freebies</button>
+          <button class="chip" data-v="quick-stops">Quick Stops</button>
+          <button class="chip" data-v="service-heavy">Service Heavy</button>
+          <button class="chip" data-v="new-launches">New Launches</button>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
           <label style="font-size:12px;color:var(--muted)">Sample Priority
@@ -942,6 +974,11 @@ const TAG_LABELS = {melanin:'Melanin ✓',kbeauty:'K-Beauty',clean:'Clean',curly
 const TAG_COLORS = {melanin:'#FFF0E6|#8B4513',kbeauty:'#EBF7FB|#0E7490',clean:'#ECFDF5|#065F46',curly:'#F5F3FF|#5B21B6',celebrity:'#FDF2F8|#9D174D',exclusive:'#FDF3E3|#92400E',sensitive:'#EFF6FF|#1D4ED8'};
 
 let activeFilter = 'all';
+let activeBrandFilter = '';
+
+function brandKey(v='') {
+  return String(v).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
 
 function buildBrandGrid(data) {
   const grid = document.getElementById('brand-grid');
@@ -956,7 +993,9 @@ function buildBrandGrid(data) {
     card.className = 'brand-card';
     card.dataset.cat = b.cat;
     card.dataset.brand = b.brand.toLowerCase();
+    card.dataset.brandKey = brandKey(b.brand);
     card.dataset.booth = b.booth;
+    card.id = `brand-card-${brandKey(b.brand)}`;
     card.innerHTML = `
       <div class="bc-top">
         <div class="bc-icon">${b.icon}</div>
@@ -978,6 +1017,27 @@ function buildBrandGrid(data) {
   document.getElementById('brand-count').textContent = data.length;
 }
 
+function populateBrandSelect() {
+  const sel = document.getElementById('brand-select');
+  if (!sel) return;
+  const opts = [...BRANDS_DATA].sort((a,b)=>a.brand.localeCompare(b.brand));
+  sel.innerHTML = '<option value="">All brands (quick jump)</option>' +
+    opts.map(b => `<option value="${brandKey(b.brand)}">${b.brand} (Booth ${b.booth})</option>`).join('');
+}
+
+function onBrandSelect(v) {
+  activeBrandFilter = v || '';
+  filterBrands();
+  if (!v) return;
+  const target = document.getElementById(`brand-card-${v}`);
+  if (target) {
+    target.scrollIntoView({behavior:'smooth', block:'center'});
+    target.classList.remove('flash');
+    void target.offsetWidth;
+    target.classList.add('flash');
+  }
+}
+
 function setFilter(cat, el) {
   activeFilter = cat;
   document.querySelectorAll('#cat-chips .chip').forEach(c => c.classList.remove('active'));
@@ -992,7 +1052,8 @@ function filterBrands() {
   cards.forEach(c => {
     const catOk = activeFilter === 'all' || c.dataset.cat === activeFilter;
     const qOk   = !q || c.dataset.brand.includes(q) || c.dataset.booth.includes(q);
-    const show  = catOk && qOk;
+    const bOk   = !activeBrandFilter || c.dataset.brandKey === activeBrandFilter;
+    const show  = catOk && qOk && bOk;
     c.classList.toggle('hidden', !show);
     if (show) visible++;
   });
@@ -1031,11 +1092,16 @@ function buildZoneMap() {
   const zones = ['A','B','C','D','GS','FT'];
   const zoneLabels = {'A':'Zone A · 100–999','B':'Zone B · 1000–1749','C':'Zone C · 1750–1999','D':'Zone D · 2000–2500','GS':'GS · Special Positions','FT':'FT · Featured Tables'};
   const zm = document.getElementById('zone-map');
+  const byBooth = Object.fromEntries(BRANDS_DATA.map(b => [String(b.booth), b]));
   zones.forEach(z => {
     const items = ALL_BOOTHS.filter(b => b.z === z);
     const block = document.createElement('div');
     block.className = 'zone-block';
-    block.innerHTML = `<div class="zone-head">${zoneLabels[z]}</div><div class="zone-pills">${items.map(i=>`<div class="zone-pill" title="${i.n}">${i.b}</div>`).join('')}</div>`;
+    block.innerHTML = `<div class="zone-head">${zoneLabels[z]}</div><div class="zone-pills">${items.map(i=>{
+      const hit = byBooth[String(i.b)];
+      const prod = hit ? String(hit.hero||'').split('—')[0].trim() : `${i.n} feature`;
+      return `<div class="zone-pill" title="${i.n}"><div class="zp-booth">Booth ${i.b}</div><div class="zp-brand">${i.n}</div><div class="zp-prod">${prod}</div></div>`;
+    }).join('')}</div>`;
     zm.appendChild(block);
   });
 }
@@ -1044,6 +1110,78 @@ function buildZoneMap() {
 document.querySelectorAll('#int-chips .chip, #focus-chips .chip').forEach(c => {
   c.addEventListener('click', () => c.classList.toggle('active'));
 });
+
+function parseRetailFromHero(hero=''){
+  const m = String(hero).match(/\$([0-9]+)/);
+  return m ? Number(m[1]) : 35;
+}
+
+function estimateSampleValue(brand){
+  const retail = parseRetailFromHero(brand.hero);
+  let sample = Math.round(retail * 0.28);
+  if (brand.cat === 'Tools') sample = 0;
+  if (brand.tags.includes('exclusive')) sample += 2;
+  return Math.max(0, sample);
+}
+
+function interestMatchScore(brand, selectedInterests, selectedFocus){
+  const txt = `${brand.brand} ${brand.desc} ${brand.hero}`.toLowerCase();
+  let score = 0;
+  const has = (s) => txt.includes(s);
+  const interestMatchers = {
+    'skincare-routine': () => brand.cat === 'Skincare',
+    'hyperpigmentation': () => has('hyperpigmentation') || has('brightening') || has('vitamin c'),
+    'barrier-repair': () => has('barrier') || has('ceramide') || has('soothing'),
+    'spf': () => has('spf') || has('sunscreen') || has('sun'),
+    'sensitive-skin': () => brand.tags.includes('sensitive') || has('sensitive') || has('soothing'),
+    'scalp-care': () => has('scalp'),
+    'bond-repair': () => has('bond') || has('repair'),
+    'curl-definition': () => brand.tags.includes('curly') || has('curl'),
+    'frizz-control': () => has('frizz') || has('smoothing'),
+    'base-makeup': () => brand.cat === 'Makeup' && (has('foundation') || has('concealer') || has('base')),
+    'lip-products': () => has('lip'),
+    'tools-styling': () => brand.cat === 'Tools',
+    'body-care': () => has('body') || has('sanitizer'),
+    'fragrance': () => brand.cat === 'Fragrance' || has('fragrance') || has('mist')
+  };
+  const focusMatchers = {
+    'budget-finds': () => parseRetailFromHero(brand.hero) <= 30,
+    'luxury-splurge': () => parseRetailFromHero(brand.hero) >= 60,
+    'freebies-max': () => estimateSampleValue(brand) >= 12,
+    'quick-stops': () => ['Skincare','Makeup'].includes(brand.cat),
+    'service-heavy': () => brand.cat === 'Tools' || has('demo'),
+    'new-launches': () => brand.tags.includes('exclusive') || has('new') || has('viral')
+  };
+  selectedInterests.forEach(k => { if (interestMatchers[k]?.()) score += 5; });
+  selectedFocus.forEach(k => {
+    if (brand.tags.includes(k)) score += 7;
+    if (focusMatchers[k]?.()) score += 7;
+  });
+  return score;
+}
+
+function estimateWalkMinutes(prevBooth, nextBooth){
+  const a = parseInt(String(prevBooth).replace(/\D/g,''),10);
+  const b = parseInt(String(nextBooth).replace(/\D/g,''),10);
+  if (Number.isNaN(a) || Number.isNaN(b)) return '4 min';
+  const d = Math.abs(a - b);
+  return `${Math.max(2, Math.min(12, Math.round(d/180)))} min`;
+}
+
+function sendRouteToPlanner(route){
+  const plannerList = route.map((s,i) => ({
+    id: Date.now() + i,
+    name: s.brand,
+    booth: String(s.booth),
+    priority: i < 4 ? 'high' : (i < 8 ? 'medium' : 'low'),
+    baseTime: i < 4 ? 25 : (i < 8 ? 15 : 8),
+    lineTime: i < 4 ? 20 : (i < 8 ? 10 : 3),
+    done: false
+  }));
+  localStorage.setItem('ubw_booth_list', JSON.stringify(plannerList));
+  localStorage.setItem('ubw_tracker_list', JSON.stringify(plannerList.map(b => ({...b, done:false, value:0, note:''}))));
+  localStorage.setItem('ubw_generated_route', JSON.stringify({ ts: Date.now(), route }));
+}
 
 async function generateRoute() {
   const btn = document.getElementById('gen-route-btn');
@@ -1062,23 +1200,37 @@ async function generateRoute() {
     localStorage.setItem(_store, JSON.stringify(_recs.slice(-5000)));
   } catch(e) {}
 
-  const boothSnippet = BRANDS_DATA.filter(b => interests.includes(b.cat)).slice(0,40)
-    .map(b=>`Booth ${b.booth}: ${b.brand} (${b.cat})`).join('\n');
-
-  const prompt = `You are a Ulta Beauty World 2026 expo strategist. Real official booths:
-${boothSnippet}
-
-User: interests=${interests.join(',')}, focus=${focus.join(',')}, samples_priority=${s1}/10, roi_priority=${s2}/10
-
-Create an optimal 10-booth ROI-ranked route. Respond ONLY in valid JSON (no fences):
-{"summary":"2 sentence pink-coded strategy","totalValue":"$XXX","route":[{"order":1,"brand":"exact name","booth":"exact #","cat":"cat","why":"1 sentence reason for this user","topProduct":"Product — $XX","sampleValue":"$XX","time":"X min","walk":"X min","roi":85}]}`;
-
   try {
-    const res = await fetch('https://jemubw-proxy.YOUR-SUBDOMAIN.workers.dev/claude',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,messages:[{role:'user',content:prompt}]})});
-    const data = await res.json();
-    const raw = (data.content||[]).map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
-    const r = JSON.parse(raw);
-    renderRoute(r);
+    const scored = BRANDS_DATA.map(b => {
+      const retail = parseRetailFromHero(b.hero);
+      const sample = estimateSampleValue(b);
+      const roiBase = (sample * (+s1)) + (retail * (+s2) * 0.12); // ROI-dominant score
+      const relevance = interestMatchScore(b, interests, focus);
+      const totalScore = roiBase * 10 + relevance; // prioritize ROI first, then relevance
+      return { b, retail, sample, relevance, totalScore };
+    }).sort((a,b) => b.totalScore - a.totalScore).slice(0,10);
+
+    const route = scored.map((x,i) => ({
+      order: i+1,
+      brand: x.b.brand,
+      booth: x.b.booth,
+      cat: x.b.cat,
+      why: `High ROI with ${x.relevance>0?'strong interest match':'good overall value'}.`,
+      topProduct: x.b.hero,
+      sampleValue: `$${x.sample}`,
+      time: `${x.b.cat==='Tools'?20:12} min`,
+      walk: i===0 ? '0 min' : estimateWalkMinutes(scored[i-1].b.booth, x.b.booth),
+      roi: Math.max(45, Math.min(99, Math.round(x.totalScore/12)))
+    }));
+
+    const totalValue = route.reduce((s,r)=>s+Number(String(r.sampleValue).replace('$','')),0);
+    const result = {
+      summary: 'Prioritized by ROI first, then tuned to your detailed interests and advanced priorities.',
+      totalValue: `$${totalValue}`,
+      route
+    };
+    sendRouteToPlanner(route);
+    renderRoute(result);
   } catch(e) {
     document.getElementById('route-output').innerHTML = '<p style="color:var(--pink-hot)">Error generating route — please try again.</p>';
   }
@@ -1110,11 +1262,16 @@ function renderRoute(r) {
       </div>
     </div>`;
   });
+  html += `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+    <a class="btn btn-pink btn-sm" href="planner.html">Open Route in Planner →</a>
+    <span style="font-size:11px;color:var(--muted);align-self:center">Route auto-saved to Planner list</span>
+  </div>`;
   document.getElementById('route-output').innerHTML = html;
 }
 
 // Init
 buildBrandGrid(BRANDS_DATA);
+populateBrandSelect();
 buildZoneMap();
 </script>
 
