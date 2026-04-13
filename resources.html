@@ -648,13 +648,24 @@ select.inp{cursor:none;}
 }
 .brand-card.hidden{display:none;}
 .bc-top{padding:10px 10px 0;position:relative;}
-.bc-icon{font-size:18px;}
+.bc-head{display:flex;gap:10px;align-items:flex-start;}
+.bc-logo{
+  width:42px;height:42px;object-fit:contain;background:#fff;border:1px solid var(--pink-border);
+  border-radius:8px;padding:4px;flex-shrink:0;
+}
+.bc-logo-fallback{
+  width:42px;height:42px;border-radius:8px;background:#fff;border:1px solid var(--pink-border);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+}
+.bc-meta{min-width:0;}
 .bc-booth{font-size:10px;font-weight:800;color:var(--muted);margin-top:4px;}
 .bc-name{font-size:13px;font-weight:900;color:var(--win-txt);margin:2px 0 5px;}
 .bc-tags{display:flex;gap:4px;flex-wrap:wrap;}
 .bc-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
 .bc-cat-bar{height:4px;margin-top:8px;border-radius:6px;}
 .bc-body{padding:9px 10px 10px;}
+.bc-company{font-size:11px;color:var(--muted);background:#fff;border:1px solid var(--pink-border);padding:6px 8px;border-radius:8px;margin-bottom:7px;}
+.bc-company b{color:var(--ink2);}
 .bc-desc{font-size:12px;line-height:1.5;color:var(--win-txt);}
 .bc-hero-prod{font-size:11px;color:var(--muted);margin:7px 0;}
 .bc-actions{display:flex;gap:6px;flex-wrap:wrap;}
@@ -831,7 +842,10 @@ if(document.body){setup();}else{document.addEventListener('DOMContentLoaded',set
         </div>
         <div class="full-map-card">
           <div style="font-size:12px;color:var(--ink2)">Want the full interactive experience?</div>
-          <a class="btn btn-pink btn-sm" href="ulta_expo_map.html">Open Full Map →</a>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+            <button class="btn btn-outline btn-sm" onclick="downloadFullFloorMap()">⬇ Download Full Floor Map</button>
+            <a class="btn btn-pink btn-sm" href="ulta_expo_map.html">Open Full Map →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -980,6 +994,20 @@ function brandKey(v='') {
   return String(v).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
 }
 
+function companyDomain(link='') {
+  try {
+    const u = new URL(link);
+    return u.hostname.replace(/^www\./,'');
+  } catch(e) {
+    return '';
+  }
+}
+
+function logoUrlForBrand(b) {
+  const d = companyDomain(b.link);
+  return d ? `https://logo.clearbit.com/${d}` : '';
+}
+
 function buildBrandGrid(data) {
   const grid = document.getElementById('brand-grid');
   grid.innerHTML = '';
@@ -996,15 +1024,23 @@ function buildBrandGrid(data) {
     card.dataset.brandKey = brandKey(b.brand);
     card.dataset.booth = b.booth;
     card.id = `brand-card-${brandKey(b.brand)}`;
+    const company = companyDomain(b.link) || b.brand.toLowerCase().replace(/\s+/g,'') + '.com';
+    const logo = logoUrlForBrand(b);
     card.innerHTML = `
       <div class="bc-top">
-        <div class="bc-icon">${b.icon}</div>
-        <div class="bc-booth">Booth ${b.booth}</div>
-        <div class="bc-name">${b.brand}</div>
-        <div class="bc-tags">${tagHtml}</div>
+        <div class="bc-head">
+          <img class="bc-logo" src="${logo}" alt="${b.brand} logo" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="bc-logo-fallback" style="display:none">${b.icon}</div>
+          <div class="bc-meta">
+            <div class="bc-booth">Booth ${b.booth}</div>
+            <div class="bc-name">${b.brand}</div>
+            <div class="bc-tags">${tagHtml}</div>
+          </div>
+        </div>
         <div class="bc-cat-bar" style="background:${cc.bar}"></div>
       </div>
       <div class="bc-body">
+        <div class="bc-company"><b>Company:</b> ${company} · <b>Category:</b> ${b.cat} · <b>Official:</b> <a href="${b.link}" target="_blank" rel="noopener">${company}</a></div>
         <div class="bc-desc">${b.desc}</div>
         <div class="bc-hero-prod">⭐ <strong style="margin-right:4px">Hero product:</strong> ${b.hero}</div>
         <div class="bc-actions">
@@ -1092,6 +1128,7 @@ function buildZoneMap() {
   const zones = ['A','B','C','D','GS','FT'];
   const zoneLabels = {'A':'Zone A · 100–999','B':'Zone B · 1000–1749','C':'Zone C · 1750–1999','D':'Zone D · 2000–2500','GS':'GS · Special Positions','FT':'FT · Featured Tables'};
   const zm = document.getElementById('zone-map');
+  window.__ALL_BOOTHS = ALL_BOOTHS;
   const byBooth = Object.fromEntries(BRANDS_DATA.map(b => [String(b.booth), b]));
   zones.forEach(z => {
     const items = ALL_BOOTHS.filter(b => b.z === z);
@@ -1104,6 +1141,100 @@ function buildZoneMap() {
     }).join('')}</div>`;
     zm.appendChild(block);
   });
+}
+
+function buildRouteIndexMap() {
+  const route = JSON.parse(localStorage.getItem('ubw_generated_route')||'{}').route || [];
+  if (route.length) {
+    const m = new Map();
+    route.forEach((r, i) => m.set(String(r.booth), i + 1));
+    return m;
+  }
+  const planner = JSON.parse(localStorage.getItem('ubw_booth_list') || '[]');
+  const m = new Map();
+  planner.slice(0, 10).forEach((r, i) => m.set(String(r.booth), i + 1));
+  return m;
+}
+
+function downloadFullFloorMap() {
+  const booths = window.__ALL_BOOTHS || [];
+  if (!booths.length) {
+    showToast('Map data not ready yet — try again in a second.');
+    return;
+  }
+  const routeMap = buildRouteIndexMap();
+  const zones = ['A','B','C','D','GS','FT'];
+  const labels = {'A':'ZONE A','B':'ZONE B','C':'ZONE C','D':'ZONE D','GS':'SPECIAL POSITIONS','FT':'FEATURED TABLES'};
+  const zoneW = 450;
+  const cardW = 208;
+  const cardH = 46;
+  const gapX = 10;
+  const gapY = 8;
+  const pad = 20;
+  const zonesPerRow = 2;
+  const zoneHeights = zones.map(z => {
+    const count = booths.filter(b => b.z === z).length;
+    const rows = Math.max(1, Math.ceil(count / 2));
+    return 42 + rows * (cardH + gapY) + 12;
+  });
+  const rowHeights = [
+    Math.max(zoneHeights[0], zoneHeights[1]),
+    Math.max(zoneHeights[2], zoneHeights[3]),
+    Math.max(zoneHeights[4], zoneHeights[5]),
+  ];
+  const width = pad * 2 + zoneW * 2 + 20;
+  const height = pad * 2 + rowHeights.reduce((a,b)=>a+b,0) + 40;
+  const byBooth = Object.fromEntries(BRANDS_DATA.map(b => [String(b.booth), b]));
+
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`;
+  svg += `<rect width="100%" height="100%" fill="#fff7fc"/><text x="${pad}" y="18" font-size="13" font-weight="700" fill="#7a104f">UBW Full Floor Map Export · ${new Date().toLocaleString()}</text>`;
+  svg += `<text x="${width - 330}" y="18" font-size="11" fill="#7a104f">Watermark: Ethnic Barbie Diaries / Route-Aware Export</text>`;
+
+  let yCursor = pad + 10;
+  zones.forEach((z, zi) => {
+    const col = zi % zonesPerRow;
+    const row = Math.floor(zi / zonesPerRow);
+    if (col === 0 && zi > 0) yCursor += rowHeights[row - 1] + 10;
+    const x0 = pad + col * (zoneW + 20);
+    const y0 = yCursor;
+    const items = booths.filter(b => b.z === z);
+    const zH = rowHeights[row];
+    svg += `<rect x="${x0}" y="${y0}" width="${zoneW}" height="${zH}" rx="8" fill="#ffe8f3" stroke="#ff6aa9"/>`;
+    svg += `<text x="${x0 + 10}" y="${y0 + 20}" font-size="14" font-weight="700" fill="#a1005a">${labels[z]}</text>`;
+
+    items.forEach((it, i) => {
+      const c = i % 2;
+      const r = Math.floor(i / 2);
+      const x = x0 + 10 + c * (cardW + gapX);
+      const y = y0 + 30 + r * (cardH + gapY);
+      const routeNum = routeMap.get(String(it.b));
+      const selected = routeMap.size ? !!routeNum : false;
+      const fill = selected ? '#7a104f' : (routeMap.size ? '#f1e3ee' : '#ffffff');
+      const nameColor = selected ? '#ffffff' : '#2f1632';
+      const boothColor = selected ? '#ffd5ea' : '#a1005a';
+      const bInfo = byBooth[String(it.b)];
+      const prod = bInfo ? String(bInfo.hero || '').split('—')[0].trim() : 'Booth feature';
+
+      svg += `<rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="6" fill="${fill}" stroke="#d46b9b"/>`;
+      svg += `<text x="${x + 8}" y="${y + 14}" font-size="10" font-weight="700" fill="${boothColor}">Booth ${it.b}</text>`;
+      svg += `<text x="${x + 8}" y="${y + 28}" font-size="11" font-weight="700" fill="${nameColor}">${it.n.replace(/&/g,'&amp;')}</text>`;
+      svg += `<text x="${x + 8}" y="${y + 40}" font-size="9" fill="${selected ? '#ffdff0' : '#6f4c63'}">${prod.replace(/&/g,'&amp;').slice(0,30)}</text>`;
+      if (routeNum) {
+        svg += `<circle cx="${x + cardW - 12}" cy="${y + 12}" r="9" fill="#ff6aa9"/><text x="${x + cardW - 12}" y="${y + 15}" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">${routeNum}</text>`;
+      }
+    });
+  });
+
+  svg += `</svg>`;
+  const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `ubw-full-floor-map-${Date.now()}.svg`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  showToast('Full floor map downloaded (route overlay included).');
 }
 
 // Route generator
